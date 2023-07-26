@@ -5,9 +5,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="game" element={<h1>GAME</h1>} />
-          <Route path="profile" element={<h1>GAME</h1>} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<h1>HOME</h1>} />
+          <Route path="/game" element={<h1>GAME</h1>} />
+          <Route path="/profile" element={<h1>GAME</h1>} />
         </Route>
 
         <Route path='/login' element={<h1>LOGIN</h1>} />
