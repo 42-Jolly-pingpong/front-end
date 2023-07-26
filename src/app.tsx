@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
-import Header from './components/layout/header';
-import Footer from './components/layout/footer';
 
 function App() {
   return (
