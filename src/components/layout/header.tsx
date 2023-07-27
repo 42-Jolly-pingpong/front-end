@@ -1,7 +1,9 @@
 const Header = () => {
 	return (
-		<header>
-			<div>header</div>
+		<header className="h-20">
+			<div className="bg-red-400 font-bold h-full">
+				header
+			</div>
 		</header>
 	)
 }
