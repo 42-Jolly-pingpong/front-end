@@ -1,11 +1,6 @@
-import { Dispatch, SetStateAction} from "react"
 import Chat from "./chat/chat";
 import Friend from "./friend/friend";
-
-type SidebarProps = {
-	state: number;
-	setState: Dispatch<SetStateAction<number>>;
-}
+import { SidebarProps } from "../../app";
 
 const Sidebar = (props: SidebarProps) => {
 	const { state, setState } = props;
