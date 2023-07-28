@@ -12,7 +12,7 @@ const Footer = (props: SidebarProps) => {
     }
 
     return (
-        <footer className="h-20">
+        <footer className="flex justify-between bg-red-400" style={{height: "10%"}}>
             <button onClick={onClickChat}>Chat</button>
             <button onClick={onClickFriend}>Friend</button>
         </footer>
