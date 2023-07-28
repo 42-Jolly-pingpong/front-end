@@ -1,7 +1,7 @@
 const Footer = () => {
 	return (
-		<footer className="h-20">
-			<div className="bg-red-400 h-full">
+		<footer className="flex justify-between bg-red-400" style={{height: "10%"}}>
+			<div>
 				footer
 			</div>
 		</footer>
