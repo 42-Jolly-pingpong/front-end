@@ -5,8 +5,8 @@ import { SidebarProps } from "../../app";
 const Sidebar = (props: SidebarProps) => {
 	const { state, setState } = props;
 
-	return (<div>
-		{state === 1 ? <Chat setState={setState}/> : <Friend setState={setState}/>}
+	return (<div className="w-80 h-full">
+		{state === 1 ? <Chat /> : <Friend />}
 		</div>
 	);
 

@@ -1,14 +1,7 @@
-import { Dispatch, SetStateAction} from "react"
-
-const Chat = (props : {setState: Dispatch<SetStateAction<number>>}): JSX.Element => {
-	const setState = props.setState;
-
-	const onClickButton = () => {
-		setState(2);
-	}
+const Chat = (): JSX.Element => {
 
 	return (
-		<button onClick={onClickButton}>chat</button>
+		<div>chat</div>
 	);
 }
 

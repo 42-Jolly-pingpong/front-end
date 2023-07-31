@@ -12,23 +12,12 @@ export type SidebarProps = {
 const Section = (props : {sidebarState: number, setSidebarState: Dispatch<SetStateAction<number>>, section: JSX.Element}) => {
   const { sidebarState, setSidebarState, section } = props;
 
-  if (sidebarState === 0){
-    return (
-      <div className="flex">
-          <div>
-            {section}
-          </div>
-      </div>
-    );
-  }
   return (
-    <div className="flex">
-      <div className="w-2/3">
-        {section}
+    <div className="flex w-full h-full">
+      <div className="flex flex-col flex-grow justify-center items-center">
+      {section}
       </div>
-      <div className="w-1/3">
-        {sidebarState === 0? null : <Sidebar state={sidebarState} setState={setSidebarState} />}
-      </div>
+      {sidebarState ? <Sidebar state={sidebarState} setState={setSidebarState} /> : null}
     </div>
   );
 }
