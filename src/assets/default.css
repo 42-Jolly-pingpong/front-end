@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @charset "UTF-8";
+
 @font-face {
 	font-family: 'IAMAPLAYER';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/IAMAPLAYER.woff2') format('woff2');
@@ -13,8 +14,9 @@
 @layer components {
 	.layout-icon {
 		display: flex;
-		maxHeight: 100%;
+		max-height: 100%;
 		height: 5rem;
+		aspect-ratio: 1/1;
 	}
 }
 
