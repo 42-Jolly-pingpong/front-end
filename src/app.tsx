@@ -23,10 +23,10 @@ const Section = (props : {sidebarState: number, setSidebarState: Dispatch<SetSta
   }
   return (
     <div className="flex">
-      <div className="w-2/3 h-1">
+      <div className="w-2/3">
         {section}
       </div>
-      <div className="w-1/3 h-1">
+      <div className="w-1/3">
         {sidebarState === 0? null : <Sidebar state={sidebarState} setState={setSidebarState} />}
       </div>
     </div>
