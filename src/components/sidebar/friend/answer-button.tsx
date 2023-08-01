@@ -10,9 +10,9 @@ const AnswerButton = (props: FriendElementProps) => {
 	}
 
 	return (
-		<div>
-			<button onClick={onClickAccept}>Y</button>
-			<button onClick={onClickUnaccept}>N</button>
+		<div className="join">
+			<button className="btn join-item" onClick={onClickAccept}>Y</button>
+			<button className="btn join-item" onClick={onClickUnaccept}>N</button>
 		</div>
 	)
 
