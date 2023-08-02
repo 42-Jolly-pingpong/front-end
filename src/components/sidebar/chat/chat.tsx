@@ -1,7 +1,13 @@
+import ChatList from "./chat-list";
+import OpenChatList from "./open-chat-list";
+
 const Chat = (): JSX.Element => {
 
 	return (
-		<div>chat</div>
+		<div>
+			<ChatList />
+			<OpenChatList />
+		</div>
 	);
 }
 
