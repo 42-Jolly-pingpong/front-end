@@ -9,16 +9,24 @@ const FriendList = () => {
 		setIsChecked((prev) => prev? false : true)
 	}
 
+	const amount = 10;
+
 	return (
-		<div className="collapse collapse-arrow">
-			<input type="checkbox" checked={isChecked} onClick={onClickCheckbox}/> 
-			<div className="collapse-title text-xl">
-				friend
-			</div> 
-			<div className="collapse-content overflow-y-auto h-5/6"> 
-				<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test1"} request={true}/>
-				<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test2"}/>
-				
+		<div className="flex flex-col justify-between">
+			<div className="collapse">
+				<input type="checkbox" checked={isChecked} onClick={onClickCheckbox}/> 
+					<div className="collapse-title text-xl">
+						friend ({amount})
+				</div> 
+				<div className="collapse-content overflow-y-auto"> 
+					<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test1"} request={true}/>
+					<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test2"}/>
+					<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test3"}/>
+				</div>
+			</div>
+			<div className="flex justify-ends">
+				<button className="btn btn-outline">+</button>
+				<button className="btn btn-outline">블락</button>
 			</div>
 		</div>
 	);
