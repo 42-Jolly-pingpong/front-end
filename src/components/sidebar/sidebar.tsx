@@ -1,9 +1,10 @@
+import { sidebarSelector } from "../../ts/state/sidebar-state";
 import Chat from "./chat/chat";
 import Friend from "./friend/friend";
-import { SidebarProps } from "../../app";
+import { useRecoilValue } from 'recoil';
 
-const Sidebar = (props: SidebarProps) => {
-	const { state, setState } = props;
+const Sidebar = () => {
+	const state = useRecoilValue(sidebarSelector);
 
 	return (<div className="w-80 h-full border border-solid border-black p-4 rounded-lg shadow-xl">
 		{state === 1 ? <Chat /> : <Friend />}

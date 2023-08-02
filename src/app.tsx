@@ -1,44 +1,44 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
-import { Dispatch, SetStateAction, useState } from 'react';
 import Sidebar from './components/sidebar/sidebar';
 import Home from './home';
+import {
+  RecoilRoot,
+  useRecoilValue,
+} from 'recoil';
+import { sidebarSelector } from './ts/state/sidebar-state';
 
-export type SidebarProps = {
-	state: number;
-	setState: Dispatch<SetStateAction<number>>;
-}
-
-const Section = (props : {sidebarState: number, setSidebarState: Dispatch<SetStateAction<number>>, section: JSX.Element}) => {
-  const { sidebarState, setSidebarState, section } = props;
+const Section = (props : {section: JSX.Element}) => {
+  const sidebarState = useRecoilValue(sidebarSelector)
 
   return (
     <div className="flex w-full h-full">
       <div className="flex flex-col flex-grow justify-center items-center">
-      {section}
+      {props.section}
       </div>
-      {sidebarState ? <Sidebar state={sidebarState} setState={setSidebarState} /> : null}
+      {sidebarState ? <Sidebar /> : null}
     </div>
   );
-}
+} //임시
 
 function App() {
-  const [sidebarState, setSidebarState] = useState<number>(0);
 
   return (
     <div>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout state={sidebarState} setState={setSidebarState}/>}>
-            <Route path="/" element={<Section sidebarState={sidebarState} setSidebarState={setSidebarState} section={<Home />} />} />
-            <Route path="/game" element={<h1>GAME</h1>} />
-            <Route path="/profile" element={<h1>GAME</h1>} />
-          </Route>
-          <Route path='/login' element={<h1>LOGIN</h1>} />
-          <Route path='/sign-up' element={<h1>SIGN-UP</h1>} />
-          <Route path='*' element={<h1>NOT FOUND</h1>} />
-        </Routes>
-      </BrowserRouter>
+      <RecoilRoot>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout/>}>
+              <Route path="/" element={<Section section={<Home />} />} />
+              <Route path="/game" element={<h1>GAME</h1>} />
+              <Route path="/profile" element={<h1>GAME</h1>} />
+            </Route>
+            <Route path='/login' element={<h1>LOGIN</h1>} />
+            <Route path='/sign-up' element={<h1>SIGN-UP</h1>} />
+            <Route path='*' element={<h1>NOT FOUND</h1>} />
+          </Routes>
+        </BrowserRouter>
+      </RecoilRoot>
     </div>
   );
 }

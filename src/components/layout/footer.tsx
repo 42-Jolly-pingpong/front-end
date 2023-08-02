@@ -1,14 +1,16 @@
-import { SidebarProps } from "../../app";
+import { useRecoilState } from 'recoil';
+import { sidebarState } from '../../ts/state/sidebar-state';
+import { SidebarStatus } from '../../ts/enum/sidebar-state.enum';
 
-const Footer = (props: SidebarProps) => {
-	const { state, setState } = props;
+const Footer = () => {
+	const [state, setState] = useRecoilState(sidebarState);
 
     const onClickChat = () => {
-        setState((prev) => {return (prev === 1 ? 0 : 1)});
+        setState((prev) => {return (prev === SidebarStatus.Chat ? SidebarStatus.None : SidebarStatus.Chat)});
     }
 
     const onClickFriend = () => {
-        setState((prev) => {return (prev === 2 ? 0 : 2)});
+        setState((prev) => {return (prev === SidebarStatus.Friend ? SidebarStatus.None : SidebarStatus.Friend)});
     }
 
     return (
