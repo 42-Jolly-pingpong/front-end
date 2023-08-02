@@ -1,20 +1,16 @@
+import { User } from "../../../ts/interfaces/userr.model";
 import AnswerButton from "./answer-button";
 
-export type FriendElementProps = {
-	src: string;
-	title: string;
-	request?: boolean;
-} // 임시! 엔티티로 수정해야 함
+const FriendElement = (props: {user: User, request?:boolean}) => {
+	const { user, request } = props;
 
-
-const FriendElement = (props: FriendElementProps) => {
 	return (
 		<div className="flex items-center m-1 justify-between">
 			<div className="flex items-center justify-start">
-				<img src={props.src} className="rounded-full layout-icon w-12 h-12 mr-3"/>
-				{props.title}
+				<img src={user.avatar} className="rounded-full layout-icon w-12 h-12 mr-3"/>
+				{user.nickname}
 			</div>
-			{props.request? <AnswerButton {... props} />: null}
+			{request? <AnswerButton {... user} />: null}
 		</div>
 	);
 }

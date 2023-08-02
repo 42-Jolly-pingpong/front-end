@@ -1,6 +1,6 @@
-import { FriendElementProps } from "./friend-element";
+import { User } from "../../../ts/interfaces/userr.model"
 
-const AnswerButton = (props: FriendElementProps) => {
+const AnswerButton = (user: User) => {
 	const onClickAccept = () => {
 		//
 	}

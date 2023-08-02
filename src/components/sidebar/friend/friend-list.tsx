@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FriendElement from "./friend-element";
+import { User } from "../../../ts/interfaces/userr.model";
 
 const FriendList = () => {
 	//친구 목록 가져오기
@@ -9,8 +10,14 @@ const FriendList = () => {
 		setIsChecked((prev) => prev? false : true)
 	}
 
-	const amount = 10;
+	const amount = 10; //temp
 
+	const tempUser : User = {
+		id : 1,
+		nickname : "temp",
+		avatar: "https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"
+	} //temp
+	
 	return (
 		<div className="flex flex-col justify-between">
 			<div className="collapse">
@@ -19,9 +26,9 @@ const FriendList = () => {
 						friend ({amount})
 				</div> 
 				<div className="collapse-content overflow-y-auto"> 
-					<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test1"} request={true}/>
-					<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test2"}/>
-					<FriendElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test3"}/>
+					<FriendElement user={tempUser} request={true}/>
+					<FriendElement user={tempUser}/>
+					<FriendElement user={tempUser}/>
 				</div>
 			</div>
 			<div className="flex justify-ends">
