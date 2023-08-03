@@ -3,7 +3,7 @@ import { SidebarStatus } from '../enum/sidebar-state.enum';
 
 export const sidebarState = atom({
 	key: "sidebarState",
-	default: SidebarStatus.None
+	default: SidebarStatus.NONE
 });
 
 export const sidebarSelector = selector({

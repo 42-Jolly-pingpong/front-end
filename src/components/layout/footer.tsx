@@ -6,11 +6,11 @@ const Footer = () => {
 	const [state, setState] = useRecoilState(sidebarState);
 
     const onClickChat = () => {
-        setState((prev) => {return (prev === SidebarStatus.Chat ? SidebarStatus.None : SidebarStatus.Chat)});
+        setState((prev) => {return (prev === SidebarStatus.CHAT ? SidebarStatus.NONE : SidebarStatus.CHAT)});
     }
 
     const onClickFriend = () => {
-        setState((prev) => {return (prev === SidebarStatus.Friend ? SidebarStatus.None : SidebarStatus.Friend)});
+        setState((prev) => {return (prev === SidebarStatus.FRIEND ? SidebarStatus.NONE : SidebarStatus.FRIEND)});
     }
 
     return (
