@@ -1,8 +1,6 @@
 import { useState } from "react";
-import ChatElement from "./chat-element";
-import { Chat } from "../../../ts/interfaces/chat.model";
-import { User } from "../../../ts/interfaces/userr.model";
-import { ChatType } from "../../../ts/enum/chat-type.enum";
+import ChatElement from "./chatroom-element";
+import { tempChatroom1, tempChatroom2 } from "../temp-chat-user";
 
 const ChatList = () => {
 	//챗 리스트 가져오기
@@ -19,10 +17,9 @@ const ChatList = () => {
 				chat
 			</div> 
 			<div className="collapse-content overflow-y-auto"> 
-				<ChatElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test1"}/>
-				<ChatElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test2"}/>
-				<ChatElement src={"https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"} title={"test3"}/>
-				
+				<ChatElement chatroom={tempChatroom1}/>
+				<ChatElement chatroom={tempChatroom1}/>
+				<ChatElement chatroom={tempChatroom2}/>
 			</div>
 		</div>
 	);

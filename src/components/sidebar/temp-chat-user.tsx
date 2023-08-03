@@ -1,5 +1,6 @@
-import { ChatType } from "../../ts/enum/chat-type.enum"
+import { ChatroomType } from "../../ts/enum/chatroom-type.enum"
 import { Chat } from "../../ts/interfaces/chat.model"
+import { Chatroom } from "../../ts/interfaces/chatroom.model copy"
 import { User } from "../../ts/interfaces/userr.model"
 
 export const tempUser1 : User = {
@@ -19,15 +20,28 @@ export const tempChat1 : Chat = {
 	user: tempUser1,
 	content: "hihi",
 	sentTime: "2023-05-31",
-	type: ChatType.PUBLIC
-} //temp
+}
 
 export const tempChat2 : Chat = {
 	id : 2,
 	user: tempUser2,
-	content: "hihi",
+	content: "hey!",
 	sentTime: "2023-05-31",
-	type: ChatType.PUBLIC
+}
+
+export const tempChatroom1 : Chatroom = {
+	id : 1,
+	user: tempUser1,
+	type: ChatroomType.PUBLIC,
+	maxPeople: 10,
+	chats: [tempChat1, tempChat2]
+} //temp
+
+export const tempChatroom2 : Chatroom = {
+	id : 2,
+	user: tempUser2,
+	type: ChatroomType.PROTECTED,
+	maxPeople: 2,
 } //temp
 
 export const numberOfFriend = 10
