@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FriendElement from "./friend-element";
 import { User } from "../../../ts/interfaces/userr.model";
+import { numberOfFriend, tempUser1 } from "../temp-chat-user"
 
 const FriendList = () => {
 	//친구 목록 가져오기
@@ -10,25 +11,17 @@ const FriendList = () => {
 		setIsChecked((prev) => prev? false : true)
 	}
 
-	const amount = 10; //temp
-
-	const tempUser : User = {
-		id : 1,
-		nickname : "temp",
-		avatar: "https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"
-	} //temp
-	
 	return (
 		<div className="flex flex-col justify-between">
 			<div className="collapse">
 				<input type="checkbox" checked={isChecked} onClick={onClickCheckbox}/> 
 					<div className="collapse-title text-xl">
-						friend ({amount})
+						friend ({numberOfFriend})
 				</div> 
 				<div className="collapse-content overflow-y-auto"> 
-					<FriendElement user={tempUser} request={true}/>
-					<FriendElement user={tempUser}/>
-					<FriendElement user={tempUser}/>
+					<FriendElement user={tempUser1} request={true}/>
+					<FriendElement user={tempUser1}/>
+					<FriendElement user={tempUser1}/>
 				</div>
 			</div>
 			<div className="flex justify-ends">

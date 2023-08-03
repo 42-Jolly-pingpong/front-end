@@ -1,12 +1,17 @@
 import { useState } from "react";
 import ChatElement from "./chat-element";
+import { Chat } from "../../../ts/interfaces/chat.model";
+import { User } from "../../../ts/interfaces/userr.model";
+import { ChatType } from "../../../ts/enum/chat-type.enum";
 
 const ChatList = () => {
+	//챗 리스트 가져오기
 	const [isChecked, setIsChecked] = useState(true);
 
 	const onClickCheckbox = () => {
 		setIsChecked((prev) => prev? false : true)
 	}
+
 	return (
 		<div className="collapse">
 			<input type="checkbox" checked={isChecked} onClick={onClickCheckbox}/> 
