@@ -1,3 +1,3 @@
-export enum ChatType {
+export enum ChatroomType {
 	PUBLIC, PROTECTED, PRIVATE
 }
