@@ -1,4 +1,4 @@
-import { ChatType } from '../enum/chat-type.enum';
+import { ChatroomType } from '../enum/chatroom-type.enum';
 import { User } from './userr.model';
 
 export interface Chat {
@@ -6,5 +6,4 @@ export interface Chat {
 	user: User;
 	content: string;
 	sentTime: string;
-	type: ChatType;
 }//임시s
