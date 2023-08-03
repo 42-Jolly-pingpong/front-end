@@ -5,7 +5,7 @@ const Header = () => {
 		<header className="flex justify-between items-center bg-gray-100 border-b-2 border-gray-200" style={{height: "10%", padding: "1%"}}>
 			<div className="flex max-h-full aspect-square h-max">
 				<a href="">
-					<img src="images/logo2.png" className="flex max-h-full" />
+					<img src="images/logo.png" className="flex max-h-full" />
 				</a>
 			</div>
 			<div style={{ fontSize: "3vw"}}>

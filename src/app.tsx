@@ -1,7 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
+import React from 'react';
 
 function App() {
+  const [user, setUser] = React.useState(null);
+  
   return (
     <BrowserRouter>
       <Routes>
