@@ -1,12 +1,20 @@
+import { useState } from "react";
 import ChatElement from "./chatroom-element";
 import { tempChatroom1, tempChatroom2 } from "../temp-chat-user";
 
-const OpenChatList = () => {
+const ChatroomList = () => {
+	//챗 리스트 가져오기
+	const [isChecked, setIsChecked] = useState(true);
+
+	const onClickCheckbox = () => {
+		setIsChecked((prev) => prev? false : true)
+	}
+
 	return (
-		<div className="collapse collapse-arrow">
-			<input type="checkbox"/> 
+		<div className="collapse">
+			<input type="checkbox" checked={isChecked} onClick={onClickCheckbox}/> 
 			<div className="collapse-title text-xl">
-				open chat
+				chat
 			</div> 
 			<div className="collapse-content overflow-y-auto"> 
 				<ChatElement chatroom={tempChatroom1}/>
@@ -17,4 +25,4 @@ const OpenChatList = () => {
 	);
 }
 
-export default OpenChatList
+export default ChatroomList
