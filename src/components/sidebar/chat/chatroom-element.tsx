@@ -1,17 +1,8 @@
-import { ChatroomType } from "../../../ts/enum/chatroom-type.enum";
 import { Chatroom } from "../../../ts/interfaces/chatroom.model copy";
-import { User } from "../../../ts/interfaces/userr.model";
+import ChatroomInfo from "./chatroom-info";
 
-export type ChatroomElementProps = {
-	src: string;
-	title: string;
-}
-// props -> chat entity로 수정
-
-const ChatroomElement = (props: {chatroom: Chatroom}) => {
-	const chatroom: Chatroom = props.chatroom;
-	const user: User = chatroom.user;
-
+const ChatroomElement = (chatroom: Chatroom) => {
+	const owner = chatroom.user[0]; // 임시
 	// const onClickChatroom = () => {
 		
 	// }
@@ -19,9 +10,11 @@ const ChatroomElement = (props: {chatroom: Chatroom}) => {
 	return (
 		<div className="flex items-center m-1 justify-between" >
 			<div className="flex items-center justify-start">
-				<img src={user.avatar} className="rounded-full layout-icon w-12 h-12 mr-3"/>
-				{chatroom.title}
-				{chatroom.type === ChatroomType.PROTECTED ? null : "🔒"}
+				<img src={owner.avatar} className="rounded-full layout-icon w-12 h-12 mr-3"/>
+				<div className="mr-2">
+					{chatroom.title}
+				</div>
+				<ChatroomInfo {... chatroom}/>
 			</div>
 		</div>
 	);
