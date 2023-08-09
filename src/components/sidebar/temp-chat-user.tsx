@@ -31,7 +31,8 @@ export const tempChat2 : Chat = {
 
 export const tempChatroom1 : Chatroom = {
 	id : 1,
-	user: tempUser1,
+	user: [tempUser1],
+	title: "come on!",
 	type: ChatroomType.PUBLIC,
 	maxPeople: 10,
 	chats: [tempChat1, tempChat2]
@@ -39,7 +40,8 @@ export const tempChatroom1 : Chatroom = {
 
 export const tempChatroom2 : Chatroom = {
 	id : 2,
-	user: tempUser2,
+	user: [tempUser1, tempUser2],
+	title: "hi!",
 	type: ChatroomType.PROTECTED,
 	maxPeople: 2,
 } //temp
