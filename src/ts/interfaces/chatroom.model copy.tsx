@@ -5,6 +5,7 @@ import { User } from './userr.model';
 export interface Chatroom {
 	id: number;
 	user: User;
+	title: String;
 	type: ChatroomType;
 	maxPeople: number;
 	chats?: Chat[];
