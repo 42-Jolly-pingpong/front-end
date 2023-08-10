@@ -7,6 +7,7 @@ import {
   useRecoilValue,
 } from 'recoil';
 import { sidebarSelector } from './ts/state/sidebar-state';
+import Profile from './pages/profile/profile';
 
 const Section = (props : {section: JSX.Element}) => {
   const sidebarState = useRecoilValue(sidebarSelector)
@@ -31,7 +32,7 @@ function App() {
             <Route element={<Layout/>}>
               <Route path="/" element={<Section section={<Home />} />} />
               <Route path="/game" element={<h1>GAME</h1>} />
-              <Route path="/profile" element={<h1>GAME</h1>} />
+              <Route path="/profile/:user_idx" element={<Profile />} />
             </Route>
             <Route path='/login' element={<h1>LOGIN</h1>} />
             <Route path='/sign-up' element={<h1>SIGN-UP</h1>} />
