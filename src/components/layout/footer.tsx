@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { sidebarState } from '../../ts/state/sidebar-state';
-import { SidebarStatus } from '../../ts/enum/sidebar-state.enum';
+import { SidebarStatus } from '../../ts/enum/sidebar-status.enum';
 
 const Footer = () => {
 	const [state, setState] = useRecoilState(sidebarState);

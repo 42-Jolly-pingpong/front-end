@@ -1,3 +1,3 @@
 export enum SidebarStatus {
-	NONE, CHAT, FRIEND
+	NONE, CHAT, FRIEND, INCHAT
 }
