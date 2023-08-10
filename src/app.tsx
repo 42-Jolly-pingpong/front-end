@@ -2,25 +2,22 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
 import Sidebar from './components/sidebar/sidebar';
 import Home from './home';
-import {
-  RecoilRoot,
-  useRecoilValue,
-} from 'recoil';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 import { sidebarSelector } from './ts/state/sidebar-state';
 import Profile from './pages/profile/profile';
 
-const Section = (props : {section: JSX.Element}) => {
-  const sidebarState = useRecoilValue(sidebarSelector)
+const Section = (props: { section: JSX.Element }) => {
+	const sidebarState = useRecoilValue(sidebarSelector);
 
-  return (
-    <div className="flex w-full h-full">
-      <div className="flex flex-col flex-grow justify-center items-center">
-      {props.section}
-      </div>
-      {sidebarState ? <Sidebar /> : null}
-    </div>
-  );
-} //임시
+	return (
+		<div className='flex w-full h-full'>
+			<div className='flex flex-col flex-grow justify-center items-center'>
+				{props.section}
+			</div>
+			{sidebarState ? <Sidebar /> : null}
+		</div>
+	);
+}; //임시
 
 function App() {
 
