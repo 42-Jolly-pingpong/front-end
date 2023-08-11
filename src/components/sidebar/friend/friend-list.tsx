@@ -14,7 +14,7 @@ const FriendList = () => {
 	return (
 		<div className="flex flex-col justify-between">
 			<div className="collapse">
-				<input type="checkbox" checked={isChecked} onClick={onClickCheckbox}/> 
+				<input type="checkbox" checked={isChecked} onChange={onClickCheckbox}/> 
 					<div className="collapse-title text-xl">
 						friend ({numberOfFriend})
 				</div> 

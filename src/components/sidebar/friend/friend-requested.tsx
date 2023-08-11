@@ -10,7 +10,7 @@ const FriendRequested = () => {
 
 	return (
 		<div className="collapse collapse-arrow">
-			<input type="checkbox" checked={isChecked} onClick={onClickCheckbox}/> 
+			<input type="checkbox" checked={isChecked} onChange={onClickCheckbox}/> 
 			<div className="collapse-title text-xl">
 			friend requested
 			</div>
