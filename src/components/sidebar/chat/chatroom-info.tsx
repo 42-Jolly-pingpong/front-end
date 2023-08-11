@@ -1,5 +1,5 @@
 import { ChatroomType } from "../../../ts/enum/chatroom-type.enum"
-import { Chatroom } from "../../../ts/interfaces/chatroom.model copy"
+import { Chatroom } from "../../../ts/interfaces/chatroom.model"
 
 const ChatroomInfo = (chatroom: Chatroom) => {
 	return (
