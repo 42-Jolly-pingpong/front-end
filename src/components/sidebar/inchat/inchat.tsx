@@ -1,8 +1,14 @@
-import { Chatroom } from "../../../ts/interfaces/chatroom.model copy";
 import ChatHeader from "./chat-header";
+import { useRecoilValue } from 'recoil';
 import ChatTextfield from "./chat-textfield";
+import { chatroomSelector } from "../../../ts/state/chat-state";
 
-const InChat = (chatroom: Chatroom) => {
+const InChat = () => {
+	const chatroom = useRecoilValue(chatroomSelector);
+	if (!chatroom) {
+		return null;
+	}
+
 	return (
 		<div className="flex flex-col h-full">
 			<ChatHeader {...chatroom}/>
