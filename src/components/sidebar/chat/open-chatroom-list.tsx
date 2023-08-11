@@ -9,9 +9,9 @@ const OpenChatroomList = () => {
 				open chat
 			</div> 
 			<div className="collapse-content overflow-y-auto"> 
-				<ChatElement chatroom={tempChatroom1}/>
-				<ChatElement chatroom={tempChatroom1}/>
-				<ChatElement chatroom={tempChatroom2}/>
+				<ChatElement {...tempChatroom1}/>
+				<ChatElement {...tempChatroom1}/>
+				<ChatElement {...tempChatroom2}/>
 			</div>
 		</div>
 	);
