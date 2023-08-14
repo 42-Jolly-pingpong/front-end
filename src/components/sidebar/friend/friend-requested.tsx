@@ -15,7 +15,7 @@ const FriendRequested = () => {
 			friend requested
 			</div>
 		</div>	
-		);
+	);
 }
 
 export default FriendRequested

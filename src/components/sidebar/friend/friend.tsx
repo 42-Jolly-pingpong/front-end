@@ -1,4 +1,5 @@
 import FriendList from "./friend-list";
+import FriendMenu from "./friend-menu";
 import FriendRequested from "./friend-requested";
 
 const Friend = (): JSX.Element => {
@@ -6,9 +7,12 @@ const Friend = (): JSX.Element => {
 	const newFriendRequested = 10;
 
 	return (
-		<div>
-			{newFriendRequested ? null : <FriendRequested />}
-			<FriendList />
+		<div className="flex flex-col h-full justify-between">
+			<div>
+				{newFriendRequested ? null : <FriendRequested />}
+				<FriendList />
+			</div>
+			<FriendMenu />
 		</div>
 	);
 }
