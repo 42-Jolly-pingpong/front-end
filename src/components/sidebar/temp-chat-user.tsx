@@ -10,7 +10,7 @@ export const tempUser1 : User = {
 } //temp
 
 export const tempUser2 : User = {
-	id : 1,
+	id : 2,
 	nickname : "temp",
 	avatar: "https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000"
 } //temp
@@ -19,14 +19,14 @@ export const tempChat1 : Chat = {
 	id : 1,
 	user: tempUser1,
 	content: "hihi",
-	sentTime: "2023-05-31",
+	sentTime: "15:23",
 }
 
 export const tempChat2 : Chat = {
 	id : 2,
 	user: tempUser2,
 	content: "hey!",
-	sentTime: "2023-05-31",
+	sentTime: "15:23",
 }
 
 export const tempChatroom1 : Chatroom = {
@@ -35,7 +35,7 @@ export const tempChatroom1 : Chatroom = {
 	title: "come on!",
 	type: ChatroomType.PUBLIC,
 	maxPeople: 10,
-	chats: [tempChat1, tempChat2]
+	chats: [tempChat1, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2, tempChat2]
 } //temp
 
 export const tempChatroom2 : Chatroom = {
