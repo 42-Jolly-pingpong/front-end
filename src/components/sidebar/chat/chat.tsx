@@ -8,7 +8,7 @@ const Chat = (): JSX.Element => {
 	const status: ChatStatus = useRecoilValue(chatStatusSelector);
 
 	return (
-		<div>
+		<div className='flex flex-col h-full'>
 			{
 				status === ChatStatus.CHATLIST ? <ChatroomList /> : <InChat />
 			}
