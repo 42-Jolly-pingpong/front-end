@@ -14,7 +14,7 @@ const ChatHeader = (chatroom: Chatroom) => {
 	}
 
 	return (
-		<div className="flex">
+		<div className="flex mb-3">
 			<button onClick={onClickReturnButton}>{"<"}</button>
 			<div className="ml-3 mr-2">{chatroom.title}</div>
 			<ChatroomInfo {...chatroom}/>

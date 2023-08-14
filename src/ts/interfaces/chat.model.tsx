@@ -1,4 +1,3 @@
-import { ChatroomType } from '../enum/chatroom-type.enum';
 import { User } from './userr.model';
 
 export interface Chat {
