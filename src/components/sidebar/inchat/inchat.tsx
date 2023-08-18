@@ -1,7 +1,7 @@
 import ChatHeader from "./chat-header";
 import { useRecoilValue } from 'recoil';
 import ChatTextfield from "./chat-textfield";
-import { chatroomSelector } from "../../../ts/state/chat-state";
+import { chatroomSelector } from "../../../ts/states/chat-state";
 import { Chat } from "../../../ts/interfaces/chat.model";
 import ChatBubble from "./chat-bubble";
 

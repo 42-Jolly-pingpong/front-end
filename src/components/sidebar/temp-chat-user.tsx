@@ -1,7 +1,7 @@
-import { ChatroomType } from "../../ts/enum/chatroom-type.enum"
+import { ChatroomType } from "../../ts/enums/chatroom-type.enum"
 import { Chat } from "../../ts/interfaces/chat.model"
 import { Chatroom } from "../../ts/interfaces/chatroom.model"
-import { User } from "../../ts/interfaces/userr.model"
+import { User } from "../../ts/interfaces/user.model"
 
 export const tempUser1 : User = {
 	id : 1,

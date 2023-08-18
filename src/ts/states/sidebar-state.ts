@@ -1,5 +1,5 @@
 import { atom, selector } from 'recoil';
-import { SidebarStatus } from '../enum/sidebar-status.enum';
+import { SidebarStatus } from '../enums/sidebar-status.enum';
 
 export const sidebarState = atom({
 	key: "sidebarState",
