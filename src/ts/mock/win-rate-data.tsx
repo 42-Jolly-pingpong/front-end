@@ -4,7 +4,7 @@ import { GameHistory } from '../interfaces/game-history.model';
 const winRateData: GameHistory[] = [
 	{
 		idx:1,
-		winplayerIdx: 0,
+		winPlayerIdx: 0,
 		losePlayerIdx: 1,
 		winScore: 2,
 		loseScore: 1,
@@ -14,7 +14,7 @@ const winRateData: GameHistory[] = [
 	},
 	{
 		idx:2,
-		winplayerIdx: 1,
+		winPlayerIdx: 1,
 		losePlayerIdx: 2,
 		winScore: 3,
 		loseScore: 2,

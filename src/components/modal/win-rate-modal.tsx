@@ -69,13 +69,13 @@ const WinRateData = () => {
 				>
 					<div className='divider mb-0' />
 					<div className='flex  justify-center items-center text-3xl'>
-						{item.winplayerIdx == user.idx ? 'Win' : 'Lose'}
+						{item.winPlayerIdx == user.idx ? 'Win' : 'Lose'}
 					</div>
 					<div className='flex justify-between items-center px-2'>
 						<div className='flex flex-col justify-center items-center w-1/6 bg-green-300 h-28 rounded-br-box'>
-							<ProfileBadge {...getUser(item.winplayerIdx)} />
+							<ProfileBadge {...getUser(item.winPlayerIdx)} />
 							<div className='mt-2'>
-								{getUserNickName(item.winplayerIdx)}
+								{getUserNickName(item.winPlayerIdx)}
 							</div>
 						</div>
 
