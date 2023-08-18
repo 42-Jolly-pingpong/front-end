@@ -1,5 +1,4 @@
 import { Link, Navigate } from 'react-router-dom';
-import ProfileBadge from '../../../pages/profile/components/profile-badge';
 import { User } from '../../../ts/interfaces/user.model';
 
 const HeaderProfileIcon: React.FC<User> = (props) => {

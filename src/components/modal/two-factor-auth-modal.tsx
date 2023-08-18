@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import XButton from '../button/x-button';
 import BackDrop from './utils/backdrop';
 

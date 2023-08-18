@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import GameWaitModal from '../modal/game-wait-modal';
-import GameResultModal from '../../pages/game/game-result-modal';
 
 const GameStartButton = () => {
 	const handleModal = () => {

@@ -1,4 +1,4 @@
-import { atom, useRecoilTransaction_UNSTABLE, selector } from 'recoil';
+import { atom, selector } from 'recoil';
 import { Chatroom } from '../interfaces/chatroom.model';
 import { ChatStatus } from '../enums/chat-status.enum';
 
