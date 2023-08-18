@@ -1,13 +1,12 @@
-import { GameMode } from '../enum/game-mode.enum';
+import { GameMode } from '../enums/game-mode.enum';
 
 export interface GameHistory {
-	win_player_idx: number;
-	lose_player_idx: number;
-	win_score: number;
-	lose_score: number;
-	play_time: number;
-	play_date: Date;
+	idx: number; 
+	winplayerIdx: number;
+	losePlayerIdx: number;
+	winScore: number;
+	loseScore: number;
+	playTime: number;
+	playDate: Date;
 	mode: GameMode;
 }
-
-export default GameHistory;
