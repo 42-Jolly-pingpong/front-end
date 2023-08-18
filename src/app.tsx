@@ -6,7 +6,6 @@ import { sidebarSelector } from './ts/states/sidebar-state';
 import Profile from './pages/profile/profile';
 import Main from './pages/main/main';
 import SignUp from './pages/sign-up/sign-up';
-import CreateChat from './pages/create-chat/create-chat';
 
 const Section = (props: { section: JSX.Element }) => {
 	const sidebarState = useRecoilValue(sidebarSelector);
@@ -36,10 +35,10 @@ function App() {
 							<Route path='/game' element={<h1>GAME</h1>} />
 							<Route
 								path='/profile/:user_idx'
+								//element={<Profile />}
 								element={<Section section={<Profile />} />}
 							/>
 							<Route path='/sign-up' element={<SignUp />} />
-							<Route path="/create-chat" element={<Section section={<CreateChat/>} />} />
 						</Route>
 						{/* /login 접근 -> jwt 확인 (42 api) */}
 						<Route path='/login' element={<h1>LOGIN</h1>} />
