@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import GetUserInfo from '../utils/getUserInfo';
+import GetUserInfo from '../../../components/services/getUserInfo';
 
 const ProfileData = () => {
 	const [user, setUser] = useState(GetUserInfo());

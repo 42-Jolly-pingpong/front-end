@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import UserDTO from './userDto';
-import userData from './Mock-up/userData';
-import GetUserInfo from '../../components/utils/getUserInfo';
-import TwoFactorAuthModal from '../../components/modal/two-factor-auth-check-modal';
-import WithdrawModal from '../../components/modal/withdraw-modal';
-import AvatarChangeModal from '../../components/modal/avatar-change-modal';
-import ProfileData from '../../components/profile/profile-data';
+import UserDTO from '../../ts/interfaces/userDto';
+import userData from '../../ts/mock/user-data';
+import GetUserInfo from '../../components/services/getUserInfo';
+import TwoFactorAuthModal from './modal/two-factor-auth-check-modal';
+import WithdrawModal from './modal/withdraw-modal';
+import AvatarChangeModal from './modal/avatar-change-modal';
+import ProfileData from './components/profile-data';
 
 const handleAuth = () => {
 	window.twoFactorAuthCheckModal.showModal();

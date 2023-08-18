@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import userData from '../../pages/profile/Mock-up/userData';
-import UserDTO from '../../pages/profile/userDto';
+import userData from '../../ts/mock/user-data';
+import UserDTO from '../../ts/interfaces/userDto';
 import winRateData from '../../ts/mock/win-rate-data';
 import XButton from '../button/x-button';
-import ProfileBadge from '../profile/profile-badge';
+import ProfileBadge from '../../pages/profile/components/profile-badge';
 import BackDrop from './utils/backdrop';
 
 interface winRateResultProps {

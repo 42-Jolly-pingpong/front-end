@@ -1,4 +1,4 @@
-import GameStartButton from '../button/game-start-button';
+import GameStartButton from '../../../components/button/game-start-button';
 import GameModeCheckbox from './game-mode-checkbox';
 
 const MainGameStart = () => {

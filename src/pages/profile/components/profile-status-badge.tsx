@@ -1,5 +1,5 @@
 import React from 'react';
-import UserDTO from '../../pages/profile/userDto';
+import UserDTO from '../../../ts/interfaces/userDto';
 
 const ProfileStatusBadge: React.FC<UserDTO> = (props) => {
 	const { intra_id, status, is_leave } = props;

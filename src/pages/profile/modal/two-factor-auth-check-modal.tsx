@@ -1,5 +1,5 @@
-import XButton from '../button/x-button';
-import BackDrop from './utils/backdrop';
+import XButton from '../../../components/button/x-button';
+import BackDrop from '../../../components/modal/utils/backdrop';
 
 const TwoFactorAuthCheckModal = () => {
 	return (

@@ -1,4 +1,4 @@
-import UserDTO from '../userDto';
+import UserDTO from '../interfaces/userDto';
 
 const userData: UserDTO[] = [
 	{

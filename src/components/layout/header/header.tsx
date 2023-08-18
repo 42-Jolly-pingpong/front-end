@@ -3,7 +3,7 @@ import HeaderIcon from './header-logo';
 import HeaderProfileIcon from './header-profile-icon';
 import HeaderSign from './header-sign';
 import HeaderTitle from './header-title';
-import GetUserInfo from '../../utils/getUserInfo';
+import GetUserInfo from '../../services/getUserInfo';
 
 const Header = () => {
 	const [user, setUser] = useState(GetUserInfo());

@@ -1,6 +1,6 @@
 import { Link, Navigate } from 'react-router-dom';
-import ProfileBadge from '../../profile/profile-badge';
-import UserDTO from '../../../pages/profile/userDto';
+import ProfileBadge from '../../../pages/profile/components/profile-badge';
+import UserDTO from '../../../ts/interfaces/userDto';
 
 const HeaderProfileIcon: React.FC<UserDTO> = (props) => {
 	const handleLogout = () => {

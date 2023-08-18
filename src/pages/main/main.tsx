@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import MainGameStart from '../../components/main/main-game-start';
-import GetUserInfo from '../../components/utils/getUserInfo';
+import MainGameStart from './components/main-game-start';
+import GetUserInfo from '../../components/services/getUserInfo';
 
 const Main = () => {
 	const [user, setUser] = useState(GetUserInfo()); // 이후에 recoil로 바뀔 예정
