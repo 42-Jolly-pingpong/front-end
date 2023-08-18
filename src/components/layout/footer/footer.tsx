@@ -1,10 +1,9 @@
 import { useRecoilState } from 'recoil';
 import { sidebarState } from '../../../ts/state/sidebar-state';
-import { SidebarStatus } from '../../../ts/enum/sidebar-state.enum';
 import WinRateModal from '../../modal/win-rate-modal';
 import { useState } from 'react';
-
 import GetUserInfo from '../../services/getUserInfo';
+import { SidebarStatus } from '../../../ts/enum/sidebar-status.enum';
 
 const Footer = () => {
 	const [user, setUser] = useState(GetUserInfo());
@@ -12,17 +11,17 @@ const Footer = () => {
 
 	const onClickChat = () => {
 		setState((prev) => {
-			return prev === SidebarStatus.Chat
-				? SidebarStatus.None
-				: SidebarStatus.Chat;
+			return prev === SidebarStatus.CHAT
+				? SidebarStatus.NONE
+				: SidebarStatus.CHAT;
 		});
 	};
 
 	const onClickFriend = () => {
 		setState((prev) => {
-			return prev === SidebarStatus.Friend
-				? SidebarStatus.None
-				: SidebarStatus.Friend;
+			return prev === SidebarStatus.FRIEND
+				? SidebarStatus.NONE
+				: SidebarStatus.FRIEND;
 		});
 	};
 
