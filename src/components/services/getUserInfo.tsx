@@ -1,7 +1,7 @@
-import { User } from '../../ts/interfaces/user.model';
 import userData from '../../ts/mock/user-data';
+import UserDTO from '../../ts/interfaces/userDto';
 
-const GetUserInfo = (): User | null => {
+const GetUserInfo = (): UserDTO | null => {
 	//return null;
 	return userData[1];
 };

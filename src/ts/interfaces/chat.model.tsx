@@ -1,9 +1,9 @@
 import { User } from './user.model';
 
 export interface Chat {
-	idx: number;
+	id: number;
 	user: User;
 	content: string;
-	sentTime: Date;
-}
+	sentTime: string;
+}//임시s
 

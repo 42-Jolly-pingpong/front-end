@@ -7,13 +7,13 @@ const ChatContent = (chat: Chat) => {
 		<div>	
 			<div className="chat-image avatar">
 				<div className="w-10 rounded-full">
-					<img src={user.avatarPath} />
+					<img src={user.avatar} />
 				</div>
 			</div>
 			<div className="chat-header">
 				{user.nickname}
 				<time className="text-xs opacity-50">
-					{chat.sentTime.getHours()} : {chat.sentTime.getMinutes()}
+					{chat.sentTime}
 				</time>
 			</div>
 			<div className="chat-bubble">{chat.content}</div>
@@ -24,7 +24,7 @@ const ChatContent = (chat: Chat) => {
 const ChatBubble = (chat: Chat) => {
 	const me = tempUser1; //임시
 
-	if (me.idx === chat.user.idx){
+	if (me.id === chat.user.id){
 		return (
 			<div className="chat chat-end">
 				<ChatContent {...chat} />	

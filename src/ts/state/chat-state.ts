@@ -1,6 +1,6 @@
 import { atom, useRecoilTransaction_UNSTABLE, selector } from 'recoil';
 import { Chatroom } from '../interfaces/chatroom.model';
-import { ChatStatus } from '../enums/chat-status.enum';
+import { ChatStatus } from '../enum/chat-status.enum';
 
 export const chatState = atom({
 	key: "chatState",

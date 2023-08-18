@@ -1,5 +1,5 @@
-import { SidebarStatus } from "../../ts/enums/sidebar-status.enum";
-import { sidebarSelector } from "../../ts/states/sidebar-state";
+import { SidebarStatus } from "../../ts/enum/sidebar-status.enum";
+import { sidebarSelector } from "../../ts/state/sidebar-state";
 import Chat from "./chat/chat";
 import Friend from "./friend/friend";
 import { useRecoilValue } from 'recoil';

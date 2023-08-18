@@ -1,13 +1,12 @@
-import { ChatroomType } from '../enums/chatroom-type.enum';
+import { ChatroomType } from '../enum/chatroom-type.enum';
+import { Chat } from './chat.model';
 import { User } from './user.model';
 
 export interface Chatroom {
-	idx: number;
+	id: number;
+	user: User[];
 	title: String;
-	owner: User;
-	currentPeople: number;
-	maxPeople: number;
 	type: ChatroomType;
-	updateTime: Date,
-	status: boolean;
-}
+	maxPeople: number;
+	chats?: Chat[];
+}//임시s

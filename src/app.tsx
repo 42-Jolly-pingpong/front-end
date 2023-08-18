@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
 import Sidebar from './components/sidebar/sidebar';
 import { RecoilRoot, useRecoilValue } from 'recoil';
-import { sidebarSelector } from './ts/states/sidebar-state';
+import { sidebarSelector } from './ts/state/sidebar-state';
 import Profile from './pages/profile/profile';
 import Main from './pages/main/main';
 import SignUp from './pages/sign-up/sign-up';

@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
-import { chatStatusSelector } from '../../../ts/states/chat-state';
-import { ChatStatus } from '../../../ts/enums/chat-status.enum';
+import { chatStatusSelector } from '../../../ts/state/chat-state';
+import { ChatStatus } from '../../../ts/enum/chat-status.enum';
 import InChat from '../inchat/inchat';
 import ChatroomList from './chatroom-list';
 

@@ -1,4 +1,4 @@
 export enum GameMode {
-	EASY,
-	HARD,
+	Easy,
+	Hard,
 }

@@ -1,8 +1,8 @@
 import { Link, Navigate } from 'react-router-dom';
 import ProfileBadge from '../../../pages/profile/components/profile-badge';
-import { User } from '../../../ts/interfaces/user.model';
+import UserDTO from '../../../ts/interfaces/userDto';
 
-const HeaderProfileIcon: React.FC<User> = (props) => {
+const HeaderProfileIcon: React.FC<UserDTO> = (props) => {
 	const handleLogout = () => {
 		localStorage.removeItem('jwtToken');
 		console.log('hi');
@@ -14,7 +14,7 @@ const HeaderProfileIcon: React.FC<User> = (props) => {
 			<label tabIndex={0} className='btn m-1'>
 				<button className='avatar online layout-icon' tabIndex={0}>
 					<img
-						src={props.avatarPath}
+						src={props.avatar_path}
 						alt='Avatar'
 						className='rounded-full'
 					/>
@@ -25,7 +25,7 @@ const HeaderProfileIcon: React.FC<User> = (props) => {
 				className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
 			>
 				<li>
-					<Link to={`/profile/${props.idx}`}>SHOW PROFILE</Link>
+					<Link to={`/profile/${props.user_idx}`}>SHOW PROFILE</Link>
 				</li>
 				<li>
 					<Link to='/'>LOGOUT</Link>

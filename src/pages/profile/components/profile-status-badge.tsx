@@ -1,8 +1,8 @@
 import React from 'react';
-import { User } from '../../../ts/interfaces/user.model';
+import UserDTO from '../../../ts/interfaces/userDto';
 
-const ProfileStatusBadge: React.FC<User> = (props) => {
-	const { intraId, status, isLeave } = props;
+const ProfileStatusBadge: React.FC<UserDTO> = (props) => {
+	const { intra_id, status, is_leave } = props;
 
 	return (
 		<div
@@ -10,7 +10,7 @@ const ProfileStatusBadge: React.FC<User> = (props) => {
 			tabIndex={0}
 		>
 			<img
-				src={props.avatarPath}
+				src={props.avatar_path}
 				alt='Avatar'
 				className='rounded-full'
 			/>
