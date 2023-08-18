@@ -1,22 +1,12 @@
-import { User } from '../../../ts/interfaces/userr.model';
+import { useState } from 'react';
 import HeaderIcon from './header-logo';
 import HeaderProfileIcon from './header-profile-icon';
 import HeaderSign from './header-sign';
 import HeaderTitle from './header-title';
-
-const mockUserInfo = {
-	id: 123,
-	nickname: 'eunson',
-	avatar: 'https://img.freepik.com/free-photo/adorable-kitty-looking-like-it-want-to-hunt_23-2149167099.jpg?w=2000',
-};
-
-const getUserInfo = (): User | null => {
-	//return null;
-	return mockUserInfo;
-};
+import GetUserInfo from '../../utils/getUserInfo';
 
 const Header = () => {
-	const user: User | null = getUserInfo();
+	const [user, setUser] = useState(GetUserInfo());
 
 	return (
 		<header
@@ -24,16 +14,8 @@ const Header = () => {
 			style={{ height: '10%', padding: '1%' }}
 		>
 			<HeaderIcon />
-			{user ? (
-				<>
-					<HeaderTitle />
-					<HeaderProfileIcon src={user.avatar} />
-				</>
-			) : (
-				<>
-					<HeaderSign />
-				</>
-			)}
+			<HeaderTitle />
+			{user ? <HeaderProfileIcon {...user} /> : <HeaderSign />}
 		</header>
 	);
 };
