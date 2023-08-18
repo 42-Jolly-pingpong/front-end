@@ -7,7 +7,7 @@ const ChatroomInfo = (chatroom: Chatroom) => {
 			<div className="mr-1">
 				({chatroom.currentPeople}/{chatroom.maxPeople})
 			</div>
-			{chatroom.type === ChatroomType.PROTECTED ? null : "🔒"}
+			{chatroom.type === ChatroomType.PUBLIC ? null : "🔒"}
 		</div>
 	)
 }
