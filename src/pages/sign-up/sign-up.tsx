@@ -1,4 +1,4 @@
-// back-end API : 42API로 얻은 user.intra_id 가져오기
+// back-end API : 42API로 얻은 user.intraId 가져오기
 
 // back-end API : duplicate check
 

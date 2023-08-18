@@ -1,5 +1,12 @@
 export interface User{
-	id: number;
-	nickname: string;
-	avatar: string;
+  idx: number;
+  intraId: string;
+  email: string;
+  nickname: string;
+  avatarPath: string;
+  status: boolean;
+  auth: boolean;
+  winCount: number;
+  loseCount: number;
+  isLeave: boolean;
 }

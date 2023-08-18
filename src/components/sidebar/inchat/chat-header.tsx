@@ -1,6 +1,6 @@
-import { ChatStatus } from "../../../ts/enum/chat-status.enum";
+import { ChatStatus } from "../../../ts/enums/chat-status.enum";
 import { Chatroom } from "../../../ts/interfaces/chatroom.model";
-import { chatState, chatroomState } from "../../../ts/state/chat-state";
+import { chatState, chatroomState } from "../../../ts/states/chat-state";
 import ChatroomInfo from "../chat/chatroom-info";
 import { useRecoilState } from 'recoil';
 
