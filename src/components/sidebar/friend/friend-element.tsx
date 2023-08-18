@@ -1,7 +1,7 @@
 import { User } from '../../../ts/interfaces/user.model';
 import AnswerButton from './answer-button';
 
-const FriendElement = (props: { user: User; request?: boolean }) => {
+const FriendElement = (props: { user: User, request?: boolean }) => {
 	const { user, request } = props;
 
 	return (

@@ -14,8 +14,8 @@ const OpenChatroomList = () => {
 			</div> 
 			<div className="collapse-content overflow-y-auto"> 
 				{
-					openChatList.map((chat, id) => (
-						<ChatElement {...chat} key={id}/>
+					openChatList.map((chatroom, id) => (
+						<ChatElement chatroom={chatroom} isOpened={true} key={id}/>
 					))
 				}
 			</div>
