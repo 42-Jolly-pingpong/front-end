@@ -1,24 +1,26 @@
 import { GameMode } from '../enums/game-mode.enum';
-import GameHistory from '../interfaces/game-history.model';
+import { GameHistory } from '../interfaces/game-history.model';
 
 const winRateData: GameHistory[] = [
 	{
-		win_player_idx: 0,
-		lose_player_idx: 1,
-		win_score: 2,
-		lose_score: 1,
-		play_time: 15,
-		play_date: new Date(),
-		mode: GameMode.Easy,
+		idx:1,
+		winplayerIdx: 0,
+		losePlayerIdx: 1,
+		winScore: 2,
+		loseScore: 1,
+		playTime: 15,
+		playDate: new Date(),
+		mode: GameMode.EASY,
 	},
 	{
-		win_player_idx: 1,
-		lose_player_idx: 2,
-		win_score: 3,
-		lose_score: 2,
-		play_time: 30,
-		play_date: new Date(),
-		mode: GameMode.Hard,
+		idx:2,
+		winplayerIdx: 1,
+		losePlayerIdx: 2,
+		winScore: 3,
+		loseScore: 2,
+		playTime: 30,
+		playDate: new Date(),
+		mode: GameMode.HARD,
 	},
 ];
 

@@ -4,6 +4,7 @@ import ChatTextfield from "./chat-textfield";
 import { chatroomSelector } from "../../../ts/states/chat-state";
 import { Chat } from "../../../ts/interfaces/chat.model";
 import ChatBubble from "./chat-bubble";
+import { tempChats1 } from "../temp-chat-user";
 
 const InChat = () => {
 	const chatroom = useRecoilValue(chatroomSelector);
@@ -12,7 +13,7 @@ const InChat = () => {
 	}
 
 	// 대화 내용 불러오기 chatroom정보 이용해서
-	if (!chatroom.chats){
+	if (!tempChats1){
 		return (
 			<div className="flex flex-col h-full p-3">
 				<ChatHeader {...chatroom}/>
@@ -21,7 +22,7 @@ const InChat = () => {
 			</div>
 		);
 	}
-	const chats: Chat[]= chatroom.chats;
+	const chats: Chat[]= tempChats1;
 
 	return (
 		<div className="flex flex-col h-full p-3">

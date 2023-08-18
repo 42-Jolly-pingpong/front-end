@@ -5,7 +5,7 @@ const ChatroomInfo = (chatroom: Chatroom) => {
 	return (
 		<div className="flex text-gray-600/80">
 			<div className="mr-1">
-				({chatroom.user.length}/{chatroom.maxPeople})
+				({chatroom.currentPeople}/{chatroom.maxPeople})
 			</div>
 			{chatroom.type === ChatroomType.PROTECTED ? null : "🔒"}
 		</div>

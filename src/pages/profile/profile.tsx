@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import UserDTO from '../../ts/interfaces/userDto';
-import userData from '../../ts/mock/user-data';
+import { useState } from 'react';
 import GetUserInfo from '../../components/services/getUserInfo';
 import TwoFactorAuthModal from './modal/two-factor-auth-check-modal';
 import WithdrawModal from './modal/withdraw-modal';
@@ -30,7 +27,7 @@ const Profile = () => {
 					<legend className='flex justify-center items-center border-solid mb-2  text-center '>
 						<div className='avatar'>
 							<div className='w-40 rounded-full ring-4 ring-offset-4 ring-offset-black'>
-								<img src={`${user?.avatar_path}`} />
+								<img src={`${user?.avatarPath}`} />
 							</div>
 						</div>
 					</legend>
@@ -85,7 +82,7 @@ export default Profile;
 //			<div className=' bg-zinc-200 flex shadow rounded-lg w-5/6 md:w-5/6 lg:w-4/6 xl:w-3/6 mx-auto'>
 //				<div className='flex justify-center'>
 //					<img
-//						src={userInfo?.avatar_path}
+//						src={userInfo?.avatarPath}
 //						alt=''
 //						className='rounded-full mx-auto absolute -top-20 w-48 h-48 shadow-md border-4 border-black transition duration-200 hover:scale-110'
 //					></img>
@@ -95,12 +92,12 @@ export default Profile;
 //						<div className='flex'>
 //							<span className='w-28'>ID</span>
 //							<span className='ml-3 mb-3 w-10'>:</span>
-//							<span>{userInfo?.intra_id}</span>
+//							<span>{userInfo?.intraId}</span>
 //						</div>
 //						<div className='flex'>
-//							<span className='w-28'>E_MAIL</span>
+//							<span className='w-28'>email</span>
 //							<span className='ml-3 mb-3 w-10'>:</span>
-//							<span>{userInfo?.e_mail}</span>
+//							<span>{userInfo?.email}</span>
 //						</div>
 //						<div className='flex'>
 //							<span className='w-28'>NICKNAME</span>

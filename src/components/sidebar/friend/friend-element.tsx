@@ -8,7 +8,7 @@ const FriendElement = (props: { user: User; request?: boolean }) => {
 		<div className='flex items-center m-1 justify-between'>
 			<div className='flex items-center justify-start'>
 				<img
-					src={user.avatar}
+					src={user.avatarPath}
 					className='rounded-full layout-icon w-12 h-12 mr-3'
 				/>
 				{user.nickname}
