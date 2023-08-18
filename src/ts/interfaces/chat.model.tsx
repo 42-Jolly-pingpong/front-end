@@ -1,4 +1,4 @@
-import { User } from './userr.model';
+import { User } from './user.model';
 
 export interface Chat {
 	id: number;
@@ -6,3 +6,4 @@ export interface Chat {
 	content: string;
 	sentTime: string;
 }//임시s
+

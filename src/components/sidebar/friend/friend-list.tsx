@@ -2,13 +2,14 @@ import { useState } from "react";
 import FriendElement from "./friend-element";
 import { numberOfFriend, tempUser1 } from "../temp-chat-user"
 
+
 const FriendList = () => {
 	//친구 목록 가져오기
 	const [isChecked, setIsChecked] = useState(true);
 
 	const onClickCheckbox = () => {
-		setIsChecked((prev) => prev? false : true)
-	}
+		setIsChecked((prev) => (prev ? false : true));
+	};
 
 	return (
 		<div className="collapse">
@@ -23,6 +24,6 @@ const FriendList = () => {
 			</div>
 		</div>
 	);
-}
+};
 
-export default FriendList
+export default FriendList;

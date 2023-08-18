@@ -1,16 +1,15 @@
 import { Outlet } from 'react-router';
-import Footer from './footer';
-import Header from './header';
+import Header from './header/header';
+import Footer from './footer/footer';
 
 const Layout = () => {
-
 	return (
-		<div className="flex flex-col h-screen">
+		<div className='flex flex-col h-screen'>
 			<Header />
-			<div className="flex-1">
+			<div className='flex-1'>
 				<Outlet />
 			</div>
-			<Footer/>
+			<Footer />
 		</div>
 	);
 };
