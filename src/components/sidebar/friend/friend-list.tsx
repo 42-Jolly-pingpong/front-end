@@ -8,7 +8,7 @@ const FriendList = () => {
 	const [isChecked, setIsChecked] = useState(true);
 
 	const onClickCheckbox = () => {
-		setIsChecked((prev) => (prev ? false : true));
+		setIsChecked((prev) => !prev);
 	};
 
 	return (
