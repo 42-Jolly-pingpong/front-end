@@ -5,7 +5,7 @@ const ProfileBadge: React.FC<UserDTO> = (props) => {
 	const { intra_id, status, is_leave } = props;
 
 	return (
-		<div className={`avatar layout-icon`} tabIndex={0}>
+		<div className='avatar layout-icon' tabIndex={0}>
 			<img
 				src={props.avatar_path}
 				alt='Avatar'
