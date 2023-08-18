@@ -1,4 +1,4 @@
-import { booleanStateType } from "../../../ts/type/stateType";
+import { booleanStateType } from "../../../ts/type/boolean-state-type";
 import SearchModal from "./search-modal";
 
 const AddFriendModal = (props: booleanStateType) => {
