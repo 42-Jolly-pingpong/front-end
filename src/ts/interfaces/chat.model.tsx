@@ -4,6 +4,6 @@ export interface Chat {
 	idx: number;
 	user: User;
 	content: string;
-	sentTime: string;
+	sentTime: Date;
 }
 
