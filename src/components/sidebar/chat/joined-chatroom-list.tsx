@@ -21,7 +21,7 @@ const JoinedChatroomList = () => {
 			<div className="collapse-content overflow-y-auto">
 				{
 					chatList.map((chat, id) => (
-						<ChatElement chatroom={chat} key={id}/>
+						<ChatElement chatroom={chat} key={id} />
 					))
 				}
 			</div>
