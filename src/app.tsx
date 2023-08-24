@@ -7,6 +7,7 @@ import Profile from './pages/profile/profile';
 import Main from './pages/main/main';
 import SignUp from './pages/sign-up/sign-up';
 import CreateChat from './pages/create-chat/create-chat';
+import Snackbar from './components/snackbar/snackbar';
 
 const Section = (props: { section: JSX.Element }) => {
 	const sidebarState = useRecoilValue(sidebarSelector);
@@ -17,6 +18,7 @@ const Section = (props: { section: JSX.Element }) => {
 				{props.section}
 			</div>
 			{sidebarState ? <Sidebar /> : null}
+			<Snackbar />
 		</div>
 	);
 }; //임시
