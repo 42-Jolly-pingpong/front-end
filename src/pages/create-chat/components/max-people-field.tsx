@@ -1,29 +1,39 @@
 import ChatroomProperty from "./chatroom-property";
 
-const MaxPeopleField = (props: {maxPeople: number, setMaxPeople: React.Dispatch<React.SetStateAction<number>>} ) => {
+const MaxPeopleField = (props: {maxPeople: string, setMaxPeople: React.Dispatch<React.SetStateAction<string>>} ) => {
 	const {maxPeople, setMaxPeople} = props;
 	const maxPeopleProperty = "Max people";
 
 	const typeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const people = Number(e.target.value);
+		const people = e.target.value;
 
-		if (2 <= people){
+		if (0 <= Number(people)){
 			setMaxPeople(people);
 		}
 	}
 
 	const onClickPlus = () => {
-		setMaxPeople((pre)=> pre + 1); //방 최대인원 규칙이 있는지?
+		setMaxPeople((pre)=> Number(pre) < 30? String(Number(pre) + 1) : pre);
 	}
 
 	const onClickMinus = () => {
-		setMaxPeople((pre)=> 2 < pre? pre - 1 : pre);
+		setMaxPeople((pre)=> 2 < Number(pre)? String(Number(pre) - 1) : pre);
+	}
+
+	const onBlurInput = () => {
+		const currPeople = Number(maxPeople);
+		if (currPeople < 2){
+			setMaxPeople('2');
+		}
+		if (30 < currPeople){
+			setMaxPeople('30');
+		}
 	}
 
 	return (
 		<div className="flex">
 			<ChatroomProperty property={maxPeopleProperty} />
-			<input type="number" value={maxPeople} onChange={typeNumber} width={3}></input>
+			<input type="text" value={maxPeople} onChange={typeNumber} onBlur={onBlurInput} width={3}></input>
 			<button onClick={onClickPlus}>+</button>
 			<button onClick={onClickMinus}>-</button>
 		</div>
