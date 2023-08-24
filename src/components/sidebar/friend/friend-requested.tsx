@@ -4,7 +4,7 @@ const FriendRequested = () => {
 	// 친구 신청 목록 가져오기
 	const [isChecked, setIsChecked] = useState(true);
 
-	const onClickCheckbox = () => {
+	const onChangeCheckbox = () => {
 		setIsChecked((prev) => !prev);
 	};
 
@@ -13,7 +13,7 @@ const FriendRequested = () => {
 			<input
 				type='checkbox'
 				checked={isChecked}
-				onClick={onClickCheckbox}
+				onChange={onChangeCheckbox}
 			/>
 			<div className='collapse-title text-xl'>friend requested</div>
 		</div>
