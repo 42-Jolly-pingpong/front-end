@@ -1,4 +1,5 @@
 import { ChatStatus } from "../../../ts/enums/chat-status.enum";
+import { ChatroomType } from "../../../ts/enums/chatroom-type.enum";
 import { Chatroom } from "../../../ts/interfaces/chatroom.model";
 import { chatState, chatroomState } from "../../../ts/states/chat-state";
 import ChatroomInfo from "./chatroom-info";
@@ -7,6 +8,7 @@ import { useRecoilState } from 'recoil';
 type ChatroomElementProps = {
 	chatroom: Chatroom, 
 	isOpened?: boolean,
+	roomToEnter?: Chatroom,
 	setRoomToEnter?: React.Dispatch<React.SetStateAction<Chatroom>>
 }
 
@@ -14,14 +16,18 @@ const ChatroomElement = (props: ChatroomElementProps) => {
 	const [currChatroom, setCurrChatroom] = useRecoilState(chatroomState);
 	const [currChat, setCurrChat] = useRecoilState(chatState);
 
-	const {chatroom, isOpened, setRoomToEnter} = props;
+	const {chatroom, isOpened, roomToEnter, setRoomToEnter} = props;
 	const owner = chatroom.owner; // 임시
 
 	const onClickChatroom = () => {
 		if (isOpened && setRoomToEnter != undefined){
 			// 유저가 채팅방에 들어가있는 지 확인.
 			setRoomToEnter(chatroom);
-			window.checkPasswordModal.showModal();
+			if (roomToEnter?.type === ChatroomType.PROTECTED){
+				window.checkPasswordModal.showModal();
+				return;
+			}
+			window.checkEnterModal.showModal();
 			return ;
 		}
 		setCurrChatroom(chatroom);
@@ -44,7 +50,3 @@ const ChatroomElement = (props: ChatroomElementProps) => {
 }
 
 export default ChatroomElement
-
-// if (document) {
-// 	(document.getElementById('checkPasswordModal') as HTMLFormElement).showModal();
-//   }
