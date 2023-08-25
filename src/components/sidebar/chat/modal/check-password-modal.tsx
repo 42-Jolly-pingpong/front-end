@@ -17,8 +17,7 @@ const CheckPasswordModal = (props: {roomToEnter: Chatroom}) => {
 
 	useEffect(() => {
 		if (password.length == 4){
-			console.log("pwasss" + password);
-				checkPassword();
+			checkPassword();
 		}
 	}, [password]);
 
@@ -41,15 +40,13 @@ const CheckPasswordModal = (props: {roomToEnter: Chatroom}) => {
 	}
 
 	const checkPassword = () => {
-		const tempPassw = "3433";
+		const tempPassw = "3433"; // bool 리턴 api로 변경
 		if (tempPassw == password){
 			setCurrChatroom(props.roomToEnter);
 			setCurrChat(ChatStatus.INCHAT);
-			console.log("success!");
 			return ;
 		}
 		showSnackbar("틀린 비밀번호!");
-		console.log(password);
 		setTimeout(() => {
 			clearPassword();
 		}, 500);
