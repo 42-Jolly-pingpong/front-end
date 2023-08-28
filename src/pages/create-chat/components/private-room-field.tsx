@@ -6,7 +6,7 @@ const PrivateRoomField = (props: {isPrivate: boolean, setIsPrivate: React.Dispat
 	const privateProperty = "Private only";
 	const passwordProperty = "Password";
 
-	const onClickPrivate = () => {
+	const onChangePrivate = () => {
 		setIsPrivate((pre) => !pre);
 	}
 
@@ -23,7 +23,7 @@ const PrivateRoomField = (props: {isPrivate: boolean, setIsPrivate: React.Dispat
 		<div>
 			<div className="flex">
 				<ChatroomProperty property={privateProperty} />
-				<input type="checkbox" checked={isPrivate} onClick={onClickPrivate}></input>
+				<input type="checkbox" checked={isPrivate} onChange={onChangePrivate}></input>
 			</div>
 			<div className="flex">
 				<ChatroomProperty property={passwordProperty} />
