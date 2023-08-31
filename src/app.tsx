@@ -30,18 +30,17 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route element={<Layout />}>
-							<Route
-								index
-								path='/'
-								element={<Section section={<Main />} />}
-							/>
+							<Route index path='/' element={<Section section={<Main />} />} />
 							<Route path='/game' element={<h1>GAME</h1>} />
 							<Route
 								path='/profile/:user_idx'
 								element={<Section section={<Profile />} />}
 							/>
 							<Route path='/sign-up' element={<SignUp />} />
-							<Route path="/create-chat" element={<Section section={<CreateChat/>} />} />
+							<Route
+								path='/create-chat'
+								element={<Section section={<CreateChat />} />}
+							/>
 						</Route>
 						{/* /login 접근 -> jwt 확인 (42 api) */}
 						<Route path='/login' element={<h1>LOGIN</h1>} />

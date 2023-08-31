@@ -11,6 +11,6 @@ const ProfileData = () => {
 			<div className='text-2xl mb-3'>{`- WIN_RATE : ${user?.winCount}%`}</div>
 		</div>
 	);
-};//승률 계산 수정 필요1!!!!!!!!!!!!!!!!!!!!!!!!
+}; //승률 계산 수정 필요1!!!!!!!!!!!!!!!!!!!!!!!!
 
 export default ProfileData;

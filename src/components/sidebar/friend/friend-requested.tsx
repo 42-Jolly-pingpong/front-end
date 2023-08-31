@@ -6,17 +6,13 @@ import { tempUser1 } from '../temp-chat-user';
 const FriendRequested = (props: {requestList: User[]}) => {
 	const [isChecked, setIsChecked] = useState(true);
 
-	const onClickCheckbox = () => {
+	const onChangeCheckbox = () => {
 		setIsChecked((prev) => !prev);
 	};
 
 	return (
 		<div className='collapse collapse-arrow'>
-			<input
-				type='checkbox'
-				checked={isChecked}
-				onClick={onClickCheckbox}
-			/>
+			<input type='checkbox' checked={isChecked} onChange={onChangeCheckbox} />
 			<div className='collapse-title text-xl'>friend requested</div>
 			<div className="collapse-content overflow-y-auto"> 
 				{

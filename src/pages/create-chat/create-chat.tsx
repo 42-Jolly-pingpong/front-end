@@ -1,7 +1,7 @@
-import { useState } from "react";
-import MaxPeopleField from "./components/max-people-field";
-import RoomNameField from "./components/room-name-field";
-import PrivateRoomField from "./components/private-room-field";
+import { useState } from 'react';
+import MaxPeopleField from './components/max-people-field';
+import RoomNameField from './components/room-name-field';
+import PrivateRoomField from './components/private-room-field';
 
 const CreateChat = (): JSX.Element => {
 	const [roomName, setRoomName] = useState('');
@@ -12,12 +12,17 @@ const CreateChat = (): JSX.Element => {
 	return (
 		<div>
 			<div>Create chat room</div>
-			<RoomNameField roomName={roomName} setRoomName={setRoomName}/>
+			<RoomNameField roomName={roomName} setRoomName={setRoomName} />
 			<MaxPeopleField maxPeople={maxPeople} setMaxPeople={setMaxPeople} />
-			<PrivateRoomField isPrivate={isPrivate} setIsPrivate={setIsPrivate} password={password} setPassword={setPassword} />
+			<PrivateRoomField
+				isPrivate={isPrivate}
+				setIsPrivate={setIsPrivate}
+				password={password}
+				setPassword={setPassword}
+			/>
 			<button>create</button>
 		</div>
 	);
-}
+};
 
-export default CreateChat
+export default CreateChat;

@@ -1,3 +1,5 @@
 export enum ChatroomType {
-	PUBLIC, PROTECTED, PRIVATE
+	PUBLIC,
+	PROTECTED,
+	PRIVATE,
 }

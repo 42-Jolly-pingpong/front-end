@@ -1,7 +1,7 @@
 import { GameMode } from '../enums/game-mode.enum';
 
 export interface GameHistory {
-	idx: number; 
+	idx: number;
 	winPlayerIdx: number;
 	losePlayerIdx: number;
 	winScore: number;

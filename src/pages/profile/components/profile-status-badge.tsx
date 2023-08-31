@@ -9,11 +9,7 @@ const ProfileStatusBadge: React.FC<User> = (props) => {
 			className={`avatar ${status ? 'online' : 'offline'} layout-icon`}
 			tabIndex={0}
 		>
-			<img
-				src={props.avatarPath}
-				alt='Avatar'
-				className='rounded-full'
-			/>
+			<img src={props.avatarPath} alt='Avatar' className='rounded-full' />
 		</div>
 	);
 };
