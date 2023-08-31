@@ -1,10 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
 import Sidebar from './components/sidebar/sidebar';
-import Home from './home';
 import { RecoilRoot, useRecoilValue } from 'recoil';
-import { sidebarSelector } from './ts/state/sidebar-state';
+import { sidebarSelector } from './ts/states/sidebar-state';
 import Profile from './pages/profile/profile';
+import Main from './pages/main/main';
+import SignUp from './pages/sign-up/sign-up';
+import CreateChat from './pages/create-chat/create-chat';
 
 const Section = (props: { section: JSX.Element }) => {
 	const sidebarState = useRecoilValue(sidebarSelector);
@@ -20,25 +22,33 @@ const Section = (props: { section: JSX.Element }) => {
 }; //임시
 
 function App() {
-
-  return (
-    <div>
-      <RecoilRoot>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Layout/>}>
-              <Route path="/" element={<Section section={<Home />} />} />
-              <Route path="/game" element={<h1>GAME</h1>} />
-              <Route path="/profile/:user_idx" element={<Profile />} />
-            </Route>
-            <Route path='/login' element={<h1>LOGIN</h1>} />
-            <Route path='/sign-up' element={<h1>SIGN-UP</h1>} />
-            <Route path='*' element={<h1>NOT FOUND</h1>} />
-          </Routes>
-        </BrowserRouter>
-      </RecoilRoot>
-    </div>
-  );
+	return (
+		<div>
+			<RecoilRoot>
+				<BrowserRouter>
+					<Routes>
+						<Route element={<Layout />}>
+							<Route
+								index
+								path='/'
+								element={<Section section={<Main />} />}
+							/>
+							<Route path='/game' element={<h1>GAME</h1>} />
+							<Route
+								path='/profile/:user_idx'
+								element={<Section section={<Profile />} />}
+							/>
+							<Route path='/sign-up' element={<SignUp />} />
+							<Route path="/create-chat" element={<Section section={<CreateChat/>} />} />
+						</Route>
+						{/* /login 접근 -> jwt 확인 (42 api) */}
+						<Route path='/login' element={<h1>LOGIN</h1>} />
+						<Route path='*' element={<h1>NOT FOUND</h1>} />
+					</Routes>
+				</BrowserRouter>
+			</RecoilRoot>
+		</div>
+	);
 }
 
 export default App;
