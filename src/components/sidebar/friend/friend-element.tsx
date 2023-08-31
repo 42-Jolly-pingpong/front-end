@@ -1,5 +1,5 @@
-import { User } from '../../../ts/interfaces/user.model';
-import AnswerButton from './answer-button';
+import { User } from 'ts/interfaces/user.model';
+import AnswerButton from 'components/sidebar/friend/answer-button';
 
 const FriendElement = (props: { user: User; request?: boolean }) => {
 	const { user, request } = props;

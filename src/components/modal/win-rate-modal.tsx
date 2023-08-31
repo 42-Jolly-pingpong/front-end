@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import userData from '../../ts/mock/user-data';
-import winRateData from '../../ts/mock/win-rate-data';
-import XButton from '../button/x-button';
-import ProfileBadge from '../../pages/profile/components/profile-badge';
-import BackDrop from './utils/backdrop';
-import { User } from '../../ts/interfaces/user.model';
+import XButton from 'components/button/x-button';
+import BackDrop from 'components/modal/utils/backdrop';
+import { User } from 'ts/interfaces/user.model';
+import userData from 'ts/mock/user-data';
+import winRateData from 'ts/mock/win-rate-data';
+import ProfileBadge from 'pages/profile/components/profile-badge';
 
 interface winRateResultProps {
 	win_rate: number;

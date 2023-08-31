@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import GetUserInfo from '../../components/services/getUserInfo';
-import TwoFactorAuthModal from './modal/two-factor-auth-check-modal';
-import WithdrawModal from './modal/withdraw-modal';
-import AvatarChangeModal from './modal/avatar-change-modal';
-import ProfileData from './components/profile-data';
+import TwoFactorAuthModal from 'pages/profile/modal/two-factor-auth-check-modal';
+import WithdrawModal from 'pages/profile/modal/withdraw-modal';
+import AvatarChangeModal from 'pages/profile/modal/avatar-change-modal';
+import ProfileData from 'pages/profile/components/profile-data';
+import GetUserInfo from 'components/services/getUserInfo';
 
 const handleAuth = () => {
 	window.twoFactorAuthCheckModal.showModal();

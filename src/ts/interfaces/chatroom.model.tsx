@@ -1,5 +1,5 @@
 import { ChatroomType } from '../enums/chatroom-type.enum';
-import { User } from './user.model';
+import { User } from 'ts/interfaces/user.model';
 
 export interface Chatroom {
 	idx: number;

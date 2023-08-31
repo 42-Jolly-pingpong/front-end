@@ -1,12 +1,12 @@
+import Layout from 'components/layout/layout';
+import Sidebar from 'components/sidebar/sidebar';
+import CreateChat from 'pages/create-chat/create-chat';
+import Main from 'pages/main/main';
+import Profile from 'pages/profile/profile';
+import SignUp from 'pages/sign-up/sign-up';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './components/layout/layout';
-import Sidebar from './components/sidebar/sidebar';
 import { RecoilRoot, useRecoilValue } from 'recoil';
-import { sidebarSelector } from './ts/states/sidebar-state';
-import Profile from './pages/profile/profile';
-import Main from './pages/main/main';
-import SignUp from './pages/sign-up/sign-up';
-import CreateChat from './pages/create-chat/create-chat';
+import { sidebarSelector } from 'ts/states/sidebar-state';
 
 const Section = (props: { section: JSX.Element }) => {
 	const sidebarState = useRecoilValue(sidebarSelector);

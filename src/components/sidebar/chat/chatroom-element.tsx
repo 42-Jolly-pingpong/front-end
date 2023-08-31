@@ -1,8 +1,8 @@
-import { ChatStatus } from '../../../ts/enums/chat-status.enum';
-import { Chatroom } from '../../../ts/interfaces/chatroom.model';
-import { chatState, chatroomState } from '../../../ts/states/chat-state';
-import ChatroomInfo from './chatroom-info';
+import { ChatStatus } from 'ts/enums/chat-status.enum';
+import { Chatroom } from 'ts/interfaces/chatroom.model';
+import { chatState, chatroomState } from 'ts/states/chat-state';
 import { useRecoilState } from 'recoil';
+import ChatroomInfo from 'components/sidebar/chat/chatroom-info';
 
 const ChatroomElement = (chatroom: Chatroom) => {
 	const owner = chatroom.owner; // 임시

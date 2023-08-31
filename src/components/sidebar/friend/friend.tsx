@@ -1,6 +1,6 @@
-import FriendList from './friend-list';
-import FriendMenu from './friend-menu';
-import FriendRequested from './friend-requested';
+import FriendList from 'components/sidebar/friend/friend-list';
+import FriendMenu from 'components/sidebar/friend/friend-menu';
+import FriendRequested from 'components/sidebar/friend/friend-requested';
 
 const Friend = (): JSX.Element => {
 	// 친구 신청있는 지 알아오기
