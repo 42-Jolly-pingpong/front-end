@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GetUserInfo from '../../components/services/getUserInfo';
 import TwoFactorAuthModal from './modal/two-factor-auth-check-modal';
 import WithdrawModal from './modal/withdraw-modal';
 import AvatarChangeModal from './modal/avatar-change-modal';
 import ProfileData from './components/profile-data';
+import { useParams } from 'react-router-dom';
+import { number } from 'prop-types';
 
 const handleAuth = () => {
 	window.twoFactorAuthCheckModal.showModal();
@@ -17,8 +19,20 @@ const handleAvatarChange = () => {
 	window.avatarChangeModal.showModal();
 };
 
+async function getUserInfoForApi(idx: number) {
+	const json = await fetch(`http://localhost:3000/user/${idx}`, {method: 'GET'}).then()
+	console.log(json)
+}
+
 const Profile = () => {
 	const [user, setUser] = useState(GetUserInfo());
+	const user_idx = useParams().user_idx!;
+	console.log(user_idx)
+	const idx: number = parseInt(user_idx, 10);
+	console.log(idx)
+	useEffect(() => {
+		getUserInfoForApi(idx);
+	}, [])
 
 	return (
 		<div className='flex justify-center items-center w-11/12 h-5/6 mb-10'>
