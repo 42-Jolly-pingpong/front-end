@@ -1,9 +1,9 @@
 import { useRecoilState } from 'recoil';
-import { sidebarState } from '../../../ts/states/sidebar-state';
-import WinRateModal from '../../modal/win-rate-modal';
 import { useState } from 'react';
-import GetUserInfo from '../../services/getUserInfo';
-import { SidebarStatus } from '../../../ts/enums/sidebar-status.enum';
+import GetUserInfo from 'components/services/getUserInfo';
+import { sidebarState } from 'ts/states/sidebar-state';
+import { SidebarStatus } from 'ts/enums/sidebar-status.enum';
+import WinRateModal from 'components/modal/win-rate-modal';
 
 const Footer = () => {
 	const [user, setUser] = useState(GetUserInfo());

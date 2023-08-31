@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../../../ts/interfaces/user.model';
+import { User } from 'ts/interfaces/user.model';
 
 const ProfileStatusBadge: React.FC<User> = (props) => {
 	const { intraId, status, isLeave } = props;

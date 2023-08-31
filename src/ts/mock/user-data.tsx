@@ -1,4 +1,4 @@
-import { User } from '../interfaces/user.model';
+import { User } from 'ts/interfaces/user.model';
 
 const userData: User[] = [
 	{

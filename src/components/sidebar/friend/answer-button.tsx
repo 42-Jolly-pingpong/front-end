@@ -1,4 +1,4 @@
-import { User } from '../../../ts/interfaces/user.model';
+import { User } from 'ts/interfaces/user.model';
 
 const AnswerButton = (user: User) => {
 	const onClickAccept = () => {
