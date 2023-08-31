@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import ChatElement from './chatroom-element';
-import { tempChatroom1, tempChatroom2 } from '../temp-chat-user';
-import { Chatroom } from '../../../ts/interfaces/chatroom.model';
+import ChatElement from 'components/sidebar/chat/chatroom-element';
+import { Chatroom } from 'ts/interfaces/chatroom.model';
+import { tempChatroom1, tempChatroom2 } from '../temp-chat-user'; //임시
 
 const JoinedChatroomList = () => {
 	//챗 리스트 가져오기

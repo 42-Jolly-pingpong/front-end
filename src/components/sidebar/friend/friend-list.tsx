@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import FriendElement from './friend-element';
-import { numberOfFriend, tempUser1 } from '../temp-chat-user';
-import { User } from '../../../ts/interfaces/user.model';
+import FriendElement from 'components/sidebar/friend/friend-element';
+import { User } from 'ts/interfaces/user.model';
+import { numberOfFriend, tempUser1 } from '../temp-chat-user'; //임시
 
 const FriendList = () => {
 	//친구 목록 가져오기

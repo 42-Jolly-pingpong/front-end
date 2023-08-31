@@ -1,9 +1,9 @@
-import { tempChatroom1, tempChatroom2 } from '../temp-chat-user';
-import { Chatroom } from '../../../ts/interfaces/chatroom.model';
-import CheckPasswordModal from './modal/check-password-modal';
+import { tempChatroom1, tempChatroom2 } from '../temp-chat-user'; // 임시
 import { useState } from 'react';
-import ChatroomElement from './chatroom-element';
-import CheckEnterModal from './modal/check-enter-modal';
+import { Chatroom } from 'ts/interfaces/chatroom.model';
+import ChatroomElement from 'components/sidebar/chat/chatroom-element';
+import CheckPasswordModal from 'components/sidebar/chat/modal/check-password-modal';
+import CheckEnterModal from 'components/sidebar/chat/modal/check-enter-modal';
 
 const OpenChatroomList = () => {
 	// openchat list 얻어오기

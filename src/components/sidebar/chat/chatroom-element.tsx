@@ -1,9 +1,9 @@
-import { ChatStatus } from '../../../ts/enums/chat-status.enum';
-import { ChatroomType } from '../../../ts/enums/chatroom-type.enum';
-import { Chatroom } from '../../../ts/interfaces/chatroom.model';
-import { chatState, chatroomState } from '../../../ts/states/chat-state';
-import ChatroomInfo from './chatroom-info';
+import { ChatStatus } from 'ts/enums/chat-status.enum';
+import { Chatroom } from 'ts/interfaces/chatroom.model';
+import { chatState, chatroomState } from 'ts/states/chat-state';
 import { useRecoilState } from 'recoil';
+import ChatroomInfo from 'components/sidebar/chat/chatroom-info';
+import { ChatroomType } from 'ts/enums/chatroom-type.enum';
 
 type ChatroomElementProps = {
 	chatroom: Chatroom;

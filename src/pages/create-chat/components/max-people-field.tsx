@@ -1,4 +1,4 @@
-import ChatroomProperty from './chatroom-property';
+import ChatroomProperty from 'pages/create-chat/components/chatroom-property';
 
 const MaxPeopleField = (props: {
 	maxPeople: string;

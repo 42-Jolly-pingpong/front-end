@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
-import { Chatroom } from '../interfaces/chatroom.model';
-import { ChatStatus } from '../enums/chat-status.enum';
+import { Chatroom } from 'ts/interfaces/chatroom.model';
+import { ChatStatus } from 'ts/enums/chat-status.enum';
 
 export const chatState = atom({
 	key: 'chatState',
