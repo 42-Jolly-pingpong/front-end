@@ -12,11 +12,7 @@ const HeaderProfileIcon: React.FC<User> = (props) => {
 		<div className='dropdown dropdown-end'>
 			<label tabIndex={0} className='btn m-1'>
 				<button className='avatar online layout-icon' tabIndex={0}>
-					<img
-						src={props.avatarPath}
-						alt='Avatar'
-						className='rounded-full'
-					/>
+					<img src={props.avatarPath} alt='Avatar' className='rounded-full' />
 				</button>
 			</label>
 			<ul

@@ -32,10 +32,7 @@ const Profile = () => {
 						</div>
 					</legend>
 					<div className='flex justify-center ml-32 mb-2'>
-						<div
-							className='btn bg-gray-200 w-16'
-							onClick={handleAvatarChange}
-						>
+						<div className='btn bg-gray-200 w-16' onClick={handleAvatarChange}>
 							<img src='/images/pen-clip-solid.svg' />
 						</div>
 						<AvatarChangeModal />
@@ -43,17 +40,11 @@ const Profile = () => {
 					<ProfileData />
 					<div className='divider mb-5 mx-20' />
 					<div className='flex flex-col justify-center items-center mb-3'>
-						<div
-							className='btn bg-gray-200 mb-2'
-							onClick={handleAuth}
-						>
+						<div className='btn bg-gray-200 mb-2' onClick={handleAuth}>
 							TWO-FACTOR AUTHENTICATION
 						</div>
 						<TwoFactorAuthModal />
-						<div
-							className='btn bg-gray-200 mb-2'
-							onClick={handleWithdraw}
-						>
+						<div className='btn bg-gray-200 mb-2' onClick={handleWithdraw}>
 							WITHDRAW MEMBER
 						</div>
 						<WithdrawModal />
