@@ -7,6 +7,7 @@ import Profile from './pages/profile/profile';
 import Main from './pages/main/main';
 import SignUp from './pages/sign-up/sign-up';
 import CreateChat from './pages/create-chat/create-chat';
+import ManageChat from './pages/manage-chat/manage-chat';
 
 const Section = (props: { section: JSX.Element }) => {
 	const sidebarState = useRecoilValue(sidebarSelector);
@@ -39,7 +40,14 @@ function App() {
 								element={<Section section={<Profile />} />}
 							/>
 							<Route path='/sign-up' element={<SignUp />} />
-							<Route path="/create-chat" element={<Section section={<CreateChat/>} />} />
+							<Route
+								path='/create-chat'
+								element={<Section section={<CreateChat />} />}
+							/>
+							<Route
+								path='/users/:user_idx/chat-rooms/:room_idx'
+								element={<Section section={<ManageChat />} />}
+							/>
 						</Route>
 						{/* /login 접근 -> jwt 확인 (42 api) */}
 						<Route path='/login' element={<h1>LOGIN</h1>} />
