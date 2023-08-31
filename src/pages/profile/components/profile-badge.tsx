@@ -6,11 +6,7 @@ const ProfileBadge: React.FC<User> = (props) => {
 
 	return (
 		<div className='avatar layout-icon' tabIndex={0}>
-			<img
-				src={props.avatarPath}
-				alt='Avatar'
-				className='rounded-full'
-			/>
+			<img src={props.avatarPath} alt='Avatar' className='rounded-full' />
 		</div>
 	);
 };

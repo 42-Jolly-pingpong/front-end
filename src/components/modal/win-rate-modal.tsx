@@ -61,12 +61,11 @@ const WinRateData = () => {
 
 	return (
 		<div className='py-4 border-solid border-t-2'>
-			<WinRateResult win_rate={user.winCount / (user.winCount + user.loseCount)} />
+			<WinRateResult
+				win_rate={user.winCount / (user.winCount + user.loseCount)}
+			/>
 			{myWinRate.map((item, index) => (
-				<div
-					className='flex flex-col w-full border-opacity-50'
-					key={index}
-				>
+				<div className='flex flex-col w-full border-opacity-50' key={index}>
 					<div className='divider mb-0' />
 					<div className='flex  justify-center items-center text-3xl'>
 						{item.winPlayerIdx == user.idx ? 'Win' : 'Lose'}
@@ -74,9 +73,7 @@ const WinRateData = () => {
 					<div className='flex justify-between items-center px-2'>
 						<div className='flex flex-col justify-center items-center w-1/6 bg-green-300 h-28 rounded-br-box'>
 							<ProfileBadge {...getUser(item.winPlayerIdx)} />
-							<div className='mt-2'>
-								{getUserNickName(item.winPlayerIdx)}
-							</div>
+							<div className='mt-2'>{getUserNickName(item.winPlayerIdx)}</div>
 						</div>
 
 						<div className='flex justify-between items-center h-20 bg-base-300 rounded-box w-1/2 px-6'>
@@ -93,9 +90,7 @@ const WinRateData = () => {
 						</div>
 						<div className='flex flex-col justify-center items-center w-1/6 bg-red-300 h-28 rounded-br-box'>
 							<ProfileBadge {...getUser(item.losePlayerIdx)} />
-							<div className='mt-2'>
-								{getUserNickName(item.losePlayerIdx)}
-							</div>
+							<div className='mt-2'>{getUserNickName(item.losePlayerIdx)}</div>
 						</div>
 					</div>
 				</div>

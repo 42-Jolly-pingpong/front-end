@@ -10,13 +10,8 @@ const TwoFactorAuthModal = () => {
 			<form method='dialog' className='modal-box'>
 				<XButton />
 				<div className='flex flex-col items-center'>
-					<div className='font-bold mb-3 text-3xl'>
-						{' '}
-						TWO-FACTOR-AUTH{' '}
-					</div>
-					<div className='text-xl mb-5'>
-						Enter the vertification code.
-					</div>
+					<div className='font-bold mb-3 text-3xl'> TWO-FACTOR-AUTH </div>
+					<div className='text-xl mb-5'>Enter the vertification code.</div>
 					<input
 						type='text'
 						placeholder='Type here'

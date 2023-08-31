@@ -9,11 +9,9 @@ const Chat = (): JSX.Element => {
 
 	return (
 		<div className='flex flex-col h-full'>
-			{
-				status === ChatStatus.CHATLIST ? <ChatroomList /> : <InChat />
-			}
+			{status === ChatStatus.CHATLIST ? <ChatroomList /> : <InChat />}
 		</div>
 	);
-}
+};
 
-export default Chat
+export default Chat;

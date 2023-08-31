@@ -6,4 +6,3 @@ export interface Chat {
 	content: string;
 	sentTime: Date;
 }
-

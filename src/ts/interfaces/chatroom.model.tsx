@@ -8,6 +8,6 @@ export interface Chatroom {
 	currentPeople: number;
 	maxPeople: number;
 	type: ChatroomType;
-	updateTime: Date,
+	updateTime: Date;
 	status: boolean;
 }

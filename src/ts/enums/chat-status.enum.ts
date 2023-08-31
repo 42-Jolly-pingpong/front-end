@@ -1,3 +1,4 @@
 export enum ChatStatus {
-	CHATLIST, INCHAT
+	CHATLIST,
+	INCHAT,
 }
