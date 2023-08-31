@@ -1,10 +1,10 @@
-import ChatMenu from "./chat-menu";
-import JoinedChatroomList from "./joined-chatroom-list";
-import OpenChatroomList from "./open-chatroom-list";
+import ChatMenu from './chat-menu';
+import JoinedChatroomList from './joined-chatroom-list';
+import OpenChatroomList from './open-chatroom-list';
 
 const ChatroomList = () => {
 	return (
-		<div className="flex flex-col h-full justify-between">
+		<div className='flex flex-col h-full justify-between'>
 			<div>
 				<JoinedChatroomList />
 				<OpenChatroomList />
@@ -12,6 +12,6 @@ const ChatroomList = () => {
 			<ChatMenu />
 		</div>
 	);
-}
+};
 
-export default ChatroomList
+export default ChatroomList;

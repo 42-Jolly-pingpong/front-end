@@ -29,11 +29,7 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route element={<Layout />}>
-							<Route
-								index
-								path='/'
-								element={<Section section={<Main />} />}
-							/>
+							<Route index path='/' element={<Section section={<Main />} />} />
 							<Route path='/game' element={<h1>GAME</h1>} />
 							<Route
 								path='/profile/:user_idx'

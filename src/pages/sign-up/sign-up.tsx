@@ -28,10 +28,7 @@ const SignUp = () => {
 							placeholder='Nickname'
 							className='input input-bordered w-full max-w-xs'
 						/>
-						<button className='btn btn-success ml-2'>
-							{' '}
-							duplicate check
-						</button>
+						<button className='btn btn-success ml-2'> duplicate check</button>
 					</div>
 					<div className='text-slate-500 mb-4'>
 						{' '}
