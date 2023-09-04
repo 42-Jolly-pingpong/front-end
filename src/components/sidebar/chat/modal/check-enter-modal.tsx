@@ -1,11 +1,11 @@
 import { Chatroom } from 'ts/interfaces/chatroom.model';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { chatState, chatroomState } from 'ts/states/chat-state';
 import { ChatStatus } from 'ts/enums/chat-status.enum';
 
 const CheckEnterModal = (props: { roomToEnter: Chatroom }) => {
-	const [currChatroom, setCurrChatroom] = useRecoilState(chatroomState);
-	const [currChat, setCurrChat] = useRecoilState(chatState);
+	const setCurrChatroom = useSetRecoilState(chatroomState);
+	const setCurrChat = useSetRecoilState(chatState);
 
 	const title = '입장하시겠어요?';
 

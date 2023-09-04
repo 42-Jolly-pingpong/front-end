@@ -7,7 +7,6 @@ import { tempUser1 } from '../temp-chat-user'; //임시
 const Friend = (): JSX.Element => {
 	// 친구 신청있는 지 알아오기
 	const requestList: User[] = [tempUser1, tempUser1, tempUser1];
-	const newFriendRequested = 10;
 
 	return (
 		<div className='flex flex-col h-full justify-between'>

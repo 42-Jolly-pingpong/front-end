@@ -1,8 +1,8 @@
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { snackbarState } from 'ts/states/snackbar-state';
 
 const useSnackbar = () => {
-	const [snackbarInfo, setSnackbarInfo] = useRecoilState(snackbarState);
+	const setSnackbarInfo = useSetRecoilState(snackbarState);
 
 	const showSnackbar = (title: string) => {
 		setSnackbarInfo({ state: true, title });

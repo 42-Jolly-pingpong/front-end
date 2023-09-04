@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { Chatroom } from 'ts/interfaces/chatroom.model';
 import { ChatStatus } from 'ts/enums/chat-status.enum';
 import { chatState, chatroomState } from 'ts/states/chat-state';
@@ -8,8 +8,8 @@ import useSnackbar from 'hooks/show-snackbar';
 const CheckPasswordModal = (props: { roomToEnter: Chatroom }) => {
 	const [password, setPassword] = useState('');
 
-	const [currChatroom, setCurrChatroom] = useRecoilState(chatroomState);
-	const [currChat, setCurrChat] = useRecoilState(chatState);
+	const setCurrChatroom = useSetRecoilState(chatroomState);
+	const setCurrChat = useSetRecoilState(chatState);
 
 	const showSnackbar = useSnackbar();
 
