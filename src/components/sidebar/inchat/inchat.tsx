@@ -1,10 +1,10 @@
-import ChatHeader from './chat-header';
+import ChatHeader from 'components/sidebar/inchat/chat-header';
 import { useRecoilValue } from 'recoil';
-import ChatTextfield from './chat-textfield';
-import { chatroomSelector } from '../../../ts/states/chat-state';
-import { Chat } from '../../../ts/interfaces/chat.model';
-import ChatBubble from './chat-bubble';
-import { tempChats1 } from '../temp-chat-user';
+import ChatTextfield from 'components/sidebar/inchat/chat-textfield';
+import { chatroomSelector } from 'ts/states/chat-state';
+import { Chat } from 'ts/interfaces/chat.model';
+import ChatBubble from 'components/sidebar/inchat/chat-bubble';
+import { tempChats1 } from '../temp-chat-user'; //임시
 
 const InChat = () => {
 	const chatroom = useRecoilValue(chatroomSelector);

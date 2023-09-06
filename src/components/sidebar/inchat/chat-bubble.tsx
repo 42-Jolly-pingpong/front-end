@@ -1,5 +1,5 @@
-import { Chat } from '../../../ts/interfaces/chat.model';
-import { tempUser1 } from '../temp-chat-user';
+import { Chat } from 'ts/interfaces/chat.model';
+import { tempUser1 } from '../temp-chat-user'; //임시
 
 const ChatContent = (chat: Chat) => {
 	const user = chat.user;

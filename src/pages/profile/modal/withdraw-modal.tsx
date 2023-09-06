@@ -1,5 +1,5 @@
-import XButton from '../../../components/button/x-button';
-import BackDrop from '../../../components/modal/utils/backdrop';
+import XButton from 'components/button/x-button';
+import BackDrop from 'components/modal/utils/backdrop';
 
 const WithdrawModal = () => {
 	return (

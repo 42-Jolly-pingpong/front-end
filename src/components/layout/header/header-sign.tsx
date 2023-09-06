@@ -1,5 +1,5 @@
+import TwoFactorAuthModal from 'components/modal/two-factor-auth-modal';
 import { Link } from 'react-router-dom';
-import TwoFactorAuthModal from '../../modal/two-factor-auth-modal';
 
 const handleSignIn = () => {
 	// back-end API : jwt 확인 | intra login (login)

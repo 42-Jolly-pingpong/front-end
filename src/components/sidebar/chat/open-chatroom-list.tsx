@@ -1,5 +1,5 @@
-import ChatElement from './chatroom-element';
-import { tempChatroom1, tempChatroom2 } from '../temp-chat-user';
+import ChatElement from 'components/sidebar/chat/chatroom-element';
+import { tempChatroom1, tempChatroom2 } from '../temp-chat-user'; // 임시
 
 const OpenChatroomList = () => {
 	return (

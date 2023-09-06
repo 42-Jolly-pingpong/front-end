@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AddFriendModal from './add-friend-modal';
+import AddFriendModal from 'components/sidebar/friend/add-friend-modal';
 
 const FriendMenu = () => {
 	const [addFriendModal, setAddFriendModal] = useState(false);

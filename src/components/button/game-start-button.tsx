@@ -1,4 +1,4 @@
-import GameWaitModal from '../modal/game-wait-modal';
+import GameWaitModal from 'components/modal/game-wait-modal';
 
 const GameStartButton = () => {
 	const handleModal = () => {

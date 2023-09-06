@@ -1,8 +1,8 @@
 import { useRecoilValue } from 'recoil';
-import { chatStatusSelector } from '../../../ts/states/chat-state';
-import { ChatStatus } from '../../../ts/enums/chat-status.enum';
-import InChat from '../inchat/inchat';
-import ChatroomList from './chatroom-list';
+import { chatStatusSelector } from 'ts/states/chat-state';
+import { ChatStatus } from 'ts/enums/chat-status.enum';
+import ChatroomList from 'components/sidebar/chat/chatroom-list';
+import InChat from 'components/sidebar/inchat/inchat';
 
 const Chat = (): JSX.Element => {
 	const status: ChatStatus = useRecoilValue(chatStatusSelector);

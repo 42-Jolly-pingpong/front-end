@@ -1,8 +1,8 @@
-import { SidebarStatus } from '../../ts/enums/sidebar-status.enum';
-import { sidebarSelector } from '../../ts/states/sidebar-state';
-import Chat from './chat/chat';
-import Friend from './friend/friend';
 import { useRecoilValue } from 'recoil';
+import { SidebarStatus } from 'ts/enums/sidebar-status.enum';
+import { sidebarSelector } from 'ts/states/sidebar-state';
+import Friend from 'components/sidebar/friend/friend';
+import Chat from 'components/sidebar/chat/chat';
 
 const SidebarContent = () => {
 	const state = useRecoilValue(sidebarSelector);
