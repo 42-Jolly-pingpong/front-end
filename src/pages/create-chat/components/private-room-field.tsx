@@ -18,7 +18,7 @@ const PrivateRoomField = (props: {
 		if (e.target.value.length === 0) {
 			setPassword('');
 		}
-		if (Number(e.target.value) && e.target.value.length <= 4) {
+		if (0 <= Number(e.target.value) && e.target.value.length <= 4) {
 			setPassword(e.target.value);
 		}
 	};

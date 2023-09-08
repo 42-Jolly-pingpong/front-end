@@ -1,5 +1,6 @@
 import { Chat } from 'ts/interfaces/chat.model';
 import { tempUser1 } from '../temp-chat-user'; //임시
+import Avatar from 'components/avatar/avatar';
 
 const ChatContent = (chat: Chat) => {
 	const user = chat.user;
