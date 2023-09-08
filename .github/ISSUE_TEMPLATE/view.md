@@ -3,7 +3,7 @@ name: "🎨 VIEW"
 about: 어떤 화면의 UI인지 작성해주세요.
 title: "[view] "
 labels: ["view"]
-projects: ["42-Jolly-pingpong/1"]
+projects: ["42-Jolly-pingpong/2"]
 
 ---
 
