@@ -9,7 +9,7 @@ const FriendElement = (props: { user: User; request?: boolean }) => {
 		<div className='flex items-center m-1 justify-between'>
 			<div className='flex items-center justify-start'>
 				<Avatar user={user} size={12} />
-				{user.nickname}
+				<div className='pl-3'>{user.nickname}</div>
 			</div>
 			{request ? <AnswerButton {...user} /> : null}
 		</div>
