@@ -7,8 +7,6 @@ const UserInfo = () => {
 	const context = useNavigate();
 	const location = useLocation();
 
-	console.log('state', location.state);
-
 	const user = tempUser1; //임시
 	const isFriend = true; //임시
 	const isBlockedFriend = false; //임시
