@@ -1,10 +1,14 @@
 import { tempUser1 } from 'components/sidebar/temp-chat-user';
 import UserShortProfile from './user-short-profile';
 import InfoButton from './info-button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const UserInfo = () => {
 	const context = useNavigate();
+	const location = useLocation();
+
+	console.log('state', location.state);
+
 	const user = tempUser1; //임시
 	const isFriend = true; //임시
 	const isBlockedFriend = false; //임시
