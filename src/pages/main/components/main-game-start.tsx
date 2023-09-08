@@ -1,5 +1,5 @@
 import GameStartButton from 'components/button/game-start-button';
-import GameModeCheckbox from './game-mode-checkbox';
+import GameModeCheckbox from 'pages/main/components/game-mode-checkbox';
 
 const MainGameStart = () => {
 	return (

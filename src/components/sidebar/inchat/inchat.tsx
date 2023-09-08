@@ -27,7 +27,7 @@ const InChat = () => {
 	return (
 		<div className='flex flex-col h-full p-3'>
 			<ChatHeader {...chatroom} />
-			<div className='flex-1 overflow-y-auto p-1'>
+			<div className='flex flex-col overflow-y max-h-full p-1'>
 				{chats.map((chat, id) => (
 					<ChatBubble key={id} {...chat} />
 				))}

@@ -1,5 +1,7 @@
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/sidebar/sidebar';
+import Snackbar from 'components/snackbar/snackbar';
+import UserInfo from 'components/user-info/user-info';
 import CreateChat from 'pages/create-chat/create-chat';
 import Main from 'pages/main/main';
 import ManageChat from 'pages/manage-chat/manage-chat';
@@ -18,6 +20,7 @@ const Section = (props: { section: JSX.Element }) => {
 				{props.section}
 			</div>
 			{sidebarState ? <Sidebar /> : null}
+			<Snackbar />
 		</div>
 	);
 }; //임시
@@ -43,6 +46,10 @@ function App() {
 							<Route
 								path='/users/:user_idx/chat-rooms/:room_idx'
 								element={<Section section={<ManageChat />} />}
+							/>
+							<Route
+								path='/user-info'
+								element={<Section section={<UserInfo />} />}
 							/>
 						</Route>
 						{/* /login 접근 -> jwt 확인 (42 api) */}
