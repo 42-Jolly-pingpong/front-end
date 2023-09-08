@@ -1,6 +1,7 @@
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/sidebar/sidebar';
 import Snackbar from 'components/snackbar/snackbar';
+import UserInfo from 'components/user-info/user-info';
 import CreateChat from 'pages/create-chat/create-chat';
 import Main from 'pages/main/main';
 import Profile from 'pages/profile/profile';
@@ -38,8 +39,12 @@ function App() {
 							/>
 							<Route path='/sign-up' element={<SignUp />} />
 							<Route
-								path='/create-chat'
+								path='/chat-rooms'
 								element={<Section section={<CreateChat />} />}
+							/>
+							<Route
+								path='/user-info'
+								element={<Section section={<UserInfo />} />}
 							/>
 						</Route>
 						{/* /login 접근 -> jwt 확인 (42 api) */}
