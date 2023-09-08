@@ -1,46 +1,53 @@
-# Getting Started with Create React App
+# front-end 🥽
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React 구현된 ft_transcendence frontend 프로젝트입니다.
 
-## Available Scripts
+## 협업하는 방식 🤝
+우리는 Figma(피그마)와 GitHub(깃허브)를 통해 협업합니다.\
+업무 진행 방식에서 부담을 덜기 위해 깃허브 issue(이슈)를 활용한 협업 방식 구축했습니다.
 
-In the project directory, you can run:
+한 화면(view)에는 여러 기능(feature)이 모여있습니다. 여러 화면은 어떤 영역(domain)을 해결할 수 있습니다.
 
-### `npm start`
+## TL;DR
+- 개발자는 🧩 Feature 이슈를 만들고 작업하면 됩니다 😃
+- 맥락을 살펴보려면 🌐 Domain까지 살펴보는 것이 좋습니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 협업 하기 전 알아야 하는 우리의 구조 🏗️
+Code 옆 [Issues 탭](https://github.com/42-Jolly-pingpong/front-end/issues/new/choose)을 클릭하면 이모지가 붙은 템플릿을 보실 수가 있습니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+🧩 Feature(기능) 하나를 만들기 위해선 View가 필요합니다.\
+🎨 View(구체적인 화면, 사용자가 볼 화면 ex. 채팅 화면)를 구성할 땐 Domain이 필요합니다.\
+🌐 Domain(영역)은 가장 위에 있고 SW로 해결하고자 하는 문제의 영역입니다. 위에서 밑으로 흐르기 때문에 Domain이 우선적으로 만들어져야 합니다.
 
-### `npm test`
+1. 🌐 Domain
+2. 🌐 Domain -> 🎨 View
+4. 🌐 Domain -> 🎨 View -> 🧩 Feature
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Project manager가 만드는 이슈 🧑🏻‍💼👩🏻‍💼
+프로덕트 매니저가 Domain, View, Feature까지 각 단계에서 이슈를 만듭니다.\
+각 단계에서는 해당 이슈에 대한 **자세한 설명**과 **하위 단계의 이슈**까지만 연결해서 작성합니다.
 
-### `npm run build`
+- **기능명세서**처럼 자세한 기능에 대한 설명은 Feature에서 합니다. 기능에 따라 화면의 상태가 바뀌는 것도 Figma에서 확인이 가능합니다.\
+Figma에서 🧩 Feature는 개별 component에 연결되어 있습니다.
+- **화면명세서**처럼 화면에 대한 자세한 설명은 View에서 하고 **디자인된 화면**은 Figma를 통해 확인하고 설명은 특정 화면은 View 이슈로 연결되어 있습니다.\
+Figma에서 🎨 View은 개별 화면에 연결되어 있습니다.
+- **요구사항 정의서**처럼 만들어야 하는 이유에 대한 설명은 Domain에서 합니다.\
+Figma에서 🌐 Domain은 연결하지 않습니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 기능 개발을 위해서 이슈를 확인하는 방법 ✨
+왜 이 기능이 필요하진를 파악하기 위해선 **feature -> view -> domain** 순으로 거꾸로 올라가서 확인하면 왜 만드는지를 알 수 있습니다.\
+개발자는 **피그마 개발 모드**로 연결된 이슈를 확인해 기능을 구현합니다. 보통 feature(기능)는 화면에 특정 component(컴포넌트)에 연결되어 있습니다.\
+연결되어 있지 않은 UI는 단순한 텍스트 같은 UI이거나 **아직 이슈가 만들어지지 않은 기능**입니다.
+> 🤔 아무리 생각해도 있어야 할 이슈인데 없는 경우라면 빠르게 공유해주세요!
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+피그마에서 작업을 해도 되는 건 ✅ ready to dev 상태가 표시되어 있습니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 피그마에 이슈가 연결된 항목 🧶
+<!--
+피그마 프로젝트는 PC & Web을 볼 수 있는 페이지 페이지로 나뉘어 있습니다.
+-->
+기능 개발을 위해선 피그마에 대한 이해와 피그마 개발 모드를 잘 활용해야 합니다.\
+피그마는 디자인 도구이기 때문에 **화면 위주의 작업물**이 존재합니다.\
+피그마는 컴포넌트 단위로도 이슈를 연결할 수 있기 때문에 View, Feature는 피그마와 연결될 수 있습니다.
+- 🎨 View은 데스크탑 웹을 기준으로 만들어진 화면과 이슈로 연결됩니다.
+- 🧩 Feautre는 성격에 따라 연결되는 이슈가 컴포넌트이거나 화면일 수 있습니다. 하나의 View에 들어있는 기능으로 연결되거나 피그마 variants를 이용해 여러개의 화면이 만들어지는 이슈와 연결됩니다.
