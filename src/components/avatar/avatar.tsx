@@ -5,6 +5,7 @@ const Avatar = (props: { user: User }) => {
 	const context = useNavigate();
 
 	const { user } = props;
+	const isOnline = true;
 
 	const onClickAvatar = () => {
 		context(`/users/${user.idx}`);
@@ -12,11 +13,13 @@ const Avatar = (props: { user: User }) => {
 
 	return (
 		<button onClick={onClickAvatar}>
-			<img
-				src={user.avatarPath}
-				alt='Avatar'
-				className='rounded-full w-12 h-12 mr-3'
-			/>
+			<div
+				className={`avatar ${
+					isOnline ? 'online' : 'offline'
+				} layout-icon w-16 h-16`}
+			>
+				<img src={user.avatarPath} alt='Avatar' className='rounded-full' />
+			</div>
 		</button>
 	);
 };
