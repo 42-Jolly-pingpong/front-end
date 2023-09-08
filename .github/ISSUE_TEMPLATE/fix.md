@@ -3,7 +3,7 @@ name: "🛠️ FIX"
 about: 어떤 오류인지 작성해주세요.
 title: "[fix] "
 labels: ["bug"]
-projects: ["42-Jolly-pingpong/1"]
+projects: ["42-Jolly-pingpong/2"]
 
 ---
 
@@ -15,9 +15,9 @@ projects: ["42-Jolly-pingpong/1"]
 -->
 develop
 
-## 🖼️ Frame
+## 🎨 View
 <!--
-이슈 연결이 가능한 '#'으로 frame과 연결해주세요
+이슈 연결이 가능한 '#'으로 view과 연결해주세요
 -->
 -
 

@@ -3,7 +3,7 @@ name: "🎁 REFACTOR"
 about: 어떤 부분을 개선하는지 작성해주세요.
 title: "[refactor] "
 labels: ["refactor"]
-projects: ["42-Jolly-pingpong/1"]
+projects: ["42-Jolly-pingpong/2"]
 
 ---
 

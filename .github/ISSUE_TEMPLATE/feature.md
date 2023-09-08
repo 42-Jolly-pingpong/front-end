@@ -3,7 +3,7 @@ name: "🧩 FEATURE"
 about: 어떤 화면의 기능인지 작성해주세요.
 title: "[feat] "
 labels: ["feat"]
-projects: ["42-Jolly-pingpong/1"]
+projects: ["42-Jolly-pingpong/2"]
 
 ---
 
