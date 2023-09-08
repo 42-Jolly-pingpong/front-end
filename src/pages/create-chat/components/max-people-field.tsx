@@ -1,14 +1,14 @@
 import ChatroomProperty from 'pages/create-chat/components/chatroom-property';
 
 const MaxPeopleField = (props: {
-	maxPeople: string;
-	setMaxPeople: React.Dispatch<React.SetStateAction<string>>;
+	maxPeople: number;
+	setMaxPeople: React.Dispatch<React.SetStateAction<number>>;
 }) => {
 	const { maxPeople, setMaxPeople } = props;
 	const maxPeopleProperty = 'Max people';
 
 	const typeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const people = e.target.value;
+		const people = Number(e.target.value);
 
 		if (0 <= Number(people)) {
 			setMaxPeople(people);
@@ -16,20 +16,19 @@ const MaxPeopleField = (props: {
 	};
 
 	const onClickPlus = () => {
-		setMaxPeople((pre) => (Number(pre) < 30 ? String(Number(pre) + 1) : pre));
+		setMaxPeople((pre) => (pre < 30 ? pre + 1 : pre));
 	};
 
 	const onClickMinus = () => {
-		setMaxPeople((pre) => (2 < Number(pre) ? String(Number(pre) - 1) : pre));
+		setMaxPeople((pre) => (2 < pre ? pre - 1 : pre));
 	};
 
 	const onBlurInput = () => {
-		const currPeople = Number(maxPeople);
-		if (currPeople < 2) {
-			setMaxPeople('2');
+		if (maxPeople < 2) {
+			setMaxPeople(2);
 		}
-		if (30 < currPeople) {
-			setMaxPeople('30');
+		if (30 < maxPeople) {
+			setMaxPeople(30);
 		}
 	};
 

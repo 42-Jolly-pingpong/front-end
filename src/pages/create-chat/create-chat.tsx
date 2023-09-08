@@ -5,7 +5,7 @@ import PrivateRoomField from 'pages/create-chat/components/private-room-field';
 
 const CreateChat = (): JSX.Element => {
 	const [roomName, setRoomName] = useState('');
-	const [maxPeople, setMaxPeople] = useState('3');
+	const [maxPeople, setMaxPeople] = useState(3);
 	const [isPrivate, setIsPrivate] = useState(false);
 	const [password, setPassword] = useState('');
 
