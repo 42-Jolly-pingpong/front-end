@@ -50,7 +50,6 @@ export const tempParticipants: User[] = [tempUser1, tempUser2];
 export const tempChatroom1: Chatroom = {
 	idx: 1,
 	title: 'come on!',
-	//owner: tempUser1,
 	password: null,
 	currentPeople: 2,
 	maxPeople: 10,
@@ -63,7 +62,6 @@ export const tempChatroom2: Chatroom = {
 	idx: 2,
 	title: 'hi!',
 	password: 1234,
-	//owner: tempUser2,
 	currentPeople: 2,
 	maxPeople: 10,
 	type: ChatroomType.PROTECTED,
