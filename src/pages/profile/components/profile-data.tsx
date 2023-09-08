@@ -2,7 +2,7 @@ import { useState } from 'react';
 import GetUserInfo from 'components/services/getUserInfo';
 
 const ProfileData = () => {
-	const [user, setUser] = useState(GetUserInfo());
+	const [user, setUser] = useState(GetUserInfo(1));
 	return (
 		<div className='flex flex-col mx-5'>
 			<div className='text-2xl mb-3'>{`- ID : ${user?.intraId}`}</div>
