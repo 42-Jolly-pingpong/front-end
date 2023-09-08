@@ -22,7 +22,7 @@ const Profile = () => {
 
 	return (
 		<div className='flex justify-center items-center w-11/12 h-5/6 mb-10'>
-			<form className='flex justify-center items-center w-3/5 '>
+			<div className='flex justify-center items-center w-3/5 '>
 				<fieldset className='flex flex-col border-4 border-black w-5/6 bg-gray-200 rounded-md'>
 					<legend className='flex justify-center items-center border-solid mb-2  text-center '>
 						<div className='avatar'>
@@ -50,7 +50,7 @@ const Profile = () => {
 						<WithdrawModal />
 					</div>
 				</fieldset>
-			</form>
+			</div>
 		</div>
 	);
 };
