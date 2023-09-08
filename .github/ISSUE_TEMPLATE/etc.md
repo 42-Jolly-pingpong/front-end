@@ -1,6 +1,6 @@
 ---
 name: "🧹 ETC"
-about: "해당하는 템플릿이 없을 때, 이게 어떤 이슈인지 작성해주세요.
+about: "해당하는 템플릿이 없을 때, 이게 어떤 이슈인지 작성해주세요."
 title: "[] "
 projects: ["42-Jolly-pingpong/2"]
 
