@@ -2,7 +2,7 @@ import { User } from 'ts/interfaces/user.model';
 import AnswerButton from 'components/sidebar/friend/answer-button';
 import Avatar from 'components/avatar/avatar';
 
-const FriendElement = (props: { user: User; request?: boolean }) => {
+const FriendElement = (props: { user: User, request?: boolean }) => {
 	const { user, request } = props;
 
 	return (

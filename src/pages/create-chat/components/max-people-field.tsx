@@ -10,26 +10,36 @@ const MaxPeopleField = (props: {
 	const typeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const people = Number(e.target.value);
 
-		if (2 <= people) {
+		if (0 <= Number(people)) {
 			setMaxPeople(people);
 		}
 	};
 
 	const onClickPlus = () => {
-		setMaxPeople((pre) => pre + 1); //방 최대인원 규칙이 있는지?
+		setMaxPeople((pre) => (pre < 30 ? pre + 1 : pre));
 	};
 
 	const onClickMinus = () => {
 		setMaxPeople((pre) => (2 < pre ? pre - 1 : pre));
 	};
 
+	const onBlurInput = () => {
+		if (maxPeople < 2) {
+			setMaxPeople(2);
+		}
+		if (30 < maxPeople) {
+			setMaxPeople(30);
+		}
+	};
+
 	return (
 		<div className='flex'>
 			<ChatroomProperty property={maxPeopleProperty} />
 			<input
-				type='number'
+				type='text'
 				value={maxPeople}
 				onChange={typeNumber}
+				onBlur={onBlurInput}
 				width={3}
 			></input>
 			<button onClick={onClickPlus}>+</button>
