@@ -1,5 +1,5 @@
 type InfoButtonProps = {
-	label: String;
+	label: string;
 	onClick: () => void;
 };
 
