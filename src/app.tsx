@@ -23,30 +23,28 @@ const Section = (props: { section: JSX.Element }) => {
 
 function App() {
 	return (
-		<div>
-			<RecoilRoot>
-				<BrowserRouter>
-					<Routes>
-						<Route element={<Layout />}>
-							<Route index path='/' element={<Section section={<Main />} />} />
-							<Route path='/game' element={<h1>GAME</h1>} />
-							<Route
-								path='/profile/:user_idx'
-								element={<Section section={<Profile />} />}
-							/>
-							<Route path='/sign-up' element={<SignUp />} />
-							<Route
-								path='/chat-rooms'
-								element={<Section section={<CreateChat />} />}
-							/>
-						</Route>
-						{/* /login 접근 -> jwt 확인 (42 api) */}
-						<Route path='/login' element={<h1>LOGIN</h1>} />
-						<Route path='*' element={<h1>NOT FOUND</h1>} />
-					</Routes>
-				</BrowserRouter>
-			</RecoilRoot>
-		</div>
+		<RecoilRoot>
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Layout />}>
+						<Route index path='/' element={<Section section={<Main />} />} />
+						<Route path='/game' element={<h1>GAME</h1>} />
+						<Route
+							path='/profile/:user_idx'
+							element={<Section section={<Profile />} />}
+						/>
+						<Route path='/sign-up' element={<SignUp />} />
+						<Route
+							path='/chat-rooms'
+							element={<Section section={<CreateChat />} />}
+						/>
+					</Route>
+					{/* /login 접근 -> jwt 확인 (42 api) */}
+					<Route path='/login' element={<h1>LOGIN</h1>} />
+					<Route path='*' element={<h1>NOT FOUND</h1>} />
+				</Routes>
+			</BrowserRouter>
+		</RecoilRoot>
 	);
 }
 
