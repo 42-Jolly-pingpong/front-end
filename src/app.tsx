@@ -4,6 +4,7 @@ import Snackbar from 'components/snackbar/snackbar';
 import UserInfo from 'components/user-info/user-info';
 import CreateChat from 'pages/create-chat/create-chat';
 import Main from 'pages/main/main';
+import ManageChat from 'pages/manage-chat/manage-chat';
 import Profile from 'pages/profile/profile';
 import SignUp from 'pages/sign-up/sign-up';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -41,6 +42,10 @@ function App() {
 							<Route
 								path='/chat-rooms'
 								element={<Section section={<CreateChat />} />}
+							/>
+							<Route
+								path='/users/:user_idx/chat-rooms/:room_idx'
+								element={<Section section={<ManageChat />} />}
 							/>
 							<Route
 								path='/user-info'

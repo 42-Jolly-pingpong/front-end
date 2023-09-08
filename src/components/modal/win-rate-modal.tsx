@@ -5,6 +5,7 @@ import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import winRateData from 'ts/mock/win-rate-data';
 import ProfileBadge from 'pages/profile/components/profile-badge';
+import GetUserInfo from 'components/services/getUserInfo';
 
 interface winRateResultProps {
 	win_rate: number;
@@ -36,10 +37,6 @@ const WinRateResult: React.FC<winRateResultProps> = ({ win_rate }) => {
 };
 
 // back-end API : recoil로 user정보가져오기
-const getUserInfo = (): User => {
-	//return null;
-	return userData[1];
-};
 
 // back-end API : user와 관련된 승률 데이터 리스트 받아오는 함수
 const getWinRateList = () => {
@@ -56,9 +53,10 @@ const getUserNickName = (userIdx: number) => {
 };
 
 const WinRateData = () => {
-	const [user, setUser] = useState(getUserInfo());
+	const [user, setUser] = useState(GetUserInfo(1));
 	const myWinRate = getWinRateList();
 
+	if (user == null) return <div>여긴 나오면 안되는 페이지</div>;
 	return (
 		<div className='py-4 border-solid border-t-2'>
 			<WinRateResult

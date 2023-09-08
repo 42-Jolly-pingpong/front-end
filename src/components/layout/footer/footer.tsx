@@ -6,7 +6,7 @@ import { SidebarStatus } from 'ts/enums/sidebar-status.enum';
 import WinRateModal from 'components/modal/win-rate-modal';
 
 const Footer = () => {
-	const [user, setUser] = useState(GetUserInfo());
+	const [user, setUser] = useState(GetUserInfo(1));
 	const [state, setState] = useRecoilState(sidebarState);
 
 	const onClickChat = () => {

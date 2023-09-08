@@ -3,7 +3,7 @@ import { GameHistory } from 'ts/interfaces/game-history.model';
 
 const winRateData: GameHistory[] = [
 	{
-		idx: 1,
+		historyIdx: 10,
 		winPlayerIdx: 0,
 		losePlayerIdx: 1,
 		winScore: 2,
@@ -13,7 +13,7 @@ const winRateData: GameHistory[] = [
 		mode: GameMode.EASY,
 	},
 	{
-		idx: 2,
+		historyIdx: 11,
 		winPlayerIdx: 1,
 		losePlayerIdx: 2,
 		winScore: 3,

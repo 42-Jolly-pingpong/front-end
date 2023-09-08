@@ -3,6 +3,7 @@ import { Chatroom } from 'ts/interfaces/chatroom.model';
 import { chatState, chatroomState } from 'ts/states/chat-state';
 import { useSetRecoilState } from 'recoil';
 import ChatroomInfo from 'components/sidebar/chat/chatroom-info';
+import { tempUser1 } from '../temp-chat-user';
 
 type ChatroomElementProps = {
 	chatroom: Chatroom;
@@ -16,7 +17,7 @@ const ChatroomElement = (props: ChatroomElementProps) => {
 	const setCurrChat = useSetRecoilState(chatState);
 
 	const { chatroom, isOpened, roomToEnter, setRoomToEnter } = props;
-	const owner = chatroom.owner; // 임시
+	const owner = tempUser1; // 임시
 
 	const onClickChatroom = () => {
 		if (isOpened && setRoomToEnter != undefined) {
