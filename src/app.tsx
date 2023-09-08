@@ -36,7 +36,7 @@ function App() {
 							/>
 							<Route path='/sign-up' element={<SignUp />} />
 							<Route
-								path='/create-chat'
+								path='/chat-rooms'
 								element={<Section section={<CreateChat />} />}
 							/>
 						</Route>
