@@ -8,7 +8,7 @@ const Avatar = (props: { user: User; size: number }) => {
 	const isOnline = true;
 
 	const onClickAvatar = () => {
-		context(`/user-info`, { state: { ...user } });
+		context(`/user-info/${user.nickname}`);
 	};
 
 	return (

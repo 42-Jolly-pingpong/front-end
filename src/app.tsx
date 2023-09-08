@@ -48,7 +48,7 @@ function App() {
 								element={<Section section={<ManageChat />} />}
 							/>
 							<Route
-								path='/user-info'
+								path='/user-info/:nickname'
 								element={<Section section={<UserInfo />} />}
 							/>
 						</Route>
