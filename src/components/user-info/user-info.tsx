@@ -6,21 +6,29 @@ import { useNavigate } from 'react-router-dom';
 const UserInfo = () => {
 	const context = useNavigate();
 	const user = tempUser1; //임시
-	const isFriend: boolean = true; //임시
-	const isBlockedFriend: boolean = false; //임시
+	const isFriend = true; //임시
+	const isBlockedFriend = false; //임시
 
 	context('/create-chat');
 	const onClickProfileButton = () => {
 		context(`/profile/${user.idx}`);
 	};
 
-	const onClickInviteGameButton = () => {};
+	const onClickInviteGameButton = () => {
+		//
+	};
 
-	const onClickSendChatButton = () => {};
+	const onClickSendChatButton = () => {
+		//
+	};
 
-	const onClickChangeFriendStatusButton = () => {};
+	const onClickChangeFriendStatusButton = () => {
+		//
+	};
 
-	const onClickChangeBlockStatusButton = () => {};
+	const onClickChangeBlockStatusButton = () => {
+		//
+	};
 
 	return (
 		<div>
