@@ -5,7 +5,7 @@ import { ChatStatus } from 'ts/enums/chat-status.enum';
 import { chatState, chatroomState } from 'ts/states/chat-state';
 import useSnackbar from 'hooks/show-snackbar';
 
-const CheckPasswordModal = (props: { roomToEnter: Chatroom }) => {
+const CheckPasswordForm = (props: { roomToEnter: Chatroom }) => {
 	const [password, setPassword] = useState('');
 
 	const setCurrChatroom = useSetRecoilState(chatroomState);
@@ -53,8 +53,8 @@ const CheckPasswordModal = (props: { roomToEnter: Chatroom }) => {
 	};
 
 	return (
-		<dialog id='checkPasswordModal' className='modal'>
-			<form method='dialog' className='modal-box'>
+		<>
+			<form method='dialog' className='modal-box z-1'>
 				<h3>{title}</h3>
 				<div className='flex'>
 					<input
@@ -71,8 +71,8 @@ const CheckPasswordModal = (props: { roomToEnter: Chatroom }) => {
 			<form method='dialog' className='modal-backdrop'>
 				<button></button>
 			</form>
-		</dialog>
+		</>
 	);
 };
 
-export default CheckPasswordModal;
+export default CheckPasswordForm;

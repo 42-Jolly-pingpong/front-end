@@ -3,7 +3,6 @@ import { Chatroom } from 'ts/interfaces/chatroom.model';
 import { chatState, chatroomState } from 'ts/states/chat-state';
 import { useSetRecoilState } from 'recoil';
 import ChatroomInfo from 'components/sidebar/chat/chatroom-info';
-import { ChatroomType } from 'ts/enums/chatroom-type.enum';
 
 type ChatroomElementProps = {
 	chatroom: Chatroom;
@@ -21,12 +20,7 @@ const ChatroomElement = (props: ChatroomElementProps) => {
 
 	const onClickChatroom = () => {
 		if (isOpened && setRoomToEnter != undefined) {
-			// 유저가 채팅방에 들어가있는 지 확인.
 			setRoomToEnter(chatroom);
-			if (roomToEnter?.type === ChatroomType.PROTECTED) {
-				window.checkPasswordModal.showModal();
-				return;
-			}
 			window.checkEnterModal.showModal();
 			return;
 		}

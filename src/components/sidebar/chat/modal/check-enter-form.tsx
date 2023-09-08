@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { chatState, chatroomState } from 'ts/states/chat-state';
 import { ChatStatus } from 'ts/enums/chat-status.enum';
 
-const CheckEnterModal = (props: { roomToEnter: Chatroom }) => {
+const CheckEnterForm = (props: { roomToEnter: Chatroom }) => {
 	const setCurrChatroom = useSetRecoilState(chatroomState);
 	const setCurrChat = useSetRecoilState(chatState);
 
@@ -14,11 +14,8 @@ const CheckEnterModal = (props: { roomToEnter: Chatroom }) => {
 		setCurrChat(ChatStatus.INCHAT);
 	};
 
-	// const onClickNo = () => {
-	// }
-
 	return (
-		<dialog id='checkEnterModal' className='modal'>
+		<>
 			<form method='dialog' className='modal-box'>
 				<h3>{title}</h3>
 				<button onClick={onClickYes}>네</button>
@@ -27,8 +24,8 @@ const CheckEnterModal = (props: { roomToEnter: Chatroom }) => {
 			<form method='dialog' className='modal-backdrop'>
 				<button></button>
 			</form>
-		</dialog>
+		</>
 	);
 };
 
-export default CheckEnterModal;
+export default CheckEnterForm;

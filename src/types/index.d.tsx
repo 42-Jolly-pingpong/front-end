@@ -11,7 +11,6 @@ declare global {
 		emailAuthModal: any;
 		withdrawModal: any;
 		avatarChangeModal: any;
-		checkPasswordModal: HTMLFormElement;
 		checkEnterModal: HTMLFormElement;
 	}
 }

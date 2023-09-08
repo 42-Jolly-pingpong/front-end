@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ChatElement from 'components/sidebar/chat/chatroom-element';
+import ChatroomElement from 'components/sidebar/chat/chatroom-element';
 import { Chatroom } from 'ts/interfaces/chatroom.model';
 import { tempChatroom1, tempChatroom2 } from '../temp-chat-user'; //임시
 
@@ -18,7 +18,7 @@ const JoinedChatroomList = () => {
 			<div className='collapse-title text-xl'>chat</div>
 			<div className='collapse-content overflow-y-auto'>
 				{chatList.map((chat, id) => (
-					<ChatElement chatroom={chat} key={id} />
+					<ChatroomElement key={id} chatroom={chat} />
 				))}
 			</div>
 		</div>
