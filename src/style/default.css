@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
 @charset "UTF-8";
 
 @font-face {
@@ -52,6 +53,7 @@
 		aspect-ratio: 1/1;
 	}
 }
+*/
 
 /* http://meyerweb.com/eric/tools/css/reset/
 v2.0 | 20110126
