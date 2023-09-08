@@ -6,7 +6,7 @@ import HeaderSign from 'components/layout/header/header-sign';
 import GetUserInfo from 'components/services/getUserInfo';
 
 const Header = () => {
-	const [user, setUser] = useState(GetUserInfo());
+	const [user, setUser] = useState(GetUserInfo(1));
 
 	return (
 		<header

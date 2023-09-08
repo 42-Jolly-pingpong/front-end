@@ -1,9 +1,9 @@
-import { Chatroom } from '../../ts/interfaces/chatroom.model';
-import chatRoomData from '../../ts/mock/chat-room-data';
+import { Chatroom } from 'ts/interfaces/chatroom.model';
+import chatRoomData from 'ts/mock/chatroom-data';
 
-const GetRoomInfo = (): Chatroom | null => {
+const GetRoomInfo = (roomIdx: number): Chatroom | null => {
 	// return null
-	return chatRoomData[0];
+	return chatRoomData[roomIdx];
 };
 
 export default GetRoomInfo;

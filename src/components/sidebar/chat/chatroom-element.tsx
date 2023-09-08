@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import ChatroomInfo from 'components/sidebar/chat/chatroom-info';
 
 const ChatroomElement = (chatroom: Chatroom) => {
-	const owner = chatroom.owner; // 임시
+	//const owner = chatroom.owner; // 임시
 	const [currChatroom, setCurrChatroom] = useRecoilState(chatroomState);
 	const [currChat, setCurrChat] = useRecoilState(chatState);
 
@@ -22,7 +22,7 @@ const ChatroomElement = (chatroom: Chatroom) => {
 					onClick={onClickChatroom}
 				>
 					<img
-						src={owner.avatarPath}
+						//src={owner.avatarPath}
 						className='rounded-full layout-icon w-12 h-12 mr-3'
 					/>
 					<div className='mr-2'>{chatroom.title}</div>
