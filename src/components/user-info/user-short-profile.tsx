@@ -4,8 +4,12 @@ const UserShortProfile = (props: { user: User }) => {
 	const { user } = props;
 
 	return (
-		<div>
-			<img src={user.avatarPath} alt='Avatar' className='rounded-full' />
+		<div className='flex items-center'>
+			<img
+				src={user.avatarPath}
+				alt='Avatar'
+				className='rounded-full w-32 h-32'
+			/>
 			<h3>{user.nickname}</h3>
 		</div>
 	);

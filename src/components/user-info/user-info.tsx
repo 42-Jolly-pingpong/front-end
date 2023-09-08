@@ -9,7 +9,6 @@ const UserInfo = () => {
 	const isFriend = true; //임시
 	const isBlockedFriend = false; //임시
 
-	context('/create-chat');
 	const onClickProfileButton = () => {
 		context(`/profile/${user.idx}`);
 	};
@@ -31,7 +30,7 @@ const UserInfo = () => {
 	};
 
 	return (
-		<div>
+		<div className='flex flex-col'>
 			<UserShortProfile user={user} />
 			<InfoButton label={'프로필'} onClick={onClickProfileButton} />
 			<InfoButton label={'게임 초대'} onClick={onClickInviteGameButton} />
