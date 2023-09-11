@@ -51,6 +51,7 @@
 	font-weight: normal;
 	font-style: normal;
 }
+*/
 
 @layer components {
 	.layout-icon {
@@ -60,7 +61,6 @@
 		aspect-ratio: 1/1;
 	}
 }
-*/
 
 /* http://meyerweb.com/eric/tools/css/reset/
 v2.0 | 20110126
