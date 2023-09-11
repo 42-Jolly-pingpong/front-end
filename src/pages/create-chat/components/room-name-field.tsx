@@ -12,14 +12,14 @@ const RoomNameField = (props: {
 	};
 
 	return (
-		<div className='flex'>
+		<div className='create-chatroom-field'>
 			<ChatroomProperty property={roomNameProperty} />
 			<input
 				type='text'
 				value={roomName}
 				onChange={onchangeName}
-				className='block w-full rounded-md border-0 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset'
-			></input>
+				className='create-chatroom-form'
+			/>
 		</div>
 	);
 };

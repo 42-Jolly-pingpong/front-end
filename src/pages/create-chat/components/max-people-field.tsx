@@ -1,5 +1,16 @@
 import ChatroomProperty from 'pages/create-chat/components/chatroom-property';
 
+const Button = (props: { label: string; onClick: () => void }) => {
+	return (
+		<button
+			className='bg-black rounded-md text-white ml-1 w-7'
+			onClick={props.onClick}
+		>
+			{props.label}
+		</button>
+	);
+};
+
 const MaxPeopleField = (props: {
 	maxPeople: number;
 	setMaxPeople: React.Dispatch<React.SetStateAction<number>>;
@@ -33,17 +44,18 @@ const MaxPeopleField = (props: {
 	};
 
 	return (
-		<div className='flex'>
+		<div className='create-chatroom-field'>
 			<ChatroomProperty property={maxPeopleProperty} />
 			<input
+				className='create-chatroom-form w-10'
 				type='text'
 				value={maxPeople}
 				onChange={typeNumber}
 				onBlur={onBlurInput}
 				width={3}
-			></input>
-			<button onClick={onClickPlus}>+</button>
-			<button onClick={onClickMinus}>-</button>
+			/>
+			<Button label='+' onClick={onClickPlus} />
+			<Button label='-' onClick={onClickMinus} />
 		</div>
 	);
 };

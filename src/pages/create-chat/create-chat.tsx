@@ -13,7 +13,7 @@ const CreateChat = (): JSX.Element => {
 		<div className='w-full h-full'>
 			<div className='flex flex-col justify-center items-center h-full'>
 				<h3>Create chat room</h3>
-				<div className='flex flex-col justify-start pt-8 pb-8'>
+				<div className='flex flex-col justify-start pt-8 pb-8 justify-items-center'>
 					<RoomNameField roomName={roomName} setRoomName={setRoomName} />
 					<MaxPeopleField maxPeople={maxPeople} setMaxPeople={setMaxPeople} />
 					<PrivateRoomField

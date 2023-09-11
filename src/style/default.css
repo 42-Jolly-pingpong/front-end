@@ -53,6 +53,14 @@
 	}
 }
 
+.create-chatroom-form {
+	@apply border-2 border-solid border-black rounded-md pl-2 pr-2;
+}
+
+.create-chatroom-field {
+	@apply flex p-1 items-center;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
 v2.0 | 20110126
 License: none (public domain)
