@@ -10,17 +10,21 @@ const CreateChat = (): JSX.Element => {
 	const [password, setPassword] = useState('');
 
 	return (
-		<div>
-			<div>Create chat room</div>
-			<RoomNameField roomName={roomName} setRoomName={setRoomName} />
-			<MaxPeopleField maxPeople={maxPeople} setMaxPeople={setMaxPeople} />
-			<PrivateRoomField
-				isPrivate={isPrivate}
-				setIsPrivate={setIsPrivate}
-				password={password}
-				setPassword={setPassword}
-			/>
-			<button>create</button>
+		<div className='w-full h-full'>
+			<div className='flex flex-col justify-center items-center h-full'>
+				<h3>Create chat room</h3>
+				<div className='flex flex-col justify-start pt-8 pb-8'>
+					<RoomNameField roomName={roomName} setRoomName={setRoomName} />
+					<MaxPeopleField maxPeople={maxPeople} setMaxPeople={setMaxPeople} />
+					<PrivateRoomField
+						isPrivate={isPrivate}
+						setIsPrivate={setIsPrivate}
+						password={password}
+						setPassword={setPassword}
+					/>
+				</div>
+				<button>create</button>
+			</div>
 		</div>
 	);
 };
