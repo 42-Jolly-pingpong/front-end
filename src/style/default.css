@@ -4,14 +4,22 @@
 
 @charset "UTF-8";
 
+/* TODO 폰트 내장하기 */
 @font-face {
 	font-family: 'IAMAPLAYER';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/IAMAPLAYER.woff2')
-		format('woff2');
+	format('woff2');
 	font-weight: normal;
 	font-style: normal;
 }
 
+@layer base {
+	html {
+		font-family: 'IAMAPLAYER';
+	}
+}
+
+/*
 @font-face {
 	font-family: 'Ramche';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Ramche.woff2')
@@ -43,6 +51,7 @@
 	font-weight: normal;
 	font-style: normal;
 }
+*/
 
 @layer components {
 	.layout-icon {
@@ -53,11 +62,12 @@
 	}
 }
 
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
 v2.0 | 20110126
 License: none (public domain)
 */
 
+/*
 html,
 body,
 div,
@@ -148,7 +158,10 @@ video {
 	font-family: 'IAMAPLAYER';
 	font-weight: 500;
 }
+*/
+
 /* HTML5 display-role reset for older browsers */
+/*
 article,
 aside,
 details,
@@ -197,3 +210,4 @@ a {
 	text-decoration: none;
 	cursor: pointer;
 }
+*/
