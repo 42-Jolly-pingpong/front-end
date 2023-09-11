@@ -1,15 +1,30 @@
 import { ChatStatus } from 'ts/enums/chat-status.enum';
 import { Chatroom } from 'ts/interfaces/chatroom.model';
 import { chatState, chatroomState } from 'ts/states/chat-state';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import ChatroomInfo from 'components/sidebar/chat/chatroom-info';
+import { tempUser1 } from '../temp-chat-user';
 
-const ChatroomElement = (chatroom: Chatroom) => {
-	const owner = chatroom.owner; // 임시
-	const [currChatroom, setCurrChatroom] = useRecoilState(chatroomState);
-	const [currChat, setCurrChat] = useRecoilState(chatState);
+type ChatroomElementProps = {
+	chatroom: Chatroom;
+	isOpened?: boolean;
+	roomToEnter?: Chatroom;
+	setRoomToEnter?: React.Dispatch<React.SetStateAction<Chatroom>>;
+};
+
+const ChatroomElement = (props: ChatroomElementProps) => {
+	const setCurrChatroom = useSetRecoilState(chatroomState);
+	const setCurrChat = useSetRecoilState(chatState);
+
+	const { chatroom, isOpened, roomToEnter, setRoomToEnter } = props;
+	const owner = tempUser1; // 임시
 
 	const onClickChatroom = () => {
+		if (isOpened && setRoomToEnter != undefined) {
+			setRoomToEnter(chatroom);
+			window.checkEnterModal.showModal();
+			return;
+		}
 		setCurrChatroom(chatroom);
 		setCurrChat(ChatStatus.INCHAT);
 	};

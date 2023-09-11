@@ -4,7 +4,6 @@ import { User } from 'ts/interfaces/user.model';
 const HeaderProfileIcon: React.FC<User> = (props) => {
 	const handleLogout = () => {
 		localStorage.removeItem('jwtToken');
-		console.log('hi');
 		return <Link to='/' />;
 	};
 

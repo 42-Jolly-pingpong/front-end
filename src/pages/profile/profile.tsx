@@ -18,7 +18,7 @@ const handleAvatarChange = () => {
 };
 
 const Profile = () => {
-	const [user, setUser] = useState(GetUserInfo());
+	const [user, setUser] = useState(GetUserInfo(1));
 
 	return (
 		<div className='flex justify-center items-center w-11/12 h-5/6 mb-10'>
@@ -64,7 +64,7 @@ export default Profile;
 //	setUserInfo(userData[idx]);
 //};
 //useEffect(() => {
-//	getUserInfo();
+//	GetUserInfo(1);
 //}, []);
 
 //<div className='flex'>

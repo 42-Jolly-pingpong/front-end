@@ -1,7 +1,10 @@
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/sidebar/sidebar';
+import Snackbar from 'components/snackbar/snackbar';
+import UserInfo from 'components/user-info/user-info';
 import CreateChat from 'pages/create-chat/create-chat';
 import Main from 'pages/main/main';
+import ManageChat from 'pages/manage-chat/manage-chat';
 import Profile from 'pages/profile/profile';
 import SignUp from 'pages/sign-up/sign-up';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -17,34 +20,45 @@ const Section = (props: { section: JSX.Element }) => {
 				{props.section}
 			</div>
 			{sidebarState ? <Sidebar /> : null}
+			<Snackbar />
 		</div>
 	);
 }; //임시
 
 function App() {
 	return (
-		<RecoilRoot>
-			<BrowserRouter>
-				<Routes>
-					<Route element={<Layout />}>
-						<Route index path='/' element={<Section section={<Main />} />} />
-						<Route path='/game' element={<h1>GAME</h1>} />
-						<Route
-							path='/profile/:user_idx'
-							element={<Section section={<Profile />} />}
-						/>
-						<Route path='/sign-up' element={<SignUp />} />
-						<Route
-							path='/chat-rooms'
-							element={<Section section={<CreateChat />} />}
-						/>
-					</Route>
-					{/* /login 접근 -> jwt 확인 (42 api) */}
-					<Route path='/login' element={<h1>LOGIN</h1>} />
-					<Route path='*' element={<h1>NOT FOUND</h1>} />
-				</Routes>
-			</BrowserRouter>
-		</RecoilRoot>
+		<div>
+			<RecoilRoot>
+				<BrowserRouter>
+					<Routes>
+						<Route element={<Layout />}>
+							<Route index path='/' element={<Section section={<Main />} />} />
+							<Route path='/game' element={<h1>GAME</h1>} />
+							<Route
+								path='/profile/:user_idx'
+								element={<Section section={<Profile />} />}
+							/>
+							<Route path='/sign-up' element={<SignUp />} />
+							<Route
+								path='/chat-rooms'
+								element={<Section section={<CreateChat />} />}
+							/>
+							<Route
+								path='/users/:user_idx/chat-rooms/:room_idx'
+								element={<Section section={<ManageChat />} />}
+							/>
+							<Route
+								path='/user-info/:nickname'
+								element={<Section section={<UserInfo />} />}
+							/>
+						</Route>
+						{/* /login 접근 -> jwt 확인 (42 api) */}
+						<Route path='/login' element={<h1>LOGIN</h1>} />
+						<Route path='*' element={<h1>NOT FOUND</h1>} />
+					</Routes>
+				</BrowserRouter>
+			</RecoilRoot>
+		</div>
 	);
 }
 

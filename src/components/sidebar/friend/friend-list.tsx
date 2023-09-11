@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import FriendElement from 'components/sidebar/friend/friend-element';
+import { User } from 'ts/interfaces/user.model';
 import { numberOfFriend, tempUser1 } from '../temp-chat-user'; //임시
 
 const FriendList = () => {
 	//친구 목록 가져오기
+	const friendList: User[] = [tempUser1, tempUser1, tempUser1];
 	const [isChecked, setIsChecked] = useState(true);
 
 	const onClickCheckbox = () => {
@@ -15,9 +17,9 @@ const FriendList = () => {
 			<input type='checkbox' checked={isChecked} onChange={onClickCheckbox} />
 			<div className='collapse-title text-xl'>friend ({numberOfFriend})</div>
 			<div className='collapse-content overflow-y-auto'>
-				<FriendElement user={tempUser1} request={true} />
-				<FriendElement user={tempUser1} />
-				<FriendElement user={tempUser1} />
+				{friendList.map((user, id) => (
+					<FriendElement user={user} key={id} />
+				))}
 			</div>
 		</div>
 	);
