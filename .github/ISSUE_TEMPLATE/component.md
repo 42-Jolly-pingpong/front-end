@@ -1,7 +1,7 @@
 ---
 name: "🖼️ COMPONENT"
 about: 어떤 화면의 UI인지 작성해주세요.
-title: "[component] "
+title: "[comp] "
 labels: ["component"]
 projects: ["ittae/3"]
 ---
