@@ -52,7 +52,6 @@ function App() {
 								element={<Section section={<UserInfo />} />}
 							/>
 						</Route>
-						{/* /login 접근 -> jwt 확인 (42 api) */}
 						<Route path='/login' element={<h1>LOGIN</h1>} />
 						<Route path='*' element={<h1>NOT FOUND</h1>} />
 					</Routes>
