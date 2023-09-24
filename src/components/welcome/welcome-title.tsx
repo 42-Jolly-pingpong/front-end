@@ -1,9 +1,9 @@
 const WelcomeTitle = () => {
 	return (
 		<div
-			className='text-9xl text-transparent font-black bg-cover animate-welcome bg-clip-text mb-8'
+			className='text-9xl text-transparent font-black mb-8 bg-clip-text animate-welcome '
 			style={{
-				backgroundImage: 'url("/images/jollypong.jpeg")',
+				backgroundImage: 'url("/images/jollypong3.jpeg")',
 			}}
 		>
 			Jolly Ping Pong

@@ -24,7 +24,7 @@ export default {
 				},
 			},
 			animation: {
-				welcome: 'welcome 15s ease-in-out infinite',
+				welcome: 'welcome 20s ease-in-out infinite',
 			},
 		},
 	},
