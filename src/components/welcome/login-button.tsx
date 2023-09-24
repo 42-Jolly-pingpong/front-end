@@ -10,7 +10,7 @@ const LoginButton = () => {
 };
 
 const handleLogin = async () => {
-	location.href = 'http://localhost:3000/auth/42login';
+	location.href = 'http://localhost:3000/auth/intra';
 };
 
 export default LoginButton;
