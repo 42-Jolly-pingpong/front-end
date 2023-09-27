@@ -1,9 +1,20 @@
 import { Sidebar } from 'flowbite-react';
+import Channel from 'pages/chat/components/channel';
+import { channelList } from 'pages/chat/mock';
+import { useEffect, useState } from 'react';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
 
 const Channels = () => {
+	const [channels, setChannels] = useState<ChatRoom[]>();
+
+	useEffect(() => {
+		//get Chat list
+		setChannels(channelList);
+	}, []);
+
 	return (
 		<Sidebar.Collapse label='채널'>
-			<Sidebar.Item href='#'>Products</Sidebar.Item>
+			{channels?.map((channel, id) => <Channel key={id} channel={channel} />)}
 		</Sidebar.Collapse>
 	);
 };

@@ -8,9 +8,9 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 		},
 		collapse: {
 			button:
-				'group flex flex-row-reverse w-full items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700',
+				'group flex flex-row-reverse w-full items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100',
 			icon: {
-				base: 'h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white',
+				base: 'h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900',
 				open: {
 					off: '',
 					on: 'text-gray-900',
@@ -26,20 +26,20 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 					},
 				},
 			},
-			list: 'space-y-2 py-2',
+			list: 'space-y-1 py-1',
 		},
 		item: {
-			base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700',
+			base: 'flex items-center justify-center rounded-lg p-1 text-base text-gray-900 hover:bg-gray-100',
 			active: 'bg-gray-100 dark:bg-gray-700',
 			collapsed: {
-				insideCollapse: 'group w-full pl-8 transition duration-75',
+				insideCollapse: 'group w-full pl-2 transition duration-75',
 				noIcon: 'font-bold',
 			},
 			content: {
-				base: 'px-3 flex-1 whitespace-nowrap',
+				base: 'px-3 flex-1 whitespace-nowrap truncate font-light',
 			},
 			icon: {
-				base: 'h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white',
+				base: 'h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900',
 				active: 'text-gray-700 dark:text-gray-100',
 			},
 			label: '',
@@ -47,6 +47,6 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 		},
 		items: '',
 		itemGroup:
-			'mt-4 space-y-2 border-t border-gray-200 pt-4 first:mt-0 first:border-t-0 first:pt-0 dark:border-gray-700',
+			'mt-4 space-y-2 border-t border-gray-200 pt-4 first:mt-0 first:border-t-0 first:pt-0',
 	},
 };
