@@ -4,11 +4,10 @@
 
 @charset "UTF-8";
 
-/* TODO 폰트 내장하기 */
 @font-face {
 	font-family: 'IAMAPLAYER';
 	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/IAMAPLAYER.woff2')
-	format('woff2');
+		format('woff2');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -16,6 +15,15 @@
 @layer base {
 	html {
 		font-family: 'IAMAPLAYER';
+	}
+}
+
+@layer components {
+	.layout-icon {
+		display: flex;
+		max-height: 100%;
+		height: 5rem;
+		aspect-ratio: 1/1;
 	}
 }
 
@@ -52,15 +60,6 @@
 	font-style: normal;
 }
 */
-
-@layer components {
-	.layout-icon {
-		display: flex;
-		max-height: 100%;
-		height: 5rem;
-		aspect-ratio: 1/1;
-	}
-}
 
 /* http://meyerweb.com/eric/tools/css/reset/
 v2.0 | 20110126

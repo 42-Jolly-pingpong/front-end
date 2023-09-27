@@ -1,9 +1,9 @@
 import Layout from 'components/layout/layout';
+import Root from 'components/root/root';
 import Sidebar from 'components/sidebar/sidebar';
 import Snackbar from 'components/snackbar/snackbar';
 import UserInfo from 'components/user-info/user-info';
 import CreateChat from 'pages/create-chat/create-chat';
-import Main from 'pages/main/main';
 import ManageChat from 'pages/manage-chat/manage-chat';
 import Profile from 'pages/profile/profile';
 import SignUp from 'pages/sign-up/sign-up';
@@ -32,7 +32,7 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route element={<Layout />}>
-							<Route index path='/' element={<Section section={<Main />} />} />
+							<Route index path='/' element={<Root />} />
 							<Route path='/game' element={<h1>GAME</h1>} />
 							<Route
 								path='/profile/:user_idx'
@@ -52,7 +52,6 @@ function App() {
 								element={<Section section={<UserInfo />} />}
 							/>
 						</Route>
-						{/* /login 접근 -> jwt 확인 (42 api) */}
 						<Route path='/login' element={<h1>LOGIN</h1>} />
 						<Route path='*' element={<h1>NOT FOUND</h1>} />
 					</Routes>
