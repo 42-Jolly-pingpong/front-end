@@ -2,11 +2,10 @@ import { Link } from 'react-router-dom';
 
 const HeaderLogo = () => {
 	return (
-		<div className='w-16 rounded-full'>
-			<Link to='/'>
-				<img src='images/logo.png' className='flex max-h-full' />
-			</Link>
-		</div>
+		<Link to='/' className='flex items-center'>
+			<img src='images/header-icon2.png' />
+			<div>졸리핑퐁</div>
+		</Link>
 	);
 };
 
