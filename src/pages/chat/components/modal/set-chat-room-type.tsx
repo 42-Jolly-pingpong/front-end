@@ -79,7 +79,12 @@ const SetChatRoomType = (props: {
 		return (
 			<div className='ml-6'>
 				<div className='text-sm mb-2'>비밀번호를 입력하세요.</div>
-				<TextInput name='password' type='password' className='w-60' />
+				<TextInput
+					name='password'
+					type='password'
+					className='w-60'
+					required={passwordField}
+				/>
 			</div>
 		);
 	};
