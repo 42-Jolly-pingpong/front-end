@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@charset "UTF-8";
+/* @charset "UTF-8"; */
 
 @font-face {
 	font-family: 'IAMAPLAYER';
@@ -14,7 +14,7 @@
 
 @layer base {
 	html {
-		font-family: 'IAMAPLAYER';
+		/* font-family: 'IAMAPLAYER'; */
 	}
 }
 
@@ -24,6 +24,11 @@
 		max-height: 100%;
 		height: 5rem;
 		aspect-ratio: 1/1;
+	}
+
+	.sidebar {
+		overflow-y: auto;
+		height: calc(100vh - 48px);
 	}
 }
 
