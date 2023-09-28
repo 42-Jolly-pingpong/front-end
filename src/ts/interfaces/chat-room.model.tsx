@@ -4,7 +4,7 @@ export interface ChatRoom {
 	id: number;
 	roomName: string;
 	roomType: ChatRoomType;
-	updateTime: Date;
+	updatedTime: Date;
 	status: boolean;
 	currentPeople: number;
 }
