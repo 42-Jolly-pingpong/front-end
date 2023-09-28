@@ -3,7 +3,7 @@ import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiHash, BiLock } from 'react-icons/bi';
 
-const Channel = (props: { channel: ChatRoom }) => {
+const ChannelItem = (props: { channel: ChatRoom }) => {
 	const channelIcon = () => {
 		switch (props.channel.roomType) {
 			case ChatRoomType.PUBLIC:
@@ -23,4 +23,4 @@ const Channel = (props: { channel: ChatRoom }) => {
 	);
 };
 
-export default Channel;
+export default ChannelItem;
