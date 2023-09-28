@@ -1,4 +1,5 @@
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
+import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 
 export interface ChatRoom {
 	id: number;
@@ -7,4 +8,5 @@ export interface ChatRoom {
 	updatedTime: Date;
 	status: boolean;
 	currentPeople: number;
+	participants: ChatParticipant[];
 }
