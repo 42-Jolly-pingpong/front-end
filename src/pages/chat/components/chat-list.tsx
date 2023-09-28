@@ -9,16 +9,18 @@ const ChatList = () => {
 		<div className='h-screen w-60 border-r'>
 			<div className='border-b'>
 				<Logo />
-				<Flowbite theme={{ theme: sidebarTheme }}>
-					<Sidebar className='w-full'>
-						<Sidebar.ItemGroup>
-							<Channels />
-						</Sidebar.ItemGroup>
-						<Sidebar.ItemGroup>
-							<Dms />
-						</Sidebar.ItemGroup>
-					</Sidebar>
-				</Flowbite>
+				<div className='sidebar'>
+					<Flowbite theme={{ theme: sidebarTheme }}>
+						<Sidebar className='w-full'>
+							<Sidebar.ItemGroup>
+								<Channels />
+							</Sidebar.ItemGroup>
+							<Sidebar.ItemGroup>
+								<Dms />
+							</Sidebar.ItemGroup>
+						</Sidebar>
+					</Flowbite>
+				</div>
 			</div>
 		</div>
 	);
