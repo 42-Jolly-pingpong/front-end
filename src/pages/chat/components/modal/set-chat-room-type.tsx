@@ -1,7 +1,10 @@
 import { Button, Label, Radio, TextInput } from 'flowbite-react';
 import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { CreateChatRoom } from 'ts/interfaces/create-chat-room.model';
+import { chatModalState } from 'ts/states/chat-modal-state';
 
 interface FormElements extends HTMLFormControlsCollection {
 	roomType: HTMLInputElement;
@@ -17,6 +20,7 @@ const SetChatRoomType = (props: {
 	setChatRoomInfo: React.Dispatch<React.SetStateAction<CreateChatRoom>>;
 }) => {
 	const [passwordField, setPasswordField] = useState<boolean>(false);
+	const setModalStatus = useSetRecoilState(chatModalState);
 
 	const { setPhase, setChatRoomInfo } = props;
 
@@ -35,7 +39,9 @@ const SetChatRoomType = (props: {
 			return { ...pre, roomType, password };
 		});
 
-		setPhase(3);
+		//create channel
+
+		setModalStatus(ChatModalStatus.CLOSE);
 	};
 
 	const handleLabelClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -102,7 +108,7 @@ const SetChatRoomType = (props: {
 				<Button color='light' onClick={onClickPreButton} className='mr-2'>
 					이전
 				</Button>
-				<Button type='submit'>다음</Button>
+				<Button type='submit'>채널 생성</Button>
 			</div>
 		</form>
 	);
