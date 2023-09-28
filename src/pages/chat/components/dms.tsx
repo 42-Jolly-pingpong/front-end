@@ -1,6 +1,6 @@
 import { Sidebar } from 'flowbite-react';
-import DmItem from 'pages/chat/components/dm-item';
-import CreateDm from 'pages/chat/components/create-dm';
+import CreateDm from 'pages/chat/components/sidebar/create-dm';
+import DmItem from 'pages/chat/components/sidebar/dm-item';
 import { dmList } from 'pages/chat/mock';
 import { useEffect, useState } from 'react';
 import { Dm } from 'ts/interfaces/dm.model';
