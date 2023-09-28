@@ -16,7 +16,7 @@ const Channel = (props: { channel: ChatRoom }) => {
 	return (
 		<Sidebar.Item>
 			<div className='flex items-center'>
-				<div className='pr-1'>{channelIcon()}</div>
+				<div className='mr-1'>{channelIcon()}</div>
 				{props.channel.roomName}
 			</div>
 		</Sidebar.Item>
