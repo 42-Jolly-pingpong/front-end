@@ -47,6 +47,6 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 		},
 		items: '',
 		itemGroup:
-			'space-y-2 pt-1 first:mt-0 first:border-t-0 first:pt-0 last:mb-2',
+			'space-y-2 pt-1 first:mt-0 first:border-t-0 first:pt-0 last:mb-2 last:border-b',
 	},
 };
