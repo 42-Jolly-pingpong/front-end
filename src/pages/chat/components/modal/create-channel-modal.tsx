@@ -1,9 +1,9 @@
-import { Button, Modal } from 'flowbite-react';
+import { Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { CreateChatRoom } from 'ts/interfaces/create-chat-room.model';
-import { TextInput } from 'flowbite-react';
 import SetChatRoomName from 'pages/chat/components/modal/set-chat-room-name';
+import SetChatRoomType from 'pages/chat/components/modal/set-chat-room-type';
 
 export const CreateChannelModal = () => {
 	const [phase, setPhase] = useState<number>(1);
@@ -13,20 +13,6 @@ export const CreateChannelModal = () => {
 		password: null,
 		participants: [],
 	});
-
-	const getType = () => {
-		return (
-			<>
-				<h3>채널 이름</h3>
-				<TextInput className='mt-3 mb-3' required />
-				<div className='flex justify-end'>
-					<Button type='submit' onSubmit={() => setPhase(2)}>
-						다음
-					</Button>
-				</div>
-			</>
-		);
-	};
 
 	const modalBody = () => {
 		switch (phase) {
@@ -38,7 +24,12 @@ export const CreateChannelModal = () => {
 					/>
 				);
 			case 2:
-				return getType();
+				return (
+					<SetChatRoomType
+						setPhase={setPhase}
+						setChatRoomInfo={setChatRoomInfo}
+					/>
+				);
 		}
 	};
 
