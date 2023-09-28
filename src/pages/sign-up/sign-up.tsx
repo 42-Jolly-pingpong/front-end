@@ -20,6 +20,7 @@ const SignUp = () => {
 			email: cookies.email,
 			nickname,
 		};
+
 		try {
 			const response = await fetch(`http://localhost:3000/auth/signup`, {
 				method: 'POST',
