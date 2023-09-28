@@ -1,5 +1,5 @@
 import { Sidebar } from 'flowbite-react';
-import Channel from 'pages/chat/components/channel';
+import ChannelItem from 'pages/chat/components/channel-item';
 import CreateChannel from 'pages/chat/components/create-channel';
 import { channelList } from 'pages/chat/mock';
 import { useEffect, useState } from 'react';
@@ -10,12 +10,18 @@ const Channels = () => {
 
 	useEffect(() => {
 		//get Chat list
-		setChannels(channelList);
+		const sortedList = channelList.sort(
+			(a, b) => a.updatedTime.getTime() - b.updatedTime.getTime()
+		);
+
+		setChannels(sortedList);
 	}, []);
 
 	return (
 		<Sidebar.Collapse label='채널'>
-			{channels?.map((channel, id) => <Channel key={id} channel={channel} />)}
+			{channels?.map((channel, id) => (
+				<ChannelItem key={id} channel={channel} />
+			))}
 			<CreateChannel />
 		</Sidebar.Collapse>
 	);
