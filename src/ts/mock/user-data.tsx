@@ -2,7 +2,7 @@ import { User } from 'ts/interfaces/user.model';
 
 const userData: User[] = [
 	{
-		idx: 0,
+		id: 0,
 		intraId: 'minsukan',
 		email: 'mmss3265@gmail.com',
 		nickname: 'minsu',
@@ -15,7 +15,7 @@ const userData: User[] = [
 		isLeave: false,
 	},
 	{
-		idx: 1,
+		id: 1,
 		intraId: 'eunson',
 		email: 'eunson@gmail.com',
 		nickname: 'eunbi',
@@ -28,7 +28,7 @@ const userData: User[] = [
 		isLeave: false,
 	},
 	{
-		idx: 2,
+		id: 2,
 		intraId: 'yujelee',
 		email: 'yujelee@gmail.com',
 		nickname: 'yujeong',

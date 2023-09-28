@@ -1,6 +1,7 @@
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Dm } from 'ts/interfaces/dm.model';
+import chatParticipantData from 'ts/mock/chat-participant-data';
 import userData from 'ts/mock/user-data';
 
 export const channelList: ChatRoom[] = [
@@ -11,6 +12,7 @@ export const channelList: ChatRoom[] = [
 		roomType: ChatRoomType.PUBLIC,
 		updatedTime: new Date(),
 		status: true,
+		participants: [chatParticipantData[0], chatParticipantData[1]],
 	},
 	{
 		id: 2,
@@ -19,6 +21,7 @@ export const channelList: ChatRoom[] = [
 		roomType: ChatRoomType.PUBLIC,
 		updatedTime: new Date(),
 		status: true,
+		participants: [chatParticipantData[0]],
 	},
 	{
 		id: 3,
@@ -27,6 +30,7 @@ export const channelList: ChatRoom[] = [
 		roomType: ChatRoomType.PROTECTED,
 		updatedTime: new Date(),
 		status: true,
+		participants: [chatParticipantData[0]],
 	},
 ];
 
