@@ -48,6 +48,10 @@ const SetChatRoomType = (props: {
 		}
 	};
 
+	const onClickPreButton = () => {
+		setPhase(1);
+	};
+
 	const onChangeButtons = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.value === 'PROTECTED') {
 			setPasswordField(true);
@@ -90,6 +94,9 @@ const SetChatRoomType = (props: {
 				{radioButton('private', 'PRIVATE', '비밀 채널')}
 			</fieldset>
 			<div className='flex justify-end'>
+				<Button color='light' onClick={onClickPreButton} className='mr-2'>
+					이전
+				</Button>
 				<Button type='submit'>다음</Button>
 			</div>
 		</form>

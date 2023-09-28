@@ -11,6 +11,7 @@ interface FormElement extends HTMLFormElement {
 
 const SetChatRoomName = (props: {
 	setPhase: React.Dispatch<React.SetStateAction<number>>;
+	chatRoomInfo: CreateChatRoom;
 	setChatRoomInfo: React.Dispatch<React.SetStateAction<CreateChatRoom>>;
 }) => {
 	const { setPhase, setChatRoomInfo } = props;
@@ -30,7 +31,12 @@ const SetChatRoomName = (props: {
 	return (
 		<form onSubmit={onSubmitName}>
 			<h3>채널 이름</h3>
-			<TextInput id='roomName' className='mt-3 mb-3' required />
+			<TextInput
+				id='roomName'
+				className='mt-3 mb-3'
+				required
+				defaultValue={props.chatRoomInfo.roomName}
+			/>
 			<div className='flex justify-end'>
 				<Button type='submit'>다음</Button>
 			</div>

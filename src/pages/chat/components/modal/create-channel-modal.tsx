@@ -20,6 +20,7 @@ export const CreateChannelModal = () => {
 				return (
 					<SetChatRoomName
 						setPhase={setPhase}
+						chatRoomInfo={chatRoomInfo}
 						setChatRoomInfo={setChatRoomInfo}
 					/>
 				);
