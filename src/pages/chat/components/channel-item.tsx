@@ -1,7 +1,7 @@
 import { Sidebar } from 'flowbite-react';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import { BiHash, BiLock } from 'react-icons/bi';
+import { BiHash, BiLock, BiLockOpen } from 'react-icons/bi';
 
 const ChannelItem = (props: { channel: ChatRoom }) => {
 	const channelIcon = () => {
@@ -10,6 +10,9 @@ const ChannelItem = (props: { channel: ChatRoom }) => {
 				return <BiHash />;
 
 			case ChatRoomType.PROTECTED:
+				return <BiLockOpen />;
+
+			case ChatRoomType.PRIVATE:
 				return <BiLock />;
 		}
 	};
