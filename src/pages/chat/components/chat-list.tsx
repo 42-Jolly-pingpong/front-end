@@ -2,7 +2,7 @@ import Logo from 'components/logo/logo';
 import { Flowbite, Sidebar } from 'flowbite-react';
 import Channels from 'pages/chat/components/sidebar/channels';
 import Dms from 'pages/chat/components/sidebar/dms';
-import { sidebarTheme } from 'pages/chat/components/sidebar/side-bar-theme';
+import { sidebarTheme } from 'pages/chat/themes/side-bar-theme';
 
 const ChatList = () => {
 	return (

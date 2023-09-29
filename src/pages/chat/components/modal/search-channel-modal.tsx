@@ -1,5 +1,5 @@
 import { Flowbite, ListGroup, Modal, TextInput } from 'flowbite-react';
-import { ListGroupTheme } from 'pages/chat/components/modal/list-group-theme';
+import { ListGroupTheme } from 'pages/chat/themes/list-group-theme';
 import { SearchChannelItem } from 'pages/chat/components/modal/search-channel-item';
 import { channelList } from 'pages/chat/mock';
 import { useEffect, useState } from 'react';
