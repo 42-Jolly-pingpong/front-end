@@ -1,30 +1,16 @@
 import { atom, selector } from 'recoil';
-import { Chatroom } from 'ts/interfaces/chat-room.model';
-import { ChatStatus } from 'ts/enums/chat-status.enum';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { Dm } from 'ts/interfaces/dm.model';
 
-export const chatState = atom({
+export const chatState = atom<ChatRoom | Dm | null>({
 	key: 'chatState',
-	default: ChatStatus.CHATLIST,
+	default: null,
 });
 
-export const chatStatusSelector = selector({
-	key: 'chatStatusSelector',
+export const chatSelector = selector({
+	key: 'chatSelector',
 	get: ({ get }) => {
 		const state = get(chatState);
-
-		return state;
-	},
-});
-
-export const chatroomState = atom({
-	key: 'chatroomState',
-	default: null as Chatroom | null,
-});
-
-export const chatroomSelector = selector({
-	key: 'chatroomSelector',
-	get: ({ get }) => {
-		const state = get(chatroomState);
 
 		return state;
 	},
