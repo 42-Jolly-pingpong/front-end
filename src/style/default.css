@@ -30,6 +30,10 @@
 		overflow-y: auto;
 		height: calc(100vh - 48px);
 	}
+
+	.chat-content {
+		width: calc(100vw - 255px);
+	}
 }
 
 /*
