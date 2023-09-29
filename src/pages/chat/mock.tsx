@@ -8,11 +8,15 @@ export const channelList: ChatRoom[] = [
 	{
 		id: 1,
 		roomName: '42seoul_global_random',
-		currentPeople: 3,
+		currentPeople: 3345,
 		roomType: ChatRoomType.PUBLIC,
 		updatedTime: new Date(),
 		status: true,
-		participants: [chatParticipantData[0], chatParticipantData[1]],
+		participants: [
+			chatParticipantData[0],
+			chatParticipantData[1],
+			chatParticipantData[2],
+		],
 	},
 	{
 		id: 2,
@@ -37,12 +41,14 @@ export const channelList: ChatRoom[] = [
 export const dmList: Dm[] = [
 	{
 		id: 1,
+		roomType: ChatRoomType.DM,
 		chatMate: userData[0],
 		updatedTime: new Date(),
 		status: true,
 	},
 	{
 		id: 2,
+		roomType: ChatRoomType.DM,
 		chatMate: userData[1],
 		updatedTime: new Date(),
 		status: true,
