@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
 	const cookies = getJsonValueByKey('user-data');
 	const [nickname, setNickname] = useState('');
-	const navigate = useNavigate();
 
 	const handleNickname = (e) => {
 		setNickname(e.target.value);
@@ -29,14 +28,18 @@ const SignUp = () => {
 				},
 				body: JSON.stringify(formData),
 			});
+			console.log('singup에 있는거!');
+
+			console.log(document.cookie);
 
 			if (response.ok) {
-				navigate('/');
+				console.log('회원가입 프론트에서 받는중..');
+				location.href = '/';
 			} else {
 				console.log('회원가입 실패 냠냠');
 			}
 		} catch (e) {
-			console.log(e);
+			console.log('하여튼 에러');
 		}
 	};
 

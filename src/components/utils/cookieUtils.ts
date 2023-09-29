@@ -20,7 +20,7 @@ export const getJwtValue = () => {
 	return cookieObject['access-token'];
 };
 
-export const getDecodedToken = async () => {
+export const getDecodedToken = async (): Promise<string | null> => {
 	const token = getJwtValue();
 	console.log(`token : ${token}`);
 
@@ -35,7 +35,7 @@ export const getDecodedToken = async () => {
 			});
 
 			if (response.ok) {
-				return await response.text();
+				return response.text();
 			} else {
 				console.log('response 실패');
 			}

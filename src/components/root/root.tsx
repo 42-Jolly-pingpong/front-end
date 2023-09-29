@@ -14,8 +14,10 @@ const Root = () => {
 			console.log('decoded: ', decodedToken);
 			if (decodedToken) {
 				setUserState(decodedToken);
+				console.log('user : ', decodedToken);
 			}
 		};
+
 		fetchDecodedToken();
 	}, []);
 
