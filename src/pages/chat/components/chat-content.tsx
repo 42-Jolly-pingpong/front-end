@@ -1,4 +1,4 @@
-import ChatHeader from 'pages/chat/chat-header';
+import ChatHeader from "pages/chat/components/chat-header";
 
 const ChatContent = () => {
 	return (

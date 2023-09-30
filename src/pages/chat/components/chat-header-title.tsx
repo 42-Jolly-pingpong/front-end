@@ -1,5 +1,5 @@
 import { Avatar, Button, Flowbite } from 'flowbite-react';
-import ChannelIcon from 'pages/chat/channel-icon';
+import ChannelIcon from 'pages/chat/components/channel-icon';
 import { ChatHeaderButtonTheme } from 'pages/chat/themes/chat-header-button-theme';
 import { useRecoilValue } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';

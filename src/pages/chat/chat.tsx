@@ -1,4 +1,4 @@
-import ChatContent from 'pages/chat/chat-content';
+import ChatContent from 'pages/chat/components/chat-content';
 import ChatList from 'pages/chat/components/chat-list';
 import ChannelModal from 'pages/chat/components/modal/channel-modal';
 

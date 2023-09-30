@@ -1,6 +1,6 @@
 import { Sidebar } from 'flowbite-react';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import ChannelIcon from 'pages/chat/channel-icon';
+import ChannelIcon from 'pages/chat/components/channel-icon';
 import { useSetRecoilState } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
 

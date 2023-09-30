@@ -1,5 +1,5 @@
-import ChatHeaderSearch from 'pages/chat/chat-header-search';
-import ChatHeaderTitle from 'pages/chat/chat-header-title';
+import ChatHeaderSearch from 'pages/chat/components/chat-header-search';
+import ChatHeaderTitle from 'pages/chat/components/chat-header-title';
 import { useRecoilValue } from 'recoil';
 import { chatHeaderState } from 'ts/states/chat-header-state';
 
