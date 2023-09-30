@@ -2,11 +2,14 @@ import { Sidebar } from 'flowbite-react';
 import { BiPlus } from 'react-icons/bi';
 import { useSetRecoilState } from 'recoil';
 import { chatHeaderState } from 'ts/states/chat-header-state';
+import { chatState } from 'ts/states/chat-state';
 
 const CreateDm = () => {
+	const setChatState = useSetRecoilState(chatState);
 	const setChatHeaderState = useSetRecoilState(chatHeaderState);
 
 	const onClickCreate = () => {
+		setChatState(null);
 		setChatHeaderState(false);
 	};
 
