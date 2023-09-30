@@ -1,12 +1,11 @@
 import { Sidebar } from 'flowbite-react';
-import { useSetRecoilState } from 'recoil';
+import changeChat from 'hooks/change-chat';
 import { Dm } from 'ts/interfaces/dm.model';
-import { chatState } from 'ts/states/chat-state';
 
 const DmItem = (props: { dm: Dm }) => {
 	const chatMate = props.dm.chatMate;
 
-	const setChat = useSetRecoilState(chatState);
+	const setChat = changeChat();
 
 	const avatar = () => {
 		return (
