@@ -10,12 +10,8 @@ const Root = () => {
 
 	useEffect(() => {
 		const fetchDecodedToken = async () => {
-			const decodedToken = await getDecodedToken();
-			console.log('decoded: ', decodedToken);
-			if (decodedToken) {
-				setUserState(decodedToken);
-				console.log('user : ', decodedToken);
-			}
+			const token: string | null = await getDecodedToken();
+			setUserState(token);
 		};
 
 		fetchDecodedToken();

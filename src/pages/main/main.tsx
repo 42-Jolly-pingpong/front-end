@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import MainGameStart from 'pages/main/components/main-game-start';
+import { useRecoilState } from 'recoil';
 import { userState } from 'ts/states/user-state';
 
 const Main = () => {
-	const [user, setUser] = useState(userState); // 이후에 recoil로 바뀔 예정
+	const [user, setUserState] = useRecoilState(userState);
 
 	console.log('main입성');
 	return (

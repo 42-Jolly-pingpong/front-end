@@ -22,20 +22,19 @@ export const getJwtValue = () => {
 
 export const getDecodedToken = async (): Promise<string | null> => {
 	const token = getJwtValue();
-	console.log(`token : ${token}`);
 
 	if (token) {
 		try {
 			const response = await fetch('http://localhost:3000/auth/decoded-token', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json', // JSON 데이터를 보내고 있음을 명시
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify({ token }),
 			});
-
 			if (response.ok) {
-				return response.text();
+				console.log('디코딩 받아오기 성공!');
+				return await response.json();
 			} else {
 				console.log('response 실패');
 			}
