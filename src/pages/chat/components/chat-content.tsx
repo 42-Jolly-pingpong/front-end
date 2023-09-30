@@ -1,10 +1,11 @@
-import ChatHeader from "pages/chat/components/chat-header";
+import ChatField from 'pages/chat/components/chat-field';
+import ChatHeader from 'pages/chat/components/chat-header';
 
 const ChatContent = () => {
 	return (
 		<div className='flex flex-col justify-between max-h-screen'>
 			<ChatHeader />
-			<div className='overflow-y-auto'></div>
+			<ChatField />
 			<div>footer</div>
 			{/* <ChatInput /> */}
 		</div>
