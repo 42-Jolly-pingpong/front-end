@@ -34,6 +34,10 @@
 	.chat-content {
 		width: calc(100vw - 255px);
 	}
+
+	.chat-pad {
+		width: calc(100vw - 255px - 60px);
+	}
 }
 
 /*
