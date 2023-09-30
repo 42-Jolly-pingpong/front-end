@@ -32,7 +32,11 @@
 	}
 
 	.chat-content {
-		width: calc(100vw - 255px);
+		width: calc(100vw - 240px);
+	}
+
+	.chat-field {
+		height: calc(100vh - 96px);
 	}
 
 	.chat-pad {
