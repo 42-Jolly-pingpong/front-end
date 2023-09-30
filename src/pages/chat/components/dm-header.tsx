@@ -12,26 +12,24 @@ const DmHeader = (props: { mate: User }) => {
 	};
 
 	return (
-		<div className=''>
-			<div className='ml-5 place-self-end'>
-				<div className='flex items-center'>
-					<div className='w-36 h-36 overflow-hidden'>
-						<img
-							src={mate.avatarPath}
-							className='object-cover w-full h-full rounded-md'
-						/>
-					</div>
-					<div className='mx-2 font-bold'>{mate.nickname}</div>
-					{status()}
+		<div className='my-5'>
+			<div className='flex items-center'>
+				<div className='w-36 h-36 overflow-hidden'>
+					<img
+						src={mate.avatarPath}
+						className='object-cover w-full h-full rounded-md'
+					/>
 				</div>
-				<div className='my-3'>
-					이 대화는 나와 @{mate.nickname}님 간의 대화입니다. 상대방에 대해
-					자세히 알아보려면 프로필을 확인하세요.
-				</div>
-				<Button color='light' className='font-bold'>
-					프로필 보기
-				</Button>
+				<div className='mx-2 font-bold'>{mate.nickname}</div>
+				{status()}
 			</div>
+			<div className='my-3'>
+				이 대화는 나와 @{mate.nickname}님 간의 대화입니다. 상대방에 대해 자세히
+				알아보려면 프로필을 확인하세요.
+			</div>
+			<Button color='light' className='font-bold'>
+				프로필 보기
+			</Button>
 		</div>
 	);
 };
