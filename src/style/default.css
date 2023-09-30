@@ -35,12 +35,12 @@
 		width: calc(100vw - 240px);
 	}
 
-	.chat-field {
-		height: calc(100vh - 96px);
-	}
-
 	.chat-pad {
 		width: calc(100vw - 255px - 60px);
+	}
+
+	.hide-scrollbar::-webkit-scrollbar {
+		display: none; /* for Chrome, Safari */
 	}
 }
 
