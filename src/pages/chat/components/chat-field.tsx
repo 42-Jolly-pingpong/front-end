@@ -21,7 +21,7 @@ const ChatField = () => {
 	const isDm = chat.roomType === ChatRoomType.DM;
 
 	return (
-		<div ref={scrollRef} className='chat-field overflow-y-auto justify-end'>
+		<div ref={scrollRef} className='overflow-y-auto mx-5'>
 			{isDm && <DmHeader mate={(chat as Dm).chatMate} />}
 		</div>
 	);
