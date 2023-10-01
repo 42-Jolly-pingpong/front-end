@@ -17,7 +17,7 @@ const changeSidebar = (state: string) => {
 
 	const setSidebarChat = (chat: ChatRoom | User) => {
 		setChatSidebarState({
-			status: ChatSidebarStatus.PROFILE,
+			status: ChatSidebarStatus.CHAT,
 			profile: null,
 			chat: chat as ChatRoom,
 		});
