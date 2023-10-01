@@ -5,12 +5,11 @@ import { RiMessage2Line } from 'react-icons/ri';
 import { MdOutlineRocketLaunch } from 'react-icons/md';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { BsMailbox } from 'react-icons/bs';
-import { useRecoilState } from 'recoil';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
+import { useRecoilValue } from 'recoil';
 
 const ChatSidebarProfile = () => {
-	const [chatSidebar, setChatSidebar] = useRecoilState(chatSidebarState);
-	const user = chatSidebar.profile;
+	const user = useRecoilValue(chatSidebarState).profile;
 
 	if (user === null) {
 		return null;
