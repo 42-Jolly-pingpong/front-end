@@ -1,11 +1,11 @@
 import { atom, selector } from 'recoil';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
-import { Chat } from 'ts/interfaces/chat.model';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { User } from 'ts/interfaces/user.model';
 
 export type ChatSidebarType = {
 	status: ChatSidebarStatus;
-	chat: Chat | null;
+	chat: ChatRoom | null;
 	profile: User | null;
 };
 

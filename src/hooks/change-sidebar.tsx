@@ -1,25 +1,25 @@
 import { useSetRecoilState } from 'recoil';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
-import { Chat } from 'ts/interfaces/chat.model';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { User } from 'ts/interfaces/user.model';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 
 const changeSidebar = (state: string) => {
 	const setChatSidebarState = useSetRecoilState(chatSidebarState);
 
-	const setSidebarProfile = (profile: User) => {
+	const setSidebarProfile = (profile: User | ChatRoom) => {
 		setChatSidebarState({
 			status: ChatSidebarStatus.PROFILE,
-			profile,
+			profile: profile as User,
 			chat: null,
 		});
 	};
 
-	const setSidebarChat = (chat: Chat) => {
+	const setSidebarChat = (chat: ChatRoom | User) => {
 		setChatSidebarState({
 			status: ChatSidebarStatus.PROFILE,
 			profile: null,
-			chat,
+			chat: chat as ChatRoom,
 		});
 	};
 
