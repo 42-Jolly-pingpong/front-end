@@ -1,6 +1,6 @@
-import { Avatar, Button, Flowbite } from 'flowbite-react';
+import { Avatar } from 'flowbite-react';
 import ChannelIcon from 'pages/chat/components/channel-icon';
-import { ChatHeaderButtonTheme } from 'pages/chat/themes/chat-header-button-theme';
+import ChatInfoButton from 'pages/chat/components/chat-info-button';
 import { useRecoilValue } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
@@ -42,42 +42,8 @@ const ChatHeaderTitle = () => {
 					</div>
 					{(chatRoom as ChatRoom).roomName}
 				</div>
-				<div>{ParticipantInfoButton()}</div>
+				<ChatInfoButton />
 			</div>
-		);
-	};
-
-	const ParticipantInfoButton = () => {
-		const participants = (chatRoom as ChatRoom).participants;
-		const participantsImg: string[] = [];
-
-		for (
-			let index = 0;
-			index < (3 <= participants.length ? 3 : participants.length);
-			index++
-		) {
-			participantsImg.push(participants[index].user.avatarPath);
-		}
-
-		const currentPeople = (chatRoom as ChatRoom).currentPeople;
-
-		return (
-			<Flowbite theme={{ theme: ChatHeaderButtonTheme }}>
-				<Button
-					color='light'
-					size='sm'
-					className='h-8 border border-slate-300 mr-2'
-				>
-					<div className='flex items-center'>
-						<Avatar.Group>
-							{participantsImg.map((img, id) => (
-								<Avatar size='xs' img={img} key={id} rounded stacked />
-							))}
-						</Avatar.Group>
-						<div className='ml-2 text-gray-500'>{currentPeople}</div>
-					</div>
-				</Button>
-			</Flowbite>
 		);
 	};
 
@@ -94,10 +60,7 @@ const ChatHeaderTitle = () => {
 	};
 
 	return (
-		<div className='w-full flex items-center border-b h-12'>
-			{/*//chat-content*/}
-			{header()}
-		</div>
+		<div className='w-full flex items-center border-b h-12'>{header()}</div>
 	);
 };
 
