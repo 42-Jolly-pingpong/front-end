@@ -44,13 +44,13 @@ const ChatHeaderSearch = () => {
 	const searchedPad = () => {
 		if (searchedFriendList.length === 0) {
 			return (
-				<div className='absolute p-3 m-2 top-20 left-9 bg-white border rounded-lg chat-pad text-gray-500'>
+				<div className='absolute p-3 m-2 -top-4 left-9 bg-white border rounded-lg chat-pad text-gray-500'>
 					'{inputContent}'가 포함된 친구가 존재하지 않습니다.
 				</div>
 			);
 		}
 		return (
-			<div className='absolute py-3 m-2 top-20 left-9 bg-white border rounded-lg max-h-40 chat-pad overflow-y-auto'>
+			<div className='absolute py-3 m-2 -top-4 left-9 bg-white border rounded-lg max-h-40 chat-pad overflow-y-auto'>
 				{searchedFriendList.map((friend, id) => (
 					<DmSearchedItem
 						friend={friend}
@@ -63,15 +63,16 @@ const ChatHeaderSearch = () => {
 	};
 
 	return (
-		<div className='relative'>
+		<div>
 			<div className='flex flex-col justify-between w-full flex items-center border-b h-24'>
-				{/*//chat-content*/}
 				<div className='flex items-center chat-content h-12 border-b font-bold'>
-					<div className='ml-3'>새 메시지</div>
+					<div className='p-3 m-2 ml-1'>새 메시지</div>
 				</div>
 				{input()}
 			</div>
-			{inputContent.length === 0 ? null : searchedPad()}
+			<div className='relative'>
+				{inputContent.length === 0 ? null : searchedPad()}
+			</div>
 		</div>
 	);
 };
