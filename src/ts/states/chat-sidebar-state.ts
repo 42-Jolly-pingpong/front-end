@@ -3,7 +3,7 @@ import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
 import { Chat } from 'ts/interfaces/chat.model';
 import { User } from 'ts/interfaces/user.model';
 
-type ChatSidebarType = {
+export type ChatSidebarType = {
 	status: ChatSidebarStatus;
 	chat: Chat | null;
 	profile: User | null;
