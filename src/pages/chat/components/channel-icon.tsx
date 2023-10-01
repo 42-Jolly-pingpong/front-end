@@ -4,13 +4,13 @@ import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 const ChannelIcon = (props: { roomType: ChatRoomType }) => {
 	switch (props.roomType) {
 		case ChatRoomType.PUBLIC:
-			return <BiHash />;
+			return <BiHash size='18' />;
 
 		case ChatRoomType.PROTECTED:
-			return <BiLockOpen />;
+			return <BiLockOpen size='18' />;
 
 		case ChatRoomType.PRIVATE:
-			return <BiLock />;
+			return <BiLock size='18' />;
 	}
 };
 

@@ -32,7 +32,7 @@ const ChatTime = (props: { time: Date }) => {
 
 	return (
 		<Tooltip content={date()} animation='duration-300'>
-			<div className='text-gray-500 text-sm font-light'>{sentTime()}</div>
+			<div className='text-gray-500 text-xs font-light'>{sentTime()}</div>
 		</Tooltip>
 	);
 };

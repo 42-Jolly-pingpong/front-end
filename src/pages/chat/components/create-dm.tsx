@@ -16,8 +16,8 @@ const CreateDm = () => {
 	return (
 		<Sidebar.Item onClick={onClickCreate}>
 			<div className='flex items-center'>
-				<BiPlus className='mr-1' />
-				<div>대화상대 추가</div>
+				<BiPlus className='mr-2' size='20' />
+				<div className='text-base font-medium'>대화상대 추가</div>
 			</div>
 		</Sidebar.Item>
 	);

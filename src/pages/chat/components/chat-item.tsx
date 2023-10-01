@@ -26,12 +26,12 @@ const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 				</button>
 				<div className='ml-3'>
 					<div className='flex items-center'>
-						<div className='mr-1 font-bold'>{user.nickname}</div>
+						<div className='mr-1 font-bold text-sm'>{user.nickname}</div>
 						<div className='ml-1'>
 							<ChatTime time={chat.sentTime} />
 						</div>
 					</div>
-					<div className=''>{chat.content}</div>
+					<div className='text-sm font-normal'>{chat.content}</div>
 				</div>
 			</div>
 		</div>

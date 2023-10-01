@@ -14,8 +14,8 @@ const CreateChannel = () => {
 	return (
 		<Sidebar.Item onClick={onClickCreateChannel}>
 			<div className='flex items-center'>
-				<BiPlus className='mr-1' />
-				<div>채널 추가</div>
+				<BiPlus className='mr-2' size='20' />
+				<div className='text-base font-medium'>채널 추가</div>
 			</div>
 		</Sidebar.Item>
 	);

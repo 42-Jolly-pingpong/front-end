@@ -18,7 +18,7 @@ const Channels = () => {
 	}, []);
 
 	return (
-		<Sidebar.Collapse label='채널'>
+		<Sidebar.Collapse label='채널' className='text-base font-medium'>
 			{channels?.map((channel, id) => (
 				<ChannelItem key={id} channel={channel} />
 			))}

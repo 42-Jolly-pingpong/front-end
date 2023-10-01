@@ -16,7 +16,9 @@ const ChannelItem = (props: { channel: ChatRoom }) => {
 				<div className='mr-1'>
 					<ChannelIcon roomType={props.channel.roomType} />
 				</div>
-				{props.channel.roomName}
+				<div className='text-base font-medium ml-1'>
+					{props.channel.roomName}
+				</div>
 			</div>
 		</Sidebar.Item>
 	);

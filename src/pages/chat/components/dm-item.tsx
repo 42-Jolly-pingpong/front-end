@@ -26,7 +26,9 @@ const DmItem = (props: { dm: Dm }) => {
 		<Sidebar.Item onClick={onClickItem}>
 			<div className='flex items-center'>
 				{avatar()}
-				<div className='flex items-center'>{chatMate.nickname}</div>
+				<div className='flex items-center font-medium text-base'>
+					{chatMate.nickname}
+				</div>
 			</div>
 		</Sidebar.Item>
 	);

@@ -36,7 +36,7 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 				noIcon: 'font-bold',
 			},
 			content: {
-				base: 'px-3 flex-1 whitespace-nowrap truncate font-light',
+				base: 'px-2 flex-1 whitespace-nowrap truncate font-light',
 			},
 			icon: {
 				base: 'h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900',
