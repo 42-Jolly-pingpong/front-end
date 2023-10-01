@@ -1,29 +1,26 @@
-import { BiX } from 'react-icons/bi';
-import { useRecoilState } from 'recoil';
+import ChatSidebarChat from 'pages/chat/components/chat-sidebar-chat';
+import ChatSidebarProfile from 'pages/chat/components/chat-sidebar-profile';
+import { useRecoilValue } from 'recoil';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 
 const ChatSidebar = () => {
-	const [chatSidebar, setChatSidebar] = useRecoilState(chatSidebarState);
-	const chat = chatSidebar.chat;
+	const chatSidebarStatus = useRecoilValue(chatSidebarState).status;
 
-	const onClickClear = () => {
-		setChatSidebar({
-			status: ChatSidebarStatus.CLOSE,
-			chat: null,
-			profile: null,
-		});
+	const sidebarContent = () => {
+		switch (chatSidebarStatus) {
+			case ChatSidebarStatus.CHAT:
+				return <ChatSidebarChat />;
+			case ChatSidebarStatus.PROFILE:
+				return <ChatSidebarProfile />;
+			default:
+				return null;
+		}
 	};
 
 	return (
 		<div className='max-h-screen chat-right-sidebar shadow-xl'>
-			<div className='flex justify-between items-center h-12 border-b'>
-				<div className='ml-3 font-bold'>{chat?.roomName}</div>
-				<button className='mr-3' onClick={onClickClear}>
-					<BiX size='28' />
-				</button>
-			</div>
-			<div className='grow'></div>
+			{sidebarContent()}
 		</div>
 	);
 };
