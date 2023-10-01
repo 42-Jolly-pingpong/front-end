@@ -1,4 +1,5 @@
 import { Button } from 'flowbite-react';
+import UserImg from 'pages/chat/components/user-img';
 import { User } from 'ts/interfaces/user.model';
 
 const DmHeader = (props: { mate: User }) => {
@@ -14,12 +15,7 @@ const DmHeader = (props: { mate: User }) => {
 	return (
 		<div className='my-5'>
 			<div className='flex items-center'>
-				<div className='w-36 h-36 overflow-hidden'>
-					<img
-						src={mate.avatarPath}
-						className='object-cover w-full h-full rounded-md'
-					/>
-				</div>
+				<UserImg src={mate.avatarPath} size={36} />
 				<div className='mx-2 font-bold'>{mate.nickname}</div>
 				{status()}
 			</div>
