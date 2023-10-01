@@ -35,6 +35,14 @@
 		width: calc(100vw - 240px);
 	}
 
+	.chat-content-sidebar {
+		width: calc(100vw - 240px - 348px);
+	}
+
+	.chat-right-sidebar {
+		width: 348px;
+	}
+
 	.chat-pad {
 		width: calc(100vw - 255px - 60px);
 	}

@@ -35,7 +35,7 @@ const ChatHeaderTitle = () => {
 			return;
 		}
 		return (
-			<div className='chat-content flex justify-between items-center'>
+			<div className='w-full flex justify-between items-center'>
 				<div className='flex items-center font-bold'>
 					<div className='ml-2 mr-2'>
 						<ChannelIcon roomType={chatRoom.roomType} />
@@ -94,7 +94,8 @@ const ChatHeaderTitle = () => {
 	};
 
 	return (
-		<div className='chat-content flex items-center border-b h-12'>
+		<div className='w-full flex items-center border-b h-12'>
+			{/*//chat-content*/}
 			{header()}
 		</div>
 	);

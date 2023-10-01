@@ -28,7 +28,7 @@ const ChatHeaderSearch = () => {
 
 	const input = () => {
 		return (
-			<div className='flex items-center chat-content h-12'>
+			<div className='flex items-center w-full h-12'>
 				<div className='text-gray-500 ml-3'>대상:</div>
 				<input
 					type='text'
@@ -64,7 +64,8 @@ const ChatHeaderSearch = () => {
 
 	return (
 		<div className='relative'>
-			<div className='flex flex-col justify-between chat-content flex items-center border-b h-24'>
+			<div className='flex flex-col justify-between w-full flex items-center border-b h-24'>
+				{/*//chat-content*/}
 				<div className='flex items-center chat-content h-12 border-b font-bold'>
 					<div className='ml-3'>새 메시지</div>
 				</div>

@@ -44,7 +44,7 @@ const ChatField = () => {
 	};
 
 	return (
-		<div ref={scrollRef} className='overflow-y-auto px-5 chat-content'>
+		<div ref={scrollRef} className='overflow-y-auto px-5 w-full'>
 			{isDm && <DmHeader mate={(chat as Dm).chatMate} />}
 			{chats.map((chat, id) => (
 				<ChatItem
