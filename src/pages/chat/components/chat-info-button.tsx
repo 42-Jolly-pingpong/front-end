@@ -1,4 +1,5 @@
 import { Avatar, Button, Flowbite } from 'flowbite-react';
+import changeSidebar from 'hooks/change-sidebar';
 import { ChatHeaderButtonTheme } from 'pages/chat/themes/chat-header-button-theme';
 import { useRecoilValue } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
@@ -6,6 +7,7 @@ import { chatState } from 'ts/states/chat-state';
 
 const ChatInfoButton = () => {
 	const chatRoom = useRecoilValue(chatState);
+	const setChatSidebar = changeSidebar('chat');
 
 	const participants = (chatRoom as ChatRoom).participants;
 	const participantsImg: string[] = [];
@@ -20,12 +22,17 @@ const ChatInfoButton = () => {
 
 	const currentPeople = (chatRoom as ChatRoom).currentPeople;
 
+	const onClickButton = () => {
+		setChatSidebar(chatRoom as ChatRoom);
+	};
+
 	return (
 		<Flowbite theme={{ theme: ChatHeaderButtonTheme }}>
 			<Button
 				color='light'
 				size='sm'
 				className='h-8 border border-slate-300 mr-2'
+				onClick={onClickButton}
 			>
 				<div className='flex items-center'>
 					<Avatar.Group>
