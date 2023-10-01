@@ -15,7 +15,7 @@ const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 	return (
 		<div>
 			{props.hasTopBorder && topBorder()}
-			<div className='flex items-start mb-2 mt-2 w-full'>
+			<div className='flex items-start mb-2 mt-2'>
 				<button onClick={onClickAvatar} className='pt-1'>
 					<Avatar img={user.avatarPath} />
 				</button>

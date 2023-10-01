@@ -4,7 +4,7 @@ import { ChatInput } from 'pages/chat/components/chat-input';
 
 const ChatContent = () => {
 	return (
-		<div className='flex flex-col justify-between max-h-screen'>
+		<div className='flex flex-col justify-between max-h-screen chat-content'>
 			<ChatHeader />
 			<ChatField />
 			<ChatInput />
