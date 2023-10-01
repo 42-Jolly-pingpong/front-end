@@ -1,9 +1,10 @@
-import { Button } from 'flowbite-react';
+import { Button, Dropdown } from 'flowbite-react';
 import ChatSidebarHeader from 'pages/chat/components/chat-sidebar-header';
 import UserImg from 'pages/chat/components/user-img';
 import { RiMessage2Line } from 'react-icons/ri';
 import { MdOutlineRocketLaunch } from 'react-icons/md';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { HiOutlineUserAdd, HiOutlineUserRemove } from 'react-icons/hi';
 import { BsMailbox } from 'react-icons/bs';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { useRecoilValue } from 'recoil';
@@ -44,13 +45,36 @@ const ChatSidebarProfile = () => {
 		);
 	};
 
-	const dotsButton = () => {
+	const renderTrigger = () => {
 		return (
 			<div>
 				<button className='rounded-lg flex items-stretch items-center justify-center p-2 text-center text-gray-900 bg-white border border-gray-300 enabled:hover:bg-gray-100 focus:ring-4 focus:ring-cyan-300 '>
 					<BiDotsVerticalRounded size={16} />
 				</button>
 			</div>
+		);
+	};
+
+	const dotsButton = () => {
+		return (
+			<Dropdown
+				label=''
+				dismissOnClick={false}
+				renderTrigger={() => renderTrigger()}
+			>
+				<Dropdown.Item>
+					<div className='flex items-center font-normal text-sm text-gray-700'>
+						<HiOutlineUserAdd className='mr-2' />
+						친구 신청
+					</div>
+				</Dropdown.Item>
+				<Dropdown.Item>
+					<div className='flex items-center font-normal text-sm text-red-500'>
+						<HiOutlineUserRemove className='mr-2' />
+						차단하기
+					</div>
+				</Dropdown.Item>
+			</Dropdown>
 		);
 	};
 
