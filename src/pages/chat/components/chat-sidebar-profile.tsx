@@ -26,7 +26,7 @@ const ChatSidebarProfile = () => {
 
 		// return (
 		// 	<div className='flex items-center mx-2 my-2'>
-		// 		<div className='flex w-2 h-2 bg-green-400 rounded-full mr-3 text-sm font-normal'></div>
+		// 		<div className='flex w-3 h-3 border border-gray-400 rounded-full mr-3 text-sm font-normal'></div>
 		// 		자리 비움
 		// 	</div> //offline
 		// );

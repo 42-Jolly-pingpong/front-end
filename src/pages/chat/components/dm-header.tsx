@@ -10,7 +10,7 @@ const DmHeader = (props: { mate: User }) => {
 	const status = () => {
 		return <div className='flex w-2 h-2 bg-green-400 rounded-full'></div>; //online
 		// return (
-		// 	<div className='flex w-3 h-3 border-2 border-gray-400 rounded-full'></div> //offline
+		// 	<div className='flex w-3 h-3 border border-gray-400 rounded-full'></div> //offline
 		// );
 	};
 
