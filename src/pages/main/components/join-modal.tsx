@@ -1,12 +1,18 @@
 import ModalControl from 'types/interfaces/modal-control.model';
-import { Button, Modal } from 'flowbite-react';
+import { Button, Modal, Spinner } from 'flowbite-react';
 
 const JoinModal: React.FC<ModalControl> = ({ isOpen, onClose }) => {
 	return (
 		<Modal show={isOpen} onClose={onClose} dismissible>
 			<Modal.Body className='flex flex-col items-center my-2'>
-				<div className=' text-gray-500 dark:text-gray-400'>게임 매칭중..</div>
-				<div>여기 뭐 회전하는거 하나넣을려나</div>
+				<div className='font-bold text-xl text-gray-500 dark:text-gray-400 pb-4'>
+					게임 매칭중..
+				</div>
+				<Spinner
+					aria-label='Warning spinner example'
+					color='warning'
+					size='xl'
+				/>
 			</Modal.Body>
 			<Modal.Footer className='flex items-center justify-center'>
 				<Button

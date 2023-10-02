@@ -1,4 +1,4 @@
-import Welcome from 'pages/main/components/welcome/welcome';
+import Welcome from 'components/root/welcome/welcome';
 import Main from 'pages/main/main';
 import User from 'types/interfaces/user.model';
 import DecodedToken from 'types/interfaces/decoded-jwt.model';
@@ -17,7 +17,6 @@ const Root = () => {
 			if (token) {
 				const user: User = await getUser(token.id);
 				setUserState(user);
-				console.log(user);
 			}
 		};
 		fetchDecodedToken();
