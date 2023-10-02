@@ -1,6 +1,6 @@
 import { Avatar } from 'flowbite-react';
 import changeSidebar from 'hooks/change-sidebar';
-import ChatTime from 'pages/chat/components/chat-time';
+import ChatTime from 'pages/chat/components/field/chat-time';
 import { Chat } from 'ts/interfaces/chat.model';
 import { User } from 'ts/interfaces/user.model';
 

@@ -1,4 +1,4 @@
-import ChatSidebarHeader from 'pages/chat/components/chat-sidebar-header';
+import ChatSidebarHeader from 'pages/chat/components/sidebar/chat-sidebar-header';
 import { useRecoilValue } from 'recoil';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 

@@ -1,5 +1,5 @@
-import ChatItem from 'pages/chat/components/chat-item';
-import DmHeader from 'pages/chat/components/dm-header';
+import ChatItem from 'pages/chat/components/field/chat-item';
+import DmHeader from 'pages/chat/components/field/dm-header';
 import { chatList } from 'pages/chat/mock';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';

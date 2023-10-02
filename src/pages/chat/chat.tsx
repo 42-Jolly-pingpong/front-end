@@ -1,6 +1,6 @@
 import ChatContent from 'pages/chat/components/chat-content';
-import ChatList from 'pages/chat/components/chat-list';
-import ChatSidebar from 'pages/chat/components/chat-sidebar';
+import ChatList from 'pages/chat/components/list/chat-list';
+import ChatSidebar from 'pages/chat/components/sidebar/chat-sidebar';
 import ChannelModal from 'pages/chat/components/modal/channel-modal';
 import { useRecoilValue } from 'recoil';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';

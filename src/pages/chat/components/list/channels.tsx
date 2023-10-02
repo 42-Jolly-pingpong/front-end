@@ -1,6 +1,6 @@
 import { Sidebar } from 'flowbite-react';
-import ChannelItem from 'pages/chat/components/channel-item';
-import CreateChannel from 'pages/chat/components/create-channel';
+import ChannelItem from 'pages/chat/components/list/channel-item';
+import CreateChannel from 'pages/chat/components/list/create-channel';
 import { channelList } from 'pages/chat/mock';
 import { useEffect, useState } from 'react';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';

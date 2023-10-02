@@ -1,5 +1,5 @@
 import { Button, Dropdown } from 'flowbite-react';
-import ChatSidebarHeader from 'pages/chat/components/chat-sidebar-header';
+import ChatSidebarHeader from 'pages/chat/components/sidebar/chat-sidebar-header';
 import UserImg from 'pages/chat/components/user-img';
 import { RiMessage2Line } from 'react-icons/ri';
 import { MdOutlineRocketLaunch } from 'react-icons/md';

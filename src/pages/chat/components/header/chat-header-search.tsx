@@ -1,4 +1,4 @@
-import DmSearchedItem from 'pages/chat/components/dm-searched-item';
+import DmSearchedItem from 'pages/chat/components/header/dm-searched-item';
 import { useEffect, useState } from 'react';
 import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
