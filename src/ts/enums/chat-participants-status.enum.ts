@@ -1,5 +1,7 @@
 export enum ChatParticipantStatus {
-	ACTIVE,
-	KICK,
-	LEFT,
+	DEFAULT = 'DEFAULT',
+	KICKED = 'KICKED',
+	BANNED = 'BANNED',
+	MUTED = 'MUTED',
+	LEFT = 'LEFT',
 }
