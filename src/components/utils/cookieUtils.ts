@@ -20,27 +20,31 @@ export const getJwtValue = () => {
 	return cookieObject['access-token'];
 };
 
-export const getDecodedToken = async (): Promise<string | null> => {
-	const token = getJwtValue();
+//export const getDecodedToken = async (): Promise<string | null> => {
+//	const token = getJwtValue();
 
-	if (token) {
-		try {
-			const response = await fetch('http://localhost:3000/auth/decoded-token', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			if (response.ok) {
-				console.log('디코딩 받아오기 성공!');
-				return await response.json();
-			} else {
-				console.log('response 실패');
-			}
-		} catch (e) {
-			console.log(e);
-		}
-	}
-	return null;
-};
+//	if (token) {
+//		try {
+//		} catch (e) {
+//			console.log('토큰 디코딩 실패');
+//		}
+//	}
+//	return null;
+//try {
+//	const response = await fetch('http://localhost:3000/auth/decoded-token', {
+//		method: 'POST',
+//		headers: {
+//			'Content-Type': 'application/json',
+//			Authorization: `Bearer ${token}`,
+//		},
+//	});
+//	if (response.ok) {
+//		console.log('디코딩 받아오기 성공!');
+//		return await response.json();
+//	} else {
+//		console.log('response 실패');
+//	}
+//} catch (e) {
+//	console.log(e);
+//}
+//};

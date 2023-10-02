@@ -1,10 +1,11 @@
-import MainGameStart from 'pages/main/components/main-game-start';
+import JoinIntro from './components/join-intro';
+import JoinButton from './components/join-button';
 
 const Main = () => {
-	console.log('main입성');
 	return (
-		<div className='flex flex-col justify-center items-center'>
-			<MainGameStart />
+		<div className='flex flex-col justify-center items-center text-center mt-72'>
+			<JoinIntro />
+			<JoinButton />
 		</div>
 	);
 };

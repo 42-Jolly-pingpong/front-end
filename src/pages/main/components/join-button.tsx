@@ -1,6 +1,6 @@
 import { Button } from 'flowbite-react';
 
-const GameStartButton = () => {
+const JoinButton = () => {
 	const handleGameStart = () => {
 		console.log('게임 모달 하나 띄우기~');
 	};
@@ -18,4 +18,4 @@ const GameStartButton = () => {
 	);
 };
 
-export default GameStartButton;
+export default JoinButton;
