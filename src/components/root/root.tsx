@@ -1,10 +1,10 @@
-import Welcome from 'components/welcome/welcome';
+import Welcome from 'pages/main/components/welcome/welcome';
 import Main from 'pages/main/main';
+import User from 'types/interfaces/user.model';
+import DecodedToken from 'types/interfaces/decoded-jwt.model';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { userState } from 'ts/states/user-state';
-import DecodedToken from 'types/interfaces/decoded-jwt.model';
-import User from 'types/interfaces/user.model';
 import { getJwt } from 'api/auth-api';
 import { getUser } from 'api/user-api';
 
