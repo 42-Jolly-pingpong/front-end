@@ -8,6 +8,7 @@ import { HiOutlineUserAdd, HiOutlineUserRemove } from 'react-icons/hi';
 import { BsMailbox } from 'react-icons/bs';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { useRecoilValue } from 'recoil';
+import HistoryDoughnutChart from 'pages/chat/components/sidebar/history-doughnut-chart';
 
 const ChatSidebarProfile = () => {
 	const user = useRecoilValue(chatSidebarState).profile;
@@ -117,9 +118,13 @@ const ChatSidebarProfile = () => {
 
 	const historyField = () => {
 		return (
-			<div className='my-4 border-b'>
+			<div className='my-4'>
 				<div className='mx-4'>
 					<div className='font-bold text-sm'>전적 정보</div>
+					<HistoryDoughnutChart
+						winCount={user.winCount}
+						loseCount={user.loseCount}
+					/>
 				</div>
 			</div>
 		);
