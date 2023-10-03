@@ -58,12 +58,12 @@ const ChatInformationTap = (props: { chat: ChatRoom }) => {
 		));
 		const delimeter = ', ';
 		return (
-			<div className='flex flex-wrap text-sm font-normal max-w-80'>
+			<div className='flex flex-wrap text-sm font-normal'>
 				{allAdmins.map((admin, id) => (
-					<>
-						{id !== 0 ? <div key={id}>{delimeter}</div> : null}
-						{admin}
-					</>
+					<div className='flex flex-wrap' key={id}>
+						{id !== 0 ? <div>{delimeter}</div> : null}
+						<div>{admin}</div>
+					</div>
 				))}
 			</div>
 		);
