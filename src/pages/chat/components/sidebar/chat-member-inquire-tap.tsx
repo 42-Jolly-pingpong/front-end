@@ -1,13 +1,14 @@
-import { Dropdown, TextInput } from 'flowbite-react';
+import { Badge, Dropdown, TextInput } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiDotsVerticalRounded, BiSearch } from 'react-icons/bi';
-import { FiUserPlus, FiUser } from 'react-icons/fi';
+import { FiUserPlus } from 'react-icons/fi';
 import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
+import NoResult from 'pages/chat/components/sidebar/no-result';
 
 const ChatMemberInquireTap = (props: {
 	chat: ChatRoom;
@@ -282,32 +283,32 @@ const ChatMemberInquireTap = (props: {
 		}
 	};
 
+	const roleBadge = (role: ChatParticipantRole) => {
+		switch (role) {
+			case ChatParticipantRole.OWNER:
+				return <Badge color='pink'>OWNER</Badge>;
+			case ChatParticipantRole.ADMIN:
+				return <Badge color='indigo'>ADMIN</Badge>;
+			case ChatParticipantRole.MEMBER:
+				return null;
+		}
+	};
+
 	const participantsList = () => {
 		const participants = searchedParticipant;
 
 		if (participants.length === 0) {
-			return (
-				<div className='px-5 pt-2'>
-					<div className=' text-xs font-semibold text-gray-600'>
-						이 채널에서
-					</div>
-					<div className='mt-2 flex items-center'>
-						<div className='flex items-center justify-center w-8 h-8 bg-gray-100 rounded-md'>
-							<FiUser size='16' />
-						</div>
-						<div className='ml-2 text-sm font-bold text-gray-500'>
-							일치하는 항목 없음
-						</div>
-					</div>
-				</div>
-			);
+			return <NoResult />;
 		}
 		return participants.map((participant, id) => (
 			<div
 				className='px-4 py-3 flex items-center justify-between w-full hover:bg-gray-200'
 				key={id}
 			>
-				<MemberItem user={participant.user} />
+				<div className='flex items-center'>
+					<MemberItem user={participant.user} />
+					<div className='ml-2'>{roleBadge(participant.role)}</div>
+				</div>
 				{memberDotButton(participant)}
 			</div>
 		));
