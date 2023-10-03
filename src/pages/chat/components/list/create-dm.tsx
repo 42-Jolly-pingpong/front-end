@@ -1,16 +1,24 @@
 import { Sidebar } from 'flowbite-react';
 import { BiPlus } from 'react-icons/bi';
 import { useSetRecoilState } from 'recoil';
+import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
 import { chatHeaderState } from 'ts/states/chat-header-state';
+import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { chatState } from 'ts/states/chat-state';
 
 const CreateDm = () => {
 	const setChatState = useSetRecoilState(chatState);
 	const setChatHeaderState = useSetRecoilState(chatHeaderState);
+	const setSidebarState = useSetRecoilState(chatSidebarState);
 
 	const onClickCreate = () => {
 		setChatState(null);
 		setChatHeaderState(false);
+		setSidebarState({
+			status: ChatSidebarStatus.CLOSE,
+			chat: null,
+			profile: null,
+		});
 	};
 
 	return (
