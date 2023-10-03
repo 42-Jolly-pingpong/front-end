@@ -66,17 +66,28 @@ const SetChatRoomType = (props: {
 		setPasswordField(false);
 	};
 
-	const radioButton = (id: string, value: string, label: string) => {
+	const radioButton = (
+		id: string,
+		value: string,
+		label: string,
+		subLabel: string
+	) => {
 		return (
-			<div className='flex items-center gap-2' onClick={handleLabelClick}>
+			<div className='flex items-start gap-2' onClick={handleLabelClick}>
 				<Radio
 					defaultChecked={id === 'public'}
 					id={id}
 					name='roomType'
 					value={value}
 					onChange={onChangeButtons}
+					className='mt-0.5'
 				/>
-				<Label htmlFor={id}>{label}</Label>
+				<Label htmlFor={id}>
+					<div>
+						{label}
+						<div className='text-xs font-normal text-gray-500'>{subLabel}</div>
+					</div>
+				</Label>
 			</div>
 		);
 	};
@@ -84,12 +95,13 @@ const SetChatRoomType = (props: {
 	const passwordInput = () => {
 		return (
 			<div className='ml-6'>
-				<div className='text-sm mb-2'>비밀번호를 입력하세요.</div>
 				<TextInput
 					name='password'
 					type='password'
 					className='w-60'
+					sizing='sm'
 					required={passwordField}
+					placeholder='채널 비밀번호'
 				/>
 			</div>
 		);
@@ -99,16 +111,29 @@ const SetChatRoomType = (props: {
 		<form onSubmit={onSubmitName}>
 			<h3 className='mb-4'>채널 타입</h3>
 			<fieldset className='flex max-w-md flex-col gap-4' id='radio'>
-				{radioButton('public', 'PUBLIC', '공개 채널')}
-				{radioButton('protected', 'PROTECTED', '보호되는 채널')}
+				{radioButton('public', 'PUBLIC', '공개 - 누구나', '')}
+				{radioButton(
+					'protected',
+					'PROTECTED',
+					'비밀번호 요구 - 암호를 공유받은 사람만',
+					'비밀번호 입력을 통해서만 가입할 수 있음'
+				)}
 				{passwordField && passwordInput()}
-				{radioButton('private', 'PRIVATE', '비밀 채널')}
+				{radioButton(
+					'private',
+					'PRIVATE',
+					'비공개 - 일부 사람만',
+					'초대를 통해서만 가입할 수 있음'
+				)}
 			</fieldset>
-			<div className='flex justify-end'>
-				<Button color='light' onClick={onClickPreButton} className='mr-2'>
-					이전
-				</Button>
-				<Button type='submit'>채널 생성</Button>
+			<div className='flex justify-between items-center mt-5'>
+				<div className='text-sm font-light text-gray-900'>2/2단계</div>
+				<div className='flex'>
+					<Button color='light' onClick={onClickPreButton} className='mr-2'>
+						이전
+					</Button>
+					<Button type='submit'>생성</Button>
+				</div>
 			</div>
 		</form>
 	);
