@@ -45,6 +45,7 @@
 
 	.chat-right-sidebar-tap {
 		height: calc(100vh - 48px - 39px);
+		max-height: calc(100vh - 48px - 39px);
 	}
 
 	.chat-pad {
