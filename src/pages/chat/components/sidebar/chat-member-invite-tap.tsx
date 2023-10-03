@@ -100,7 +100,7 @@ const ChatMemberInviteTap = (props: {
 				<div className='p-3 text-xs font-bold text-gray-600'>이 채널에서</div>
 				{memberList.map((member, id) => (
 					<div
-						className='px-4 py-3 flex items-center justify-between w-full hover:bg-gray-200'
+						className='px-4 py-3 flex items-center w-full hover:bg-gray-200'
 						key={id}
 					>
 						<MemberItem user={member.user} />
