@@ -1,11 +1,11 @@
-import HeaderSidebar from './header-sidebar';
+import HeaderNavigateBar from './header-navigation-bar';
 import HeaderProfileIcon from './header-profile-icon';
 
 const HeaderRight = () => {
 	return (
 		<div className='flex p-2'>
 			<HeaderProfileIcon />
-			<HeaderSidebar />
+			<HeaderNavigateBar />
 		</div>
 	);
 };
