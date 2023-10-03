@@ -1,4 +1,4 @@
-import { TextInput } from 'flowbite-react';
+import { Badge, TextInput } from 'flowbite-react';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
@@ -8,6 +8,7 @@ import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import { HiArrowUturnLeft } from 'react-icons/hi2';
 import NoResult from 'pages/chat/components/sidebar/no-result';
+import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 
 const ChatMemberInviteTap = (props: {
 	chat: ChatRoom;
@@ -74,6 +75,17 @@ const ChatMemberInviteTap = (props: {
 		);
 	};
 
+	const roleBadge = (role: ChatParticipantRole) => {
+		switch (role) {
+			case ChatParticipantRole.OWNER:
+				return <Badge color='pink'>소유주</Badge>;
+			case ChatParticipantRole.ADMIN:
+				return <Badge color='indigo'>관리자</Badge>;
+			case ChatParticipantRole.MEMBER:
+				return null;
+		}
+	};
+
 	const inChannelList = () => {
 		if (memberList.length === 0) {
 			return (
@@ -92,6 +104,7 @@ const ChatMemberInviteTap = (props: {
 						key={id}
 					>
 						<MemberItem user={member.user} />
+						<div className='ml-2'>{roleBadge(member.role)}</div>
 					</div>
 				))}
 			</div>

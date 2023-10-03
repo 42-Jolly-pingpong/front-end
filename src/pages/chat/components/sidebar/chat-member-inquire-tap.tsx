@@ -286,9 +286,9 @@ const ChatMemberInquireTap = (props: {
 	const roleBadge = (role: ChatParticipantRole) => {
 		switch (role) {
 			case ChatParticipantRole.OWNER:
-				return <Badge color='pink'>OWNER</Badge>;
+				return <Badge color='pink'>소유주</Badge>;
 			case ChatParticipantRole.ADMIN:
-				return <Badge color='indigo'>ADMIN</Badge>;
+				return <Badge color='indigo'>관리자</Badge>;
 			case ChatParticipantRole.MEMBER:
 				return null;
 		}
