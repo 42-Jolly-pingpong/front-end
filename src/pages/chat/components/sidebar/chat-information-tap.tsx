@@ -38,7 +38,7 @@ const ChatInformationTap = (props: { chat: ChatRoom }) => {
 	const adminButton = (admin: ChatParticipant) => {
 		return (
 			<button
-				className='text-blue-700 text-xs font-normal'
+				className='text-blue-700 text-xs font-normal hover:underline'
 				onClick={() => onClickAdmin(admin)}
 			>
 				{admin.user.nickname}
@@ -49,7 +49,7 @@ const ChatInformationTap = (props: { chat: ChatRoom }) => {
 	const adminsToOneElement = (admins: ChatParticipant[]) => {
 		const allAdmins = admins.map((admin, id) => (
 			<button
-				className='text-blue-700 text-xs font-normal'
+				className='text-blue-700 text-xs font-normal hover:underline'
 				onClick={() => onClickAdmin(admin)}
 				key={id}
 			>
