@@ -43,6 +43,10 @@
 		width: 348px;
 	}
 
+	.chat-right-sidebar-tap {
+		height: calc(100vh - 48px - 39px);
+	}
+
 	.chat-pad {
 		width: calc(100vw - 255px - 60px);
 	}

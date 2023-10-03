@@ -1,22 +1,18 @@
-import { Tabs } from 'flowbite-react';
-import ChatInformationTap from 'pages/chat/components/sidebar/chat-information-tap';
-import ChatMemberTap from 'pages/chat/components/sidebar/chat-member-tap';
-import ChatSettingTap from 'pages/chat/components/sidebar/chat-setting-tap';
-import { FiUsers, FiInfo, FiSettings } from 'react-icons/fi';
+import { Flowbite } from 'flowbite-react';
 import ChatSidebarHeader from 'pages/chat/components/sidebar/chat-sidebar-header';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
-import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import userData from 'ts/mock/user-data';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import ChatSidebarForAdmin from 'pages/chat/components/sidebar/chat-sidebar-for-admin';
 import ChatSidebarForMember from 'pages/chat/components/sidebar/chat-sidebar-for-member';
+import { tapsTheme } from 'pages/chat/themes/taps.theme';
 
 const ChatSidebarChat = () => {
 	const chat = useRecoilValue(chatSidebarState).chat;
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
-	const user = userData[1]; //temp
+	const user = userData[0]; //temp
 
 	useEffect(() => {
 		const participantWithSameId = chat?.participants.find(
@@ -41,12 +37,14 @@ const ChatSidebarChat = () => {
 				aria-label='Tabs with underline'
 				title={chat.roomName}
 			/>
-			<div className='grow'>
-				{isAdmin ? (
-					<ChatSidebarForAdmin chat={chat} />
-				) : (
-					<ChatSidebarForMember chat={chat} />
-				)}
+			<div className=''>
+				<Flowbite theme={{ theme: tapsTheme }}>
+					{isAdmin ? (
+						<ChatSidebarForAdmin chat={chat} />
+					) : (
+						<ChatSidebarForMember chat={chat} />
+					)}
+				</Flowbite>
 			</div>
 		</div>
 	);
