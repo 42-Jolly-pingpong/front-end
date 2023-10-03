@@ -1,4 +1,6 @@
+import Status from 'pages/chat/components/status';
 import UserImg from 'pages/chat/components/user-img';
+import { UserStatus } from 'ts/enums/user-status.enum';
 import { User } from 'ts/interfaces/user.model';
 
 const MemberItem = (props: { user: User }) => {
@@ -8,6 +10,7 @@ const MemberItem = (props: { user: User }) => {
 			<div className='text-sm font-bold text-gray-900 mx-2'>
 				{props.user.nickname}
 			</div>
+			<Status status={UserStatus.ONLINE} />
 		</div>
 	);
 };
