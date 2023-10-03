@@ -18,6 +18,8 @@ const Section = (props: { section: JSX.Element }) => {
 	);
 }; //임시
 
+//			{sidebarState ? <Sidebar /> : null}
+<Snackbar />;
 function App() {
 	return (
 		<div>
