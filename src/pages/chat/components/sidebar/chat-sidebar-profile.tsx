@@ -135,7 +135,7 @@ const ChatSidebarProfile = () => {
 			<ChatSidebarHeader title='프로필' />
 			<div className='grow'>
 				<div className='flex justify-center my-3'>
-					<UserImg src={user.avatarPath} size={64} />
+					<UserImg src={user.avatarPath} size='64' />
 				</div>
 				{profileField()}
 				{contactField()}

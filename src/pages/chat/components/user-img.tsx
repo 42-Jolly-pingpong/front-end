@@ -1,4 +1,4 @@
-const UserImg = (props: { src: string; size: number }) => {
+const UserImg = (props: { src: string; size: string | number }) => {
 	return (
 		<div className={`w-${props.size} h-${props.size} overflow-hidden`}>
 			<img src={props.src} className='object-cover w-full h-full rounded-md' />
