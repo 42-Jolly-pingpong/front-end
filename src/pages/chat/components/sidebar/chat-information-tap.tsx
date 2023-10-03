@@ -107,7 +107,7 @@ const ChatInformationTap = (props: { chat: ChatRoom }) => {
 		return (
 			<button>
 				<div className='px-5 py-4 bg-white rounded-b-xl hover:bg-gray-200 text-left'>
-					<div className='text-sm font-bold text-red-500'>채널 삭제</div>
+					<div className='text-sm font-bold text-red-500'>채널에서 나가기</div>
 				</div>
 			</button>
 		);
