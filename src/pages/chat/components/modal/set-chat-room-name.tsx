@@ -31,10 +31,6 @@ const SetChatRoomName = (props: {
 		setPhase(2);
 	};
 
-	const byteLeft = () => {
-		return <div>{nameLength}</div>;
-	};
-
 	const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setNameLength(80 - e.target.value.length);
 	};
@@ -62,7 +58,7 @@ const SetChatRoomName = (props: {
 					<Button type='submit'>다음</Button>
 				</div>
 			</form>
-			<div className='absolute top-12 right-4 text-sm font-normal text-gray-500'>
+			<div className='absolute top-12 right-4 text-sm font-normal text-gray-500 bg-gray-50'>
 				{nameLength}
 			</div>
 		</div>
