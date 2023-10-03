@@ -4,10 +4,10 @@ import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiDotsVerticalRounded, BiSearch } from 'react-icons/bi';
 import { FiUserPlus, FiUser } from 'react-icons/fi';
-import UserImg from 'pages/chat/components/user-img';
 import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
+import MemberItem from 'pages/chat/components/sidebar/member-item';
 
 const ChatMemberTap = (props: { chat: ChatRoom }) => {
 	const { chat } = props;
@@ -297,12 +297,7 @@ const ChatMemberTap = (props: { chat: ChatRoom }) => {
 				className='px-4 py-3 flex items-center justify-between w-full hover:bg-gray-200'
 				key={id}
 			>
-				<div className='flex items-center '>
-					<UserImg src={participant.user.avatarPath} size={8} />
-					<div className='text-sm font-bold text-gray-900 mx-2'>
-						{participant.user.nickname}
-					</div>
-				</div>
+				<MemberItem participant={participant} />
 				{memberDotButton(participant)}
 			</div>
 		));
