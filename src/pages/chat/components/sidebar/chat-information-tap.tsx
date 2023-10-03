@@ -47,13 +47,21 @@ const ChatInformationTap = (props: { chat: ChatRoom }) => {
 	};
 
 	const adminsToOneElement = (admins: ChatParticipant[]) => {
-		const allAdmins = admins.map((admin) => adminButton(admin));
+		const allAdmins = admins.map((admin, id) => (
+			<button
+				className='text-blue-700 text-xs font-normal'
+				onClick={() => onClickAdmin(admin)}
+				key={id}
+			>
+				{admin.user.nickname}
+			</button>
+		));
 		const delimeter = ', ';
 		return (
 			<div className='flex flex-wrap text-sm font-normal max-w-80'>
 				{allAdmins.map((admin, id) => (
 					<>
-						{id !== 0 ? <div>{delimeter}</div> : null}
+						{id !== 0 ? <div key={id}>{delimeter}</div> : null}
 						{admin}
 					</>
 				))}
