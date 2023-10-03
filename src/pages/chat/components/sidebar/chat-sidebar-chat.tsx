@@ -11,7 +11,7 @@ import { tapsTheme } from 'pages/chat/themes/taps.theme';
 
 const ChatSidebarChat = () => {
 	const chat = useRecoilValue(chatSidebarState).chat;
-	const [isAdmin, setIsAdmin] = useState<boolean>(false);
+	const [isOwner, setIsOwner] = useState<boolean>(false);
 	const user = userData[0]; //temp
 
 	useEffect(() => {
@@ -20,10 +20,7 @@ const ChatSidebarChat = () => {
 		);
 
 		if (participantWithSameId !== undefined) {
-			setIsAdmin(
-				participantWithSameId.role === ChatParticipantRole.ADMIN ||
-					participantWithSameId.role === ChatParticipantRole.OWNER
-			);
+			setIsOwner(participantWithSameId.role === ChatParticipantRole.OWNER);
 		}
 	}, []);
 
@@ -39,7 +36,7 @@ const ChatSidebarChat = () => {
 			/>
 			<div className=''>
 				<Flowbite theme={{ theme: tapsTheme }}>
-					{isAdmin ? (
+					{isOwner ? (
 						<ChatSidebarForAdmin chat={chat} />
 					) : (
 						<ChatSidebarForMember chat={chat} />
