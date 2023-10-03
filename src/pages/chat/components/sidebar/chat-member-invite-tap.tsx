@@ -7,6 +7,7 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import { HiArrowUturnLeft } from 'react-icons/hi2';
+import NoResult from 'pages/chat/components/sidebar/no-result';
 
 const ChatMemberInviteTap = (props: {
 	chat: ChatRoom;
@@ -74,6 +75,14 @@ const ChatMemberInviteTap = (props: {
 	};
 
 	const inChannelList = () => {
+		if (memberList.length === 0) {
+			return (
+				<div className='pb-3'>
+					<div className='p-3 text-xs font-bold text-gray-600'>이 채널에서</div>
+					<NoResult />
+				</div>
+			);
+		}
 		return (
 			<div className=''>
 				<div className='p-3 text-xs font-bold text-gray-600'>이 채널에서</div>
@@ -94,6 +103,16 @@ const ChatMemberInviteTap = (props: {
 	};
 
 	const notInChannelList = () => {
+		if (notMemberList.length === 0) {
+			return (
+				<div className='flex flex-col w-full bg-gray-100 pb-3'>
+					<div className='px-3 py-3 text-xs font-bold text-gray-600'>
+						이 채널에 없음
+					</div>
+					<NoResult />
+				</div>
+			);
+		}
 		return (
 			<div className='flex flex-col w-full bg-gray-100'>
 				<div className='px-3 py-3 text-xs font-bold text-gray-600'>

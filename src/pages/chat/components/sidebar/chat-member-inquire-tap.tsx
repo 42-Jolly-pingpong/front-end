@@ -298,7 +298,14 @@ const ChatMemberInquireTap = (props: {
 		const participants = searchedParticipant;
 
 		if (participants.length === 0) {
-			return <NoResult />;
+			return (
+				<>
+					<div className='pl-5 pt-2 text-xs font-semibold text-gray-600'>
+						이 채널에서
+					</div>
+					<NoResult />
+				</>
+			);
 		}
 		return participants.map((participant, id) => (
 			<div

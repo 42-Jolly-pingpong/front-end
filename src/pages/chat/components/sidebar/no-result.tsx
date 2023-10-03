@@ -2,8 +2,7 @@ import { FiUser } from 'react-icons/fi';
 
 const NoResult = () => {
 	return (
-		<div className='px-5 pt-2'>
-			<div className=' text-xs font-semibold text-gray-600'>이 채널에서</div>
+		<div className='px-5'>
 			<div className='mt-2 flex items-center'>
 				<div className='flex items-center justify-center w-8 h-8 bg-gray-100 rounded-md'>
 					<FiUser size='16' />
