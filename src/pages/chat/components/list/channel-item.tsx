@@ -3,7 +3,7 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import changeChat from 'hooks/change-chat';
 
-const ChannelItem = (props: { channel: ChatRoom }) => {
+const ChannelItem = (props: { channel: ChatRoom; isSelected: boolean }) => {
 	const setChat = changeChat();
 
 	const onClickItem = () => {
@@ -11,12 +11,15 @@ const ChannelItem = (props: { channel: ChatRoom }) => {
 	};
 
 	return (
-		<Sidebar.Item onClick={onClickItem}>
+		<Sidebar.Item
+			onClick={onClickItem}
+			className={props.isSelected ? 'bg-yellow-200 hover:bg-yellow-400' : ''}
+		>
 			<div className='flex items-center'>
 				<div className='mr-1'>
 					<ChannelIcon roomType={props.channel.roomType} />
 				</div>
-				<div className='text-base font-medium ml-1'>
+				<div className='text-base font-medium ml-1 truncate'>
 					{props.channel.roomName}
 				</div>
 			</div>

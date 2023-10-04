@@ -2,7 +2,7 @@ import { Sidebar } from 'flowbite-react';
 import changeChat from 'hooks/change-chat';
 import { Dm } from 'ts/interfaces/dm.model';
 
-const DmItem = (props: { dm: Dm }) => {
+const DmItem = (props: { dm: Dm; isSelected: boolean }) => {
 	const chatMate = props.dm.chatMate;
 
 	const setChat = changeChat();
@@ -23,10 +23,13 @@ const DmItem = (props: { dm: Dm }) => {
 	};
 
 	return (
-		<Sidebar.Item onClick={onClickItem}>
+		<Sidebar.Item
+			onClick={onClickItem}
+			className={props.isSelected ? 'bg-yellow-200 hover:bg-yellow-400' : ''}
+		>
 			<div className='flex items-center'>
 				{avatar()}
-				<div className='flex items-center font-medium text-base'>
+				<div className='flex items-center font-medium text-base truncate'>
 					{chatMate.nickname}
 				</div>
 			</div>
