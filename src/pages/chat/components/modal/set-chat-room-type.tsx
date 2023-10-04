@@ -39,8 +39,7 @@ const SetChatRoomType = (props: {
 			ChatRoomType[roomTypeString as keyof typeof ChatRoomType];
 
 		const passwordValue = e.currentTarget.elements.password;
-		const password =
-			passwordValue === undefined ? null : Number(passwordValue.value);
+		const password = passwordValue === undefined ? null : passwordValue.value;
 
 		setChatRoomInfo((pre) => {
 			return { ...pre, roomType, password };
