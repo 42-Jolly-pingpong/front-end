@@ -50,6 +50,7 @@
 
 	.chat-pad {
 		width: calc(100vw - 255px - 60px);
+		max-height: 160px;
 	}
 
 	.hide-scrollbar::-webkit-scrollbar {

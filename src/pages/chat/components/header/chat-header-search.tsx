@@ -50,7 +50,7 @@ const ChatHeaderSearch = () => {
 			);
 		}
 		return (
-			<div className='absolute py-3 m-2 -top-4 left-9 bg-white border rounded-lg max-h-40 chat-pad overflow-y-auto'>
+			<div className='absolute py-3 m-2 -top-4 left-9 bg-white border rounded-lg chat-pad overflow-y-auto'>
 				{searchedFriendList.map((friend, id) => (
 					<DmSearchedItem
 						friend={friend}
