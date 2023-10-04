@@ -10,7 +10,7 @@ const ChatList = () => {
 			<Logo />
 			<div className='sidebar'>
 				<Flowbite theme={{ theme: sidebarTheme }}>
-					<Sidebar className='w-full'>
+					<Sidebar className='w-full p-3'>
 						<Sidebar.ItemGroup>
 							<Channels />
 						</Sidebar.ItemGroup>
