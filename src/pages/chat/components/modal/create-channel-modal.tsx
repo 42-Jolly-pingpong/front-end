@@ -1,18 +1,17 @@
 import { Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
-import { CreateChatRoom } from 'ts/interfaces/create-chat-room.model';
 import SetChatRoomName from 'pages/chat/components/modal/set-chat-room-name';
 import SetChatRoomType from 'pages/chat/components/modal/set-chat-room-type';
 import { BiHash } from 'react-icons/bi';
+import { CreateChatRoomDto } from 'ts/interfaces/create-chat-room.dto';
 
 export const CreateChannelModal = () => {
 	const [phase, setPhase] = useState<number>(1);
-	const [chatRoomInfo, setChatRoomInfo] = useState<CreateChatRoom>({
+	const [chatRoomInfo, setChatRoomInfo] = useState<CreateChatRoomDto>({
 		roomName: '',
 		roomType: ChatRoomType.PUBLIC,
 		password: null,
-		participants: [],
 	});
 
 	const modalBody = () => {
@@ -29,6 +28,7 @@ export const CreateChannelModal = () => {
 				return (
 					<SetChatRoomType
 						setPhase={setPhase}
+						chatRoomInfo={chatRoomInfo}
 						setChatRoomInfo={setChatRoomInfo}
 					/>
 				);

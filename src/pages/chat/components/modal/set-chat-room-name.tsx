@@ -1,7 +1,7 @@
 import { Button, TextInput } from 'flowbite-react';
-import { CreateChatRoom } from 'ts/interfaces/create-chat-room.model';
 import { BiHash } from 'react-icons/bi';
 import { useEffect, useRef, useState } from 'react';
+import { CreateChatRoomDto } from 'ts/interfaces/create-chat-room.dto';
 
 interface FormElements extends HTMLFormControlsCollection {
 	roomName: HTMLInputElement;
@@ -13,10 +13,10 @@ interface FormElement extends HTMLFormElement {
 
 const SetChatRoomName = (props: {
 	setPhase: React.Dispatch<React.SetStateAction<number>>;
-	chatRoomInfo: CreateChatRoom;
-	setChatRoomInfo: React.Dispatch<React.SetStateAction<CreateChatRoom>>;
+	chatRoomInfo: CreateChatRoomDto;
+	setChatRoomInfo: React.Dispatch<React.SetStateAction<CreateChatRoomDto>>;
 }) => {
-	const { setPhase, setChatRoomInfo } = props;
+	const { setPhase, chatRoomInfo, setChatRoomInfo } = props;
 	const [nameLength, setNameLength] = useState<number>(80);
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,7 +52,7 @@ const SetChatRoomName = (props: {
 					icon={BiHash}
 					className='mt-3 mb-3'
 					required
-					defaultValue={props.chatRoomInfo.roomName}
+					defaultValue={chatRoomInfo.roomName}
 					placeholder='예: 게임 고수만'
 					maxLength={80}
 					onChange={onChangeName}

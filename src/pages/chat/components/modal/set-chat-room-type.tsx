@@ -1,9 +1,13 @@
 import { Button, Label, Radio, TextInput } from 'flowbite-react';
+import useFetch from 'hooks/use-fetch';
+import useHash from 'hooks/use-hash';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
-import { CreateChatRoom } from 'ts/interfaces/create-chat-room.model';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { CreateChatRoomDto } from 'ts/interfaces/create-chat-room.dto';
+import { chatListState } from 'ts/states/chat-list.state';
 import { chatModalState } from 'ts/states/chat-modal-state';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -17,11 +21,17 @@ interface FormElement extends HTMLFormElement {
 
 const SetChatRoomType = (props: {
 	setPhase: React.Dispatch<React.SetStateAction<number>>;
-	setChatRoomInfo: React.Dispatch<React.SetStateAction<CreateChatRoom>>;
+	chatRoomInfo: CreateChatRoomDto;
+	setChatRoomInfo: React.Dispatch<React.SetStateAction<CreateChatRoomDto>>;
 }) => {
 	const [passwordField, setPasswordField] = useState<boolean>(false);
+	const [isFinished, setIsFinished] = useState<boolean>(false);
 	const setModalStatus = useSetRecoilState(chatModalState);
+	const setChannelList = useSetRecoilState(chatListState);
 	const inputRef = useRef<HTMLInputElement>(null);
+	const sendApi = useFetch();
+	const hash = useHash();
+	const { setPhase, chatRoomInfo, setChatRoomInfo } = props;
 
 	useEffect(() => {
 		if (inputRef.current && passwordField) {
@@ -29,26 +39,50 @@ const SetChatRoomType = (props: {
 		}
 	}, [passwordField]);
 
-	const { setPhase, setChatRoomInfo } = props;
-
-	const onSubmitName = (e: React.FormEvent<FormElement>) => {
+	const onSubmitChannel = (e: React.FormEvent<FormElement>) => {
 		e.preventDefault();
 
 		const roomTypeString = e.currentTarget.elements.roomType.value;
 		const roomType: ChatRoomType =
 			ChatRoomType[roomTypeString as keyof typeof ChatRoomType];
-
 		const passwordValue = e.currentTarget.elements.password;
-		const password = passwordValue === undefined ? null : passwordValue.value;
 
 		setChatRoomInfo((pre) => {
-			return { ...pre, roomType, password };
+			let updatedInfo = { ...pre, roomType };
+
+			if (passwordValue !== undefined) {
+				updatedInfo = { ...updatedInfo, password: passwordValue.value };
+			}
+
+			return updatedInfo;
 		});
 
-		//create channel
-
-		setModalStatus(ChatModalStatus.CLOSE);
+		setIsFinished(true);
 	};
+
+	useEffect(() => {
+		console.log(chatRoomInfo);
+		console.log(JSON.stringify(chatRoomInfo));
+		if (isFinished) {
+			(async () => {
+				await sendApi('POST', '/chat-rooms', chatRoomInfo)
+					.then((res) => res.json())
+					.then((data: ChatRoom) => {
+						const dataWithDate = {
+							...data,
+							createdAt: new Date(data.createdAt),
+							updatedTime: new Date(data.updatedTime),
+						};
+						setChannelList((pre) => ({
+							...pre,
+							channelList: [...pre.channelList, dataWithDate],
+						}));
+					});
+			})();
+
+			setModalStatus(ChatModalStatus.CLOSE);
+		}
+	}, [isFinished]);
 
 	const handleLabelClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		const radioId = e.currentTarget.getAttribute('for');
@@ -115,7 +149,7 @@ const SetChatRoomType = (props: {
 	};
 
 	return (
-		<form onSubmit={onSubmitName}>
+		<form onSubmit={onSubmitChannel}>
 			<h3 className='mb-4'>채널 타입</h3>
 			<fieldset className='flex max-w-md flex-col gap-4' id='radio'>
 				{radioButton('public', 'PUBLIC', '공개 - 누구나', '')}
