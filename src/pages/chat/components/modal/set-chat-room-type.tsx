@@ -132,7 +132,12 @@ const SetChatRoomType = (props: {
 					<Button color='light' onClick={onClickPreButton} className='mr-2'>
 						이전
 					</Button>
-					<Button type='submit'>생성</Button>
+					<Button
+						type='submit'
+						className='bg-primary-700 enabled:hover:bg-primary-800'
+					>
+						생성
+					</Button>
 				</div>
 			</div>
 		</form>

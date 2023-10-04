@@ -153,7 +153,7 @@ const ChatMemberInquireTap = (props: {
 				onClick={() => onClickManageBlockList(isBlocked, otherUser)}
 			>
 				<div className='flex items-center font-normal text-sm text-red-500'>
-					{isBlocked ? '차단 해제하기' : '차단하기'}
+					{isBlocked ? '사용자 차단 해제하기' : '사용자 차단하기'}
 				</div>
 			</Dropdown.Item>
 		);
@@ -200,7 +200,7 @@ const ChatMemberInquireTap = (props: {
 	const manageKickedList = (otherUser: ChatParticipant) => {
 		return (
 			<Dropdown.Item onClick={() => onClickManageKickedList(otherUser)}>
-				<div className='flex items-center font-normal text-sm text-gray-700'>
+				<div className='flex items-center font-normal text-sm text-red-500'>
 					채널에서 제거
 				</div>
 			</Dropdown.Item>
@@ -217,7 +217,7 @@ const ChatMemberInquireTap = (props: {
 	const manageBannedList = (otherUser: ChatParticipant) => {
 		return (
 			<Dropdown.Item onClick={() => onClickManageBannedList(otherUser)}>
-				<div className='flex items-center font-normal text-sm text-gray-700'>
+				<div className='flex items-center font-normal text-sm text-red-5000'>
 					채널에서 추방
 				</div>
 			</Dropdown.Item>

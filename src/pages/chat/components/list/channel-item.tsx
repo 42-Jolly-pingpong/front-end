@@ -13,7 +13,7 @@ const ChannelItem = (props: { channel: ChatRoom; isSelected: boolean }) => {
 	return (
 		<Sidebar.Item
 			onClick={onClickItem}
-			className={props.isSelected ? 'bg-yellow-200 hover:bg-yellow-400' : ''}
+			className={props.isSelected ? 'bg-primary-300 hover:bg-primary-500' : ''}
 		>
 			<div className='flex items-center'>
 				<div className='mr-1'>

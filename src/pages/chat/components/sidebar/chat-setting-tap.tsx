@@ -77,7 +77,7 @@ const ChatSettingTap = (props: { chat: ChatRoom }) => {
 					<Button
 						color='warning'
 						size='sm'
-						className='bg-yellow-300 ml-2'
+						className='bg-primary-700 enabled:hover:bg-primary-800 ml-2'
 						onClick={onClickChange}
 					>
 						변경

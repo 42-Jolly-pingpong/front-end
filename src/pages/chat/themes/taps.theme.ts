@@ -27,7 +27,7 @@ export const tapsTheme: CustomFlowbiteTheme = {
 					underline: {
 						base: 'rounded-t-lg',
 						active: {
-							on: 'text-yellow-300 rounded-t-lg border-b-2 border-yellow-300 active dark:text-cyan-500 dark:border-cyan-500',
+							on: 'text-primary-600 rounded-t-lg border-b-2 border-primary-600 active dark:text-cyan-500 dark:border-cyan-500',
 							off: 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300',
 						},
 					},

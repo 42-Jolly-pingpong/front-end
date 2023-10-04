@@ -55,7 +55,12 @@ const SetChatRoomName = (props: {
 				</div>
 				<div className='ml-1 flex justify-between items-center mt-5'>
 					<div className='text-sm font-light text-gray-900'>1/2단계</div>
-					<Button type='submit'>다음</Button>
+					<Button
+						type='submit'
+						className='bg-primary-700 enabled:hover:bg-primary-800'
+					>
+						다음
+					</Button>
 				</div>
 			</form>
 			<div className='absolute top-12 right-4 text-sm font-normal text-gray-500 bg-gray-50'>
