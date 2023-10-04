@@ -23,7 +23,7 @@ const ChatField = () => {
 		if (scrollRef.current) {
 			scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 		}
-	}, [scrollRef]);
+	}, [scrollRef, chat]);
 
 	if (chat === null) {
 		return <></>;
