@@ -1,11 +1,11 @@
 import { Avatar } from 'flowbite-react';
-import changeChat from 'hooks/change-chat';
+import useChangeChat from 'hooks/use-change-chat';
 import { dmList } from 'pages/chat/mock';
 import { User } from 'ts/interfaces/user.model';
 
 const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 	const { friend } = props;
-	const setChat = changeChat();
+	const setChat = useChangeChat();
 	const margin = props.isTheLast ? '' : 'mb-1';
 
 	const onClickFriend = () => {

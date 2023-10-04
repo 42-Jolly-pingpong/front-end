@@ -6,7 +6,7 @@ import { chatHeaderState } from 'ts/states/chat-header-state';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { chatState } from 'ts/states/chat-state';
 
-const changeChat = () => {
+const useChangeChat = () => {
 	const setChatState = useSetRecoilState(chatState);
 	const setChatHeaderState = useSetRecoilState(chatHeaderState);
 	const setSidebarState = useSetRecoilState(chatSidebarState);
@@ -24,4 +24,4 @@ const changeChat = () => {
 	return setChat;
 };
 
-export default changeChat;
+export default useChangeChat;

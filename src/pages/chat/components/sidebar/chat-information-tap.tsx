@@ -1,4 +1,4 @@
-import changeSidebar from 'hooks/change-sidebar';
+import useChangeSidebar from 'hooks/use-change-sidebar';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import formattedDate from 'pages/chat/components/formatted-date';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
@@ -6,7 +6,7 @@ import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 
 const ChatInformationTap = (props: { chat: ChatRoom }) => {
-	const setProfile = changeSidebar('profile');
+	const setProfile = useChangeSidebar('profile');
 	const { chat } = props;
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER

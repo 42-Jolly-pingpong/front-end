@@ -4,7 +4,7 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { User } from 'ts/interfaces/user.model';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 
-const changeSidebar = (state: string) => {
+const useChangeSidebar = (state: string) => {
 	const setChatSidebarState = useSetRecoilState(chatSidebarState);
 
 	const setSidebarProfile = (profile: User | ChatRoom) => {
@@ -29,4 +29,4 @@ const changeSidebar = (state: string) => {
 	return setSidebarChat;
 };
 
-export default changeSidebar;
+export default useChangeSidebar;

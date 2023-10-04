@@ -1,11 +1,11 @@
 import { Sidebar } from 'flowbite-react';
-import changeChat from 'hooks/change-chat';
+import useChangeChat from 'hooks/use-change-chat';
 import { Dm } from 'ts/interfaces/dm.model';
 
 const DmItem = (props: { dm: Dm; isSelected: boolean }) => {
 	const chatMate = props.dm.chatMate;
 
-	const setChat = changeChat();
+	const setChat = useChangeChat();
 
 	const avatar = () => {
 		return (

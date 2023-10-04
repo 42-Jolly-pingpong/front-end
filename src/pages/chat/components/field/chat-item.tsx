@@ -1,12 +1,12 @@
 import { Avatar } from 'flowbite-react';
-import changeSidebar from 'hooks/change-sidebar';
+import useChangeSidebar from 'hooks/use-change-sidebar';
 import ChatTime from 'pages/chat/components/field/chat-time';
 import { Chat } from 'ts/interfaces/chat.model';
 import { User } from 'ts/interfaces/user.model';
 
 const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 	const { chat } = props;
-	const setChatSidebar = changeSidebar('profile');
+	const setChatSidebar = useChangeSidebar('profile');
 	const user = chat.user.user;
 
 	const topBorder = () => {

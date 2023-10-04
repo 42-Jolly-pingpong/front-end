@@ -1,10 +1,10 @@
 import { Sidebar } from 'flowbite-react';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import ChannelIcon from 'pages/chat/components/channel-icon';
-import changeChat from 'hooks/change-chat';
+import useChangeChat from 'hooks/use-change-chat';
 
 const ChannelItem = (props: { channel: ChatRoom; isSelected: boolean }) => {
-	const setChat = changeChat();
+	const setChat = useChangeChat();
 
 	const onClickItem = () => {
 		setChat(props.channel);

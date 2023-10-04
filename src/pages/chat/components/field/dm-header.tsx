@@ -1,11 +1,11 @@
 import { Button } from 'flowbite-react';
-import changeSidebar from 'hooks/change-sidebar';
+import useChangeSidebar from 'hooks/use-change-sidebar';
 import UserImg from 'pages/chat/components/user-img';
 import { User } from 'ts/interfaces/user.model';
 
 const DmHeader = (props: { mate: User }) => {
 	const { mate } = props;
-	const setChatSidebar = changeSidebar('profile');
+	const setChatSidebar = useChangeSidebar('profile');
 
 	const status = () => {
 		return <div className='flex w-2 h-2 bg-green-400 rounded-full'></div>; //online
