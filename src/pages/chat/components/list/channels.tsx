@@ -1,24 +1,23 @@
 import { Sidebar } from 'flowbite-react';
 import ChannelItem from 'pages/chat/components/list/channel-item';
 import CreateChannel from 'pages/chat/components/list/create-channel';
-import { channelList } from 'pages/chat/mock';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
 const Channels = () => {
 	const [channels, setChannels] = useState<ChatRoom[]>();
+	const channelList = useRecoilValue(chatListState).channelList;
 	const chat = useRecoilValue(chatState);
 
 	useEffect(() => {
-		//get Chat list
-		const sortedList = channelList.sort(
-			(a, b) => a.updatedTime.getTime() - b.updatedTime.getTime()
+		const list = [...channelList];
+		setChannels(
+			list.sort((a, b) => b.updatedTime.getTime() - a.updatedTime.getTime())
 		);
-
-		setChannels(sortedList);
-	}, []);
+	}, [channelList]);
 
 	return (
 		<Sidebar.Collapse label='채널' className='text-base font-medium'>
