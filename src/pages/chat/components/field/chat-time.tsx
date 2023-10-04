@@ -1,22 +1,16 @@
 import { Tooltip } from 'flowbite-react';
+import FormattedDate from 'pages/chat/components/formatted-date';
 
 const ChatTime = (props: { time: Date }) => {
 	const { time } = props;
 
 	const date = () => {
-		const formattedYear =
-			time.getFullYear() === new Date().getFullYear()
-				? ''
-				: `${time.getFullYear()}년 `;
-		const month = time.getMonth() + 1;
-		const day = time.getDate();
-
-		const formattedMonth = month < 10 ? `0${month}` : month;
-		const formattedDay = day < 10 ? `0${day}` : day;
-
-		const formattedDate = `${formattedYear}${formattedMonth}월 ${formattedDay}일`;
-
-		return formattedDate;
+		return (
+			<FormattedDate
+				date={time}
+				hasYear={time.getFullYear() !== new Date().getFullYear()}
+			/>
+		);
 	};
 
 	const sentTime = () => {
