@@ -1,9 +1,11 @@
+import ChannelHeader from 'pages/chat/components/field/channel-header';
 import ChatItem from 'pages/chat/components/field/chat-item';
 import DmHeader from 'pages/chat/components/field/dm-header';
 import { chatList } from 'pages/chat/mock';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Chat } from 'ts/interfaces/chat.model';
 import { Dm } from 'ts/interfaces/dm.model';
 import { chatState } from 'ts/states/chat-state';
@@ -45,7 +47,11 @@ const ChatField = () => {
 
 	return (
 		<div ref={scrollRef} className='overflow-y-auto px-5 w-full'>
-			{isDm && <DmHeader mate={(chat as Dm).chatMate} />}
+			{isDm ? (
+				<DmHeader mate={(chat as Dm).chatMate} />
+			) : (
+				<ChannelHeader channel={chat as ChatRoom} />
+			)}
 			{chats.map((chat, id) => (
 				<ChatItem
 					chat={chat}
