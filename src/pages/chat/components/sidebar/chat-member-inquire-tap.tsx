@@ -217,7 +217,7 @@ const ChatMemberInquireTap = (props: {
 	const manageBannedList = (otherUser: ChatParticipant) => {
 		return (
 			<Dropdown.Item onClick={() => onClickManageBannedList(otherUser)}>
-				<div className='flex items-center font-normal text-sm text-red-5000'>
+				<div className='flex items-center font-normal text-sm text-red-500'>
 					채널에서 추방
 				</div>
 			</Dropdown.Item>
