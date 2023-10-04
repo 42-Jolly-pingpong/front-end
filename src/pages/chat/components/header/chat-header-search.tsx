@@ -1,5 +1,5 @@
 import DmSearchedItem from 'pages/chat/components/header/dm-searched-item';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 
@@ -7,6 +7,13 @@ const ChatHeaderSearch = () => {
 	const [inputContent, setInputContent] = useState<string>('');
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [searchedFriendList, setSearchedFriendList] = useState<User[]>([]);
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
 
 	useEffect(() => {
 		setFriendList(userData); //temp
@@ -31,6 +38,7 @@ const ChatHeaderSearch = () => {
 			<div className='flex items-center w-full h-12'>
 				<div className='text-gray-500 ml-3'>대상:</div>
 				<input
+					ref={inputRef}
 					type='text'
 					className='border-0 focus:outline-none focus:ring-0 text-gray-500'
 					placeholder='사용자 닉네임'

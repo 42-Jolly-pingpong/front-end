@@ -1,5 +1,5 @@
 import { Button, Label, Radio, TextInput } from 'flowbite-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
@@ -21,6 +21,13 @@ const SetChatRoomType = (props: {
 }) => {
 	const [passwordField, setPasswordField] = useState<boolean>(false);
 	const setModalStatus = useSetRecoilState(chatModalState);
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (inputRef.current && passwordField) {
+			inputRef.current.focus();
+		}
+	}, [passwordField]);
 
 	const { setPhase, setChatRoomInfo } = props;
 
@@ -96,6 +103,7 @@ const SetChatRoomType = (props: {
 		return (
 			<div className='ml-6'>
 				<TextInput
+					ref={inputRef}
 					name='password'
 					type='password'
 					className='w-60'

@@ -12,6 +12,13 @@ export const ChatInput = () => {
 
 	useEffect(() => {
 		if (textareaRef.current) {
+			textareaRef.current.focus();
+		}
+	}, [chat]);
+
+	useEffect(() => {
+		if (textareaRef.current) {
+			textareaRef.current.focus();
 			textareaRef.current.style.height = '0px';
 			const scrollHeight = textareaRef.current.scrollHeight;
 			textareaRef.current.style.height = scrollHeight + 'px';

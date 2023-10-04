@@ -1,7 +1,7 @@
 import { Button, TextInput } from 'flowbite-react';
 import { CreateChatRoom } from 'ts/interfaces/create-chat-room.model';
 import { BiHash } from 'react-icons/bi';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface FormElements extends HTMLFormControlsCollection {
 	roomName: HTMLInputElement;
@@ -18,6 +18,13 @@ const SetChatRoomName = (props: {
 }) => {
 	const { setPhase, setChatRoomInfo } = props;
 	const [nameLength, setNameLength] = useState<number>(80);
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
 
 	const onSubmitName = (e: React.FormEvent<FormElement>) => {
 		e.preventDefault();
@@ -40,6 +47,7 @@ const SetChatRoomName = (props: {
 			<form onSubmit={onSubmitName}>
 				<h3>이름</h3>
 				<TextInput
+					ref={inputRef}
 					id='roomName'
 					icon={BiHash}
 					className='mt-3 mb-3'

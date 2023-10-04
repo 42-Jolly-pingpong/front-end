@@ -1,5 +1,5 @@
 import { Button, TextInput } from 'flowbite-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 
@@ -7,6 +7,14 @@ const ChatSettingTap = (props: { chat: ChatRoom }) => {
 	const { chat } = props;
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (inputRef.current && settingPassword) {
+			inputRef.current.focus();
+		}
+	}, [settingPassword]);
+
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -35,6 +43,10 @@ const ChatSettingTap = (props: { chat: ChatRoom }) => {
 	const onClickPassword = () => {
 		setPassword('');
 		setSettingPassword(true);
+
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
 	};
 
 	const passwordField = () => {
@@ -64,6 +76,7 @@ const ChatSettingTap = (props: { chat: ChatRoom }) => {
 			<div className='mt-4 px-5 py-4 bg-white rounded-t-xl border-b text-left'>
 				{title('비밀번호 변경')}
 				<TextInput
+					ref={inputRef}
 					type='password'
 					value={password}
 					onChange={onchangePassword}
