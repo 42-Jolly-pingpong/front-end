@@ -1,6 +1,6 @@
 import changeSidebar from 'hooks/change-sidebar';
 import ChannelIcon from 'pages/chat/components/channel-icon';
-import FormattedDate from 'pages/chat/components/formatted-date';
+import formattedDate from 'pages/chat/components/formatted-date';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
@@ -97,12 +97,10 @@ const ChatInformationTap = (props: { chat: ChatRoom }) => {
 		return (
 			<div className='px-5 py-4 bg-white border-t border-b text-left'>
 				{title('만든 사람')}
-				<div className='mt-1 flex'>
+				<div className='mt-1 flex items-center'>
 					{content(`작성자: ${owner?.user.nickname} 작성 날짜:`)}
-					<div className='text-sm font-normal gray-900 flex'>
-						&nbsp;
-						<FormattedDate date={chat.createdAt} hasYear={true} />
-					</div>
+					&nbsp;
+					{content(formattedDate(chat.createdAt, true))}
 				</div>
 			</div>
 		);

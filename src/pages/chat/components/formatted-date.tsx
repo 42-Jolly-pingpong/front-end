@@ -1,6 +1,4 @@
-const FormattedDate = (props: { date: Date; hasYear: boolean }) => {
-	const { date, hasYear } = props;
-
+const formattedDate = (date: Date, hasYear: boolean) => {
 	const month = date.getMonth() + 1;
 	const day = date.getDate();
 
@@ -12,7 +10,7 @@ const FormattedDate = (props: { date: Date; hasYear: boolean }) => {
 		? `${formattedYear}년 ${formattedMonth}월 ${formattedDay}일`
 		: `${formattedMonth}월 ${formattedDay}일`;
 
-	return <div>{formattedDate}</div>;
+	return formattedDate;
 };
 
-export default FormattedDate;
+export default formattedDate;
