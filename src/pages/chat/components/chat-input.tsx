@@ -65,6 +65,7 @@ export const ChatInput = () => {
 	};
 
 	const onDownEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (e.nativeEvent.isComposing) return;
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault();
 			if (input.trim().length !== 0) {
