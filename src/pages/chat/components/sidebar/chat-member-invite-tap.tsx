@@ -10,24 +10,24 @@ import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
+import useChangeChat from 'hooks/use-change-chat';
+import { useRecoilValue } from 'recoil';
+import { chatState } from 'ts/states/chat-state';
 
 const ChatMemberInviteTap = (props: {
-	chat: ChatRoom;
-	participants: ChatParticipant[];
-	setParticipants: React.Dispatch<React.SetStateAction<ChatParticipant[]>>;
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [input, setInput] = useState<string>('');
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [memberList, setMemberList] = useState<ChatParticipant[]>([]);
 	const [notMemberList, setNotMemberList] = useState<User[]>([]);
+	const setChat = useChangeChat();
 	const sendApi = useFetch();
-
-	const { chat, participants, setParticipants } = props;
 
 	useEffect(() => {
 		setMemberList(
-			participants.filter(
+			chat.participants.filter(
 				(participant) =>
 					friendList.some((friend) => friend.id === participant.user.id) &&
 					(participant.status === ChatParticipantStatus.DEFAULT ||
@@ -38,7 +38,7 @@ const ChatMemberInviteTap = (props: {
 		setNotMemberList(
 			friendList.filter(
 				(friend) =>
-					!participants.some(
+					!chat.participants.some(
 						(participant) =>
 							participant.user.id === friend.id &&
 							(participant.status === ChatParticipantStatus.DEFAULT ||
@@ -46,7 +46,7 @@ const ChatMemberInviteTap = (props: {
 					) && friend.nickname.includes(input)
 			)
 		);
-	}, [friendList, input, participants]);
+	}, [friendList, input, chat]);
 
 	useEffect(() => {
 		(async () => {
@@ -116,10 +116,7 @@ const ChatMemberInviteTap = (props: {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					setParticipants((pre) => [
-						...pre.filter((participant) => participant.user.id !== user.id),
-						...data,
-					]);
+					setChat(data);
 				})
 				.catch((err) => console.log(err, 'error'));
 		})();

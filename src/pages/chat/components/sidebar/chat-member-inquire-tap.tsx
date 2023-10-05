@@ -12,14 +12,13 @@ import NoResult from 'pages/chat/components/sidebar/no-result';
 import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import useChangeChat from 'hooks/use-change-chat';
+import { useRecoilValue } from 'recoil';
+import { chatState } from 'ts/states/chat-state';
 
 const ChatMemberInquireTap = (props: {
-	chat: ChatRoom;
-	participants: ChatParticipant[];
-	setParticipants: React.Dispatch<React.SetStateAction<ChatParticipant[]>>;
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-	const { chat, participants, setParticipants } = props;
+	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [input, setInput] = useState<string>('');
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [blockedList, setBlockedList] = useState<User[]>([]);
@@ -39,13 +38,13 @@ const ChatMemberInquireTap = (props: {
 
 	useEffect(() => {
 		setStableParticipants(
-			participants.filter(
+			chat.participants.filter(
 				(participant) =>
 					participant.status === ChatParticipantStatus.DEFAULT ||
 					participant.status === ChatParticipantStatus.MUTED
 			)
 		);
-	}, [participants]);
+	}, [chat]);
 
 	useEffect(() => {
 		if (input.length === 0) {
@@ -57,7 +56,7 @@ const ChatMemberInquireTap = (props: {
 				)
 			);
 		}
-	}, [input, stableParticipants]);
+	}, [input, stableParticipants, chat]);
 
 	useEffect(() => {
 		(async () => {
@@ -70,7 +69,7 @@ const ChatMemberInquireTap = (props: {
 				.then((res) => res.json())
 				.then((data) => setBlockedList(data));
 		})();
-		const participant = participants.find(
+		const participant = chat.participants.find(
 			(participant) => participant.user.id === user.id
 		);
 		if (participant) {
@@ -196,21 +195,8 @@ const ChatMemberInquireTap = (props: {
 				user: otherUser.user,
 				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
 			})
-				.then(() =>
-					setParticipants((pre) =>
-						pre.map((participant) => {
-							if (participant.user.id === otherUser.user.id) {
-								return {
-									...participant,
-									role: isAdmin
-										? ChatParticipantRole.MEMBER
-										: ChatParticipantRole.ADMIN,
-								};
-							}
-							return participant;
-						})
-					)
-				)
+				.then((res) => res.json())
+				.then((data) => setChat(data))
 				.catch((err) => console.log(err));
 		})();
 	};
@@ -234,22 +220,13 @@ const ChatMemberInquireTap = (props: {
 				user: otherUser.user,
 				status,
 			})
-				.then(() => {
-					setParticipants((pre) =>
-						pre.map((participant) => {
-							if (participant.user.id === otherUser.user.id) {
-								return {
-									...participant,
-									status,
-								};
-							}
-							return participant;
-						})
-					);
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data);
+					setChat(data);
 				})
 				.catch((err) => console.log(err));
 		})();
-		// setChat({ ...chat, participants });
 	};
 
 	const manageMutedList = (otherUser: ChatParticipant) => {
