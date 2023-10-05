@@ -10,6 +10,8 @@ import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import useFetch from 'hooks/use-fetch';
+import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
+import useChangeChat from 'hooks/use-change-chat';
 
 const ChatMemberInquireTap = (props: {
 	chat: ChatRoom;
@@ -24,12 +26,38 @@ const ChatMemberInquireTap = (props: {
 	const [userRole, setUserRole] = useState<ChatParticipantRole>(
 		ChatParticipantRole.MEMBER
 	);
+	const [stableParticipants, setStableParticipants] = useState<
+		ChatParticipant[]
+	>([]);
 	const [searchedParticipant, setSearchedParticipant] = useState<
 		ChatParticipant[]
 	>([]);
+	const setChat = useChangeChat();
 	const sendApi = useFetch();
 
 	const user = userData[0]; //temp
+
+	useEffect(() => {
+		setStableParticipants(
+			participants.filter(
+				(participant) =>
+					participant.status === ChatParticipantStatus.DEFAULT ||
+					participant.status === ChatParticipantStatus.MUTED
+			)
+		);
+	}, [participants]);
+
+	useEffect(() => {
+		if (input.length === 0) {
+			setSearchedParticipant(stableParticipants);
+		} else {
+			setSearchedParticipant(
+				stableParticipants.filter((participant) =>
+					participant.user.nickname.includes(input)
+				)
+			);
+		}
+	}, [input, stableParticipants]);
 
 	useEffect(() => {
 		(async () => {
@@ -49,18 +77,6 @@ const ChatMemberInquireTap = (props: {
 			setUserRole(participant.role);
 		}
 	}, []);
-
-	useEffect(() => {
-		if (input.length === 0) {
-			setSearchedParticipant(participants);
-		} else {
-			setSearchedParticipant(
-				participants.filter((participant) =>
-					participant.user.nickname.includes(input)
-				)
-			);
-		}
-	}, [input, participants]);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);
@@ -209,13 +225,40 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
-	const onClickManageMutedList = (otherUser: ChatParticipant) => {
-		//temp
+	const onClickManageMemberStatus = (
+		otherUser: ChatParticipant,
+		status: ChatParticipantStatus
+	) => {
+		(async () => {
+			await sendApi('PATCH', `/chat-rooms/${chat.id}/members/status`, {
+				user: otherUser.user,
+				status,
+			})
+				.then(() => {
+					setParticipants((pre) =>
+						pre.map((participant) => {
+							if (participant.user.id === otherUser.user.id) {
+								return {
+									...participant,
+									status,
+								};
+							}
+							return participant;
+						})
+					);
+				})
+				.catch((err) => console.log(err));
+		})();
+		// setChat({ ...chat, participants });
 	};
 
 	const manageMutedList = (otherUser: ChatParticipant) => {
 		return (
-			<Dropdown.Item onClick={() => onClickManageMutedList(otherUser)}>
+			<Dropdown.Item
+				onClick={() =>
+					onClickManageMemberStatus(otherUser, ChatParticipantStatus.MUTED)
+				}
+			>
 				<div className='flex items-center font-normal text-sm text-gray-700'>
 					조용히 시키기
 				</div>
@@ -223,16 +266,13 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
-	const onClickManageKickedList = (otherUser: ChatParticipant) => {
-		//temp
-		participants.filter(
-			(participant) => participant.user.id !== otherUser?.user.id
-		);
-	};
-
 	const manageKickedList = (otherUser: ChatParticipant) => {
 		return (
-			<Dropdown.Item onClick={() => onClickManageKickedList(otherUser)}>
+			<Dropdown.Item
+				onClick={() =>
+					onClickManageMemberStatus(otherUser, ChatParticipantStatus.KICKED)
+				}
+			>
 				<div className='flex items-center font-normal text-sm text-red-500'>
 					채널에서 제거
 				</div>
@@ -240,16 +280,13 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
-	const onClickManageBannedList = (otherUser: ChatParticipant) => {
-		//temp
-		participants.filter(
-			(participant) => participant.user.id !== otherUser?.user.id
-		);
-	};
-
 	const manageBannedList = (otherUser: ChatParticipant) => {
 		return (
-			<Dropdown.Item onClick={() => onClickManageBannedList(otherUser)}>
+			<Dropdown.Item
+				onClick={() =>
+					onClickManageMemberStatus(otherUser, ChatParticipantStatus.BANNED)
+				}
+			>
 				<div className='flex items-center font-normal text-sm text-red-500'>
 					채널에서 추방
 				</div>

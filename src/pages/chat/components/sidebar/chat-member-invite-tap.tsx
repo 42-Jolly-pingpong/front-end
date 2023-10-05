@@ -9,6 +9,7 @@ import { HiArrowUturnLeft } from 'react-icons/hi2';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import useFetch from 'hooks/use-fetch';
+import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 
 const ChatMemberInviteTap = (props: {
 	chat: ChatRoom;
@@ -25,19 +26,12 @@ const ChatMemberInviteTap = (props: {
 	const { chat, participants, setParticipants } = props;
 
 	useEffect(() => {
-		(async () => {
-			await sendApi('get', '/friends')
-				.then((res) => res.json())
-				.then((data) => setFriendList(data));
-		})();
-		setParticipants(chat.participants);
-	}, []);
-
-	useEffect(() => {
 		setMemberList(
 			participants.filter(
 				(participant) =>
 					friendList.some((friend) => friend.id === participant.user.id) &&
+					(participant.status === ChatParticipantStatus.DEFAULT ||
+						participant.status === ChatParticipantStatus.MUTED) &&
 					participant.user.nickname.includes(input)
 			)
 		);
@@ -45,11 +39,22 @@ const ChatMemberInviteTap = (props: {
 			friendList.filter(
 				(friend) =>
 					!participants.some(
-						(participant) => participant.user.id === friend.id
+						(participant) =>
+							participant.user.id === friend.id &&
+							(participant.status === ChatParticipantStatus.DEFAULT ||
+								participant.status === ChatParticipantStatus.MUTED)
 					) && friend.nickname.includes(input)
 			)
 		);
 	}, [friendList, input, participants]);
+
+	useEffect(() => {
+		(async () => {
+			await sendApi('get', '/friends')
+				.then((res) => res.json())
+				.then((data) => setFriendList(data));
+		})();
+	}, []);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);
@@ -111,7 +116,10 @@ const ChatMemberInviteTap = (props: {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					setParticipants((pre) => [...pre, ...data]);
+					setParticipants((pre) => [
+						...pre.filter((participant) => participant.user.id !== user.id),
+						...data,
+					]);
 				})
 				.catch((err) => console.log(err, 'error'));
 		})();
