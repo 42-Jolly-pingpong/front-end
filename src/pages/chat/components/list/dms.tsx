@@ -15,7 +15,10 @@ const Dms = () => {
 	useEffect(() => {
 		const list = [...dmList];
 		setDms(
-			list.sort((a, b) => b.updatedTime.getTime() - a.updatedTime.getTime())
+			list.sort(
+				(a, b) =>
+					new Date(b.updatedTime).getTime() - new Date(a.updatedTime).getTime()
+			)
 		);
 	}, [dmList]);
 
