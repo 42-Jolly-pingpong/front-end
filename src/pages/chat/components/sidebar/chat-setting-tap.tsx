@@ -1,10 +1,12 @@
 import { Button, TextInput } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { chatState } from 'ts/states/chat-state';
 
-const ChatSettingTap = (props: { chat: ChatRoom }) => {
-	const { chat } = props;
+const ChatSettingTap = () => {
+	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);

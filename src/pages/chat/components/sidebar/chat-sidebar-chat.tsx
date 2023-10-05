@@ -4,18 +4,19 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import userData from 'ts/mock/user-data';
-import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import ChatSidebarForAdmin from 'pages/chat/components/sidebar/chat-sidebar-for-admin';
 import ChatSidebarForMember from 'pages/chat/components/sidebar/chat-sidebar-for-member';
 import { tapsTheme } from 'pages/chat/themes/taps.theme';
+import { chatState } from 'ts/states/chat-state';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
 
 const ChatSidebarChat = () => {
-	const chat = useRecoilValue(chatSidebarState).chat;
+	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [isOwner, setIsOwner] = useState<boolean>(false);
 	const user = userData[0]; //temp
 
 	useEffect(() => {
-		const participantWithSameId = chat?.participants.find(
+		const participantWithSameId = chat.participants.find(
 			(participant) => participant.user.id === user.id
 		);
 
@@ -36,11 +37,7 @@ const ChatSidebarChat = () => {
 			/>
 			<div className=''>
 				<Flowbite theme={{ theme: tapsTheme }}>
-					{isOwner ? (
-						<ChatSidebarForAdmin chat={chat} />
-					) : (
-						<ChatSidebarForMember chat={chat} />
-					)}
+					{isOwner ? <ChatSidebarForAdmin /> : <ChatSidebarForMember />}
 				</Flowbite>
 			</div>
 		</div>
