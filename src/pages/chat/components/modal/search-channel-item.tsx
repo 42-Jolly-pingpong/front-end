@@ -4,11 +4,16 @@ import { BiCheck, BiHash, BiLock } from 'react-icons/bi';
 import { ListGroup } from 'flowbite-react';
 import { useState } from 'react';
 import userData from 'ts/mock/user-data';
+import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
+import { BsDot } from 'react-icons/bs';
 
 export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const [isHovered, setIsHovered] = useState(false);
+	const owner = props.channel.participants.find(
+		(participant) => participant.role === ChatParticipantRole.OWNER
+	);
 
-	const user = userData[1]; //temp
+	const user = userData[0]; //temp
 
 	const onMouseEnter = () => {
 		setIsHovered(true);
@@ -39,21 +44,21 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const buttonOnChannel = () => {
 		if (isUserInChannel()) {
 			return (
-				<div className='h-8 border border-green-700 focus:outline-none text-green-700 bg-white hover:bg-slate-200 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5'>
-					참여 중
+				<div className='h-8 border border-gray-200 focus:outline-none text-gray-800 bg-white hover:bg-gray-300 focus:ring-4 focus:ring-cyan-300 text-xs font-medium rounded-lg px-3 py-2'>
+					이동
 				</div>
 			);
 		}
 		return (
-			<div className='h-8 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5'>
-				입장
+			<div className='h-8 focus:outline-none text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 text-xs font-medium rounded-lg px-3 py-2'>
+				참여
 			</div>
 		);
 	};
 
 	const badge = () => {
 		return (
-			<div className='flex items-center text-green-700 font-semibold mr-1'>
+			<div className='flex items-center text-green-500 text-sm font-bold mr-1'>
 				<BiCheck />
 				<div>참여함</div>
 			</div>
@@ -63,13 +68,15 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	return (
 		<ListGroup.Item onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
 			<div className='flex flex-col items-start'>
-				<div className='flex items-center'>
+				<div className='flex items-center text-sm font-bold text-gray-900'>
 					<div className='mr-1'>{channelIcon()}</div>
 					{props.channel.roomName}
 				</div>
-				<div className='flex text-xs text-slate-900 font-thin'>
+				<div className='flex items-center text-xm text-gray-500 font-light'>
 					{isUserInChannel() && badge()}
 					{props.channel.currentPeople}명의 멤버
+					<BsDot />
+					채널 소요주 : {owner?.user.intraId}
 				</div>
 			</div>
 			{isHovered && buttonOnChannel()}
