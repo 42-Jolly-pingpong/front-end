@@ -1,13 +1,14 @@
+import useFetch from 'hooks/use-fetch';
 import DmSearchedItem from 'pages/chat/components/header/dm-searched-item';
 import { useEffect, useRef, useState } from 'react';
 import { User } from 'ts/interfaces/user.model';
-import userData from 'ts/mock/user-data';
 
 const ChatHeaderSearch = () => {
 	const [inputContent, setInputContent] = useState<string>('');
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [searchedFriendList, setSearchedFriendList] = useState<User[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
+	const sendApi = useFetch();
 
 	useEffect(() => {
 		if (inputRef.current) {
@@ -16,7 +17,11 @@ const ChatHeaderSearch = () => {
 	}, []);
 
 	useEffect(() => {
-		setFriendList(userData); //temp
+		(async () => {
+			await sendApi('get', '/friends')
+				.then((res) => res.json())
+				.then((data) => setFriendList(data));
+		})();
 	}, []);
 
 	useEffect(() => {

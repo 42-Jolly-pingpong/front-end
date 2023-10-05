@@ -9,6 +9,7 @@ import userData from 'ts/mock/user-data';
 import { HiArrowUturnLeft } from 'react-icons/hi2';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
+import useFetch from 'hooks/use-fetch';
 
 const ChatMemberInviteTap = (props: {
 	chat: ChatRoom;
@@ -18,12 +19,16 @@ const ChatMemberInviteTap = (props: {
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [memberList, setMemberList] = useState<ChatParticipant[]>([]);
 	const [notMemberList, setNotMemberList] = useState<User[]>([]);
+	const sendApi = useFetch();
 
 	const { chat } = props;
 
 	useEffect(() => {
-		//temp
-		setFriendList([userData[0], userData[1]]);
+		(async () => {
+			await sendApi('get', '/friends')
+				.then((res) => res.json())
+				.then((data) => setFriendList(data));
+		})();
 	}, []);
 
 	useEffect(() => {
