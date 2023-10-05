@@ -9,7 +9,7 @@ const useFetch = () => {
 	 * @param body
 	 */
 	const sendMsg = (method: string, url: string, body: any = null) => {
-		if (method === 'get') {
+		if (body === null) {
 			return fetch(baseUrl + url, {
 				method,
 			});
