@@ -1,16 +1,20 @@
 import { Avatar, Button, Flowbite } from 'flowbite-react';
 import useChangeSidebar from 'hooks/use-change-sidebar';
 import { ChatHeaderButtonTheme } from 'pages/chat/themes/chat-header-button-theme';
-import { useRecoilValue } from 'recoil';
+import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import { chatState } from 'ts/states/chat-state';
 
-const ChatInfoButton = () => {
-	const chatRoom = useRecoilValue(chatState).chatRoom;
+const ChatInfoButton = (props: { chatRoom: ChatRoom }) => {
+	const { chatRoom } = props;
 	const setChatSidebar = useChangeSidebar('chat');
 
-	const participants = (chatRoom as ChatRoom).participants;
 	const participantsImg: string[] = [];
+
+	const participants = chatRoom.participants.filter(
+		(participant) =>
+			participant.status === ChatParticipantStatus.DEFAULT ||
+			participant.status === ChatParticipantStatus.MUTED
+	);
 
 	if (participants) {
 		for (
@@ -21,8 +25,6 @@ const ChatInfoButton = () => {
 			participantsImg.push(participants[index].user.avatarPath);
 		}
 	}
-
-	const currentPeople = (chatRoom as ChatRoom).currentPeople;
 
 	const onClickButton = () => {
 		setChatSidebar(chatRoom as ChatRoom);
@@ -42,7 +44,7 @@ const ChatInfoButton = () => {
 							<Avatar size='xs' img={img} key={id} rounded stacked />
 						))}
 					</Avatar.Group>
-					<div className='ml-2 text-gray-500'>{currentPeople}</div>
+					<div className='ml-2 text-gray-500'>{participants.length}</div>
 				</div>
 			</Button>
 		</Flowbite>

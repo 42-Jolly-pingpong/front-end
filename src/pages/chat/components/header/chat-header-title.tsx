@@ -9,7 +9,6 @@ import { chatState } from 'ts/states/chat-state';
 
 const ChatHeaderTitle = () => {
 	const chatRoom = useRecoilValue(chatState).chatRoom;
-
 	const headerForDm = () => {
 		if (chatRoom === null) {
 			return;
@@ -42,7 +41,7 @@ const ChatHeaderTitle = () => {
 					</div>
 					{(chatRoom as ChatRoom).roomName}
 				</div>
-				<ChatInfoButton />
+				<ChatInfoButton chatRoom={chatRoom as ChatRoom} />
 			</div>
 		);
 	};
