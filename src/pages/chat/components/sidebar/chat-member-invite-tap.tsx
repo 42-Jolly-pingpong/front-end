@@ -5,7 +5,6 @@ import { BiSearch } from 'react-icons/bi';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { User } from 'ts/interfaces/user.model';
-import userData from 'ts/mock/user-data';
 import { HiArrowUturnLeft } from 'react-icons/hi2';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
@@ -13,6 +12,8 @@ import useFetch from 'hooks/use-fetch';
 
 const ChatMemberInviteTap = (props: {
 	chat: ChatRoom;
+	participants: ChatParticipant[];
+	setParticipants: React.Dispatch<React.SetStateAction<ChatParticipant[]>>;
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const [input, setInput] = useState<string>('');
@@ -21,7 +22,7 @@ const ChatMemberInviteTap = (props: {
 	const [notMemberList, setNotMemberList] = useState<User[]>([]);
 	const sendApi = useFetch();
 
-	const { chat } = props;
+	const { chat, participants, setParticipants } = props;
 
 	useEffect(() => {
 		(async () => {
@@ -29,25 +30,12 @@ const ChatMemberInviteTap = (props: {
 				.then((res) => res.json())
 				.then((data) => setFriendList(data));
 		})();
+		setParticipants(chat.participants);
 	}, []);
 
 	useEffect(() => {
-		if (input.length === 0) {
-			setMemberList(
-				chat.participants.filter((participant) =>
-					friendList.some((friend) => friend.id === participant.user.id)
-				)
-			);
-			setNotMemberList(
-				friendList.filter((friend) =>
-					chat.participants.some(
-						(participant) => participant.user.id !== friend.id
-					)
-				)
-			);
-		}
 		setMemberList(
-			chat.participants.filter(
+			participants.filter(
 				(participant) =>
 					friendList.some((friend) => friend.id === participant.user.id) &&
 					participant.user.nickname.includes(input)
@@ -56,12 +44,12 @@ const ChatMemberInviteTap = (props: {
 		setNotMemberList(
 			friendList.filter(
 				(friend) =>
-					chat.participants.some(
-						(participant) => participant.user.id !== friend.id
+					!participants.some(
+						(participant) => participant.user.id === friend.id
 					) && friend.nickname.includes(input)
 			)
 		);
-	}, [friendList, input]);
+	}, [friendList, input, participants]);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);
@@ -117,7 +105,16 @@ const ChatMemberInviteTap = (props: {
 	};
 
 	const onClickAddUser = (user: User) => {
-		//temp
+		(async () => {
+			await sendApi('post', `/chat-rooms/${chat.id}/members`, {
+				participants: [user.id],
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					setParticipants((pre) => [...pre, ...data]);
+				})
+				.catch((err) => console.log(err, 'error'));
+		})();
 	};
 
 	const notInChannelList = () => {

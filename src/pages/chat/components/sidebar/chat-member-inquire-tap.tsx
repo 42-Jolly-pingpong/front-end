@@ -9,12 +9,14 @@ import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
+import useFetch from 'hooks/use-fetch';
 
 const ChatMemberInquireTap = (props: {
 	chat: ChatRoom;
+	participants: ChatParticipant[];
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-	const { chat } = props;
+	const { chat, participants } = props;
 	const [input, setInput] = useState<string>('');
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [blockedList, setBlockedList] = useState<User[]>([]);
@@ -24,13 +26,22 @@ const ChatMemberInquireTap = (props: {
 	const [searchedParticipant, setSearchedParticipant] = useState<
 		ChatParticipant[]
 	>([]);
+	const sendApi = useFetch();
 
-	const user = userData[1]; //temp
+	const user = userData[0]; //temp
 
 	useEffect(() => {
-		setBlockedList([userData[0]]);
-		setFriendList([userData[0]]);
-		const participant = chat.participants.find(
+		(async () => {
+			await sendApi('get', '/friends')
+				.then((res) => res.json())
+				.then((data) => setFriendList(data));
+		})();
+		(async () => {
+			await sendApi('get', '/friends/black-list')
+				.then((res) => res.json())
+				.then((data) => setBlockedList(data));
+		})();
+		const participant = participants.find(
 			(participant) => participant.user.id === user.id
 		);
 		if (participant) {
@@ -40,15 +51,15 @@ const ChatMemberInquireTap = (props: {
 
 	useEffect(() => {
 		if (input.length === 0) {
-			setSearchedParticipant(chat.participants);
+			setSearchedParticipant(participants);
 		} else {
 			setSearchedParticipant(
-				chat.participants.filter((participant) =>
+				participants.filter((participant) =>
 					participant.user.nickname.includes(input)
 				)
 			);
 		}
-	}, [input]);
+	}, [input, participants]);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);
@@ -192,7 +203,7 @@ const ChatMemberInquireTap = (props: {
 
 	const onClickManageKickedList = (otherUser: ChatParticipant) => {
 		//temp
-		chat.participants.filter(
+		participants.filter(
 			(participant) => participant.user.id !== otherUser?.user.id
 		);
 	};
@@ -209,7 +220,7 @@ const ChatMemberInquireTap = (props: {
 
 	const onClickManageBannedList = (otherUser: ChatParticipant) => {
 		//temp
-		chat.participants.filter(
+		participants.filter(
 			(participant) => participant.user.id !== otherUser?.user.id
 		);
 	};
@@ -294,6 +305,10 @@ const ChatMemberInquireTap = (props: {
 		}
 	};
 
+	const mybadge = () => {
+		return <div>나</div>;
+	};
+
 	const participantsList = () => {
 		const participants = searchedParticipant;
 
@@ -316,7 +331,9 @@ const ChatMemberInquireTap = (props: {
 					<MemberItem user={participant.user} />
 					<div className='ml-2'>{roleBadge(participant.role)}</div>
 				</div>
-				{memberDotButton(participant)}
+				{participant.user.id === user.id
+					? mybadge()
+					: memberDotButton(participant)}
 			</div>
 		));
 	};
