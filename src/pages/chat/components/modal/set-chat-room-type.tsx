@@ -61,8 +61,6 @@ const SetChatRoomType = (props: {
 	};
 
 	useEffect(() => {
-		console.log(chatRoomInfo);
-		console.log(JSON.stringify(chatRoomInfo));
 		if (isFinished) {
 			(async () => {
 				await sendApi('POST', '/chat-rooms', chatRoomInfo)
