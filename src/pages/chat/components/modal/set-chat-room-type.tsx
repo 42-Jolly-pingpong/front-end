@@ -68,14 +68,9 @@ const SetChatRoomType = (props: {
 				await sendApi('POST', '/chat-rooms', chatRoomInfo)
 					.then((res) => res.json())
 					.then((data: ChatRoom) => {
-						const dataWithDate = {
-							...data,
-							createdAt: new Date(data.createdAt),
-							updatedTime: new Date(data.updatedTime),
-						};
 						setChannelList((pre) => ({
 							...pre,
-							channelList: [...pre.channelList, dataWithDate],
+							channelList: [...pre.channelList, data],
 						}));
 					});
 			})();

@@ -8,7 +8,7 @@ import { Dm } from 'ts/interfaces/dm.model';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatHeaderTitle = () => {
-	const chatRoom = useRecoilValue(chatState);
+	const chatRoom = useRecoilValue(chatState).chatRoom;
 
 	const headerForDm = () => {
 		if (chatRoom === null) {

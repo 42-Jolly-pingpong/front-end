@@ -1,3 +1,4 @@
+import useFetch from 'hooks/use-fetch';
 import { useSetRecoilState } from 'recoil';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
@@ -10,10 +11,22 @@ const useChangeChat = () => {
 	const setChatState = useSetRecoilState(chatState);
 	const setChatHeaderState = useSetRecoilState(chatHeaderState);
 	const setSidebarState = useSetRecoilState(chatSidebarState);
+	const sendApi = useFetch();
 
 	const setChat = (chat: ChatRoom | Dm | null) => {
+		(async () => {
+			if (chat) {
+				await sendApi('get', `/chat-rooms/${chat?.id}/chats`)
+					.then((res) => res.json())
+					.then((chats) =>
+						setChatState({
+							chatRoom: chat,
+							chats,
+						})
+					);
+			}
+		})();
 		setChatHeaderState(true);
-		setChatState(chat);
 		setSidebarState({
 			status: ChatSidebarStatus.CLOSE,
 			chat: null,

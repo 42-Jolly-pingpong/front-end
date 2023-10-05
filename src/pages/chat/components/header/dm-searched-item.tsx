@@ -17,15 +17,11 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 		await sendApi('POST', '/chat-rooms/dm', { chatMate: friend })
 			.then((res) => res.json())
 			.then((data: Dm) => {
-				const dataWithDate = {
-					...data,
-					updatedTime: new Date(data.updatedTime),
-				};
 				setDmList((pre) => ({
 					...pre,
-					dmList: [...pre.dmList, dataWithDate],
+					dmList: [...pre.dmList, data],
 				}));
-				setChat(dataWithDate);
+				setChat(data);
 			})
 			.catch((err) => console.log(err));
 	};

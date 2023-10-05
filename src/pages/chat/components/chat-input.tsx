@@ -1,14 +1,17 @@
 import { Textarea } from 'flowbite-react';
+import useFetch from 'hooks/use-fetch';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend, IoSendOutline } from 'react-icons/io5';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
 
 export const ChatInput = () => {
 	const [input, setInput] = useState<string>('');
 	const [scrollbar, setSrollbar] = useState<string>('hide-scrollbar');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
-	const chat = useRecoilValue(chatState);
+	const chat = useRecoilValue(chatState).chatRoom;
+	const addChats = useSetRecoilState(chatState);
+	const sendApi = useFetch();
 
 	useEffect(() => {
 		if (textareaRef.current) {
@@ -31,9 +34,19 @@ export const ChatInput = () => {
 	};
 
 	const onClickSend = () => {
-		//temp
-		//trim해서 보내기
-		setInput('');
+		if (chat) {
+			(async () => {
+				sendApi('POST', `/chat-rooms/${chat?.id}/chats`, {
+					content: input.trim(),
+				})
+					.then((res) => res.json())
+					.then((data) =>
+						addChats((pre) => ({ ...pre, chats: [...pre.chats, data] }))
+					)
+					.catch((err) => console.log(err));
+			})();
+			setInput('');
+		}
 	};
 
 	const sendButton = () => {

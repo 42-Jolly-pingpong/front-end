@@ -6,18 +6,20 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatInfoButton = () => {
-	const chatRoom = useRecoilValue(chatState);
+	const chatRoom = useRecoilValue(chatState).chatRoom;
 	const setChatSidebar = useChangeSidebar('chat');
 
 	const participants = (chatRoom as ChatRoom).participants;
 	const participantsImg: string[] = [];
 
-	for (
-		let index = 0;
-		index < (3 <= participants.length ? 3 : participants.length);
-		index++
-	) {
-		participantsImg.push(participants[index].user.avatarPath);
+	if (participants) {
+		for (
+			let index = 0;
+			index < (3 <= participants.length ? 3 : participants.length);
+			index++
+		) {
+			participantsImg.push(participants[index].user.avatarPath);
+		}
 	}
 
 	const currentPeople = (chatRoom as ChatRoom).currentPeople;

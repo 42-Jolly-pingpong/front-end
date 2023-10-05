@@ -10,7 +10,7 @@ import { chatState } from 'ts/states/chat-state';
 const Dms = () => {
 	const [dms, setDms] = useState<Dm[]>();
 	const dmList = useRecoilValue(chatListState).dmList;
-	const chat = useRecoilValue(chatState);
+	const chat = useRecoilValue(chatState).chatRoom;
 
 	useEffect(() => {
 		const list = [...dmList];

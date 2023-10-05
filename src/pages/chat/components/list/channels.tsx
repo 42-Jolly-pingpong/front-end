@@ -10,7 +10,7 @@ import { chatState } from 'ts/states/chat-state';
 const Channels = () => {
 	const [channels, setChannels] = useState<ChatRoom[]>();
 	const channelList = useRecoilValue(chatListState).channelList;
-	const chat = useRecoilValue(chatState);
+	const chat = useRecoilValue(chatState).chatRoom;
 
 	useEffect(() => {
 		const list = [...channelList];

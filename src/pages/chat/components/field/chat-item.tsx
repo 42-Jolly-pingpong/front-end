@@ -6,8 +6,8 @@ import { User } from 'ts/interfaces/user.model';
 
 const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 	const { chat } = props;
-	const setChatSidebar = useChangeSidebar('profile');
 	const user = chat.user.user;
+	const setChatSidebar = useChangeSidebar('profile');
 
 	const topBorder = () => {
 		return <div className='border-t mb-3'></div>;
@@ -17,6 +17,9 @@ const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 		setChatSidebar(user as User);
 	};
 
+	if (!user) {
+		return null;
+	}
 	return (
 		<div>
 			{props.hasTopBorder && topBorder()}

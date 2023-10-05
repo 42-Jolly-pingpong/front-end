@@ -2,7 +2,7 @@ import { Tooltip } from 'flowbite-react';
 import formattedDate from 'pages/chat/components/formatted-date';
 
 const ChatTime = (props: { time: Date }) => {
-	const { time } = props;
+	const time = new Date(props.time);
 
 	const date = () => {
 		return formattedDate(time, time.getFullYear() !== new Date().getFullYear());

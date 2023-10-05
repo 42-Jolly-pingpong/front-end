@@ -12,7 +12,7 @@ const CreateDm = () => {
 	const setSidebarState = useSetRecoilState(chatSidebarState);
 
 	const onClickCreate = () => {
-		setChatState(null);
+		setChatState({ chatRoom: null, chats: [] });
 		setChatHeaderState(false);
 		setSidebarState({
 			status: ChatSidebarStatus.CLOSE,
