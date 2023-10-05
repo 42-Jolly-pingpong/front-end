@@ -43,6 +43,11 @@
 		width: 348px;
 	}
 
+	.chat-field {
+		height: calc(100vh - 48px - 70px);
+		max-height: calc(100vh - 48px - 70px);
+	}
+
 	.chat-right-sidebar-tap {
 		height: calc(100vh - 48px - 39px);
 		max-height: calc(100vh - 48px - 39px);
