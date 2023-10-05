@@ -14,9 +14,10 @@ import useFetch from 'hooks/use-fetch';
 const ChatMemberInquireTap = (props: {
 	chat: ChatRoom;
 	participants: ChatParticipant[];
+	setParticipants: React.Dispatch<React.SetStateAction<ChatParticipant[]>>;
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-	const { chat, participants } = props;
+	const { chat, participants, setParticipants } = props;
 	const [input, setInput] = useState<string>('');
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [blockedList, setBlockedList] = useState<User[]>([]);
@@ -174,7 +175,28 @@ const ChatMemberInquireTap = (props: {
 		isAdmin: boolean,
 		otherUser: ChatParticipant
 	) => {
-		//temp
+		(async () => {
+			await sendApi('PATCH', `/chat-rooms/${chat.id}/members/role`, {
+				user: otherUser.user,
+				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
+			})
+				.then(() =>
+					setParticipants((pre) =>
+						pre.map((participant) => {
+							if (participant.user.id === otherUser.user.id) {
+								return {
+									...participant,
+									role: isAdmin
+										? ChatParticipantRole.MEMBER
+										: ChatParticipantRole.ADMIN,
+								};
+							}
+							return participant;
+						})
+					)
+				)
+				.catch((err) => console.log(err));
+		})();
 	};
 
 	const manageAdminList = (isAdmin: boolean, otherUser: ChatParticipant) => {
