@@ -27,7 +27,7 @@ const ChatInfoButton = (props: { chatRoom: ChatRoom }) => {
 	}
 
 	const onClickButton = () => {
-		setChatSidebar(chatRoom as ChatRoom);
+		setChatSidebar(null);
 	};
 
 	return (
