@@ -1,13 +1,15 @@
 import useChangeSidebar from 'hooks/use-change-sidebar';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import formattedDate from 'pages/chat/components/formatted-date';
+import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { chatState } from 'ts/states/chat-state';
 
-const ChatInformationTap = (props: { chat: ChatRoom }) => {
+const ChatInformationTap = () => {
 	const setProfile = useChangeSidebar('profile');
-	const { chat } = props;
+	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
