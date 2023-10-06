@@ -1,4 +1,5 @@
 import { Button, TextInput } from 'flowbite-react';
+import useFetch from 'hooks/use-fetch';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
@@ -10,6 +11,7 @@ const ChatSettingTap = () => {
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
+	const sendApi = useFetch();
 
 	useEffect(() => {
 		if (inputRef.current && settingPassword) {
@@ -70,7 +72,16 @@ const ChatSettingTap = () => {
 	};
 
 	const onClickChange = () => {
-		//temp
+		(async () => {
+			await sendApi('PUT', `/chat-rooms/${chat.id}`, { ...chat, password })
+				.then((res) => {
+					if (!res.ok) {
+						throw Error('비밀번호 변경 실패');
+					}
+					setSettingPassword(false);
+				})
+				.catch((err) => console.log(err.message));
+		})();
 	};
 
 	const setPasswordField = () => {
