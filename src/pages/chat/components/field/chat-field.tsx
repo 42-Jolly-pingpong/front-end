@@ -1,19 +1,20 @@
 import ChannelHeader from 'pages/chat/components/field/channel-header';
 import ChatItem from 'pages/chat/components/field/chat-item';
 import DmHeader from 'pages/chat/components/field/dm-header';
-import { chatList, chatList2 } from 'pages/chat/mock';
 import { useEffect, useRef } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Dm } from 'ts/interfaces/dm.model';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatField = () => {
-	const [chat, setChat] = useRecoilState(chatState);
+	const chat = useRecoilValue(chatState);
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const chatRoom = chat.chatRoom;
-	const chats = chat.chats;
+	const chats = [...chat.chats].sort(
+		(a, b) => new Date(a.sentTime).getTime() - new Date(b.sentTime).getTime()
+	);
 
 	useEffect(() => {
 		if (scrollRef.current) {
