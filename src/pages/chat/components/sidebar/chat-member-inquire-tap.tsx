@@ -196,7 +196,7 @@ const ChatMemberInquireTap = (props: {
 				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
 			})
 				.then((res) => res.json())
-				.then((data) => setChat(data))
+				.then((data) => setChat(data, false))
 				.catch((err) => console.log(err));
 		})();
 	};
@@ -221,10 +221,7 @@ const ChatMemberInquireTap = (props: {
 				status,
 			})
 				.then((res) => res.json())
-				.then((data) => {
-					console.log(data);
-					setChat(data);
-				})
+				.then((data) => setChat(data, false))
 				.catch((err) => console.log(err));
 		})();
 	};

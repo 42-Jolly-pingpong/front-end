@@ -116,7 +116,7 @@ const ChatMemberInviteTap = (props: {
 			})
 				.then((res) => res.json())
 				.then((data) => {
-					setChat(data);
+					setChat(data, false);
 				})
 				.catch((err) => console.log(err, 'error'));
 		})();

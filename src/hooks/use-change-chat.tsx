@@ -13,7 +13,10 @@ const useChangeChat = () => {
 	const setSidebarState = useSetRecoilState(chatSidebarState);
 	const sendApi = useFetch();
 
-	const setChat = (chat: ChatRoom | Dm | null) => {
+	const setChat = (
+		chat: ChatRoom | Dm | null,
+		closeSidebar: boolean = true
+	) => {
 		(async () => {
 			if (chat) {
 				await sendApi('get', `/chat-rooms/${chat?.id}/chats`)
@@ -27,11 +30,12 @@ const useChangeChat = () => {
 			}
 		})();
 		setChatHeaderState(true);
-		setSidebarState({
-			status: ChatSidebarStatus.CLOSE,
-			chat: null,
-			profile: null,
-		});
+		if (closeSidebar) {
+			setSidebarState({
+				status: ChatSidebarStatus.CLOSE,
+				profile: null,
+			});
+		}
 	};
 
 	return setChat;
