@@ -1,4 +1,5 @@
 import { Button, Label, Radio, TextInput } from 'flowbite-react';
+import useChangeChat from 'hooks/use-change-chat';
 import useFetch from 'hooks/use-fetch';
 import useHash from 'hooks/use-hash';
 import { useEffect, useRef, useState } from 'react';
@@ -27,6 +28,7 @@ const SetChatRoomType = (props: {
 	const [passwordField, setPasswordField] = useState<boolean>(false);
 	const [isFinished, setIsFinished] = useState<boolean>(false);
 	const setModalStatus = useSetRecoilState(chatModalState);
+	const setChat = useChangeChat();
 	const setChannelList = useSetRecoilState(chatListState);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const sendApi = useFetch();
@@ -70,6 +72,7 @@ const SetChatRoomType = (props: {
 							...pre,
 							channelList: [...pre.channelList, data],
 						}));
+						setChat(data);
 					});
 			})();
 
