@@ -1,15 +1,21 @@
+import useChangeChat from 'hooks/use-change-chat';
 import useChangeSidebar from 'hooks/use-change-sidebar';
+import useFetch from 'hooks/use-fetch';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import formattedDate from 'pages/chat/components/formatted-date';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatInformationTap = () => {
 	const setProfile = useChangeSidebar('profile');
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
+	const setChat = useChangeChat();
+	const setChatList = useSetRecoilState(chatListState);
+	const sendApi = useFetch();
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -108,9 +114,28 @@ const ChatInformationTap = () => {
 		);
 	};
 
+	const onClickLeave = () => {
+		(async () => {
+			await sendApi('DELETE', `/chat-rooms/${chat.id}/members`)
+				.then((res) => res.json())
+				.then((data) => {
+					setChat(null);
+					setChatList((pre) => {
+						return {
+							...pre,
+							channelList: pre.channelList.filter(
+								(channel) => channel.id !== data.id
+							),
+						};
+					});
+				})
+				.catch((err) => console.log('err', err));
+		})();
+	};
+
 	const leaveField = () => {
 		return (
-			<button>
+			<button onClick={onClickLeave}>
 				<div className='px-5 py-4 bg-white rounded-b-xl hover:bg-gray-200 text-left'>
 					<div className='text-sm font-bold text-red-500'>채널에서 나가기</div>
 				</div>
