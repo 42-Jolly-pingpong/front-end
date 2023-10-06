@@ -41,5 +41,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-src/components/sidebar/chat/pre/
