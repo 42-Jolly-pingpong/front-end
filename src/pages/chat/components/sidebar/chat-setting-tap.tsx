@@ -1,9 +1,11 @@
 import { Button, TextInput } from 'flowbite-react';
+import useChangeChat from 'hooks/use-change-chat';
 import useFetch from 'hooks/use-fetch';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatSettingTap = () => {
@@ -12,6 +14,8 @@ const ChatSettingTap = () => {
 	const [password, setPassword] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
 	const sendApi = useFetch();
+	const setChat = useChangeChat();
+	const setChatList = useSetRecoilState(chatListState);
 
 	useEffect(() => {
 		if (inputRef.current && settingPassword) {
@@ -113,9 +117,28 @@ const ChatSettingTap = () => {
 		);
 	};
 
+	const onClickDelete = () => {
+		(async () => {
+			sendApi('DELETE', `/chat-rooms/${chat.id}`)
+				.then((res) => {
+					if (!res.ok) {
+						throw Error('삭제 불가');
+					}
+					setChatList((pre) => ({
+						...pre,
+						channelList: pre.channelList.filter(
+							(channel) => channel.id !== chat.id
+						),
+					}));
+					setChat(null);
+				})
+				.catch(() => console.log('삭제 불가'));
+		})();
+	};
+
 	const deleteField = () => {
 		return (
-			<button>
+			<button onClick={onClickDelete}>
 				<div className='px-5 py-4 bg-white rounded-b-xl hover:bg-gray-200 text-left'>
 					<div className='text-sm font-bold text-red-500'>채널 삭제하기</div>
 				</div>
