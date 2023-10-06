@@ -25,7 +25,7 @@ const DmItem = (props: { dm: Dm; isSelected: boolean }) => {
 	return (
 		<Sidebar.Item
 			onClick={onClickItem}
-			className={props.isSelected ? 'bg-yellow-100 hover:bg-yellow-200' : ''}
+			className={props.isSelected ? 'bg-yellow-100 hover:bg-yellow-50' : ''}
 		>
 			<div className='flex items-center'>
 				{avatar()}
