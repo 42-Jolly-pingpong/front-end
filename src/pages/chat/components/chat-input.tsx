@@ -3,15 +3,40 @@ import useFetch from 'hooks/use-fetch';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend, IoSendOutline } from 'react-icons/io5';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
+import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
+import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { Dm } from 'ts/interfaces/dm.model';
+import userData from 'ts/mock/user-data';
 import { chatState } from 'ts/states/chat-state';
 
 export const ChatInput = () => {
 	const [input, setInput] = useState<string>('');
+	const [isMuted, setIsMuted] = useState<boolean>(false);
 	const [scrollbar, setSrollbar] = useState<string>('hide-scrollbar');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const chat = useRecoilValue(chatState).chatRoom;
 	const addChats = useSetRecoilState(chatState);
 	const sendApi = useFetch();
+
+	const user = userData[0]; //temp
+
+	useEffect(() => {
+		if (chat !== null && chat.roomType !== ChatRoomType.DM) {
+			const participant = (chat as ChatRoom).participants.find(
+				(participant) => participant.user.id === user.id
+			);
+			if (participant) {
+				if (
+					participant.status === ChatParticipantStatus.MUTED &&
+					participant.muteExpirationTime &&
+					new Date() < new Date(participant.muteExpirationTime)
+				) {
+					setIsMuted(true);
+				}
+			}
+		}
+	}, [chat]);
 
 	useEffect(() => {
 		if (textareaRef.current) {
@@ -39,13 +64,22 @@ export const ChatInput = () => {
 				sendApi('POST', `/chat-rooms/${chat?.id}/chats`, {
 					content: input.trim(),
 				})
-					.then((res) => res.json())
-					.then((data) =>
-						addChats((pre) => ({ ...pre, chats: [...pre.chats, data] }))
-					)
-					.catch((err) => console.log(err));
+					.then((res) => {
+						if (res.statusText === 'Unauthorized') {
+							throw Error(res.statusText);
+						}
+						return res.json();
+					})
+					.then((data) => {
+						addChats((pre) => ({ ...pre, chats: [...pre.chats, data] }));
+						setInput('');
+					})
+					.catch((err) => {
+						if (err.message === 'Unauthorized') {
+							console.log('음소거 상태');
+						}
+					});
 			})();
-			setInput('');
 		}
 	};
 
@@ -74,12 +108,23 @@ export const ChatInput = () => {
 		}
 	};
 
+	const placeholder = () => {
+		if (chat === null) return '';
+		if (isMuted) return `${user.nickname}님은 현재 채팅이 제한되어 있습니다.`;
+		switch (chat.roomType) {
+			case ChatRoomType.DM:
+				return `${(chat as Dm).chatMate.nickname}에게 매시지 보내기`;
+			default:
+				return `${(chat as ChatRoom).roomName}에 매시지 보내기`;
+		}
+	};
 	return (
 		<div className=''>
 			<div className='flex mx-4 mb-3 bg-gray-100 border border-gray-300 rounded-lg items-center justify-stretch'>
 				<Textarea
 					disabled={chat === null}
 					ref={textareaRef}
+					placeholder={placeholder()}
 					rows={1}
 					className={`bg-white my-2 ml-2 resize-none rounded-lg border border-gray-300 max-h-20 overflow-y-auto ${scrollbar} focus:ring-0 focus:border focus:border-gray-400`}
 					value={input}
