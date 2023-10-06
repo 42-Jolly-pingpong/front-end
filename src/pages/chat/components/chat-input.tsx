@@ -74,6 +74,7 @@ export const ChatInput = () => {
 					.then((data) => {
 						addChats((pre) => ({ ...pre, chats: [...pre.chats, data] }));
 						setInput('');
+						if (textareaRef.current) textareaRef.current.focus();
 					})
 					.catch((err) => {
 						if (err.message === 'Unauthorized') {
@@ -90,6 +91,7 @@ export const ChatInput = () => {
 			<button
 				className={`mx-3 ${isDisabled ? 'text-gray-400' : 'text-primary-700'}`}
 				disabled={chat === null}
+				onClick={onClickSend}
 			>
 				<IoSend />
 			</button>
