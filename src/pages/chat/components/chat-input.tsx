@@ -22,6 +22,7 @@ export const ChatInput = () => {
 	const user = userData[0]; //temp
 
 	useEffect(() => {
+		setIsMuted(false);
 		if (chat !== null && chat.roomType !== ChatRoomType.DM) {
 			const participant = (chat as ChatRoom).participants.find(
 				(participant) => participant.user.id === user.id
