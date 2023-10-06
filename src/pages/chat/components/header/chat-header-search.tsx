@@ -20,7 +20,11 @@ const ChatHeaderSearch = () => {
 		(async () => {
 			await sendApi('get', '/friends')
 				.then((res) => res.json())
-				.then((data) => setFriendList(data));
+				.then((data: User[]) =>
+					setFriendList(
+						data.sort((a, b) => a.nickname.localeCompare(b.nickname))
+					)
+				);
 		})();
 	}, []);
 
