@@ -7,6 +7,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import userData from 'ts/mock/user-data';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
@@ -19,6 +20,8 @@ const ChatInformationTap = () => {
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
+
+	const user = userData[0]; //temp
 
 	const title = (label: string) => {
 		return <div className='text-sm font-bold'>{label}</div>;
@@ -103,7 +106,11 @@ const ChatInformationTap = () => {
 
 	const ownerField = () => {
 		return (
-			<div className='px-5 py-4 bg-white border-t border-b text-left'>
+			<div
+				className={`px-5 py-4 bg-white border-t ${
+					owner?.user.id === user.id ? 'rounded-b-xl' : ' border-b'
+				} text-left`}
+			>
 				{title('만든 사람')}
 				<div className='mt-1 flex items-center'>
 					{content(`작성자: ${owner?.user.nickname} 작성 날짜:`)}
@@ -147,7 +154,7 @@ const ChatInformationTap = () => {
 			{channelNameField()}
 			{adminField()}
 			{ownerField()}
-			{leaveField()}
+			{owner?.user.id !== user.id && leaveField()}
 		</div>
 	);
 };
