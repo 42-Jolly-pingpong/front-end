@@ -13,11 +13,9 @@ const Dms = () => {
 	const chat = useRecoilValue(chatState).chatRoom;
 
 	useEffect(() => {
-		const list = [...dmList];
 		setDms(
-			list.sort(
-				(a, b) =>
-					new Date(b.updatedTime).getTime() - new Date(a.updatedTime).getTime()
+			[...dmList].sort((a, b) =>
+				a.chatMate.nickname.localeCompare(b.chatMate.nickname)
 			)
 		);
 	}, [dmList]);

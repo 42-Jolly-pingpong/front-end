@@ -9,18 +9,16 @@ import { chatState } from 'ts/states/chat-state';
 
 const Channels = () => {
 	const [channels, setChannels] = useState<ChatRoom[]>();
-	const channelList = useRecoilValue(chatListState).channelList;
+	const chatList = useRecoilValue(chatListState);
 	const chat = useRecoilValue(chatState).chatRoom;
 
 	useEffect(() => {
-		const list = [...channelList];
 		setChannels(
-			list.sort(
-				(a, b) =>
-					new Date(b.updatedTime).getTime() - new Date(a.updatedTime).getTime()
+			[...chatList.channelList].sort((a, b) =>
+				a.roomName.localeCompare(b.roomName)
 			)
 		);
-	}, [channelList]);
+	}, [chatList]);
 
 	return (
 		<Sidebar.Collapse label='채널' className='text-base font-medium'>
