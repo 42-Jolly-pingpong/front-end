@@ -17,8 +17,8 @@ const useChangeChat = () => {
 		chat: ChatRoom | Dm | null,
 		closeSidebar: boolean = true
 	) => {
-		(async () => {
-			if (chat) {
+		if (chat) {
+			(async () => {
 				await sendApi('get', `/chat-rooms/${chat?.id}/chats`)
 					.then((res) => res.json())
 					.then((chats) =>
@@ -27,8 +27,10 @@ const useChangeChat = () => {
 							chats,
 						})
 					);
-			}
-		})();
+			})();
+		} else {
+			setChatState({ chatRoom: null, chats: [] });
+		}
 		setChatHeaderState(true);
 		if (closeSidebar) {
 			setSidebarState({
