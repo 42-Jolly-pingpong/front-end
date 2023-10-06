@@ -12,6 +12,8 @@ import { chatListState } from 'ts/states/chat-list.state';
 import useFetch from 'hooks/use-fetch';
 import { chatModalState } from 'ts/states/chat-modal-state';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
+import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
+import Status from 'pages/chat/components/status';
 
 export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const [isHovered, setIsHovered] = useState(false);
@@ -25,7 +27,12 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const user = userData[0]; //temp
 	const isUserInChannel =
 		props.channel.participants.filter(
-			(participant) => participant.user.id == user.id
+			(participant) =>
+				participant.user.id == user.id &&
+				!(
+					participant.status === ChatParticipantStatus.KICKED ||
+					participant.status === ChatParticipantStatus.LEFT
+				)
 		).length !== 0;
 
 	const onMouseEnter = () => {
@@ -79,7 +86,12 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 		(async () => {
 			//temp 비번있으면 또 해쉬해서 쳐보내야함..
 			await sendApi('POST', `/chat-rooms/${props.channel.id}`)
-				.then((res) => res.json())
+				.then((res) => {
+					if (res.statusText === 'Unauthorized') {
+						throw Error(res.statusText);
+					}
+					return res.json();
+				})
 				.then((data: ChatRoom) => {
 					setChannelList((pre) => {
 						return {
@@ -88,6 +100,11 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 						};
 					});
 					setChat(data);
+				})
+				.catch((err) => {
+					if (err.message === 'Unauthorized') {
+						console.log('비번 틀림');
+					}
 				});
 			setModalStatus(ChatModalStatus.CLOSE);
 		})();
