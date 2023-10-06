@@ -16,7 +16,9 @@ const SearchChannelModal = () => {
 		(async () => {
 			sentApi('get', '/chat-rooms/opened')
 				.then((res) => res.json())
-				.then((data) => setChannels(data));
+				.then((data: ChatRoom[]) =>
+					setChannels(data.sort((a, b) => a.roomName.localeCompare(b.roomName)))
+				);
 		})();
 	}, []);
 
