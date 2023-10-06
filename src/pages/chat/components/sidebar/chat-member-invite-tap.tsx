@@ -109,7 +109,7 @@ const ChatMemberInviteTap = (props: {
 						className='px-4 py-3 flex items-center w-full hover:bg-gray-200'
 						key={id}
 					>
-						<MemberItem user={member.user} />
+						<MemberItem user={member.user} isMe={false} />
 						<div className='ml-2'>{roleBadge(member.role)}</div>
 					</div>
 				))}
@@ -151,7 +151,7 @@ const ChatMemberInviteTap = (props: {
 						className='p-3 flex items-center justify-between w-full hover:bg-gray-200'
 						key={id}
 					>
-						<MemberItem user={user} />
+						<MemberItem user={user} isMe={false} />
 						<button
 							className='text-sm font-medium text-blue-600 hover:underline'
 							onClick={() => onClickAddUser(user)}

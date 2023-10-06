@@ -340,10 +340,6 @@ const ChatMemberInquireTap = (props: {
 		}
 	};
 
-	const mybadge = () => {
-		return <div>나</div>;
-	};
-
 	const participantsList = () => {
 		const participants = searchedParticipant;
 
@@ -363,12 +359,13 @@ const ChatMemberInquireTap = (props: {
 				key={id}
 			>
 				<div className='flex items-center'>
-					<MemberItem user={participant.user} />
+					<MemberItem
+						user={participant.user}
+						isMe={participant.user.id === user.id}
+					/>
 					<div className='ml-2'>{roleBadge(participant.role)}</div>
 				</div>
-				{participant.user.id === user.id
-					? mybadge()
-					: memberDotButton(participant)}
+				{participant.user.id !== user.id && memberDotButton(participant)}
 			</div>
 		));
 	};
