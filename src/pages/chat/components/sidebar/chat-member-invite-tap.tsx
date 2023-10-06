@@ -27,24 +27,28 @@ const ChatMemberInviteTap = (props: {
 
 	useEffect(() => {
 		setMemberList(
-			chat.participants.filter(
-				(participant) =>
-					friendList.some((friend) => friend.id === participant.user.id) &&
-					(participant.status === ChatParticipantStatus.DEFAULT ||
-						participant.status === ChatParticipantStatus.MUTED) &&
-					participant.user.nickname.includes(input)
-			)
+			chat.participants
+				.filter(
+					(participant) =>
+						friendList.some((friend) => friend.id === participant.user.id) &&
+						(participant.status === ChatParticipantStatus.DEFAULT ||
+							participant.status === ChatParticipantStatus.MUTED) &&
+						participant.user.nickname.includes(input)
+				)
+				.sort((a, b) => a.user.nickname.localeCompare(b.user.nickname))
 		);
 		setNotMemberList(
-			friendList.filter(
-				(friend) =>
-					!chat.participants.some(
-						(participant) =>
-							participant.user.id === friend.id &&
-							(participant.status === ChatParticipantStatus.DEFAULT ||
-								participant.status === ChatParticipantStatus.MUTED)
-					) && friend.nickname.includes(input)
-			)
+			friendList
+				.filter(
+					(friend) =>
+						!chat.participants.some(
+							(participant) =>
+								participant.user.id === friend.id &&
+								(participant.status === ChatParticipantStatus.DEFAULT ||
+									participant.status === ChatParticipantStatus.MUTED)
+						) && friend.nickname.includes(input)
+				)
+				.sort((a, b) => a.nickname.localeCompare(b.nickname))
 		);
 	}, [friendList, input, chat]);
 
@@ -52,7 +56,11 @@ const ChatMemberInviteTap = (props: {
 		(async () => {
 			await sendApi('get', '/friends')
 				.then((res) => res.json())
-				.then((data) => setFriendList(data));
+				.then((data: User[]) =>
+					setFriendList(
+						data.sort((a, b) => a.nickname.localeCompare(b.nickname))
+					)
+				);
 		})();
 	}, []);
 

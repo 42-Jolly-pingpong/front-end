@@ -38,11 +38,13 @@ const ChatMemberInquireTap = (props: {
 
 	useEffect(() => {
 		setStableParticipants(
-			chat.participants.filter(
-				(participant) =>
-					participant.status === ChatParticipantStatus.DEFAULT ||
-					participant.status === ChatParticipantStatus.MUTED
-			)
+			chat.participants
+				.filter(
+					(participant) =>
+						participant.status === ChatParticipantStatus.DEFAULT ||
+						participant.status === ChatParticipantStatus.MUTED
+				)
+				.sort((a, b) => a.user.nickname.localeCompare(b.user.nickname))
 		);
 	}, [chat]);
 
