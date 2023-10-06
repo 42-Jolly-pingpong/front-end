@@ -85,15 +85,12 @@ export const ChatInput = () => {
 	};
 
 	const sendButton = () => {
-		if (input.trim().length === 0) {
-			return (
-				<button className='mx-3' disabled={chat === null}>
-					<IoSendOutline />
-				</button>
-			);
-		}
+		const isDisabled = input.trim().length === 0;
 		return (
-			<button className='mx-3' onClick={onClickSend}>
+			<button
+				className={`mx-3 ${isDisabled ? 'text-gray-400' : 'text-primary-700'}`}
+				disabled={chat === null}
+			>
 				<IoSend />
 			</button>
 		);
