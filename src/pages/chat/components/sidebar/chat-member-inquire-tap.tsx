@@ -229,6 +229,9 @@ const ChatMemberInquireTap = (props: {
 	};
 
 	const manageMutedList = (otherUser: ChatParticipant) => {
+		if (otherUser.role === ChatParticipantRole.OWNER) {
+			return null;
+		}
 		return (
 			<Dropdown.Item
 				onClick={() =>
@@ -243,6 +246,9 @@ const ChatMemberInquireTap = (props: {
 	};
 
 	const manageKickedList = (otherUser: ChatParticipant) => {
+		if (otherUser.role === ChatParticipantRole.OWNER) {
+			return null;
+		}
 		return (
 			<Dropdown.Item
 				onClick={() =>
@@ -257,6 +263,9 @@ const ChatMemberInquireTap = (props: {
 	};
 
 	const manageBannedList = (otherUser: ChatParticipant) => {
+		if (otherUser.role === ChatParticipantRole.OWNER) {
+			return null;
+		}
 		return (
 			<Dropdown.Item
 				onClick={() =>
@@ -303,7 +312,9 @@ const ChatMemberInquireTap = (props: {
 						{inviteGame(participant)}
 						{manageFriend(isFriend, participant)}
 						{manageBlockList(isBlocked, participant)}
-						<Dropdown.Divider />
+						{participant.role !== ChatParticipantRole.OWNER && (
+							<Dropdown.Divider />
+						)}
 						{manageMutedList(participant)}
 						{manageKickedList(participant)}
 						{manageBannedList(participant)}
