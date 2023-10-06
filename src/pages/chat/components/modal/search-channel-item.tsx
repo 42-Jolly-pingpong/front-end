@@ -13,6 +13,7 @@ import useFetch from 'hooks/use-fetch';
 import { chatModalState } from 'ts/states/chat-modal-state';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
+import useHash from 'hooks/use-hash';
 
 export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -24,6 +25,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const setModalStatus = useSetRecoilState(chatModalState);
 	const sendApi = useFetch();
 	const inputRef = useRef<HTMLInputElement>(null);
+	const hash = useHash();
 	const owner = props.channel.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -101,7 +103,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 		}, 1000);
 	};
 
-	const onClickItem = () => {
+	const onClickItem = async () => {
 		if (isUserInChannel) {
 			setChat(props.channel);
 			setModalStatus(ChatModalStatus.CLOSE);
@@ -111,7 +113,10 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 			setEnterPassword(true);
 			return;
 		}
-		const password = enterPassword ? input : null;
+		var password = null;
+		if (enterPassword) {
+			password = await hash(input);
+		}
 		(async () => {
 			await sendApi('POST', `/chat-rooms/${props.channel.id}`, { password })
 				.then((res) => {
@@ -155,9 +160,11 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 				color={inputFail ? 'failure' : 'gray'}
 				helperText={
 					inputFail ? (
-						<div className='text-xs font-normal text-red-600'>
-							비밀번호가 일치하지 않습니다.
-						</div>
+						<>
+							<span className='text-xs font-normal text-red-600'>
+								비밀번호가 일치하지 않습니다.
+							</span>
+						</>
 					) : null
 				}
 				onClick={onClickInput}

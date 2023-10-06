@@ -26,7 +26,6 @@ const SetChatRoomType = (props: {
 	setChatRoomInfo: React.Dispatch<React.SetStateAction<CreateChatRoomDto>>;
 }) => {
 	const [passwordField, setPasswordField] = useState<boolean>(false);
-	const [isFinished, setIsFinished] = useState<boolean>(false);
 	const setModalStatus = useSetRecoilState(chatModalState);
 	const setChat = useChangeChat();
 	const setChannelList = useSetRecoilState(chatListState);
@@ -41,7 +40,7 @@ const SetChatRoomType = (props: {
 		}
 	}, [passwordField]);
 
-	const onSubmitChannel = (e: React.FormEvent<FormElement>) => {
+	const onSubmitChannel = async (e: React.FormEvent<FormElement>) => {
 		e.preventDefault();
 
 		const roomTypeString = e.currentTarget.elements.roomType.value;
@@ -49,21 +48,17 @@ const SetChatRoomType = (props: {
 			ChatRoomType[roomTypeString as keyof typeof ChatRoomType];
 		const passwordValue = e.currentTarget.elements.password;
 
-		setChatRoomInfo((pre) => {
-			let updatedInfo = { ...pre, roomType };
+		if (passwordValue !== undefined) {
+			const password = await hash(passwordValue.value);
+			setChatRoomInfo((pre) => ({ ...pre, roomType, password }));
+			return;
+		}
 
-			if (passwordValue !== undefined) {
-				updatedInfo = { ...updatedInfo, password: passwordValue.value };
-			}
-
-			return updatedInfo;
-		});
-
-		setIsFinished(true);
+		setChatRoomInfo((pre) => ({ ...pre, roomType }));
 	};
 
 	useEffect(() => {
-		if (isFinished) {
+		if (chatRoomInfo.roomType) {
 			(async () => {
 				await sendApi('POST', '/chat-rooms', chatRoomInfo)
 					.then((res) => res.json())
@@ -78,7 +73,7 @@ const SetChatRoomType = (props: {
 
 			setModalStatus(ChatModalStatus.CLOSE);
 		}
-	}, [isFinished]);
+	}, [chatRoomInfo]);
 
 	const handleLabelClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		const radioId = e.currentTarget.getAttribute('for');

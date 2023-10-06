@@ -1,6 +1,7 @@
 import { Button, TextInput } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
 import useFetch from 'hooks/use-fetch';
+import useHash from 'hooks/use-hash';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
@@ -16,6 +17,7 @@ const ChatSettingTap = () => {
 	const sendApi = useFetch();
 	const setChat = useChangeChat();
 	const setChatList = useSetRecoilState(chatListState);
+	const hash = useHash();
 
 	useEffect(() => {
 		if (inputRef.current && settingPassword) {
@@ -75,17 +77,19 @@ const ChatSettingTap = () => {
 		setSettingPassword(false);
 	};
 
-	const onClickChange = () => {
-		(async () => {
-			await sendApi('PUT', `/chat-rooms/${chat.id}`, { ...chat, password })
-				.then((res) => {
-					if (!res.ok) {
-						throw Error('비밀번호 변경 실패');
-					}
-					setSettingPassword(false);
-				})
-				.catch((err) => console.log(err.message));
-		})();
+	const onClickChange = async () => {
+		const encryptedPassword = await hash(password);
+		await sendApi('PUT', `/chat-rooms/${chat.id}`, {
+			...chat,
+			password: encryptedPassword,
+		})
+			.then((res) => {
+				if (!res.ok) {
+					throw Error('비밀번호 변경 실패');
+				}
+				setSettingPassword(false);
+			})
+			.catch((err) => console.log(err.message));
 	};
 
 	const setPasswordField = () => {
