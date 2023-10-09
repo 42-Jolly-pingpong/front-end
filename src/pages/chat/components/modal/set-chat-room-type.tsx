@@ -111,7 +111,7 @@ const SetChatRoomType = (props: {
 					name='roomType'
 					value={value}
 					onChange={onChangeButtons}
-					className='mt-0.5'
+					className='mt-0.5 checked:bg-primary-700'
 				/>
 				<Label htmlFor={id}>
 					<div>
