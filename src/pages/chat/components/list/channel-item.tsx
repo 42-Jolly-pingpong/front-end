@@ -17,7 +17,7 @@ const ChannelItem = (props: { channel: ChatRoom; isSelected: boolean }) => {
 		>
 			<div className='flex items-center'>
 				<div className='mr-1'>
-					<ChannelIcon roomType={props.channel.roomType} />
+					<ChannelIcon roomType={props.channel.roomType} size={18} />
 				</div>
 				<div className='text-base font-medium ml-1 truncate'>
 					{props.channel.roomName}

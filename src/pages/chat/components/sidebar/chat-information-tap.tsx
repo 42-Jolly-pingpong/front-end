@@ -36,7 +36,7 @@ const ChatInformationTap = () => {
 			<div className='px-5 py-4 bg-white rounded-xl'>
 				{title('채널 이름')}
 				<div className='mt-1 flex items-center gray-900'>
-					<ChannelIcon roomType={chat.roomType} />
+					<ChannelIcon roomType={chat.roomType} size={18} />
 					{content(chat.roomName)}
 				</div>
 			</div>
