@@ -7,13 +7,24 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { HiOutlineUserAdd, HiOutlineUserRemove } from 'react-icons/hi';
 import { BsMailbox } from 'react-icons/bs';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import HistoryDoughnutChart from 'pages/chat/components/sidebar/history-doughnut-chart';
+import { Dm } from 'ts/interfaces/dm.model';
+import useFetch from 'hooks/use-fetch';
+import useChangeChat from 'hooks/use-change-chat';
+import { chatListSelector, chatListState } from 'ts/states/chat-list.state';
+import userData from 'ts/mock/user-data';
 
 const ChatSidebarProfile = () => {
-	const user = useRecoilValue(chatSidebarState).profile;
+	const otherUser = useRecoilValue(chatSidebarState).profile;
+	const dmList = useRecoilValue(chatListSelector).dmList;
+	const setChat = useChangeChat();
+	const setDmList = useSetRecoilState(chatListState);
+	const sendApi = useFetch();
 
-	if (user === null) {
+	const user = userData[0]; //temp
+
+	if (otherUser === null) {
 		return null;
 	}
 
@@ -33,10 +44,19 @@ const ChatSidebarProfile = () => {
 		// );
 	}; //temp
 
-	const button = (icon: JSX.Element, label: string) => {
+	const button = (
+		icon: JSX.Element,
+		label: string,
+		onClickEvent: React.MouseEventHandler<HTMLButtonElement>
+	) => {
 		return (
 			<div className='mr-2.5 mb-4'>
-				<Button color='light' size='sm'>
+				<Button
+					color='light'
+					size='sm'
+					onClick={onClickEvent}
+					disabled={user.id === otherUser.id}
+				>
 					<div className='flex items-center font-normal text-gray-600'>
 						{icon}
 						<div className='ml-2 text-xs font-medium'>{label}</div>
@@ -49,7 +69,10 @@ const ChatSidebarProfile = () => {
 	const renderTrigger = () => {
 		return (
 			<div>
-				<button className='rounded-lg flex items-stretch items-center justify-center p-2 text-center text-gray-900 bg-white border border-gray-300 enabled:hover:bg-gray-100 focus:ring-4 focus:ring-cyan-300 '>
+				<button
+					disabled={user.id === otherUser.id}
+					className='disabled:cursor-not-allowed disabled:opacity-50 rounded-lg flex items-stretch items-center justify-center p-2 text-center text-gray-900 bg-white border border-gray-300 enabled:hover:bg-gray-100 focus:ring-4 focus:ring-cyan-300 '
+				>
 					<BiDotsVerticalRounded size={16} />
 				</button>
 			</div>
@@ -79,15 +102,37 @@ const ChatSidebarProfile = () => {
 		);
 	};
 
+	const createNewDm = async () => {
+		await sendApi('POST', '/chat-rooms/dm', { chatMate: otherUser })
+			.then((res) => res.json())
+			.then((data: Dm) => {
+				setDmList((pre) => ({
+					...pre,
+					dmList: [...pre.dmList, data],
+				}));
+				setChat(data, false);
+			})
+			.catch((err) => console.log(err));
+	};
+
+	const onClickFriend = () => {
+		const dm = dmList.find((dm) => dm.chatMate.id === otherUser.id);
+		if (dm) {
+			setChat(dm, false);
+			return;
+		}
+		createNewDm();
+	};
+
 	const profileField = () => {
 		return (
 			<div className='my-4 border-b'>
 				<div className='mx-4'>
-					<div className='font-bold text-xl'>{user.nickname}</div>
+					<div className='font-bold text-xl'>{otherUser.nickname}</div>
 					{status()}
 					<div className='flex'>
-						{button(<RiMessage2Line size='12' />, '메시지')}
-						{button(<MdOutlineRocketLaunch size='12' />, '게임 신청')}
+						{button(<RiMessage2Line size='12' />, '메시지', onClickFriend)}
+						{button(<MdOutlineRocketLaunch size='12' />, '게임 신청', () => {})}
 						{dotsButton()}
 					</div>
 				</div>
@@ -107,7 +152,7 @@ const ChatSidebarProfile = () => {
 						<div>
 							<div className='text-gray-500 font-bold text-xs'>이메일 주소</div>
 							<div className='text-blue-400 font-normal text-xs'>
-								{user.email}
+								{otherUser.email}
 							</div>
 						</div>
 					</div>
@@ -122,8 +167,8 @@ const ChatSidebarProfile = () => {
 				<div className='mx-4'>
 					<div className='font-bold text-sm'>전적 정보</div>
 					<HistoryDoughnutChart
-						winCount={user.winCount}
-						loseCount={user.loseCount}
+						winCount={otherUser.winCount}
+						loseCount={otherUser.loseCount}
 					/>
 				</div>
 			</div>
@@ -135,7 +180,7 @@ const ChatSidebarProfile = () => {
 			<ChatSidebarHeader title='프로필' />
 			<div className='grow'>
 				<div className='flex justify-center my-3'>
-					<UserImg src={user.avatarPath} size='64' />
+					<UserImg src={otherUser.avatarPath} size='64' />
 				</div>
 				{profileField()}
 				{contactField()}
