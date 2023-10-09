@@ -44,10 +44,10 @@ const HistoryDoughnutChart = (props: {
 					options={{ maintainAspectRatio: false, cutout: 65 }}
 				/>
 			</div>
-			<div className='absolute top-20 left-28 text-2xl font-bold ml-2'>
+			<div className='absolute top-20 w-full flex items-center justify-center text-2xl font-bold'>
 				{winRate}%
 			</div>
-			<div className='absolute top-48 left-20 mt-1'>{label()}</div>
+			<div className='w-full mt-4 flex justify-center'>{label()}</div>
 		</div>
 	);
 };
