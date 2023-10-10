@@ -113,9 +113,9 @@ export const ChatInput = () => {
 		if (isMuted) return `${user.nickname}님은 현재 채팅이 제한되어 있습니다.`;
 		switch (chat.roomType) {
 			case ChatRoomType.DM:
-				return `${(chat as Dm).chatMate.nickname}에게 매시지 보내기`;
+				return `${(chat as Dm).chatMate.nickname}에게 메시지 보내기`;
 			default:
-				return `${(chat as ChatRoom).roomName}에 매시지 보내기`;
+				return `${(chat as ChatRoom).roomName}에 메시지 보내기`;
 		}
 	};
 	return (
