@@ -14,7 +14,7 @@ const ChatSettingTap = () => {
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
-	const sendApi = useFetch();
+	const getData = useFetch();
 	const setChat = useChangeChat();
 	const setChatList = useSetRecoilState(chatListState);
 	const hash = useHash();
@@ -79,7 +79,7 @@ const ChatSettingTap = () => {
 
 	const onClickChange = async () => {
 		const encryptedPassword = await hash(password);
-		await sendApi('PUT', `/chat-rooms/${chat.id}`, {
+		await getData('PUT', `/chat-rooms/${chat.id}`, {
 			...chat,
 			password: encryptedPassword,
 		})
@@ -123,7 +123,7 @@ const ChatSettingTap = () => {
 
 	const onClickDelete = () => {
 		(async () => {
-			sendApi('DELETE', `/chat-rooms/${chat.id}`)
+			getData('DELETE', `/chat-rooms/${chat.id}`)
 				.then((res) => {
 					if (!res.ok) {
 						throw Error('삭제 불가');

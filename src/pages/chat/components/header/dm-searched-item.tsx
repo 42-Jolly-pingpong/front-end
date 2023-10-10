@@ -11,11 +11,16 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
 	const dmList = useRecoilValue(chatListSelector).dmList;
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	const createNewDm = async () => {
-		await sendApi('POST', '/chat-rooms/dm', { chatMate: friend })
-			.then((res) => res.json())
+		await getData('POST', '/chat-rooms/dm', { chatMate: friend })
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+				throw Error(res.statusText);
+			})
 			.then((data: Dm) => {
 				setDmList((pre) => ({
 					...pre,
@@ -23,7 +28,7 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 				}));
 				setChat(data);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log('dm-seached-item', err));
 	};
 
 	const onClickFriend = () => {

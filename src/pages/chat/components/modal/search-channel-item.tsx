@@ -23,7 +23,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const setChat = useChangeChat();
 	const setChannelList = useSetRecoilState(chatListState);
 	const setModalStatus = useSetRecoilState(chatModalState);
-	const sendApi = useFetch();
+	const getData = useFetch();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
 	const owner = props.channel.participants.find(
@@ -118,7 +118,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 			password = await hash(input);
 		}
 		(async () => {
-			await sendApi('POST', `/chat-rooms/${props.channel.id}`, { password })
+			await getData('POST', `/chat-rooms/${props.channel.id}`, { password })
 				.then((res) => {
 					if (res.statusText === 'Unauthorized') {
 						throw Error(res.statusText);

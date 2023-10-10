@@ -16,7 +16,7 @@ const ChatInformationTap = () => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const setChat = useChangeChat();
 	const setChatList = useSetRecoilState(chatListState);
-	const sendApi = useFetch();
+	const getData = useFetch();
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -123,8 +123,13 @@ const ChatInformationTap = () => {
 
 	const onClickLeave = () => {
 		(async () => {
-			await sendApi('DELETE', `/chat-rooms/${chat.id}/members`)
-				.then((res) => res.json())
+			await getData('DELETE', `/chat-rooms/${chat.id}/members`)
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then((data) => {
 					setChat(null);
 					setChatList((pre) => {
@@ -136,7 +141,7 @@ const ChatInformationTap = () => {
 						};
 					});
 				})
-				.catch((err) => console.log('err', err));
+				.catch((err) => console.log('chat-information-tap', err));
 		})();
 	};
 

@@ -23,7 +23,7 @@ const ChatMemberInviteTap = (props: {
 	const [memberList, setMemberList] = useState<ChatParticipant[]>([]);
 	const [notMemberList, setNotMemberList] = useState<User[]>([]);
 	const setChat = useChangeChat();
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	useEffect(() => {
 		setMemberList(
@@ -54,13 +54,19 @@ const ChatMemberInviteTap = (props: {
 
 	useEffect(() => {
 		(async () => {
-			await sendApi('get', '/friends')
-				.then((res) => res.json())
+			await getData('get', '/friends')
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then((data: User[]) =>
 					setFriendList(
 						data.sort((a, b) => a.nickname.localeCompare(b.nickname))
 					)
-				);
+				)
+				.catch((err) => console.log('get friend list', err));
 		})();
 	}, []);
 
@@ -119,14 +125,19 @@ const ChatMemberInviteTap = (props: {
 
 	const onClickAddUser = (user: User) => {
 		(async () => {
-			await sendApi('post', `/chat-rooms/${chat.id}/members`, {
+			await getData('post', `/chat-rooms/${chat.id}/members`, {
 				participants: [user.id],
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then((data) => {
 					setChat(data, false);
 				})
-				.catch((err) => console.log(err, 'error'));
+				.catch((err) => console.log('add user', err));
 		})();
 	};
 

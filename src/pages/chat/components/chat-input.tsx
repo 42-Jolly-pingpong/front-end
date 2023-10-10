@@ -1,7 +1,7 @@
 import { Textarea } from 'flowbite-react';
 import useFetch from 'hooks/use-fetch';
 import { useEffect, useRef, useState } from 'react';
-import { IoSend, IoSendOutline } from 'react-icons/io5';
+import { IoSend } from 'react-icons/io5';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
@@ -17,7 +17,7 @@ export const ChatInput = () => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const chat = useRecoilValue(chatState).chatRoom;
 	const addChats = useSetRecoilState(chatState);
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	const user = userData[0]; //temp
 
@@ -62,7 +62,7 @@ export const ChatInput = () => {
 	const onClickSend = () => {
 		if (chat) {
 			(async () => {
-				sendApi('POST', `/chat-rooms/${chat?.id}/chats`, {
+				getData('POST', `/chat-rooms/${chat?.id}/chats`, {
 					content: input.trim(),
 				})
 					.then((res) => {

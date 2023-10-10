@@ -24,7 +24,7 @@ const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 		<div>
 			{props.hasTopBorder && topBorder()}
 			<div className='flex items-start mb-2 mt-2'>
-				<button onClick={onClickAvatar} className='pt-1'>
+				<button onClick={onClickAvatar} className='pt- min-w-12 h-12'>
 					<Avatar img={user.avatarPath} />
 				</button>
 				<div className='ml-3'>
@@ -34,7 +34,9 @@ const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 							<ChatTime time={chat.sentTime} />
 						</div>
 					</div>
-					<div className='text-sm font-normal'>{chat.content}</div>
+					<div className='text-sm font-normal whitespace-pre-line'>
+						{chat.content}
+					</div>
 				</div>
 			</div>
 		</div>

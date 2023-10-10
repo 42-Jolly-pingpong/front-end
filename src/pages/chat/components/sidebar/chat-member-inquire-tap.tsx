@@ -32,7 +32,7 @@ const ChatMemberInquireTap = (props: {
 		ChatParticipant[]
 	>([]);
 	const setChat = useChangeChat();
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	const user = userData[0]; //temp
 
@@ -62,14 +62,26 @@ const ChatMemberInquireTap = (props: {
 
 	useEffect(() => {
 		(async () => {
-			await sendApi('get', '/friends')
-				.then((res) => res.json())
-				.then((data) => setFriendList(data));
+			await getData('get', '/friends')
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
+				.then((data) => setFriendList(data))
+				.catch((err) => console.log('get Friend list', err));
 		})();
 		(async () => {
-			await sendApi('get', '/friends/black-list')
-				.then((res) => res.json())
-				.then((data) => setBlockedList(data));
+			await getData('get', '/friends/black-list')
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
+				.then((data) => setBlockedList(data))
+				.catch((err) => console.log('get blocked list', err));
 		})();
 		const participant = chat.participants.find(
 			(participant) => participant.user.id === user.id
@@ -193,13 +205,18 @@ const ChatMemberInquireTap = (props: {
 		otherUser: ChatParticipant
 	) => {
 		(async () => {
-			await sendApi('PATCH', `/chat-rooms/${chat.id}/members/role`, {
+			await getData('PATCH', `/chat-rooms/${chat.id}/members/role`, {
 				user: otherUser.user,
 				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then((data) => setChat(data, false))
-				.catch((err) => console.log(err));
+				.catch((err) => console.log('manage admin list', err));
 		})();
 	};
 
@@ -218,13 +235,18 @@ const ChatMemberInquireTap = (props: {
 		status: ChatParticipantStatus
 	) => {
 		(async () => {
-			await sendApi('PATCH', `/chat-rooms/${chat.id}/members/status`, {
+			await getData('PATCH', `/chat-rooms/${chat.id}/members/status`, {
 				user: otherUser.user,
 				status,
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then((data) => setChat(data, false))
-				.catch((err) => console.log(err));
+				.catch((err) => console.log('manage member-status', err));
 		})();
 	};
 

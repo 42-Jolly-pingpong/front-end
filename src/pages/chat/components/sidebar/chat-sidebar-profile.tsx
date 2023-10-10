@@ -20,7 +20,7 @@ const ChatSidebarProfile = () => {
 	const dmList = useRecoilValue(chatListSelector).dmList;
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	const user = userData[0]; //temp
 
@@ -103,8 +103,13 @@ const ChatSidebarProfile = () => {
 	};
 
 	const createNewDm = async () => {
-		await sendApi('POST', '/chat-rooms/dm', { chatMate: otherUser })
-			.then((res) => res.json())
+		await getData('POST', '/chat-rooms/dm', { chatMate: otherUser })
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+				throw Error(res.statusText);
+			})
 			.then((data: Dm) => {
 				setDmList((pre) => ({
 					...pre,
@@ -112,7 +117,7 @@ const ChatSidebarProfile = () => {
 				}));
 				setChat(data, false);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log('create new Dm', err));
 	};
 
 	const onClickFriend = () => {

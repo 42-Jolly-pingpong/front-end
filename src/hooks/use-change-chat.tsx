@@ -11,7 +11,7 @@ const useChangeChat = () => {
 	const setChatState = useSetRecoilState(chatState);
 	const setChatHeaderState = useSetRecoilState(chatHeaderState);
 	const setSidebarState = useSetRecoilState(chatSidebarState);
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	const setChat = (
 		chat: ChatRoom | Dm | null,
@@ -19,14 +19,20 @@ const useChangeChat = () => {
 	) => {
 		if (chat) {
 			(async () => {
-				await sendApi('get', `/chat-rooms/${chat?.id}/chats`)
-					.then((res) => res.json())
+				await getData('get', `/chat-rooms/${chat?.id}/chats`)
+					.then((res) => {
+						if (res.ok) {
+							return res.json();
+						}
+						throw Error(res.statusText);
+					})
 					.then((chats) =>
 						setChatState({
 							chatRoom: chat,
 							chats,
 						})
-					);
+					)
+					.catch((err) => console.log('inside setChat', err));
 			})();
 		} else {
 			setChatState({ chatRoom: null, chats: [] });

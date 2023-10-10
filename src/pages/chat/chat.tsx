@@ -13,21 +13,33 @@ const Chat = () => {
 	const hasChatSidebar =
 		useRecoilValue(chatSidebarState).status !== ChatSidebarStatus.CLOSE;
 	const setChatList = useSetRecoilState(chatListState);
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	useEffect(() => {
 		(async () => {
-			await sendApi('get', '/chat-rooms')
-				.then((res) => res.json())
+			await getData('get', '/chat-rooms')
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then(async (data) => {
 					setChatList((pre) => ({ ...pre, channelList: data }));
-				});
+				})
+				.catch((err) => console.log('chat', err));
 
-			await sendApi('get', '/chat-rooms/dm')
-				.then((res) => res.json())
+			await getData('get', '/chat-rooms/dm')
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then((data) => {
 					setChatList((pre) => ({ ...pre, dmList: data }));
-				});
+				})
+				.catch((err) => console.log('chat', err));
 		})();
 	}, []);
 

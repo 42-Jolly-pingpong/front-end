@@ -30,7 +30,7 @@ const SetChatRoomType = (props: {
 	const setChat = useChangeChat();
 	const setChannelList = useSetRecoilState(chatListState);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const sendApi = useFetch();
+	const getData = useFetch();
 	const hash = useHash();
 	const { setPhase, chatRoomInfo, setChatRoomInfo } = props;
 
@@ -60,15 +60,21 @@ const SetChatRoomType = (props: {
 	useEffect(() => {
 		if (chatRoomInfo.roomType) {
 			(async () => {
-				await sendApi('POST', '/chat-rooms', chatRoomInfo)
-					.then((res) => res.json())
+				await getData('POST', '/chat-rooms', chatRoomInfo)
+					.then((res) => {
+						if (res.ok) {
+							return res.json();
+						}
+						throw Error(res.statusText);
+					})
 					.then((data: ChatRoom) => {
 						setChannelList((pre) => ({
 							...pre,
 							channelList: [...pre.channelList, data],
 						}));
 						setChat(data);
-					});
+					})
+					.catch((err) => console.log('set-chat-room-type', err));
 			})();
 
 			setModalStatus(ChatModalStatus.CLOSE);

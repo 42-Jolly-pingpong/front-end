@@ -8,7 +8,7 @@ const ChatHeaderSearch = () => {
 	const [friendList, setFriendList] = useState<User[]>([]);
 	const [searchedFriendList, setSearchedFriendList] = useState<User[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const sendApi = useFetch();
+	const getData = useFetch();
 
 	useEffect(() => {
 		if (inputRef.current) {
@@ -18,13 +18,19 @@ const ChatHeaderSearch = () => {
 
 	useEffect(() => {
 		(async () => {
-			await sendApi('get', '/friends')
-				.then((res) => res.json())
+			await getData('get', '/friends')
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
 				.then((data: User[]) =>
 					setFriendList(
 						data.sort((a, b) => a.nickname.localeCompare(b.nickname))
 					)
-				);
+				)
+				.catch((err) => console.log('chat-header', err));
 		})();
 	}, []);
 
