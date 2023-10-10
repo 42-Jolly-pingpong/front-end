@@ -1,5 +1,5 @@
 import { atom, selector } from 'recoil';
-import User from 'types/interfaces/user.model';
+import User from 'ts/interfaces/user.model';
 
 export const userState = atom<User | null>({
 	key: 'userState',

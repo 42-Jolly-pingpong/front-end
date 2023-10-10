@@ -1,16 +1,10 @@
-import DecodedToken from 'types/interfaces/decoded-jwt.model';
+import User from 'ts/interfaces/user.model';
 import axios from './axios';
 
-export const getJwt = async (): Promise<DecodedToken | undefined> => {
+export const getUserByJwt = async (): Promise<User | undefined> => {
 	try {
-		const response = await axios.post('/auth/decoded-token');
-
-		if (response.status === 200) {
-			return response.data;
-		} else {
-			console.log('받아오기 실패');
-		}
+		return await axios.post('/auth/user');
 	} catch (e) {
-		console.log(e);
+		return undefined;
 	}
 };
