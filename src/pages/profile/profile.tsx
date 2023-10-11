@@ -1,5 +1,5 @@
-import ProfileHeader from './components/profile-header';
-import ProfileNavigator from './components/profile-navigator';
+import ProfileHeader from './components/header/profile-header';
+import ProfileNavigator from './components/navigator/profile-navigator';
 
 const Profile = () => {
 	return (

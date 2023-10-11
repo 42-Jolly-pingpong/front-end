@@ -4,7 +4,7 @@ import BackDrop from 'components/modal/utils/backdrop';
 import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import winRateData from 'ts/mock/win-rate-data';
-import ProfileBadge from 'pages/profile/components/profile-badge';
+import ProfileBadge from 'pages/profile/components/header/profile-badge';
 import GetUserInfo from 'components/services/getUserInfo';
 
 interface winRateResultProps {
