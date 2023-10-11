@@ -1,8 +1,12 @@
 import { Sidebar } from 'flowbite-react';
+import { useSetRecoilState } from 'recoil';
 import { Dm } from 'ts/interfaces/dm.model';
+import { chatState } from 'ts/states/chat-state';
 
 const DmItem = (props: { dm: Dm }) => {
 	const chatMate = props.dm.chatMate;
+
+	const setChat = useSetRecoilState(chatState);
 
 	const avatar = () => {
 		return (
@@ -15,8 +19,12 @@ const DmItem = (props: { dm: Dm }) => {
 		);
 	};
 
+	const onClickItem = () => {
+		setChat(props.dm);
+	};
+
 	return (
-		<Sidebar.Item>
+		<Sidebar.Item onClick={onClickItem}>
 			<div className='flex items-center'>
 				{avatar()}
 				<div className='flex items-center'>{chatMate.nickname}</div>

@@ -1,25 +1,22 @@
 import { Sidebar } from 'flowbite-react';
-import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import { BiHash, BiLock, BiLockOpen } from 'react-icons/bi';
+import ChannelIcon from 'pages/chat/channel-icon';
+import { useSetRecoilState } from 'recoil';
+import { chatState } from 'ts/states/chat-state';
 
 const ChannelItem = (props: { channel: ChatRoom }) => {
-	const channelIcon = () => {
-		switch (props.channel.roomType) {
-			case ChatRoomType.PUBLIC:
-				return <BiHash />;
+	const setChat = useSetRecoilState(chatState);
 
-			case ChatRoomType.PROTECTED:
-				return <BiLockOpen />;
-
-			case ChatRoomType.PRIVATE:
-				return <BiLock />;
-		}
+	const onClickItem = () => {
+		setChat(props.channel);
 	};
+
 	return (
-		<Sidebar.Item>
+		<Sidebar.Item onClick={onClickItem}>
 			<div className='flex items-center'>
-				<div className='mr-1'>{channelIcon()}</div>
+				<div className='mr-1'>
+					<ChannelIcon roomType={props.channel.roomType} />
+				</div>
 				{props.channel.roomName}
 			</div>
 		</Sidebar.Item>

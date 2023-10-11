@@ -1,11 +1,10 @@
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
-import { ChatParticipantAuth } from '../enums/chat-participants-auth.enum';
+import { ChatParticipantRole } from '../enums/chat-participants-role.enum';
+import { User } from 'ts/interfaces/user.model';
 
 export interface ChatParticipant {
-	chatUserIdx: number;
-	roomIdx: number;
-	userIdx: number;
-	auth: ChatParticipantAuth;
+	user: User;
 	status: ChatParticipantStatus;
+	role: ChatParticipantRole;
 	muteExpirationTime: Date | null;
 }
