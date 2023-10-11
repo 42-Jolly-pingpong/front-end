@@ -5,6 +5,7 @@ import { socket } from '../../socket/socket';
 
 const Main = () => {
 	const [isConnected, setIsConnected] = useState<boolean>(socket.connected)
+	const [isGameStart, setIsGameStart] = useState<boolean>(false)
 
 	useEffect(() => {
 		if (!isConnected)
@@ -19,10 +20,15 @@ const Main = () => {
 		socket.on('disconnect', onDisconnect)
 	}, [])
 
+	const updateGameState = (newState: boolean) => {
+		setIsGameStart(newState);
+	  };
+
 	return (
 		<div className='flex flex-col justify-center items-center text-center mt-72'>
 			<JoinIntro />
-			<JoinButton />
+			<JoinButton updateGameStatus={updateGameState}/>
+			{isGameStart ? <h1>게임 모달 띄우기</h1> : null} 
 		</div>
 	);
 };

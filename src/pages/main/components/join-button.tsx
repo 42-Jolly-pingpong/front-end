@@ -3,15 +3,23 @@ import { useEffect, useState } from 'react';
 import JoinModal from './join-modal';
 import { socket } from '../../../socket/socket';
 
-const JoinButton = () => {
+interface ChildProps {
+	updateGameStatus: (newState: boolean) => void;
+}
+
+const JoinButton = ({ updateGameStatus }: ChildProps) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	useEffect(() => {
 		if (!socket.connected) socket.connect();
+		socket.on('gameStart', () => {
+			updateGameStatus(true);
+			cancel();
+		});
 	}, []);
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			cancel();
-		}, 5000);
+		}, 60000);
 
 		return () => {
 			clearTimeout(timer);
