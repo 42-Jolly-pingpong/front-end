@@ -15,9 +15,9 @@ const HeaderProfileIcon = () => {
 			label={<Avatar img='images/jollypong2.jpeg' rounded className='mr-3' />}
 		>
 			<Link to={`profile/${user.nickname}`}>
-				<Dropdown.Item>Profile</Dropdown.Item>
+				<Dropdown.Item className='text-gray-700'>프로필 보기</Dropdown.Item>
 			</Link>
-			<Dropdown.Item>Sign out</Dropdown.Item>
+			<Dropdown.Item className='text-red-500'>로그아웃</Dropdown.Item>
 		</Dropdown>
 	);
 };
