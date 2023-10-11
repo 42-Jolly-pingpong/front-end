@@ -6,16 +6,24 @@ import { socket } from '../../../socket/socket';
 const JoinButton = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	useEffect(() => {
-		if (!socket.connected)
-			socket.connect();
-	}, [])
+		if (!socket.connected) socket.connect();
+	}, []);
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			cancel();
+		}, 5000);
+
+		return () => {
+			clearTimeout(timer);
+		};
+	});
 	function matching() {
 		socket.emit('matching', '');
 		setIsModalOpen(true);
 	}
 	function cancel() {
 		socket.emit('cancel', '');
-		setIsModalOpen(false)
+		setIsModalOpen(false);
 	}
 	return (
 		<>
