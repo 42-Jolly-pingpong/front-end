@@ -1,6 +1,6 @@
 import { Button } from 'flowbite-react';
 import { useState } from 'react';
-import JoinModal from './join-modal';
+import JoinModal from './modal/join-modal-backup';
 
 const JoinButton = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +13,7 @@ const JoinButton = () => {
 				onClick={() => setIsModalOpen(true)}
 			>
 				<img src='images/fire.png' alt='fire' />
-				<div className='font-bold mx-3'> Join Game</div>
+				<div className='font-bold mx-3'> 게임하러 가기</div>
 				<img src='images/arrow-right.png' alt='arrow' />
 			</Button>
 			<JoinModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
