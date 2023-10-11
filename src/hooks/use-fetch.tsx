@@ -1,7 +1,7 @@
 const useFetch = () => {
 	//토큰 꺼내오기
 
-	const baseUrl = 'http://localhost:3000';
+	const baseUrl = process.env.REACT_APP_BASE_URL;
 	/**
 	 * api 보내기
 	 * @param method
