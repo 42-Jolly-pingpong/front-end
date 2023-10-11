@@ -18,6 +18,8 @@ const Section = (props: { section: JSX.Element }) => {
 	);
 }; //임시
 
+//			{sidebarState ? <Sidebar /> : null}
+<Snackbar />;
 function App() {
 	return (
 		<div>
@@ -25,16 +27,12 @@ function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route element={<Layout />}>
-							<Route index path='/' element={<Root />} />
+							<Route path='/' element={<Root />} index />
 							<Route path='/game' element={<h1>GAME</h1>} />
-							<Route
-								path='/profile/:user_idx'
-								element={<Section section={<Profile />} />}
-							/>
+							<Route path='/profile/:user_idx' element={<Profile />} />
 							<Route path='/chat' element={<Chat />} />
 							<Route path='/sign-up' element={<SignUp />} />
 						</Route>
-						<Route path='/login' element={<h1>LOGIN</h1>} />
 						<Route path='*' element={<h1>NOT FOUND</h1>} />
 					</Routes>
 				</BrowserRouter>
