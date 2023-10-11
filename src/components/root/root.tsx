@@ -10,11 +10,13 @@ const Root = () => {
 	const [user, setUserState] = useRecoilState(userState);
 
 	useEffect(() => {
+		console.log('?');
 		const test = async () => {
-			const user: User | undefined = await getUserByJwt();
+			const user = await getUserByJwt();
 			if (user !== undefined) {
 				console.log(user);
-				setUserState(user);
+				console.log(user.data.user);
+				setUserState(user.data.user);
 			}
 		};
 		test();
