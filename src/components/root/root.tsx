@@ -22,7 +22,8 @@ const Root = () => {
 		test();
 	}, []);
 
-	return user ? <Main /> : <Welcome />;
+	return <Main />;
+	//return user ? <Main /> : <Welcome />;
 };
 
 export default Root;
