@@ -1,6 +1,7 @@
+import { Modal } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
 
-function gamePlayModal() {
+function GamePlayModal() {
 	const canvasRef = useRef(null);
 	const [ball, setBall] = useState({ x: 400, y: 200, speedX: 5, speedY: 5 });
 	const [paddleY, setPaddleY] = useState(100);
@@ -43,20 +44,24 @@ function gamePlayModal() {
 	};
 
 	return (
-		<div className='flex flex-col items-center justify-center h-screen'>
-			<h1 className='text-4xl mb-4'>Ping Pong Game</h1>
-			<p className='text-xl mb-2'>Score: {score}</p>
-			<div className='w-800 h-400 relative'>
-				<canvas
-					ref={canvasRef} // useRef로 생성한 참조를 ref 속성에 할당
-					onMouseMove={handleMouseMove}
-					className='absolute border-2 border-black'
-					width='800'
-					height='400'
-				></canvas>
-			</div>
-		</div>
+		<Modal show={true} dismissible>
+			<Modal.Body className='flex flex-col items-center justify-center h-screen'>
+				<div>
+					<h1 className='text-4xl mb-4'>Ping Pong Game</h1>
+					<p className='text-xl mb-2'>Score: {score}</p>
+					<div className='w-800 h-400 relative'>
+						<canvas
+							ref={canvasRef} // useRef로 생성한 참조를 ref 속성에 할당
+							onMouseMove={handleMouseMove}
+							className='absolute border-2 border-black'
+							width='800'
+							height='400'
+						></canvas>
+					</div>
+				</div>
+			</Modal.Body>
+		</Modal>
 	);
 }
 
-export default gamePlayModal;
+export default GamePlayModal;

@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import { useEffect, useState } from 'react';
-import JoinButton from './components/join-button';
-import JoinIntro from './components/join-intro';
 import { socket } from '../../socket/socket';
 import GamePlayModal from '../game/pingpong-play-modal';
-=======
 import JoinButton from 'pages/main/components/join-button';
 import JoinIntro from 'pages/main/components/join-intro';
->>>>>>> 26bb4a3637f24c76be80f129e2928b39bbbc87d5
 
 const Main = () => {
 	const [isConnected, setIsConnected] = useState<boolean>(socket.connected)
