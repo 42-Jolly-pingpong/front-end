@@ -1,6 +1,6 @@
 import { Button } from 'flowbite-react';
+import JoinModal from 'pages/main/components/modal/join-modal';
 import { useState } from 'react';
-import JoinModal from './modal/join-modal-backup';
 
 const JoinButton = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);

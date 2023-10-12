@@ -1,6 +1,5 @@
-import JoinButton from './components/join-button';
-import JoinIntro from './components/join-intro';
-//import JoinAnimation from './components/join-animation';
+import JoinButton from 'pages/main/components/join-button';
+import JoinIntro from 'pages/main/components/join-intro';
 
 const Main = () => {
 	return (

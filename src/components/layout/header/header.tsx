@@ -1,7 +1,7 @@
 import HeaderLogo from 'components/layout/header/components/header-logo';
+import HeaderRight from 'components/layout/header/components/header-right';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'ts/states/user-state';
-import HeaderRight from './components/header-right';
 
 const Header = () => {
 	const user = useRecoilValue(userState);

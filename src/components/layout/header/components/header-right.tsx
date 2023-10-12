@@ -1,5 +1,5 @@
-import HeaderNavigateBar from './header-navigation-bar';
-import HeaderProfileIcon from './header-profile-icon';
+import HeaderNavigateBar from 'components/layout/header/components/header-navigation-bar';
+import HeaderProfileIcon from 'components/layout/header/components/header-profile-icon';
 
 const HeaderRight = () => {
 	return (
