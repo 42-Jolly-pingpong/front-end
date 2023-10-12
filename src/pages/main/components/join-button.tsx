@@ -19,7 +19,7 @@ const JoinButton = ({ updateGameStatus }: ChildProps) => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			cancel();
-		}, 60000);
+		}, 6000);
 
 		return () => {
 			clearTimeout(timer);

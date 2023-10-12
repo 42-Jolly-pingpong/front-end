@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import JoinButton from './components/join-button';
 import JoinIntro from './components/join-intro';
 import { socket } from '../../socket/socket';
+import GamePlayModal from '../game/pingpong-play-modal';
 
 const Main = () => {
 	const [isConnected, setIsConnected] = useState<boolean>(socket.connected)
@@ -22,13 +23,13 @@ const Main = () => {
 
 	const updateGameState = (newState: boolean) => {
 		setIsGameStart(newState);
-	  };
+	};
 
 	return (
 		<div className='flex flex-col justify-center items-center text-center mt-72'>
 			<JoinIntro />
 			<JoinButton updateGameStatus={updateGameState}/>
-			{isGameStart ? <h1>게임 모달 띄우기</h1> : null} 
+			{isGameStart ? <GamePlayModal /> : null}
 		</div>
 	);
 };
