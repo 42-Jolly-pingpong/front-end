@@ -8,6 +8,7 @@ export default defineConfig({
 	plugins: [react(), EnvironmentPlugin('all', { prefix: 'REACT_APP_' })],
 	resolve: {
 		alias: {
+			api: '/src/api',
 			src: '/src',
 			components: '/src/components',
 			pages: '/src/pages',

@@ -1,5 +1,5 @@
-import LoginButton from './login-button';
-import WelcomeTitle from './welcome-title';
+import LoginButton from './components/login-button';
+import WelcomeTitle from './components/welcome-title';
 
 const Welcome = () => {
 	return (
