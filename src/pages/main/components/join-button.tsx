@@ -1,7 +1,7 @@
 import { Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import JoinModal from './join-modal';
 import { socket } from '../../../socket/socket';
+import JoinModal from 'pages/main/components/modal/join-modal';
 
 interface ChildProps {
 	updateGameStatus: (newState: boolean) => void;
@@ -41,7 +41,7 @@ const JoinButton = ({ updateGameStatus }: ChildProps) => {
 				onClick={matching}
 			>
 				<img src='images/fire.png' alt='fire' />
-				<div className='font-bold mx-3'> Join Game</div>
+				<div className='font-bold mx-3'> 게임하러 가기</div>
 				<img src='images/arrow-right.png' alt='arrow' />
 			</Button>
 			<JoinModal isOpen={isModalOpen} onClose={cancel} />
