@@ -1,5 +1,5 @@
-import ModalControl from 'types/interfaces/modal-control.model';
 import { Button, Modal, Spinner } from 'flowbite-react';
+import ModalControl from 'ts/interfaces/modal-control.model';
 
 const JoinModal: React.FC<ModalControl> = ({ isOpen, onClose }) => {
 	return (
