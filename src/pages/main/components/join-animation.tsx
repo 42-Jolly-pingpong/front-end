@@ -1,4 +1,4 @@
-const JoinVideo = () => {
+const JoinAnimation = () => {
 	return (
 		<div className='w-full max-w-screen-lg'>
 			<video muted autoPlay loop>
@@ -8,4 +8,4 @@ const JoinVideo = () => {
 	);
 };
 
-export default JoinVideo;
+export default JoinAnimation;

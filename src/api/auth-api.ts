@@ -8,7 +8,6 @@ export const getUserByJwt = async (
 		const response = await axios.post('/auth/user');
 
 		if (response.data !== undefined) {
-			console.log(response.data);
 			setUserState(response.data);
 		}
 	} catch (e) {
