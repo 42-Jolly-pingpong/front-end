@@ -1,25 +1,26 @@
 import { Flowbite, ListGroup, Modal, TextInput } from 'flowbite-react';
 import { ListGroupTheme } from 'pages/chat/themes/list-group-theme';
 import { SearchChannelItem } from 'pages/chat/components/modal/search-channel-item';
-import { channelList } from 'pages/chat/mock';
 import { useEffect, useState } from 'react';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiSearch } from 'react-icons/bi';
+import useFetch from 'hooks/use-fetch';
 
 const SearchChannelModal = () => {
 	const [input, setInput] = useState<string>('');
 	const [channels, setChannels] = useState<ChatRoom[]>([]);
 	const [searchedChannels, setSearchedChannels] = useState<ChatRoom[]>([]);
+	const sentApi = useFetch();
 
 	useEffect(() => {
-		setChannels(channelList);
+		(async () => {
+			sentApi('get', '/chat-rooms/opened')
+				.then((res) => res.json())
+				.then((data: ChatRoom[]) =>
+					setChannels(data.sort((a, b) => a.roomName.localeCompare(b.roomName)))
+				);
+		})();
 	}, []);
-
-	useEffect(() => {
-		if (channels) {
-			setSearchedChannels(channels);
-		}
-	}, [channels]);
 
 	useEffect(() => {
 		if (input.length === 0) {
@@ -29,7 +30,7 @@ const SearchChannelModal = () => {
 				channels?.filter((channel) => channel.roomName.includes(input))
 			);
 		}
-	}, [input]);
+	}, [channels, input]);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);
@@ -43,17 +44,17 @@ const SearchChannelModal = () => {
 	};
 
 	const seachedChannelList = () => {
-		if (searchedChannels?.length !== 0)
+		if (searchedChannels.length !== 0)
 			return (
 				<ListGroup>
-					{searchedChannels?.map((channel, id) => (
+					{searchedChannels.map((channel, id) => (
 						<SearchChannelItem key={id} channel={channel} />
 					))}
 				</ListGroup>
 			);
 		return (
 			<div className='flex justify-center text-gray-500'>
-				<div>검색 결과가 존재하지않습니다.</div>
+				<div>검색 결과가 존재하지 않습니다.</div>
 			</div>
 		);
 	};
@@ -66,6 +67,7 @@ const SearchChannelModal = () => {
 					icon={BiSearch}
 					value={input}
 					onChange={onChangeInput}
+					placeholder='채널 찾기'
 				></TextInput>
 				<div className='text-sm mb-3 mt-3'>{title()}</div>
 				<Flowbite theme={{ theme: ListGroupTheme }}>

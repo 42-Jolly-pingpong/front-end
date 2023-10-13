@@ -12,6 +12,10 @@
 	font-style: normal;
 }
 
+body {
+	overflow: hidden;
+}
+
 @layer base {
 	html {
 		/* font-family: 'IAMAPLAYER'; */
@@ -32,7 +36,34 @@
 	}
 
 	.chat-content {
-		width: calc(100vw - 255px);
+		width: calc(100vw - 240px);
+	}
+
+	.chat-content-sidebar {
+		width: calc(100vw - 240px - 348px);
+	}
+
+	.chat-right-sidebar {
+		width: 348px;
+	}
+
+	.chat-field {
+		height: calc(100vh - 48px - 70px);
+		max-height: calc(100vh - 48px - 70px);
+	}
+
+	.chat-right-sidebar-tap {
+		height: calc(100vh - 48px - 39px);
+		max-height: calc(100vh - 48px - 39px);
+	}
+
+	.chat-pad {
+		width: calc(100vw - 255px - 60px);
+		max-height: 160px;
+	}
+
+	.hide-scrollbar::-webkit-scrollbar {
+		display: none; /* for Chrome, Safari */
 	}
 }
 
