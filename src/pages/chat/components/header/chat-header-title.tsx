@@ -48,7 +48,7 @@ const ChatHeaderTitle = () => {
 
 	const header = () => {
 		if (chatRoom === null) {
-			return <div></div>;
+			return <></>;
 		}
 		switch (chatRoom.roomType) {
 			case ChatRoomType.DM:
