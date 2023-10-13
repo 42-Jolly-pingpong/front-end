@@ -1,10 +1,16 @@
 import { atom, selector } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { Chat } from 'ts/interfaces/chat.model';
 import { Dm } from 'ts/interfaces/dm.model';
 
-export const chatState = atom<ChatRoom | Dm | null>({
+export type ChatFieldType = {
+	chatRoom: ChatRoom | Dm | null;
+	chats: Chat[];
+};
+
+export const chatState = atom<ChatFieldType>({
 	key: 'chatState',
-	default: null,
+	default: { chatRoom: null, chats: [] },
 });
 
 export const chatSelector = selector({

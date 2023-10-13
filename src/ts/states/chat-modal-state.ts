@@ -6,8 +6,8 @@ export const chatModalState = atom({
 	default: ChatModalStatus.CLOSE,
 });
 
-export const sidebarSelector = selector({
-	key: 'sidebarSelector',
+export const chatModalSelector = selector({
+	key: 'chatModalSelector',
 	get: ({ get }) => {
 		const state = get(chatModalState);
 

@@ -1,6 +1,5 @@
 import Layout from 'components/layout/layout';
 import Root from 'components/root/root';
-import Snackbar from 'components/snackbar/snackbar';
 import Chat from 'pages/chat/chat';
 import Profile from 'pages/profile/profile';
 import SignUp from 'pages/sign-up/sign-up';
@@ -13,13 +12,11 @@ const Section = (props: { section: JSX.Element }) => {
 			<div className='flex flex-col flex-grow justify-center items-center'>
 				{props.section}
 			</div>
-			<Snackbar />
 		</div>
 	);
 }; //임시
 
 //			{sidebarState ? <Sidebar /> : null}
-<Snackbar />;
 function App() {
 	return (
 		<div>
