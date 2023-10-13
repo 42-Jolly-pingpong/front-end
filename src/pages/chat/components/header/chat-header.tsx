@@ -6,7 +6,7 @@ import { chatHeaderState } from 'ts/states/chat-header-state';
 const ChatHeader = () => {
 	const isHeaderForTitle = useRecoilValue(chatHeaderState);
 
-	return <>{isHeaderForTitle ? <ChatHeaderTitle /> : <ChatHeaderSearch />}</>;
+	return isHeaderForTitle ? <ChatHeaderTitle /> : <ChatHeaderSearch />;
 };
 
 export default ChatHeader;
