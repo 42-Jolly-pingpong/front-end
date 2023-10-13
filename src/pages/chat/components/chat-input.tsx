@@ -119,21 +119,19 @@ export const ChatInput = () => {
 		}
 	};
 	return (
-		<div className=''>
-			<div className='flex mx-4 mb-3 bg-gray-100 border border-gray-300 rounded-lg items-center justify-stretch'>
-				<Textarea
-					disabled={chat === null}
-					ref={textareaRef}
-					placeholder={placeholder()}
-					rows={1}
-					className={`bg-white my-2 ml-2 resize-none rounded-lg border border-gray-300 max-h-20 overflow-y-auto ${scrollbar} focus:ring-0 focus:border focus:border-gray-400`}
-					value={input}
-					onChange={onChangeInput}
-					onKeyDown={onDownEnter}
-					maxLength={4000}
-				/>
-				{sendButton()}
-			</div>
+		<div className='flex mx-4 mb-3 bg-gray-100 border border-gray-300 rounded-lg items-center justify-stretch'>
+			<Textarea
+				disabled={chat === null}
+				ref={textareaRef}
+				placeholder={placeholder()}
+				rows={1}
+				className={`bg-white my-2 ml-2 resize-none rounded-lg border border-gray-300 max-h-20 overflow-y-auto ${scrollbar} focus:ring-0 focus:border focus:border-gray-400`}
+				value={input}
+				onChange={onChangeInput}
+				onKeyDown={onDownEnter}
+				maxLength={4000}
+			/>
+			{sendButton()}
 		</div>
 	);
 };
