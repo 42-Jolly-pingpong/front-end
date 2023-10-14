@@ -3,9 +3,8 @@ import { useSetRecoilState } from 'recoil';
 import { profileState } from 'ts/states/profile-state';
 import { useEffect, useState } from 'react';
 import { getUserByNickname } from 'api/user-api';
-import ProfileBadge from './profile-badge';
-import ProfileData from './profile-data';
-
+import ProfileBadge from 'pages/profile/components/header/profile-badge';
+import ProfileData from 'pages/profile/components/header/profile-data';
 const ProfileHeader = () => {
 	const { user_idx } = useParams();
 	const nickname = user_idx!;

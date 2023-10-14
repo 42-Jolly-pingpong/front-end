@@ -1,6 +1,6 @@
+import ProfileBio from 'pages/profile/components/header/profile-bio';
 import ProfileSocial from './profile-social';
-import ProfileGameHistory from './profile-game-history';
-import ProfileBio from './profile-bio';
+import ProfileGameHistory from 'pages/profile/components/header/profile-game-history';
 
 const ProfileData = () => {
 	return (
