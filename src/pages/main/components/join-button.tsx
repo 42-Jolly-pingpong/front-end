@@ -2,18 +2,23 @@ import { Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { socket } from '../../../socket/socket';
 import JoinModal from 'pages/main/components/modal/join-modal';
+import PlayerInfo from 'ts/interfaces/playerInfo.model';
 
 interface ChildProps {
 	updateGameStatus: (newState: boolean) => void;
+	updatePlayerInfo: (newplayerInfo: PlayerInfo) => void;
 }
 
-const JoinButton = ({ updateGameStatus }: ChildProps) => {
+const JoinButton = ({ updateGameStatus, updatePlayerInfo }: ChildProps) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	useEffect(() => {
 		if (!socket.connected) socket.connect();
 		socket.on('gameStart', () => {
 			updateGameStatus(true);
 			cancel();
+		});
+		socket.on('getPlayerInfo', (playerData: PlayerInfo) => {
+			updatePlayerInfo(playerData);
 		});
 	}, []);
 	useEffect(() => {

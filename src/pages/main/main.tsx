@@ -3,33 +3,40 @@ import { socket } from '../../socket/socket';
 import GamePlayModal from '../game/pingpong-play-modal';
 import JoinButton from 'pages/main/components/join-button';
 import JoinIntro from 'pages/main/components/join-intro';
+import PlayerInfo from 'ts/interfaces/playerInfo.model';
+
+
 
 const Main = () => {
-	const [isConnected, setIsConnected] = useState<boolean>(socket.connected)
-	const [isGameStart, setIsGameStart] = useState<boolean>(false)
+	const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
+	const [isGameStart, setIsGameStart] = useState<boolean>(false);
+	const [playerInfo, setPlayerInfo] = useState<PlayerInfo>(null);
 
 	useEffect(() => {
-		if (!isConnected)
-			socket.connect();
+		if (!isConnected) socket.connect();
 		function onConnect() {
 			setIsConnected(true);
 		}
 		function onDisconnect() {
-			setIsConnected(false)
+			setIsConnected(false);
 		}
-		socket.on('connect', onConnect)
-		socket.on('disconnect', onDisconnect)
-	}, [])
+		socket.on('connect', onConnect);
+		socket.on('disconnect', onDisconnect);
+	}, []);
 
 	const updateGameState = (newState: boolean) => {
 		setIsGameStart(newState);
 	};
 
+	const updatePlayerInfo = (newPlayerInfo: PlayerInfo) => {
+		setPlayerInfo(newPlayerInfo);
+	};
+
 	return (
 		<div className='flex flex-col justify-center items-center text-center mt-72'>
 			<JoinIntro />
-			<JoinButton updateGameStatus={updateGameState}/>
-			{isGameStart ? <GamePlayModal /> : null}
+			<JoinButton updateGameStatus={updateGameState} updatePlayerInfo={updatePlayerInfo} />
+			{isGameStart ? <GamePlayModal playerInfo={playerInfo} /> : null}
 		</div>
 	);
 };
