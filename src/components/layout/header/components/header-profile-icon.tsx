@@ -6,8 +6,9 @@ import { userState } from 'ts/states/user-state';
 const HeaderProfileIcon = () => {
 	const user = useRecoilValue(userState)!;
 
-	console.log(user);
-	console.log(user.nickname);
+	const a = () => {
+		console.log('로그아웃 기능');
+	};
 	return (
 		<Dropdown
 			arrowIcon={false}
@@ -17,7 +18,9 @@ const HeaderProfileIcon = () => {
 			<Link to={`profile/${user.nickname}`}>
 				<Dropdown.Item className='text-gray-700'>프로필 보기</Dropdown.Item>
 			</Link>
-			<Dropdown.Item className='text-red-500'>로그아웃</Dropdown.Item>
+			<Link to={'/'} onClick={a}>
+				<Dropdown.Item className='text-red-500'>로그아웃</Dropdown.Item>
+			</Link>
 		</Dropdown>
 	);
 };

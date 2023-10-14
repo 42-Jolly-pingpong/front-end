@@ -1,8 +1,8 @@
-import { User } from './user.model';
+import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 
 export interface Chat {
-	idx: number;
-	user: User;
+	id: number;
+	user: ChatParticipant;
 	content: string;
 	sentTime: Date;
 }
