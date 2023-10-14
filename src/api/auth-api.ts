@@ -1,4 +1,5 @@
 import { getJwtValue } from 'components/utils/cookieUtils';
+import { useHistory } from 'react-router-dom';
 import User from 'ts/interfaces/user.model';
 
 export const getUserByJwt = async (
@@ -37,6 +38,7 @@ export const userSignOut = async (setUserState: any): Promise<void> => {
 
 		if (response) {
 			setUserState(null);
+			window.location.href = '/';
 			console.log('response가 성공');
 		}
 	} catch (e) {
