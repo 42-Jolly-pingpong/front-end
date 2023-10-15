@@ -1,9 +1,18 @@
 import { Button } from 'flowbite-react';
-import JoinModal from 'pages/main/components/modal/join-modal';
 import { useState } from 'react';
+import { GameMode } from 'ts/enums/game-mode.enum';
+import GameMatchModal from 'components/modal/game-match-modal';
+import GameModeModal from 'components/modal/game-mode-modal';
 
 const JoinButton = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [matchModalOpen, setMatchModalOpen] = useState(false);
+	const [selectMode, setSelectMode] = useState(GameMode.CLASSIC);
+
+	const handleMatch = (selectMode) => {
+		setSelectMode(selectMode);
+		setMatchModalOpen(true);
+	};
 
 	return (
 		<>
@@ -16,7 +25,18 @@ const JoinButton = () => {
 				<div className='font-bold mx-3'> 게임하러 가기</div>
 				<img src='images/arrow-right.png' alt='arrow' />
 			</Button>
-			<JoinModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+			<GameModeModal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				onMatch={handleMatch}
+			/>
+			{matchModalOpen && (
+				<GameMatchModal
+					isOpen={matchModalOpen}
+					onClose={() => setMatchModalOpen(false)}
+					onMatch={() => setMatchModalOpen(false)}
+				/>
+			)}
 		</>
 	);
 };
