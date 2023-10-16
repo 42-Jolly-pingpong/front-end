@@ -10,10 +10,11 @@ import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
 import { chatSocket } from 'pages/chat/chat-socket';
 import User from 'ts/interfaces/user.model';
+import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,6 +33,7 @@ const ChatMemberInquireTap = (props: {
 		ChatParticipant[]
 	>([]);
 	const getData = useFetch();
+	const setAlertModal = useSetRecoilState(chatAlertModalState);
 
 	const user = userData[0]; //temp
 
@@ -147,22 +149,31 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
+	const manageFriend = (isFriend: boolean, otherUser: ChatParticipant) => {
+		//temp
+	};
+
 	const onClickManageFriend = (
 		isFriend: boolean,
 		otherUser: ChatParticipant
 	) => {
-		//temp
 		if (isFriend) {
-			//temp
-			setFriendList((pre) =>
-				pre.filter((friend) => friend.id !== otherUser?.user.id)
-			);
+			setAlertModal({
+				status: true,
+				title: `친구 목록에서 ${otherUser.user.nickname} 님을 제거하시겠습니까?`,
+				subText: '이 사용자는 더 이상 친구 목록에 존재하지 않습니다.',
+				confirmButtonText: `친구 목록에서 제거`,
+				exitButtonText: '취소',
+				onClickButton: () => {
+					manageFriend(isFriend, otherUser);
+				},
+			});
 			return;
 		}
-		setFriendList((pre) => [...pre, otherUser.user]);
+		manageFriend(isFriend, otherUser);
 	};
 
-	const manageFriend = (isFriend: boolean, otherUser: ChatParticipant) => {
+	const manageFriendList = (isFriend: boolean, otherUser: ChatParticipant) => {
 		return (
 			<Dropdown.Item onClick={() => onClickManageFriend(isFriend, otherUser)}>
 				<div className='flex items-center font-normal text-sm text-gray-700'>
@@ -199,10 +210,7 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
-	const onClickManageAdminList = (
-		isAdmin: boolean,
-		otherUser: ChatParticipant
-	) => {
+	const manageAdmin = (isAdmin: boolean, otherUser: ChatParticipant) => {
 		chatSocket.emit(
 			'manageParticipantRole',
 			{
@@ -211,9 +219,31 @@ const ChatMemberInquireTap = (props: {
 				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
 			},
 			(status: number) => {
-				//에러 처리
+				if (status === 200) {
+					setAlertModal((pre) => ({ ...pre, status: false }));
+				}
 			}
 		);
+	};
+
+	const onClickManageAdminList = (
+		isAdmin: boolean,
+		otherUser: ChatParticipant
+	) => {
+		if (isAdmin) {
+			setAlertModal({
+				status: true,
+				title: `${chat.roomName} 채널 관리자 목록에서 ${otherUser.user.nickname} 님을 제거하시겠습니까?`,
+				subText: '이 사용자는 더 이상 채널을 관리할 수 없습니다.',
+				confirmButtonText: `채널 관리자 목록에서 제거`,
+				exitButtonText: '취소',
+				onClickButton: () => {
+					manageAdmin(isAdmin, otherUser);
+				},
+			});
+			return;
+		}
+		manageAdmin(isAdmin, otherUser);
 	};
 
 	const manageAdminList = (isAdmin: boolean, otherUser: ChatParticipant) => {
@@ -237,9 +267,7 @@ const ChatMemberInquireTap = (props: {
 				user: otherUser.user,
 				status,
 			},
-			(status: number) => {
-				//에러 처리
-			}
+			(status: number) => {}
 		);
 	};
 
@@ -313,7 +341,7 @@ const ChatMemberInquireTap = (props: {
 						renderTrigger={() => dotButton()}
 					>
 						{inviteGame(participant)}
-						{manageFriend(isFriend, participant)}
+						{manageFriendList(isFriend, participant)}
 						{manageBlockList(isBlocked, participant)}
 					</Dropdown>
 				);
@@ -325,7 +353,7 @@ const ChatMemberInquireTap = (props: {
 						renderTrigger={() => dotButton()}
 					>
 						{inviteGame(participant)}
-						{manageFriend(isFriend, participant)}
+						{manageFriendList(isFriend, participant)}
 						{manageBlockList(isBlocked, participant)}
 						{participant.role !== ChatParticipantRole.OWNER && (
 							<Dropdown.Divider />
@@ -343,7 +371,7 @@ const ChatMemberInquireTap = (props: {
 						renderTrigger={() => dotButton()}
 					>
 						{inviteGame(participant)}
-						{manageFriend(isFriend, participant)}
+						{manageFriendList(isFriend, participant)}
 						{manageBlockList(isBlocked, participant)}
 						<Dropdown.Divider />
 						{manageAdminList(isAdmin, participant)}
