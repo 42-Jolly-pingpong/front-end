@@ -59,7 +59,7 @@ export const ChatInput = () => {
 
 	const onClickSend = () => {
 		if (chat) {
-			chatSocket.emit('sendChat', { content: input.trim() }, chat.id);
+			chatSocket.emit('sendChat', { content: input.trim(), roomId: chat.id });
 			setInput('');
 		}
 	};
