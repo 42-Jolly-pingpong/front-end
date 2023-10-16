@@ -121,15 +121,19 @@ const ChatInformationTap = () => {
 	};
 
 	const onClickLeave = () => {
-		chatSocket.emit('participantLeave', chat.id, (room: ChatRoom) => {
-			setChatList((pre) => ({
-				...pre,
-				channelList: pre.channelList.filter(
-					(channel) => channel.id !== room.id
-				),
-			}));
-			setChat(null);
-		});
+		chatSocket.emit(
+			'participantLeave',
+			{ roomId: chat.id },
+			(room: ChatRoom) => {
+				setChatList((pre) => ({
+					...pre,
+					channelList: pre.channelList.filter(
+						(channel) => channel.id !== room.id
+					),
+				}));
+				setChat(null);
+			}
+		);
 	};
 
 	const leaveField = () => {
