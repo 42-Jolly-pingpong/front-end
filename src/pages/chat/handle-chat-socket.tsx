@@ -75,7 +75,7 @@ const HandleChatSocket = () => {
 			'addNewChatRoom',
 			(data: { chatRoom: ChatRoom; userId: number[] }) => {
 				const { chatRoom, userId } = data;
-				if (userId.find(user.id) === undefined) {
+				if (userId.find((one) => one === user.id) === undefined) {
 					return;
 				}
 				setChatRoomList((pre) => ({
