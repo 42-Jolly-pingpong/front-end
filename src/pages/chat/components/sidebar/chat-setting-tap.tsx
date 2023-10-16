@@ -1,14 +1,10 @@
 import { Button, TextInput } from 'flowbite-react';
-import useChangeChat from 'hooks/use-change-chat';
-import useFetch from 'hooks/use-fetch';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { Socket } from 'socket.io-client';
+import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatSettingTap = () => {
@@ -16,9 +12,6 @@ const ChatSettingTap = () => {
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
-	const getData = useFetch();
-	const setChat = useChangeChat();
-	const setChatList = useSetRecoilState(chatListState);
 	const hash = useHash();
 
 	useEffect(() => {
@@ -117,22 +110,7 @@ const ChatSettingTap = () => {
 	};
 
 	const onClickDelete = () => {
-		(async () => {
-			getData('DELETE', `/chat-rooms/${chat.id}`)
-				.then((res) => {
-					if (!res.ok) {
-						throw Error('삭제 불가');
-					}
-					setChatList((pre) => ({
-						...pre,
-						channelList: pre.channelList.filter(
-							(channel) => channel.id !== chat.id
-						),
-					}));
-					setChat(null);
-				})
-				.catch(() => console.log('삭제 불가'));
-		})();
+		chatSocket.emit('deleteChatRoom', chat.id);
 	};
 
 	const deleteField = () => {

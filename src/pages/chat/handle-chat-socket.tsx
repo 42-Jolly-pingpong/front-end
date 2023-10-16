@@ -33,11 +33,19 @@ const HandleChatSocket = () => {
 					setChatRoom(chatroom, false);
 				}
 			});
+
+			chatSocket.off('chatRoomDeleted');
+			chatSocket.on('chatRoomDeleted', (roomId: number) => {
+				if (roomId === chat.chatRoom?.id) {
+					setChatRoom(null);
+				}
+			});
 		}
 
 		return () => {
 			chatSocket.off('getNewChat');
 			chatSocket.off('updateChatRoom');
+			chatSocket.off('chatRoomDeleted');
 		};
 	}, [chat.chatRoom]);
 
