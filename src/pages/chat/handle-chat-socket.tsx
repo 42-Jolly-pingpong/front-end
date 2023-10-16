@@ -1,14 +1,16 @@
 import useChangeChat from 'hooks/use-change-chat';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Chat } from 'ts/interfaces/chat.model';
+import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
 const HandleChatSocket = () => {
 	const [chat, setChat] = useRecoilState(chatState);
 	const setChatRoom = useChangeChat();
+	const setChatRoomList = useSetRecoilState(chatListState);
 
 	useEffect(() => {}, []);
 
@@ -39,6 +41,19 @@ const HandleChatSocket = () => {
 				if (roomId === chat.chatRoom?.id) {
 					setChatRoom(null);
 				}
+			});
+
+			chatSocket.off('updateChatRoomOnList');
+			chatSocket.on('updateChatRoomOnList', (chatroom: ChatRoom) => {
+				setChatRoomList((pre) => ({
+					...pre,
+					channelList: pre.channelList.map((channel) => {
+						if (channel.id === chatroom.id) {
+							return chatroom;
+						}
+						return channel;
+					}),
+				}));
 			});
 		}
 
