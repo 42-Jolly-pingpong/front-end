@@ -2,8 +2,10 @@ import { Button, TextInput } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
 import useFetch from 'hooks/use-fetch';
 import useHash from 'hooks/use-hash';
+import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { Socket } from 'socket.io-client';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { chatListState } from 'ts/states/chat-list.state';
@@ -79,17 +81,10 @@ const ChatSettingTap = () => {
 
 	const onClickChange = async () => {
 		const encryptedPassword = await hash(password);
-		await getData('PUT', `/chat-rooms/${chat.id}`, {
+		chatSocket.emit('setChatRoom', {
 			...chat,
 			password: encryptedPassword,
-		})
-			.then((res) => {
-				if (!res.ok) {
-					throw Error('비밀번호 변경 실패');
-				}
-				setSettingPassword(false);
-			})
-			.catch((err) => console.log(err.message));
+		});
 	};
 
 	const setPasswordField = () => {
