@@ -1,6 +1,6 @@
 import useChangeChat from 'hooks/use-change-chat';
 import useChangeSidebar from 'hooks/use-change-sidebar';
-import useFetch from 'hooks/use-fetch';
+import { chatSocket } from 'pages/chat/chat-socket';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import formattedDate from 'pages/chat/components/formatted-date';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -16,7 +16,6 @@ const ChatInformationTap = () => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const setChat = useChangeChat();
 	const setChatList = useSetRecoilState(chatListState);
-	const getData = useFetch();
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -122,27 +121,15 @@ const ChatInformationTap = () => {
 	};
 
 	const onClickLeave = () => {
-		(async () => {
-			await getData('DELETE', `/chat-rooms/${chat.id}/members`)
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => {
-					setChat(null);
-					setChatList((pre) => {
-						return {
-							...pre,
-							channelList: pre.channelList.filter(
-								(channel) => channel.id !== data.id
-							),
-						};
-					});
-				})
-				.catch((err) => console.log('chat-information-tap', err));
-		})();
+		chatSocket.emit('participantLeave', chat.id, (room: ChatRoom) => {
+			setChatList((pre) => ({
+				...pre,
+				channelList: pre.channelList.filter(
+					(channel) => channel.id !== room.id
+				),
+			}));
+			setChat(null);
+		});
 	};
 
 	const leaveField = () => {
