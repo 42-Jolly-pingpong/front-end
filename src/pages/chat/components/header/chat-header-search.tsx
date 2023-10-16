@@ -1,7 +1,7 @@
 import useFetch from 'hooks/use-fetch';
 import DmSearchedItem from 'pages/chat/components/header/dm-searched-item';
 import { useEffect, useRef, useState } from 'react';
-import { User } from 'ts/interfaces/user.model';
+import User from 'ts/interfaces/user.model';
 
 const ChatHeaderSearch = () => {
 	const [inputContent, setInputContent] = useState<string>('');
