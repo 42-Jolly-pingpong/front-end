@@ -4,6 +4,7 @@ import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
+import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { chatState } from 'ts/states/chat-state';
 
@@ -74,10 +75,25 @@ const ChatSettingTap = () => {
 
 	const onClickChange = async () => {
 		const encryptedPassword = await hash(password);
-		chatSocket.emit('setChatRoom', {
-			...chat,
-			password: encryptedPassword,
-		});
+		const roomType =
+			password.length === 0 ? ChatRoomType.PUBLIC : ChatRoomType.PROTECTED;
+
+		chatSocket.emit(
+			'setChatRoom',
+			{
+				...chat,
+				roomId: chat.id,
+				roomType,
+				password: encryptedPassword,
+			},
+			(status: number) => {
+				console.log(status);
+				if (status === 200) {
+					setPassword('');
+					setSettingPassword(false);
+				}
+			}
+		);
 	};
 
 	const setPasswordField = () => {
