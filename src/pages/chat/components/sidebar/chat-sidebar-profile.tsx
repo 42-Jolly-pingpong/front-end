@@ -10,17 +10,16 @@ import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import HistoryDoughnutChart from 'pages/chat/components/sidebar/history-doughnut-chart';
 import { Dm } from 'ts/interfaces/dm.model';
-import useFetch from 'hooks/use-fetch';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatListSelector, chatListState } from 'ts/states/chat-list.state';
 import userData from 'ts/mock/user-data';
+import { chatSocket } from 'pages/chat/chat-socket';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
 	const dmList = useRecoilValue(chatListSelector).dmList;
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
-	const getData = useFetch();
 
 	const user = userData[0]; //temp
 
@@ -103,21 +102,13 @@ const ChatSidebarProfile = () => {
 	};
 
 	const createNewDm = async () => {
-		await getData('POST', '/chat-rooms/dm', { chatMate: otherUser })
-			.then((res) => {
-				if (res.ok) {
-					return res.json();
-				}
-				throw Error(res.statusText);
-			})
-			.then((data: Dm) => {
-				setDmList((pre) => ({
-					...pre,
-					dmList: [...pre.dmList, data],
-				}));
-				setChat(data, false);
-			})
-			.catch((err) => console.log('create new Dm', err));
+		chatSocket.emit('createNewDm', { chatMate: otherUser }, (newDm: Dm) => {
+			setDmList((pre) => ({
+				...pre,
+				dmList: [...pre.dmList, newDm],
+			}));
+			setChat(newDm);
+		});
 	};
 
 	const onClickFriend = () => {
