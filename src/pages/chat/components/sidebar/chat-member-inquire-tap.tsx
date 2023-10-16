@@ -4,16 +4,16 @@ import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiDotsVerticalRounded, BiSearch } from 'react-icons/bi';
 import { FiUserPlus } from 'react-icons/fi';
-import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
-import useChangeChat from 'hooks/use-change-chat';
 import { useRecoilValue } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
+import { chatSocket } from 'pages/chat/chat-socket';
+import User from 'ts/interfaces/user.model';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,7 +31,6 @@ const ChatMemberInquireTap = (props: {
 	const [searchedParticipant, setSearchedParticipant] = useState<
 		ChatParticipant[]
 	>([]);
-	const setChat = useChangeChat();
 	const getData = useFetch();
 
 	const user = userData[0]; //temp
@@ -204,20 +203,11 @@ const ChatMemberInquireTap = (props: {
 		isAdmin: boolean,
 		otherUser: ChatParticipant
 	) => {
-		(async () => {
-			await getData('PATCH', `/chat-rooms/${chat.id}/members/role`, {
-				user: otherUser.user,
-				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
-			})
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setChat(data, false))
-				.catch((err) => console.log('manage admin list', err));
-		})();
+		chatSocket.emit('manageParticipantRole', {
+			roomId: chat.id,
+			user: otherUser.user,
+			role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
+		});
 	};
 
 	const manageAdminList = (isAdmin: boolean, otherUser: ChatParticipant) => {
@@ -234,20 +224,11 @@ const ChatMemberInquireTap = (props: {
 		otherUser: ChatParticipant,
 		status: ChatParticipantStatus
 	) => {
-		(async () => {
-			await getData('PATCH', `/chat-rooms/${chat.id}/members/status`, {
-				user: otherUser.user,
-				status,
-			})
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setChat(data, false))
-				.catch((err) => console.log('manage member-status', err));
-		})();
+		chatSocket.emit('manageParticipantStatus', {
+			roomId: chat.id,
+			user: otherUser.user,
+			status,
+		});
 	};
 
 	const manageMutedList = (otherUser: ChatParticipant) => {
