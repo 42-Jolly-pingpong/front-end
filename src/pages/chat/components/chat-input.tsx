@@ -1,5 +1,6 @@
 import { Textarea } from 'flowbite-react';
 import useFetch from 'hooks/use-fetch';
+import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend } from 'react-icons/io5';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -61,27 +62,8 @@ export const ChatInput = () => {
 
 	const onClickSend = () => {
 		if (chat) {
-			(async () => {
-				getData('POST', `/chat-rooms/${chat?.id}/chats`, {
-					content: input.trim(),
-				})
-					.then((res) => {
-						if (res.statusText === 'Unauthorized') {
-							throw Error(res.statusText);
-						}
-						return res.json();
-					})
-					.then((data) => {
-						addChats((pre) => ({ ...pre, chats: [...pre.chats, data] }));
-						setInput('');
-						if (textareaRef.current) textareaRef.current.focus();
-					})
-					.catch((err) => {
-						if (err.message === 'Unauthorized') {
-							console.log('음소거 상태');
-						}
-					});
-			})();
+			chatSocket.emit('sendChat', { content: input.trim() }, chat.id);
+			setInput('');
 		}
 	};
 
