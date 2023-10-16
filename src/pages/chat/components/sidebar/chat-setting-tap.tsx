@@ -1,4 +1,4 @@
-import { Button, TextInput } from 'flowbite-react';
+import { Button, Label, Radio, TextInput } from 'flowbite-react';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
@@ -46,6 +46,63 @@ const ChatSettingTap = () => {
 		}
 	};
 
+	const onClickChangeRoomType = (roomType: ChatRoomType) => {
+		chatSocket.emit(
+			'setChatRoom',
+			{
+				...chat,
+				roomId: chat.id,
+				roomType,
+				password: null,
+			},
+			(status: number) => {
+				if (status === 200) {
+					//temp
+				}
+			}
+		);
+	};
+
+	const roomTypeField = () => {
+		return (
+			<div className='mt-4 px-5 py-4 bg-white rounded-t-xl border-b text-left'>
+				{title('가시성')}
+				<fieldset className='flex mt-3 gap-4' id='radio'>
+					<div
+						className='flex items-center gap-2'
+						onClick={() => onClickChangeRoomType(ChatRoomType.PUBLIC)}
+					>
+						<Radio
+							defaultChecked={
+								chat.roomType !== ChatRoomType.PRIVATE ? true : false
+							}
+							id='public'
+							name='roomType'
+							value='public'
+							className='checked:bg-primary-700'
+						/>
+						<Label htmlFor='public'>공개 - 누구나</Label>
+					</div>
+					<div
+						className='flex items-center gap-2'
+						onClick={() => onClickChangeRoomType(ChatRoomType.PRIVATE)}
+					>
+						<Radio
+							defaultChecked={
+								chat.roomType !== ChatRoomType.PRIVATE ? false : true
+							}
+							id='private'
+							name='roomType'
+							value='private'
+							className='checked:bg-primary-700'
+						/>
+						<Label htmlFor='private'>비공개 - 일부 사람만</Label>
+					</div>
+				</fieldset>
+			</div>
+		);
+	};
+
 	const onClickPassword = () => {
 		setPassword('');
 		setSettingPassword(true);
@@ -55,11 +112,38 @@ const ChatSettingTap = () => {
 		}
 	};
 
+	const onClickDeletePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+
+		chatSocket.emit(
+			'setChatRoom',
+			{
+				...chat,
+				roomId: chat.id,
+				roomType: ChatRoomType.PUBLIC,
+				password: null,
+			},
+			(status: number) => {
+				if (status === 200) {
+					//temp
+				}
+			}
+		);
+	};
+
 	const passwordField = () => {
 		return (
 			<button onClick={onClickPassword}>
-				<div className='mt-4 px-5 py-4 bg-white rounded-t-xl hover:bg-gray-200 border-b text-left'>
+				<div className='flex justify-between px-5 py-4 bg-white hover:bg-gray-200 border-b text-left'>
 					{title('비밀번호 변경')}
+					{chat.roomType === ChatRoomType.PROTECTED && (
+						<button
+							className='text-sm font-normal hover:underline'
+							onClick={onClickDeletePassword}
+						>
+							삭제
+						</button>
+					)}
 				</div>
 			</button>
 		);
@@ -87,7 +171,6 @@ const ChatSettingTap = () => {
 				password: encryptedPassword,
 			},
 			(status: number) => {
-				console.log(status);
 				if (status === 200) {
 					setPassword('');
 					setSettingPassword(false);
@@ -98,7 +181,7 @@ const ChatSettingTap = () => {
 
 	const setPasswordField = () => {
 		return (
-			<div className='mt-4 px-5 py-4 bg-white rounded-t-xl border-b text-left'>
+			<div className='px-5 py-4 bg-white border-b text-left'>
 				{title('비밀번호 변경')}
 				<TextInput
 					ref={inputRef}
@@ -144,6 +227,7 @@ const ChatSettingTap = () => {
 	return (
 		<div className='flex flex-col w-full chat-right-sidebar-tap bg-gray-100 p-4'>
 			{ownerField()}
+			{roomTypeField()}
 			{settingPassword ? setPasswordField() : passwordField()}
 			{deleteField()}
 		</div>
