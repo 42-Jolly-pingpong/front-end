@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Chat } from 'ts/interfaces/chat.model';
+import { Dm } from 'ts/interfaces/dm.model';
+import userData from 'ts/mock/user-data';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
@@ -18,6 +20,8 @@ const HandleChatSocket = () => {
 		console.log('connected with server');
 	}); //위치 옮겨야 함
 
+	const user = userData[0]; //temp
+
 	useEffect(() => {
 		if (chat && chat.chatRoom) {
 			chatSocket.off('getNewChat');
@@ -30,9 +34,9 @@ const HandleChatSocket = () => {
 			});
 
 			chatSocket.off('updateChatRoom');
-			chatSocket.on('updateChatRoom', (chatroom: ChatRoom) => {
-				if (chatroom.id === chat.chatRoom?.id) {
-					setChatRoom(chatroom, false);
+			chatSocket.on('updateChatRoom', (chatRoom: ChatRoom) => {
+				if (chatRoom.id === chat.chatRoom?.id) {
+					setChatRoom(chatRoom, false);
 				}
 			});
 
@@ -44,15 +48,42 @@ const HandleChatSocket = () => {
 			});
 
 			chatSocket.off('updateChatRoomOnList');
-			chatSocket.on('updateChatRoomOnList', (chatroom: ChatRoom) => {
+			chatSocket.on('updateChatRoomOnList', (chatRoom: ChatRoom) => {
 				setChatRoomList((pre) => ({
 					...pre,
 					channelList: pre.channelList.map((channel) => {
-						if (channel.id === chatroom.id) {
-							return chatroom;
+						if (channel.id === chatRoom.id) {
+							return chatRoom;
 						}
 						return channel;
 					}),
+				}));
+			});
+
+			chatSocket.off('addNewChatRoom');
+			chatSocket.on(
+				'addNewChatRoom',
+				(data: { chatRoom: ChatRoom; userId: number[] }) => {
+					const { chatRoom, userId } = data;
+					if (userId.find(user.id) === undefined) {
+						return;
+					}
+					setChatRoomList((pre) => ({
+						...pre,
+						channelList: [...pre.channelList, chatRoom],
+					}));
+				}
+			);
+
+			chatSocket.off('addNewDm');
+			chatSocket.on('addNewDm', (data: { dm: Dm; userId: number }) => {
+				const { dm, userId } = data;
+				if (userId !== user.id) {
+					return;
+				}
+				setChatRoomList((pre) => ({
+					...pre,
+					dmList: [...pre.dmList, dm],
 				}));
 			});
 		}
@@ -61,6 +92,9 @@ const HandleChatSocket = () => {
 			chatSocket.off('getNewChat');
 			chatSocket.off('updateChatRoom');
 			chatSocket.off('chatRoomDeleted');
+			chatSocket.off('updateChatRoomOnList');
+			chatSocket.off('addNewChatRoom');
+			chatSocket.off('addNewDm');
 		};
 	}, [chat.chatRoom]);
 
