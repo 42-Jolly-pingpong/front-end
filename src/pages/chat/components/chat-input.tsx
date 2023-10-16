@@ -1,9 +1,8 @@
 import { Textarea } from 'flowbite-react';
-import useFetch from 'hooks/use-fetch';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend } from 'react-icons/io5';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
@@ -17,8 +16,6 @@ export const ChatInput = () => {
 	const [scrollbar, setSrollbar] = useState<string>('hide-scrollbar');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const chat = useRecoilValue(chatState).chatRoom;
-	const addChats = useSetRecoilState(chatState);
-	const getData = useFetch();
 
 	const user = userData[0]; //temp
 
