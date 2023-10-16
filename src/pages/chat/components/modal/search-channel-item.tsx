@@ -9,11 +9,11 @@ import { BsDot } from 'react-icons/bs';
 import useChangeChat from 'hooks/use-change-chat';
 import { useSetRecoilState } from 'recoil';
 import { chatListState } from 'ts/states/chat-list.state';
-import useFetch from 'hooks/use-fetch';
 import { chatModalState } from 'ts/states/chat-modal-state';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import useHash from 'hooks/use-hash';
+import { chatSocket } from 'pages/chat/chat-socket';
 
 export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -23,7 +23,6 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const setChat = useChangeChat();
 	const setChannelList = useSetRecoilState(chatListState);
 	const setModalStatus = useSetRecoilState(chatModalState);
-	const getData = useFetch();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
 	const owner = props.channel.participants.find(
@@ -117,32 +116,26 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 		if (enterPassword) {
 			password = await hash(input);
 		}
-		(async () => {
-			await getData('POST', `/chat-rooms/${props.channel.id}`, { password })
-				.then((res) => {
-					if (res.statusText === 'Unauthorized') {
-						throw Error(res.statusText);
-					}
-					return res.json();
-				})
-				.then((data: ChatRoom) => {
-					setChannelList((pre) => {
-						return {
-							...pre,
-							channelList: [...pre.channelList, data],
-						};
-					});
-					setChat(data);
-					setModalStatus(ChatModalStatus.CLOSE);
-				})
-				.catch((err) => {
-					if (err.message === 'Unauthorized') {
-						console.log('비번 틀림');
-						changeInput();
-						setInput('');
-					}
+
+		chatSocket.emit(
+			'enterChatRoom',
+			{ roomId: props.channel.id, password },
+			(data: { response: number; chatRoom: ChatRoom }) => {
+				if (data.response !== 200) {
+					changeInput();
+					setInput('');
+					return;
+				}
+				setChannelList((pre) => {
+					return {
+						...pre,
+						channelList: [...pre.channelList, data.chatRoom],
+					};
 				});
-		})();
+				setChat(data.chatRoom);
+				setModalStatus(ChatModalStatus.CLOSE);
+			}
+		);
 	};
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
