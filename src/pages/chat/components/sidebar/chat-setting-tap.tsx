@@ -110,7 +110,9 @@ const ChatSettingTap = () => {
 	};
 
 	const onClickDelete = () => {
-		chatSocket.emit('deleteChatRoom', { roomId: chat.id });
+		chatSocket.emit('deleteChatRoom', { roomId: chat.id }, (status: number) => {
+			//에러 처리
+		});
 	};
 
 	const deleteField = () => {

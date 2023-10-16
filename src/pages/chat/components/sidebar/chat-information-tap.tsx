@@ -124,14 +124,16 @@ const ChatInformationTap = () => {
 		chatSocket.emit(
 			'participantLeave',
 			{ roomId: chat.id },
-			(room: ChatRoom) => {
-				setChatList((pre) => ({
-					...pre,
-					channelList: pre.channelList.filter(
-						(channel) => channel.id !== room.id
-					),
-				}));
-				setChat(null);
+			(response: { status: number; room: ChatRoom }) => {
+				if (response.status === 200) {
+					setChatList((pre) => ({
+						...pre,
+						channelList: pre.channelList.filter(
+							(channel) => channel.id !== response.room.id
+						),
+					}));
+					setChat(null);
+				}
 			}
 		);
 	};

@@ -13,13 +13,19 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 	const dmList = useRecoilValue(chatListSelector).dmList;
 
 	const createNewDm = async () => {
-		chatSocket.emit('createNewDm', { chatMate: friend }, (newDm: Dm) => {
-			setDmList((pre) => ({
-				...pre,
-				dmList: [...pre.dmList, newDm],
-			}));
-			setChat(newDm);
-		});
+		chatSocket.emit(
+			'createNewDm',
+			{ chatMate: friend },
+			(response: { status: number; newDm: Dm }) => {
+				if (response.status === 200) {
+					setDmList((pre) => ({
+						...pre,
+						dmList: [...pre.dmList, response.newDm],
+					}));
+					setChat(response.newDm);
+				}
+			}
+		);
 	};
 
 	const onClickFriend = () => {

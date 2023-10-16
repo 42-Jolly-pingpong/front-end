@@ -120,8 +120,8 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 		chatSocket.emit(
 			'enterChatRoom',
 			{ roomId: props.channel.id, password },
-			(data: { response: number; chatRoom: ChatRoom }) => {
-				if (data.response !== 200) {
+			(response: { status: number; chatRoom: ChatRoom }) => {
+				if (response.status !== 200) {
 					changeInput();
 					setInput('');
 					return;
@@ -129,10 +129,10 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 				setChannelList((pre) => {
 					return {
 						...pre,
-						channelList: [...pre.channelList, data.chatRoom],
+						channelList: [...pre.channelList, response.chatRoom],
 					};
 				});
-				setChat(data.chatRoom);
+				setChat(response.chatRoom);
 				setModalStatus(ChatModalStatus.CLOSE);
 			}
 		);

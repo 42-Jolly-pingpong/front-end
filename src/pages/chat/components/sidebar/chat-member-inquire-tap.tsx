@@ -203,11 +203,17 @@ const ChatMemberInquireTap = (props: {
 		isAdmin: boolean,
 		otherUser: ChatParticipant
 	) => {
-		chatSocket.emit('manageParticipantRole', {
-			roomId: chat.id,
-			user: otherUser.user,
-			role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
-		});
+		chatSocket.emit(
+			'manageParticipantRole',
+			{
+				roomId: chat.id,
+				user: otherUser.user,
+				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
+			},
+			(status: number) => {
+				//에러 처리
+			}
+		);
 	};
 
 	const manageAdminList = (isAdmin: boolean, otherUser: ChatParticipant) => {
@@ -224,11 +230,17 @@ const ChatMemberInquireTap = (props: {
 		otherUser: ChatParticipant,
 		status: ChatParticipantStatus
 	) => {
-		chatSocket.emit('manageParticipantStatus', {
-			roomId: chat.id,
-			user: otherUser.user,
-			status,
-		});
+		chatSocket.emit(
+			'manageParticipantStatus',
+			{
+				roomId: chat.id,
+				user: otherUser.user,
+				status,
+			},
+			(status: number) => {
+				//에러 처리
+			}
+		);
 	};
 
 	const manageMutedList = (otherUser: ChatParticipant) => {

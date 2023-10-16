@@ -102,13 +102,19 @@ const ChatSidebarProfile = () => {
 	};
 
 	const createNewDm = async () => {
-		chatSocket.emit('createNewDm', { chatMate: otherUser }, (newDm: Dm) => {
-			setDmList((pre) => ({
-				...pre,
-				dmList: [...pre.dmList, newDm],
-			}));
-			setChat(newDm);
-		});
+		chatSocket.emit(
+			'createNewDm',
+			{ chatMate: otherUser },
+			(response: { status: number; newDm: Dm }) => {
+				if (response.status === 200) {
+					setDmList((pre) => ({
+						...pre,
+						dmList: [...pre.dmList, response.newDm],
+					}));
+					setChat(response.newDm);
+				}
+			}
+		);
 	};
 
 	const onClickFriend = () => {
