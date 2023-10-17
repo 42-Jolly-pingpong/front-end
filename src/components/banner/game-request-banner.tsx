@@ -8,11 +8,11 @@ import { gameBannerState } from 'ts/states/game/game-banner-state';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import BannerMessage from 'components/banner/item/banner-message';
 import BannerProgress from 'components/banner/item/banner-progress';
+import { GAME_REQ_MSG } from 'constants/messages';
 import {
 	COUNTDOWN_REQUEST_INTERVAL,
 	COUNTDOWN_REQUEST_VALUE,
 } from 'constants/values';
-import { GAME_APPROVE_MSG, GAME_REQ_MSG } from 'constants/messages';
 
 const GameRequestBanner = () => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
@@ -20,7 +20,7 @@ const GameRequestBanner = () => {
 
 	const handleMatch = () => {
 		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
-		// 매칭됬을 때 게임 추가
+		// 게임을 수락했을 경우 소켓 로직 추가
 	};
 
 	const handleCancel = () => {
@@ -47,9 +47,7 @@ const GameRequestBanner = () => {
 							<BannerMessage message={GAME_REQ_MSG} />
 						</div>
 						<div className='flex items-center'>
-							<YellowButtonXs onClick={handleMatch}>
-								{GAME_APPROVE_MSG}
-							</YellowButtonXs>
+							<YellowButtonXs onClick={handleMatch}>승낙하기</YellowButtonXs>
 							<CancelButtonXs onClick={handleCancel} />
 						</div>
 					</div>
