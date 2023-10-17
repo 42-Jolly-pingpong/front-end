@@ -120,12 +120,12 @@ const ChatInformationTap = () => {
 		);
 	};
 
-	const onClickLeave = () => {
+	const onClickLeave = async () => {
 		chatSocket.emit(
 			'participantLeave',
 			{ roomId: chat.id },
 			(response: { status: number; room: ChatRoom }) => {
-				if (response.status === 200) {
+				if (response.status === 200 && response.room) {
 					setChatList((pre) => ({
 						...pre,
 						channelList: pre.channelList.filter(
