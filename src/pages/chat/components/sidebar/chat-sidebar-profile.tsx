@@ -14,12 +14,14 @@ import useChangeChat from 'hooks/use-change-chat';
 import { chatListSelector, chatListState } from 'ts/states/chat-list.state';
 import userData from 'ts/mock/user-data';
 import { chatSocket } from 'pages/chat/chat-socket';
+import useChatAlert from 'hooks/use-chat-alert';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
 	const dmList = useRecoilValue(chatListSelector).dmList;
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
+	const setAlertModal = useChatAlert();
 
 	const user = userData[0]; //temp
 
@@ -112,7 +114,9 @@ const ChatSidebarProfile = () => {
 						dmList: [...pre.dmList, response.dm],
 					}));
 					setChat(response.dm);
+					return;
 				}
+				setAlertModal();
 			}
 		);
 	};

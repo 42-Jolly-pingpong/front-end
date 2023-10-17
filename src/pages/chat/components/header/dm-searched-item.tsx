@@ -1,5 +1,6 @@
 import { Avatar } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
+import useChatAlert from 'hooks/use-chat-alert';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Dm } from 'ts/interfaces/dm.model';
@@ -11,6 +12,7 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
 	const dmList = useRecoilValue(chatListSelector).dmList;
+	const setAlertModal = useChatAlert();
 
 	const createNewDm = async () => {
 		chatSocket.emit(
@@ -23,7 +25,9 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 						dmList: [...pre.dmList, response.dm],
 					}));
 					setChat(response.dm);
+					return;
 				}
+				setAlertModal();
 			}
 		);
 	};

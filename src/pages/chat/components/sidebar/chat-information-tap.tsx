@@ -1,5 +1,6 @@
 import useChangeChat from 'hooks/use-change-chat';
 import useChangeSidebar from 'hooks/use-change-sidebar';
+import useChatAlert from 'hooks/use-chat-alert';
 import { chatSocket } from 'pages/chat/chat-socket';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import formattedDate from 'pages/chat/components/formatted-date';
@@ -16,6 +17,7 @@ const ChatInformationTap = () => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const setChat = useChangeChat();
 	const setChatList = useSetRecoilState(chatListState);
+	const setAlertModal = useChatAlert();
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -133,6 +135,8 @@ const ChatInformationTap = () => {
 						),
 					}));
 					setChat(null);
+				} else {
+					setAlertModal();
 				}
 			}
 		);

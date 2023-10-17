@@ -15,6 +15,7 @@ import { chatState } from 'ts/states/chat-state';
 import { chatSocket } from 'pages/chat/chat-socket';
 import User from 'ts/interfaces/user.model';
 import { chatAlertModalState } from 'ts/states/chat-alert-modal';
+import useChatAlert from 'hooks/use-chat-alert';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +35,7 @@ const ChatMemberInquireTap = (props: {
 	>([]);
 	const getData = useFetch();
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
-
+	const setDefaultAlertModal = useChatAlert();
 	const user = userData[0]; //temp
 
 	useEffect(() => {
@@ -267,7 +268,11 @@ const ChatMemberInquireTap = (props: {
 				user: otherUser.user,
 				status,
 			},
-			(status: number) => {}
+			(status: number) => {
+				if (status !== 200) {
+					setDefaultAlertModal();
+				}
+			}
 		);
 	};
 

@@ -14,6 +14,7 @@ import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
+import useChatAlert from 'hooks/use-chat-alert';
 
 export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -25,6 +26,8 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const setModalStatus = useSetRecoilState(chatModalState);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
+	const setAlertModal = useChatAlert();
+
 	const owner = props.channel.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -124,6 +127,8 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 				if (response.status !== 200) {
 					changeInput();
 					setInput('');
+					setAlertModal();
+					setModalStatus(ChatModalStatus.CLOSE);
 					return;
 				}
 				setChannelList((pre) => {
@@ -134,6 +139,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 				});
 				setChat(response.chatRoom);
 				setModalStatus(ChatModalStatus.CLOSE);
+				return;
 			}
 		);
 	};

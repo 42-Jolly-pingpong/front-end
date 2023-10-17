@@ -1,4 +1,5 @@
 import { Button, Label, Radio, TextInput } from 'flowbite-react';
+import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
@@ -14,6 +15,7 @@ const ChatSettingTap = () => {
 	const [password, setPassword] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
+	const setAlertModal = useChatAlert();
 
 	useEffect(() => {
 		if (inputRef.current && settingPassword) {
@@ -56,8 +58,8 @@ const ChatSettingTap = () => {
 				password: null,
 			},
 			(status: number) => {
-				if (status === 200) {
-					//temp
+				if (status !== 200) {
+					setAlertModal();
 				}
 			}
 		);
@@ -124,8 +126,8 @@ const ChatSettingTap = () => {
 				password: null,
 			},
 			(status: number) => {
-				if (status === 200) {
-					//temp
+				if (status !== 200) {
+					setAlertModal();
 				}
 			}
 		);
@@ -174,7 +176,9 @@ const ChatSettingTap = () => {
 				if (status === 200) {
 					setPassword('');
 					setSettingPassword(false);
+					return;
 				}
+				setAlertModal();
 			}
 		);
 	};
@@ -210,7 +214,9 @@ const ChatSettingTap = () => {
 
 	const onClickDelete = () => {
 		chatSocket.emit('deleteChatRoom', { roomId: chat.id }, (status: number) => {
-			//에러 처리
+			if (status !== 200) {
+				setAlertModal();
+			}
 		});
 	};
 
