@@ -127,6 +127,7 @@ const HandleChatSocket = () => {
 					...pre,
 					channelList: [...pre.channelList, chatRoom],
 				}));
+				chatSocket.emit('requestJoin', { roomId: chatRoom.id });
 			}
 		);
 
@@ -140,6 +141,7 @@ const HandleChatSocket = () => {
 				...pre,
 				dmList: [...pre.dmList, dm],
 			}));
+			chatSocket.emit('requestJoin', { roomId: dm.id });
 		});
 
 		return () => {
