@@ -7,7 +7,7 @@ import { gameBannerState } from 'ts/states/game/game-banner-state';
 const Banner = () => {
 	const banner = useRecoilValue(gameBannerState);
 
-	switch (banner) {
+	switch (banner.banner) {
 		case GameBanner.GAMEREQUEST:
 			return <GameRequestBanner />;
 		case GameBanner.NOMATCH:
