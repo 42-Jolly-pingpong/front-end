@@ -29,7 +29,11 @@ const DmItem = (props: { dm: Dm; isSelected: boolean }) => {
 		>
 			<div className='flex items-center'>
 				{avatar()}
-				<div className='flex items-center font-medium text-base truncate'>
+				<div
+					className={`flex items-center text-base ${
+						props.dm.leftToRead ? 'font-bold' : 'font-medium'
+					} ml-1 truncate`}
+				>
 					{chatMate.nickname}
 				</div>
 			</div>

@@ -7,4 +7,5 @@ export interface Dm {
 	chatMate: User;
 	updatedTime: Date;
 	status: boolean;
+	leftToRead: boolean;
 }

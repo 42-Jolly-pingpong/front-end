@@ -19,7 +19,11 @@ const ChannelItem = (props: { channel: ChatRoom; isSelected: boolean }) => {
 				<div className='mr-1'>
 					<ChannelIcon roomType={props.channel.roomType} size={18} />
 				</div>
-				<div className='text-base font-medium ml-1 truncate'>
+				<div
+					className={`text-base ${
+						props.channel.leftToRead ? 'font-bold' : 'font-medium'
+					} ml-1 truncate`}
+				>
 					{props.channel.roomName}
 				</div>
 			</div>

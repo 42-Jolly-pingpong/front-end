@@ -23,15 +23,45 @@ const HandleChatSocket = () => {
 	const user = userData[0]; //temp
 
 	useEffect(() => {
-		if (chat && chat.chatRoom) {
+		if (chat.chatRoom) {
 			chatSocket.off('getNewChat');
 			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
 				const { roomId, newChat } = data;
-				console.log('het', newChat.content);
 				if (roomId === chat.chatRoom?.id) {
 					setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
+				} else {
+					setChatRoomList((pre) => ({
+						...pre,
+						channelList: pre.channelList.map((channel) => {
+							if (channel.id === roomId) {
+								return { ...channel, leftToRead: true };
+							}
+							return channel;
+						}),
+					}));
 				}
 			});
+
+			chatSocket.off('getNewChatOnDm');
+			chatSocket.on(
+				'getNewChatOnDm',
+				(data: { roomId: number; newChat: Chat }) => {
+					const { roomId, newChat } = data;
+					if (roomId === chat.chatRoom?.id) {
+						setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
+					} else {
+						setChatRoomList((pre) => ({
+							...pre,
+							dmList: pre.dmList.map((dm) => {
+								if (dm.id === roomId) {
+									return { ...dm, leftToRead: true };
+								}
+								return dm;
+							}),
+						}));
+					}
+				}
+			);
 
 			chatSocket.off('updateChatRoom');
 			chatSocket.on('updateChatRoom', (chatRoom: ChatRoom) => {
@@ -69,6 +99,7 @@ const HandleChatSocket = () => {
 
 		return () => {
 			chatSocket.off('getNewChat');
+			chatSocket.off('getNewChatOnDm');
 			chatSocket.off('updateChatRoom');
 			chatSocket.off('chatRoomDeleted');
 			chatSocket.off('updateChatRoomOnList');
