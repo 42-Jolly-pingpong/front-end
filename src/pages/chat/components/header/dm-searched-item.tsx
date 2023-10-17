@@ -16,13 +16,13 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 		chatSocket.emit(
 			'createNewDm',
 			{ chatMate: friend },
-			(response: { status: number; newDm: Dm }) => {
+			(response: { status: number; dm: Dm }) => {
 				if (response.status === 200) {
 					setDmList((pre) => ({
 						...pre,
-						dmList: [...pre.dmList, response.newDm],
+						dmList: [...pre.dmList, response.dm],
 					}));
-					setChat(response.newDm);
+					setChat(response.dm);
 				}
 			}
 		);
