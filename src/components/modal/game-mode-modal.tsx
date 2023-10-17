@@ -1,6 +1,6 @@
 import { Button, Label, Radio, Modal } from 'flowbite-react';
 import { useState } from 'react';
-import { GameMode } from 'ts/enums/game-mode.enum';
+import { GameMode } from 'ts/enums/game/game-mode.enum';
 import GameOptionControl from 'ts/interfaces/game/game-modal-control';
 
 const GameModeModal: React.FC<GameOptionControl> = ({

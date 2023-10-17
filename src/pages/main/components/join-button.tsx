@@ -1,6 +1,6 @@
 import { Button } from 'flowbite-react';
 import { useState } from 'react';
-import { GameMode } from 'ts/enums/game-mode.enum';
+import { GameMode } from 'ts/enums/game/game-mode.enum';
 import GameMatchModal from 'components/modal/game-match-modal';
 import GameModeModal from 'components/modal/game-mode-modal';
 
