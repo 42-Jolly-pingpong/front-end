@@ -103,6 +103,37 @@ const HandleChatSocket = () => {
 					}),
 				}));
 			});
+		} else {
+			chatSocket.off('getNewChat');
+			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
+				const { roomId } = data;
+				setChatRoomList((pre) => ({
+					...pre,
+					channelList: pre.channelList.map((channel) => {
+						if (channel.id === roomId) {
+							return { ...channel, leftToRead: true };
+						}
+						return channel;
+					}),
+				}));
+			});
+
+			chatSocket.off('getNewChatOnDm');
+			chatSocket.on(
+				'getNewChatOnDm',
+				(data: { roomId: number; newChat: Chat }) => {
+					const { roomId } = data;
+					setChatRoomList((pre) => ({
+						...pre,
+						dmList: pre.dmList.map((dm) => {
+							if (dm.id === roomId) {
+								return { ...dm, leftToRead: true };
+							}
+							return dm;
+						}),
+					}));
+				}
+			);
 		}
 
 		return () => {
