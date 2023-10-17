@@ -1,17 +1,27 @@
 import { Button, Label, Radio, Modal } from 'flowbite-react';
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { GameMode } from 'ts/enums/game/game-mode.enum';
-import GameOptionControl from 'ts/interfaces/game/game-modal-control';
+import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
+import { gameWaitState } from 'ts/states/game/game-wait-state';
 
-const GameModeModal: React.FC<GameOptionControl> = ({
-	isOpen,
-	onClose,
-	onMatch,
-}) => {
-	const [selectedMode, setSelectedMode] = useState(GameMode.CLASSIC);
+interface ModalProps {
+	show: boolean;
+	onClose: () => void;
+}
+
+const GameModeModal: React.FC<ModalProps> = ({ show, onClose }) => {
+	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
+
+	const handleGameStart = () => {
+		setGameWait({ ...gameWait, status: GameWaitStatus.SEARCH });
+	};
+
+	const handleChange = (mode: GameMode) => {
+		setGameWait({ ...gameWait, mode: mode });
+	};
 
 	return (
-		<Modal size='lg' show={isOpen} onClose={onClose} dismissible>
+		<Modal size='lg' show={show} onClose={onClose} dismissible>
 			<Modal.Body className='flex flex-col my-2 m-6 '>
 				<div className='font-bold text-xl text-gray-900'>게임 옵션 선택</div>
 				<fieldset className='flex max-w-md flex-col gap-4' id='radio'>
@@ -21,7 +31,7 @@ const GameModeModal: React.FC<GameOptionControl> = ({
 							id='classic'
 							name='mode'
 							value={GameMode.CLASSIC}
-							onChange={() => setSelectedMode(GameMode.CLASSIC)}
+							onChange={() => handleChange(GameMode.CLASSIC)}
 							className='enabled:hover:bg-yellow-300  focus:ring-yellow-300 text-yellow-300'
 						/>
 						<Label htmlFor='classic'>
@@ -36,7 +46,7 @@ const GameModeModal: React.FC<GameOptionControl> = ({
 							id='speed'
 							name='mode'
 							value={GameMode.SPEED}
-							onChange={() => setSelectedMode(GameMode.SPEED)}
+							onChange={() => handleChange(GameMode.SPEED)}
 							className=' enabled:hover:bg-yellow-300  focus:ring-yellow-300 text-yellow-300'
 						/>
 						<Label htmlFor='speed'>
@@ -48,10 +58,7 @@ const GameModeModal: React.FC<GameOptionControl> = ({
 					</div>
 				</fieldset>
 				<Button
-					onClick={() => {
-						onMatch(selectedMode);
-						onClose();
-					}}
+					onClick={handleGameStart}
 					className='p-1 font-bold text-white bg-yellow-300 enabled:hover:bg-yellow-300 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-300'
 				>
 					게임 시작

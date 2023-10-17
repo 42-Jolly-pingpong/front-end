@@ -6,11 +6,11 @@ interface ButtonProps {
 	children: ReactNode;
 }
 
-const YellowButtonXs: React.FC<ButtonProps> = ({ onClick, children }) => {
+const YellowButtonXl: React.FC<ButtonProps> = ({ onClick, children }) => {
 	return (
 		<Button
 			className='text-white bg-yellow-300 border border-transparent enabled:hover:bg-yellow-300 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-300'
-			size='xs'
+			size='xl'
 			onClick={onClick}
 		>
 			{children}
@@ -18,4 +18,4 @@ const YellowButtonXs: React.FC<ButtonProps> = ({ onClick, children }) => {
 	);
 };
 
-export default YellowButtonXs;
+export default YellowButtonXl;

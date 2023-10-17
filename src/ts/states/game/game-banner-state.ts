@@ -1,9 +1,15 @@
 import { atom, selector } from 'recoil';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
+import { GameMode } from 'ts/enums/game/game-mode.enum';
 
-export const gameBannerState = atom<GameBanner>({
+export type GameBannerType = {
+	banner: GameBanner;
+	mode: GameMode;
+};
+
+export const gameBannerState = atom<GameBannerType>({
 	key: 'gameBannerState',
-	default: GameBanner.GAMEREQUEST,
+	default: { banner: GameBanner.NONE, mode: GameMode.CLASSIC },
 });
 
 export const gameBannerSelector = selector({
