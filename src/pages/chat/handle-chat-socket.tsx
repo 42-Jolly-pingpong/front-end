@@ -23,6 +23,14 @@ const HandleChatSocket = () => {
 	const user = userData[0]; //temp
 
 	useEffect(() => {
+		chatSocket.connect();
+
+		return () => {
+			chatSocket.disconnect();
+		};
+	}, []);
+
+	useEffect(() => {
 		if (chat.chatRoom) {
 			chatSocket.off('getNewChat');
 			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
