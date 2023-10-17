@@ -124,12 +124,12 @@ const ChatInformationTap = () => {
 		chatSocket.emit(
 			'participantLeave',
 			{ roomId: chat.id },
-			(response: { status: number; room: ChatRoom }) => {
-				if (response.status === 200 && response.room) {
+			(response: { status: number; chatRoom: ChatRoom }) => {
+				if (response.status === 200 && response.chatRoom) {
 					setChatList((pre) => ({
 						...pre,
 						channelList: pre.channelList.filter(
-							(channel) => channel.id !== response.room.id
+							(channel) => channel.id !== response.chatRoom.id
 						),
 					}));
 					setChat(null);
