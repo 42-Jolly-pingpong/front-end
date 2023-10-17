@@ -120,7 +120,7 @@ const ChatSidebarProfile = () => {
 	const onClickFriend = () => {
 		const dm = dmList.find((dm) => dm.chatMate.id === otherUser.id);
 		if (dm) {
-			setChat(dm, false);
+			setChat(dm);
 			return;
 		}
 		createNewDm();
