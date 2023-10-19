@@ -26,6 +26,22 @@ const JoinButton = ({ updateGameStatus, updatePlayerInfo }: ChildProps) => {
 			cancel();
 		}, 6000);
 
+
+const JoinButton = () => {
+	const [modal, setModal] = useState(false);
+	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
+	const resetGameWait = useResetRecoilState(gameWaitState);
+
+	const handleButton = () => {
+		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
+		setModal(true);
+	};
+
+	const handleClose = () => {
+		resetGameWait();
+		setModal(false);
+	};
+
 		return () => {
 			clearTimeout(timer);
 		};
@@ -50,6 +66,12 @@ const JoinButton = ({ updateGameStatus, updatePlayerInfo }: ChildProps) => {
 				<img src='images/arrow-right.png' alt='arrow' />
 			</Button>
 			<JoinModal isOpen={isModalOpen} onClose={cancel} />
+			<YellowButtonXl onClick={handleButton}>
+				<img src='images/fire.png' alt='fire' />
+				<div className='font-bold mx-3'> 게임하러 가기</div>
+				<img src='images/arrow-right.png' alt='arrow' />
+			</YellowButtonXl>
+			<GameWaitModal show={modal} onClose={handleClose} />
 		</>
 	);
 };
