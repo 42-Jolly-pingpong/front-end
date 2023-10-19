@@ -1,20 +1,43 @@
-import { Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import { socket } from '../../../socket/socket';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { GameWaitStatus } from '../../../ts/enums/game/game-wait.enum';
 import { gameWaitState } from '../../../ts/states/game/game-wait-state';
 import YellowButtonXl from 'components/button/yellow-button-xl';
 import GameWaitModal from 'components/modal/game-wait-modal';
-import React from 'react';
+import { socket } from 'socket/socket';
+import { gameStartState } from 'ts/states/game/game-start-state';
+import { GameInfo, GameInfoType } from 'ts/states/game/game-info.state';
 
 const JoinButton = () => {
 	const [modal, setModal] = useState(false);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const resetGameWait = useResetRecoilState(gameWaitState);
 
+	const [isGameStart, setIsGameStart] = useRecoilState(gameStartState);
+	const [gameInfo, setGameInfo] = useRecoilState(GameInfo);
+
+	useEffect(() => {
+		if (socket.connected) {
+			socket.on('getPlayerInfo', (message) => {
+				const newGameInfo: GameInfoType = message;
+				setGameInfo(newGameInfo);
+			});
+			socket.on('gameStart', () => {
+				//socket.emit('cancel')
+				setIsGameStart(true);
+			});
+		}
+
+		return () => {
+			socket.off('getPlayerInfo');
+			socket.off('gameStart');
+		}
+	});
+
+
 	const handleButton = () => {
 		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
+		socket.emit('cancel')
 		setModal(true);
 	};
 

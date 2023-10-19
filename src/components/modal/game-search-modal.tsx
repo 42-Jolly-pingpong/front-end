@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Modal } from 'flowbite-react';
 import UseCountdown from 'hooks/use-countdown';
@@ -18,6 +18,7 @@ const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const [seconds, setSeconds] = useState(COUNTDOWN_MATCH_VALUE);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
+	
 
 	/**
 	 * 카운트다운 안에 매칭이 이루어지지 않을 경우
@@ -35,7 +36,6 @@ const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 
 	// 매칭 성공했을 경우
 	const handleMatch = () => {
-		// 소켓 이을 곳
 		onClose();
 	};
 

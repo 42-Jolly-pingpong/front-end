@@ -1,7 +1,9 @@
+import GameCanvas from './components/gameCanvas';
+
 const Game = () => {
 	return (
-		<div className='flex'>
-			<div className='flex max-h-screen max-w-screen'></div>
+		<div className='flex flex-col items-center justify-center h-screen'>
+			<GameCanvas></GameCanvas>
 		</div>
 	);
 };
