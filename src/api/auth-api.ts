@@ -24,9 +24,8 @@ export const getUserByJwt = async (
 	}
 };
 
-export const userSignUp = async (nickname: any): Promise<void> => {
+export const userSignUp = async (nickname: string): Promise<void> => {
 	try {
-		console.log('sign in 보내기 전');
 		const cookies = getJsonValueByKey('user-data');
 
 		const formData = {
@@ -37,14 +36,16 @@ export const userSignUp = async (nickname: any): Promise<void> => {
 
 		const response = await fetch('http://localhost:3000/auth/signup', {
 			method: 'POST',
+			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(formData),
 		});
 
-		if (response.ok) {
-			location.href = '/';
+		if (response) {
+			console.log('회원가입 성공');
+			window.location.href = '/';
 		} else {
 			console.log('회원가입 실패');
 		}
@@ -67,7 +68,6 @@ export const userSignOut = async (setUserState: any): Promise<void> => {
 		if (response) {
 			setUserState(null);
 			window.location.href = '/';
-			console.log('response가 성공');
 		}
 	} catch (e) {
 		return undefined;

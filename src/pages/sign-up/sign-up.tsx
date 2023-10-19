@@ -11,17 +11,16 @@ const SignUp = () => {
 	const [validNickname, setValidNickname] = useState(false);
 
 	const handleNickname = (nickname: string) => {
-		console.log('nickname : ', nickname);
 		if (nickname) {
 			setNickname(nickname);
-			console.log(nickname);
 			setValidNickname(true);
 		} else {
 			setValidNickname(false);
 		}
 	};
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		await userSignUp(nickname);
 	};
 
