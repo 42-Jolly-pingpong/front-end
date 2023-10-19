@@ -8,7 +8,7 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 		},
 		collapse: {
 			button:
-				'group flex flex-row-reverse w-full items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100',
+				'group flex flex-row-reverse w-full items-center rounded-lg py-1.5 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100',
 			icon: {
 				base: 'h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900',
 				open: {
@@ -29,14 +29,14 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 			list: 'space-y-1 py-1',
 		},
 		item: {
-			base: 'flex items-center justify-center rounded-lg p-1 text-base text-gray-900 hover:bg-gray-100',
+			base: 'flex items-center justify-center rounded-lg py-1 text-base text-gray-900 hover:bg-gray-100',
 			active: 'bg-gray-100 dark:bg-gray-700',
 			collapsed: {
-				insideCollapse: 'group w-full pl-2 transition duration-75',
+				insideCollapse: 'group w-full transition duration-75',
 				noIcon: 'font-bold',
 			},
 			content: {
-				base: 'px-3 flex-1 whitespace-nowrap truncate font-light',
+				base: 'px-1 flex-1 whitespace-nowrap truncate font-light',
 			},
 			icon: {
 				base: 'h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900',
@@ -47,6 +47,6 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 		},
 		items: '',
 		itemGroup:
-			'space-y-2 pt-1 first:mt-0 first:border-t-0 first:pt-0 last:mb-2 last:border-b',
+			'space-y-2 pt-1 first:mt-0 first:border-t-0 first:pt-0 last:mb-2',
 	},
 };
