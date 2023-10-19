@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router';
-import Header from 'components/layout/header/header';
 import { useSetRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
-import { getUserByJwt } from 'api/auth-api';
-import { userState } from 'ts/states/user-state';
 import Banner from 'components/banner/banner';
+import Header from 'components/layout/header/header';
+import { userState } from 'ts/states/user-state';
+import { getUserByJwt } from 'api/auth-api';
 
 const Layout = () => {
 	const setUserState = useSetRecoilState(userState);
@@ -12,8 +12,16 @@ const Layout = () => {
 
 	useEffect(() => {
 		const updateUser = async () => {
-			await getUserByJwt(setUserState);
-			setLoading(false);
+			try {
+				const user = await getUserByJwt();
+				if (user) {
+					setUserState(user);
+				}
+			} catch (e) {
+				console.log(e);
+			} finally {
+				setLoading(false);
+			}
 		};
 		updateUser();
 	}, []);

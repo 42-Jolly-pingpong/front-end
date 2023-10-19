@@ -1,75 +1,58 @@
 import { getJsonValueByKey, getJwtValue } from 'components/utils/cookieUtils';
 import User from 'ts/interfaces/user.model';
+import sendAPI from 'api/sendAPI';
 
-export const getUserByJwt = async (
-	setUserState: any
-): Promise<User | undefined> => {
+export const getUserByJwt = async (): Promise<User | undefined> => {
 	try {
 		const token = getJwtValue();
 
-		const response = await fetch('http://localhost:3000/auth/user', {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-			},
-		});
-
-		if (response.ok) {
-			const user = await response.json();
-			setUserState(user);
+		if (token) {
+			const user = await sendAPI({
+				method: 'POST',
+				url: '/auth/user',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			return user;
 		}
+		return undefined;
 	} catch (e) {
+		console.log(e);
 		return undefined;
 	}
 };
 
 export const userSignUp = async (nickname: string): Promise<void> => {
+	const cookies = getJsonValueByKey('user-data');
+
+	const signUpData = {
+		intraId: cookies.intraId,
+		email: cookies.email,
+		nickname,
+	};
+
 	try {
-		const cookies = getJsonValueByKey('user-data');
-
-		const formData = {
-			intraId: cookies.intraId,
-			email: cookies.email,
-			nickname,
-		};
-
-		const response = await fetch('http://localhost:3000/auth/signup', {
+		await sendAPI({
 			method: 'POST',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData),
+			url: '/auth/signup',
+			body: signUpData,
 		});
 
-		if (response) {
-			console.log('회원가입 성공');
-			window.location.href = '/';
-		} else {
-			console.log('회원가입 실패');
-		}
+		window.location.href = '/';
 	} catch (e) {
 		console.log(e);
 	}
 };
 
-export const userSignOut = async (setUserState: any): Promise<void> => {
+export const userSignOut = async (): Promise<void> => {
 	try {
-		console.log('sign out 보내기 전');
-		const response = await fetch('http://localhost:3000/auth/signout', {
+		await sendAPI({
 			method: 'GET',
-			credentials: 'include',
-			headers: {
-				origin: 'http://localhost:5173',
-			},
+			url: '/auth/signout',
 		});
-
-		if (response) {
-			setUserState(null);
-			window.location.href = '/';
-		}
+		window.location.href = '/';
 	} catch (e) {
-		return undefined;
+		console.log(e);
 	}
 };

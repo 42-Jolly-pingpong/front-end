@@ -7,10 +7,11 @@ import { userSignOut } from 'api/auth-api';
 const HeaderProfileIcon = () => {
 	const [user, setUserState] = useRecoilState(userState);
 
-	const handleSignOut = async (e) => {
+	const handleSignOut = async (e: React.MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
 		try {
-			await userSignOut(setUserState);
+			await userSignOut();
+			setUserState(null);
 		} catch (err) {
 			console.log(err);
 		}

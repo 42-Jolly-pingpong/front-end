@@ -1,3 +1,4 @@
+import sendAPI from 'api/sendAPI';
 import User from 'ts/interfaces/user.model';
 
 export const getUserByNickname = async (
@@ -5,16 +6,14 @@ export const getUserByNickname = async (
 ): Promise<User | undefined> => {
 	try {
 		if (nickname) {
-			const response = await fetch(
-				'http://localhost:3000/user/search/' + nickname
-			);
-			if (response.ok) {
-				const data: User[] = await response.json();
-				const user: User | undefined = data[0];
-				return user;
-			}
+			const users = await sendAPI({
+				method: 'GET',
+				url: '/user/search/' + nickname,
+			});
+			return users[0];
 		}
 	} catch (e) {
 		console.log(e);
+		return undefined;
 	}
 };

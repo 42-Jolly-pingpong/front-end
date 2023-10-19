@@ -8,7 +8,7 @@ import { gameWaitState } from 'ts/states/game/game-wait-state';
 const GameWaitModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const gameWait = useRecoilValue(gameWaitState);
 
-	console.log(gameWait);
+	//console.log(gameWait);
 	switch (gameWait.status) {
 		case GameWaitStatus.MODE:
 			return <GameModeModal show={show} onClose={onClose} />;
