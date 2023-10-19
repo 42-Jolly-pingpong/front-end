@@ -1,5 +1,4 @@
-import { getJwtValue } from 'components/utils/cookieUtils';
-import { useHistory } from 'react-router-dom';
+import { getJsonValueByKey, getJwtValue } from 'components/utils/cookieUtils';
 import User from 'ts/interfaces/user.model';
 
 export const getUserByJwt = async (
@@ -22,6 +21,35 @@ export const getUserByJwt = async (
 		}
 	} catch (e) {
 		return undefined;
+	}
+};
+
+export const userSignUp = async (nickname: any): Promise<void> => {
+	try {
+		console.log('sign in 보내기 전');
+		const cookies = getJsonValueByKey('user-data');
+
+		const formData = {
+			intraId: cookies.intraId,
+			email: cookies.email,
+			nickname,
+		};
+
+		const response = await fetch('http://localhost:3000/auth/signup', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formData),
+		});
+
+		if (response.ok) {
+			location.href = '/';
+		} else {
+			console.log('회원가입 실패');
+		}
+	} catch (e) {
+		console.log(e);
 	}
 };
 
