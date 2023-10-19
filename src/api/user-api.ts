@@ -5,7 +5,6 @@ export const getUserByNickname = async (
 	nickname: string
 ): Promise<User | undefined> => {
 	try {
-		console.log(nickname);
 		if (nickname) {
 			const users = await sendAPI({
 				method: 'GET',
