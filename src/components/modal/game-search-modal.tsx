@@ -19,20 +19,27 @@ const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
 
+	/**
+	 * 카운트다운 안에 매칭이 이루어지지 않을 경우
+	 * rematch를 묻는 배너 띄우기 + waitState 초기화 시키기
+	 */
 	const handleNoMatch = () => {
 		setGameBanner({ ...gameBanner, banner: GameBanner.NOMATCH });
 		setGameWait({ ...gameWait, status: GameWaitStatus.NONE });
 	};
 
+	// 모달을 닫았을 경우
 	const handleCancel = () => {
 		onClose();
 	};
 
+	// 매칭 성공했을 경우
 	const handleMatch = () => {
 		// 소켓 이을 곳
 		onClose();
 	};
 
+	// 카운트다운 관련 handle
 	const handleTick = (value: number) => {
 		setSeconds(value);
 	};

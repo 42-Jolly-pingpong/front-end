@@ -5,6 +5,7 @@ import ModalProps from 'ts/interfaces/game/modal-props';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
 import { gameWaitState } from 'ts/states/game/game-wait-state';
 
+// 게임 관련 모달들
 const GameWaitModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const gameWait = useRecoilValue(gameWaitState);
 
