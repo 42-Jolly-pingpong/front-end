@@ -7,6 +7,25 @@ interface GameCanvasProps {
 	playerInfo: PlayerInfo;
 }
 
+interface obj {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
+
+interface GameInfo {
+	ball: obj;
+	player1: obj;
+	player2: obj;
+}
+
+const initialGameInfo: GameInfo = {
+	ball: { x: 0, y: 0, width: 0, height: 0 },
+	player1: { x: 0, y: 0, width: 0, height: 0 },
+	player2: { x: 0, y: 0, width: 0, height: 0 },
+};
+
 function GameCanvas({ playerInfo }: GameCanvasProps) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -20,40 +39,52 @@ function GameCanvas({ playerInfo }: GameCanvasProps) {
 		width: canvasSize.width * 0.02,
 		height: canvasSize.height * 0.2,
 	});
+	const [gameInfo, setGameInfo] = useState<GameInfo>(initialGameInfo);
 
 	useEffect(() => {
 		const canvas = canvasRef.current;
-
 		if (canvas) {
 			setCanvas(canvas);
 			const ctx = canvas.getContext('2d');
 			if (ctx) {
+				console.log('등록')
 				setContext(ctx);
 			}
+			canvas.width = 1400;
+			canvas.height = 1000;
 		}
-		socket.on('getGameData', (event) => {
-			const data = event;
-			setInitialPositions(data);
+
+		socket.on('getGameData', (ball, player1, player2) => {
+			const newGameInfo: GameInfo = {
+				ball: ball,
+				player1: player1,
+				player2: player2,
+			};
+			setGameInfo(() => ({
+				ball: newGameInfo.ball,
+				player1: newGameInfo.player1,
+				player2: newGameInfo.player2
+			}));
 		});
 		if (playerInfo.position == 1) {
 			socket.emit('getGameData', playerInfo.roomName);
 		}
+		console.log(playerInfo.position);
 	}, []);
-
-	useEffect(() => {
-		function canvasResize() {
-			setCanvasSize((prevSize: Size) => ({
-				...prevSize,
-				height: window.innerHeight * 0.7,
-				width: window.innerWidth * 0.7,
-			}));
-		}
-		canvasResize();
-		window.addEventListener('resize', canvasResize);
-		return () => {
-			window.removeEventListener('resize', canvasResize);
-		};
-	}, []);
+	// useEffect(() => {
+	// 	function canvasResize() {
+	// 		setCanvasSize((prevSize: Size) => ({
+	// 			...prevSize,
+	// 			height: window.innerHeight * 0.7,
+	// 			width: window.innerWidth * 0.7,
+	// 		}));
+	// 	}
+	// 	canvasResize();
+	// 	window.addEventListener('resize', canvasResize);
+	// 	return () => {
+	// 		window.removeEventListener('resize', canvasResize);
+	// 	};
+	// }, []);
 
 	useEffect(() => {
 		setPaddleSize((prevSize: Size) => ({
@@ -61,58 +92,64 @@ function GameCanvas({ playerInfo }: GameCanvasProps) {
 			height: canvasSize.height * 0.2,
 			width: canvasSize.width * 0.02,
 		}));
-	}, [canvasSize])
+	}, [canvasSize]);
+
+	const handleKeyPress = (event: KeyboardEvent) => {
+		if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+			socket.emit(
+				'movePaddle',
+				playerInfo.roomName,
+				playerInfo.position,
+				event.key
+			);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyPress);
+		return () => {
+			window.removeEventListener('keydown', handleKeyPress);
+		};
+	}, []);
 
 	useEffect(() => {
 		const drawCanvas = () => {
-			if (initialPositions) {
-				console.log('그리기');
-				const { ball, player1, player2 } = initialPositions;
-				// 백그라운드
+			// background
+			if (context !== null) {
 				context.fillStyle = 'black';
 				context.fillRect(0, 0, canvas.width, canvas.height);
-
-				// 공
-				context.fillStyle = 'red';
-				const ballX = (ball.x / 100) * canvas.width;
-				const ballY = (ball.y / 100) * canvas.height;
-				context.beginPath();
-				context.arc(ballX, ballY, 10, 0, 2 * Math.PI);
-				context.fill();
-
-				// 플레이어1
-				const player1X = (player1.x / 100) * canvasSize.width;
-				const player1Y = (player1.y / 100) * canvasSize.height;
-				context.fillStyle = 'blue';
+	
+				context.fillStyle = '#ffffff';
+				// ball
 				context.fillRect(
-					player1X - paddleSize.width / 2,
-					player1Y - paddleSize.height / 2,
-					paddleSize.width,
-					paddleSize.height
+					gameInfo.ball.x,
+					gameInfo.ball.y,
+					gameInfo.ball.width,
+					gameInfo.ball.height
 				);
-
-				// 플레이어2
-				const player2X = (player2.x / 100) * canvasSize.width;
-				const player2Y = (player2.y / 100) * canvasSize.height;
-				context.fillStyle = 'green';
+	
+				// player1
 				context.fillRect(
-					player2X - paddleSize.width / 2,
-					player2Y - paddleSize.height / 2,
-					paddleSize.width,
-					paddleSize.height
+					gameInfo.player1.x,
+					gameInfo.player1.y,
+					gameInfo.player1.width,
+					gameInfo.player1.height
+				);
+	
+				// player2
+				context.fillRect(
+					gameInfo.player2.x,
+					gameInfo.player2.y,
+					gameInfo.player2.width,
+					gameInfo.player2.height
 				);
 			}
 		};
 		drawCanvas();
-	}, [initialPositions, canvasSize, paddleSize]);
+	}, [gameInfo]);
 
 	return (
-		<canvas
-			ref={canvasRef}
-			width={canvasSize.width}
-			height={canvasSize.height}
-			className='absolute border-2 border-black'
-		></canvas>
+		<canvas ref={canvasRef} className='absolute border-2 border-black'></canvas>
 	);
 }
 

@@ -2,6 +2,7 @@ import Layout from 'components/layout/layout';
 import Root from 'components/root/root';
 import Snackbar from 'components/snackbar/snackbar';
 import Chat from 'pages/chat/chat';
+import Game from 'pages/game/game';
 import Profile from 'pages/profile/profile';
 import SignUp from 'pages/sign-up/sign-up';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -28,7 +29,7 @@ function App() {
 					<Routes>
 						<Route element={<Layout />}>
 							<Route path='/' element={<Root />} index />
-							<Route path='/game' element={<h1>GAME</h1>} />
+							<Route path='/game' element={<Game />} />
 							<Route path='/profile/:user_idx' element={<Profile />} />
 							<Route path='/chat' element={<Chat />} />
 							<Route path='/sign-up' element={<SignUp />} />
