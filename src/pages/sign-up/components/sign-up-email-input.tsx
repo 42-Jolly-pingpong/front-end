@@ -1,6 +1,6 @@
-import { getJsonValueByKey } from 'components/utils/cookieUtils';
 import { Label, TextInput } from 'flowbite-react';
 import { HiMail } from 'react-icons/hi';
+import { getJsonValueByKey } from 'components/utils/cookieUtils';
 
 const SignUpEmailInput = () => {
 	const cookies = getJsonValueByKey('user-data');

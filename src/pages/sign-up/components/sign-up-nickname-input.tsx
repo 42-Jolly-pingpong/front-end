@@ -21,21 +21,23 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 		}
 
 		const newTimeoutId = setTimeout(async () => {
+			let newErrorMessage = '';
 			if (nickname.length == 0) {
-				setErrorMessage('닉네임을 입력해주세요.');
+				newErrorMessage = '닉네임을 입력해주세요.';
 			} else if (nickname.length > 20) {
-				setErrorMessage('닉네임은 20글자까지 입력할 수 있습니다.');
+				newErrorMessage = '닉네임은 20글자까지 입력할 수 있습니다.';
 			} else if (nickname.indexOf(' ') !== -1) {
-				setErrorMessage('닉네임에는 공백이 포함될 수 없습니다.');
+				newErrorMessage = '닉네임에는 공백이 포함될 수 없습니다.';
 			} else {
 				const user = await getUserByNickname(nickname);
 				if (user !== undefined) {
-					setErrorMessage('중복된 닉네임 입니다.');
+					newErrorMessage = '중복된 닉네임 입니다.';
 				} else {
-					setErrorMessage('');
+					newErrorMessage = '';
 				}
 			}
-			onChange(errorMessage ? '' : nickname);
+			setErrorMessage(newErrorMessage);
+			onChange(newErrorMessage ? '' : nickname);
 		}, 500);
 		setTimeoutId(newTimeoutId);
 	};
