@@ -38,8 +38,6 @@ export const userSignUp = async (nickname: string): Promise<void> => {
 			url: '/auth/signup',
 			body: signUpData,
 		});
-
-		window.location.href = '/';
 	} catch (e) {
 		console.log(e);
 	}
@@ -51,7 +49,6 @@ export const userSignOut = async (): Promise<void> => {
 			method: 'GET',
 			url: '/auth/signout',
 		});
-		window.location.href = '/';
 	} catch (e) {
 		console.log(e);
 	}

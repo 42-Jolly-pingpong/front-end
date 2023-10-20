@@ -14,17 +14,17 @@ const NoMatchBanner = () => {
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 
 	const handleReMatch = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 		setGameWait({ ...gameWait, status: GameWaitStatus.SEARCH });
 	};
 
 	const handleCancel = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 	};
 
 	return (
 		<>
-			<div className='fixed z-50 flex justify-center w-full h-full mt-6'>
+			<div className='fixed z-50 flex justify-center w-full mt-6'>
 				<div className='fixed w-11/12 border rounded bg-white '>
 					<div className='flex justify-between p-4 items-center'>
 						<div className='flex'>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Dropdown } from 'flowbite-react';
 import { useRecoilState } from 'recoil';
 import { userState } from 'ts/states/user-state';
@@ -6,12 +6,14 @@ import { userSignOut } from 'api/auth-api';
 
 const HeaderProfileIcon = () => {
 	const [user, setUserState] = useRecoilState(userState);
+	const navigate = useNavigate();
 
 	const handleSignOut = async (e: React.MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
 		try {
 			await userSignOut();
 			setUserState(null);
+			navigate('/');
 		} catch (err) {
 			console.log(err);
 		}

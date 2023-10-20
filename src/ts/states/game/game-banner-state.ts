@@ -3,13 +3,13 @@ import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import { GameMode } from 'ts/enums/game/game-mode.enum';
 
 export type GameBannerType = {
-	banner: GameBanner;
+	type: GameBanner;
 	mode: GameMode;
 };
 
 export const gameBannerState = atom<GameBannerType>({
 	key: 'gameBannerState',
-	default: { banner: GameBanner.NONE, mode: GameMode.CLASSIC },
+	default: { type: GameBanner.NONE, mode: GameMode.CLASSIC },
 });
 
 export const gameBannerSelector = selector({

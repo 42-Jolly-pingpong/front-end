@@ -38,8 +38,8 @@ function GameCanvas() {
 			if (ctx) {
 				setContext(ctx);
 			}
-			canvas.width = 1400;
-			canvas.height = 1000;
+			canvas.width = 1000;
+			canvas.height = 600;
 		}
 
 		socket.on('getGameData', (ball, player1, player2) => {

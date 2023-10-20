@@ -5,7 +5,7 @@ const HeaderLogo = () => {
 	return (
 		<Link to='/' className='flex items-center p-1'>
 			<img src={LogoImage} />
-			<div className='font-bold'>졸리핑퐁</div>
+			<div className='font-bold'>죠리핑퐁</div>
 		</Link>
 	);
 };

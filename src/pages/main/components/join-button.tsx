@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { GameWaitStatus } from '../../../ts/enums/game/game-wait.enum';
-import { gameWaitState } from '../../../ts/states/game/game-wait-state';
 import YellowButtonXl from 'components/button/yellow-button-xl';
 import GameWaitModal from 'components/modal/game-wait-modal';
 import { socket } from 'socket/socket';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { GameInfo, GameInfoType } from 'ts/states/game/game-info.state';
+import { gameWaitState } from 'ts/states/game/game-wait-state';
+import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
+import { gameBannerState } from 'ts/states/game/game-banner-state';
 
 const JoinButton = () => {
 	const [modal, setModal] = useState(false);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const resetGameWait = useResetRecoilState(gameWaitState);
+	const resetGameBanner = useResetRecoilState(gameBannerState);
 
 	const [isGameStart, setIsGameStart] = useRecoilState(gameStartState);
 	const [gameInfo, setGameInfo] = useRecoilState(GameInfo);
@@ -36,6 +38,7 @@ const JoinButton = () => {
 
 
 	const handleButton = () => {
+		resetGameBanner();
 		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
 		socket.emit('cancel')
 		setModal(true);
