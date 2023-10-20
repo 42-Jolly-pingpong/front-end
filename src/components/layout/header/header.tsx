@@ -8,7 +8,7 @@ const Header = () => {
 
 	if (user) {
 		return (
-			<header className='flex justify-between'>
+			<header className='flex justify-between h-20 p-6 m-0'>
 				<HeaderLogo />
 				<HeaderRight />
 			</header>

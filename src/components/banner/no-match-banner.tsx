@@ -24,7 +24,7 @@ const NoMatchBanner = () => {
 
 	return (
 		<>
-			<div className='fixed z-50 flex justify-center w-full h-full mt-6'>
+			<div className='fixed z-50 flex justify-center w-full mt-6'>
 				<div className='fixed w-11/12 border rounded bg-white '>
 					<div className='flex justify-between p-4 items-center'>
 						<div className='flex'>
