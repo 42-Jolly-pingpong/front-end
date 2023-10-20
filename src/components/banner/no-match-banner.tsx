@@ -14,12 +14,12 @@ const NoMatchBanner = () => {
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 
 	const handleReMatch = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 		setGameWait({ ...gameWait, status: GameWaitStatus.SEARCH });
 	};
 
 	const handleCancel = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 	};
 
 	return (

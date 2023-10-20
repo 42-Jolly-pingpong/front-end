@@ -12,19 +12,20 @@ import { GAME_REQ_MSG } from 'constants/messages';
 import {
 	COUNTDOWN_REQUEST_INTERVAL,
 	COUNTDOWN_REQUEST_VALUE,
+	PROGRESS_DEFAULT_VALUE,
 } from 'constants/values';
 
 const GameRequestBanner = () => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
-	const [progressValue, setProgressValue] = useState(100);
+	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 		// 게임을 수락했을 경우 소켓 로직 추가
 	};
 
 	const handleCancel = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 	};
 
 	const handleProgress = (value: number) => {

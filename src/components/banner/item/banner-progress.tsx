@@ -1,6 +1,6 @@
-type BannerProgressProps = {
+interface BannerProgressProps {
 	progress: number;
-};
+}
 
 const BannerProgress: React.FC<BannerProgressProps> = ({ progress }) => {
 	const progressWidth = {

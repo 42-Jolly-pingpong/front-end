@@ -15,8 +15,16 @@ const Layout = () => {
 
 	useEffect(() => {
 		const updateUser = async () => {
-			await getUserByJwt(setUserState);
-			setLoading(false);
+			try {
+				const user = await getUserByJwt();
+				if (user) {
+					setUserState(user);
+				}
+			} catch (e) {
+				console.log(e);
+			} finally {
+				setLoading(false);
+			}
 		};
 		updateUser();
 	}, []);
