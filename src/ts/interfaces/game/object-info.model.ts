@@ -1,9 +1,10 @@
-import Object from "./object.model";
+import Ball from "./ball.model";
+import Player from "./player.model";
 
 interface ObjectInfo {
-	ball: Object;
-	player1: Object;
-	player2: Object;
+	ball: Ball;
+	player1: Player;
+	player2: Player;
 }
 
 export default ObjectInfo

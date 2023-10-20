@@ -2,7 +2,7 @@ import GameCanvas from './components/gameCanvas';
 
 const Game = () => {
 	return (
-		<div className='flex flex-col items-center justify-center h-screen'>
+		<div className='flex flex-col items-center bg-black  justify-center h-screen'>
 			<GameCanvas></GameCanvas>
 		</div>
 	);

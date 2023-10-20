@@ -7,8 +7,8 @@ import RoundInfo from './roundInfo';
 
 const initialObjectInfo: ObjectInfo = {
 	ball: { x: 0, y: 0, width: 0, height: 0 },
-	player1: { x: 0, y: 0, width: 0, height: 0 },
-	player2: { x: 0, y: 0, width: 0, height: 0 },
+	player1: { x: 0, y: 0, width: 0, height: 0, score: 0 },
+	player2: { x: 0, y: 0, width: 0, height: 0, score: 0 },
 };
 
 function GameCanvas() {
@@ -20,7 +20,7 @@ function GameCanvas() {
 	const [round, setRound] = useState<number>(1);
 	const gameInfo: GameInfoType = useRecoilValue(GameInfo);
 
-	const [ObjectInfo, setObjectInfo] = useState<ObjectInfo>(initialObjectInfo);
+	const [objectInfo, setObjectInfo] = useState<ObjectInfo>(initialObjectInfo);
 
 	useEffect(() => {
 		const canvas = canvasRef.current;
@@ -53,7 +53,6 @@ function GameCanvas() {
 			setIsWaitRound(true);
 		});
 
-
 		return () => {
 			socket.emit('exitGame', gameInfo.roomName, gameInfo.position);
 		};
@@ -61,14 +60,14 @@ function GameCanvas() {
 
 	useEffect(() => {
 		if (!isWaitRound && gameInfo.position === 1)
-			socket.emit('getGameData', gameInfo.roomName)
-	}, [isWaitRound])
+			socket.emit('getGameData', gameInfo.roomName);
+	}, [isWaitRound]);
 
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
 			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
 				socket.emit(
-					'movePaddle',
+					'movePlayer',
 					gameInfo.roomName,
 					gameInfo.position,
 					event.key
@@ -78,7 +77,7 @@ function GameCanvas() {
 		const handleKeyUp = (event: KeyboardEvent) => {
 			if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
 				socket.emit(
-					'stopPaddle',
+					'stopPlayer',
 					gameInfo.roomName,
 					gameInfo.position,
 					event.key
@@ -110,34 +109,47 @@ function GameCanvas() {
 				context.strokeStyle = '#ffffff';
 				context.stroke();
 
-				context.fillStyle = '#ffffff';
+				context.fillStyle = '#FCB404';
 				// ball
 				context.fillRect(
-					ObjectInfo.ball.x,
-					ObjectInfo.ball.y,
-					ObjectInfo.ball.width,
-					ObjectInfo.ball.height
+					objectInfo.ball.x,
+					objectInfo.ball.y,
+					objectInfo.ball.width,
+					objectInfo.ball.height
 				);
-
+				context.fillStyle = '#ffffff';
 				// player1
 				context.fillRect(
-					ObjectInfo.player1.x,
-					ObjectInfo.player1.y,
-					ObjectInfo.player1.width,
-					ObjectInfo.player1.height
+					objectInfo.player1.x,
+					objectInfo.player1.y,
+					objectInfo.player1.width,
+					objectInfo.player1.height
 				);
 
 				// player2
 				context.fillRect(
-					ObjectInfo.player2.x,
-					ObjectInfo.player2.y,
-					ObjectInfo.player2.width,
-					ObjectInfo.player2.height
+					objectInfo.player2.x,
+					objectInfo.player2.y,
+					objectInfo.player2.width,
+					objectInfo.player2.height
 				);
+				
+				// score
+				context.font = '80px Inter New';
+				context.textAlign = 'center';
+
+				context.fillText(objectInfo.player1.score.toLocaleString('en-US', {
+					minimumIntegerDigits: 2,
+					useGrouping: false,
+				}), canvas.width / 2 - 60, 70);
+				context.fillText(objectInfo.player2.score.toLocaleString('en-US', {
+					minimumIntegerDigits: 2,
+					useGrouping: false,
+				}), canvas.width / 2 + 60, 70);
 			}
 		};
 		drawCanvas();
-	}, [ObjectInfo]);
+	}, [objectInfo]);
 
 	return (
 		<div className='flex flex-col items-center justify-center h-screen'>
