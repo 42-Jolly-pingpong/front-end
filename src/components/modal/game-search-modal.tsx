@@ -24,7 +24,7 @@ const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	 * rematch를 묻는 배너 띄우기 + waitState 초기화 시키기
 	 */
 	const handleNoMatch = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NOMATCH });
+		setGameBanner({ ...gameBanner, type: GameBanner.NOMATCH });
 		setGameWait({ ...gameWait, status: GameWaitStatus.NONE });
 	};
 

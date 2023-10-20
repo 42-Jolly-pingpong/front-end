@@ -15,7 +15,7 @@ import { gameBannerState } from 'ts/states/game/game-banner-state';
 const Banner = () => {
 	const banner = useRecoilValue(gameBannerState);
 
-	switch (banner.banner) {
+	switch (banner.type) {
 		case GameBanner.GAMEREQUEST: // 게임 request가 왔을 때
 			return <GameRequestBanner />;
 		case GameBanner.NOMATCH: // 게임 matching에 실패했을 때

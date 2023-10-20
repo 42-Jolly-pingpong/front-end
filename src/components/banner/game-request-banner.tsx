@@ -20,12 +20,12 @@ const GameRequestBanner = () => {
 	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 		// 게임을 수락했을 경우 소켓 로직 추가
 	};
 
 	const handleCancel = () => {
-		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
+		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 	};
 
 	const handleProgress = (value: number) => {
