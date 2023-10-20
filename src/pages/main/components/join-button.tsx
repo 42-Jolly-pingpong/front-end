@@ -4,13 +4,16 @@ import YellowButtonXl from 'components/button/yellow-button-xl';
 import GameWaitModal from 'components/modal/game-wait-modal';
 import { gameWaitState } from 'ts/states/game/game-wait-state';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
+import { gameBannerState } from 'ts/states/game/game-banner-state';
 
 const JoinButton = () => {
 	const [modal, setModal] = useState(false);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const resetGameWait = useResetRecoilState(gameWaitState);
+	const resetGameBanner = useResetRecoilState(gameBannerState);
 
 	const handleButton = () => {
+		resetGameBanner();
 		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
 		setModal(true);
 	};

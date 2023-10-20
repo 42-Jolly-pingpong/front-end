@@ -12,11 +12,12 @@ import { GAME_REQ_MSG } from 'constants/messages';
 import {
 	COUNTDOWN_REQUEST_INTERVAL,
 	COUNTDOWN_REQUEST_VALUE,
+	PROGRESS_DEFAULT_VALUE,
 } from 'constants/values';
 
 const GameRequestBanner = () => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
-	const [progressValue, setProgressValue] = useState(100);
+	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
 		setGameBanner({ ...gameBanner, banner: GameBanner.NONE });
@@ -39,7 +40,7 @@ const GameRequestBanner = () => {
 				end={handleCancel}
 				onTick={handleProgress}
 			/>
-			<div className='fixed z-50 flex justify-center w-full h-full mt-6'>
+			<div className='fixed z-50 flex justify-center w-full mt-6'>
 				<div className='fixed w-11/12 border rounded bg-white '>
 					<div className='flex justify-between p-4 items-center'>
 						<div className='flex'>
