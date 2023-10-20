@@ -1,4 +1,4 @@
-import { GameMode } from 'ts/enums/game-mode.enum';
+import { GameMode } from 'ts/enums/game/game-mode.enum';
 import { GameHistory } from 'ts/interfaces/game-history.model';
 
 const winRateData: GameHistory[] = [

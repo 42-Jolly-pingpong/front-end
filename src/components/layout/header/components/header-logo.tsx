@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
+import LogoImage from '/images/logo.png';
 
 const HeaderLogo = () => {
 	return (
 		<Link to='/' className='flex items-center p-1'>
-			<img src='images/logo.png' />
-			<div className='font-bold'>졸리핑퐁</div>
+			<img src={LogoImage} />
+			<div className='font-bold'>죠리핑퐁</div>
 		</Link>
 	);
 };

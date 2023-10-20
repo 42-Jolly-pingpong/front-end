@@ -10,6 +10,8 @@ export default defineConfig({
 		alias: {
 			api: '/src/api',
 			src: '/src',
+			constants: '/src/constants',
+			images: '/images',
 			components: '/src/components',
 			pages: '/src/pages',
 			ts: '/src/ts',

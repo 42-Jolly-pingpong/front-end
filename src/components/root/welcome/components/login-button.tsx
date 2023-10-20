@@ -1,5 +1,9 @@
 import { Button } from 'flowbite-react';
 
+const handleLogin = async () => {
+	location.href = 'http://localhost:3000/auth/intra';
+};
+
 const LoginButton = () => {
 	return (
 		<Button color='gray' size='xl' className='border-2' onClick={handleLogin}>
@@ -7,10 +11,6 @@ const LoginButton = () => {
 			<div className='ml-2 mb-1 font-bold'>계정으로 로그인 </div>
 		</Button>
 	);
-};
-
-const handleLogin = async () => {
-	location.href = 'http://localhost:3000/auth/intra';
 };
 
 export default LoginButton;

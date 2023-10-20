@@ -1,47 +1,23 @@
-import { useEffect, useState } from 'react';
-import XButton from 'components/button/x-button';
-import BackDrop from 'components/modal/utils/backdrop';
+import { useRecoilValue } from 'recoil';
+import GameMatchModal from 'components/modal/game-search-modal';
+import GameModeModal from 'components/modal/game-mode-modal';
+import ModalProps from 'ts/interfaces/game/modal-props';
+import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
+import { gameWaitState } from 'ts/states/game/game-wait-state';
 
-const GameWaitModal = () => {
-	const [timeValue, setTimeValue] = useState(0);
+// 게임 관련 모달들
+const GameWaitModal: React.FC<ModalProps> = ({ show, onClose }) => {
+	const gameWait = useRecoilValue(gameWaitState);
 
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setTimeValue((t) => t + 1);
-		}, 1000);
-
-		return () => {
-			clearInterval(timer);
-			console.log('hi');
-		};
-	}, []);
-
-	useEffect(() => {
-		return () => {
-			console.log('modal closed');
-		};
-	}, []);
-
-	const formatTime = (time: number) => {
-		const minutes = Math.floor(time / 60);
-		const seconds = time % 60;
-		return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(
-			2,
-			'0'
-		)}`;
-	};
-
-	return (
-		<dialog id='gameWaitModal' className='modal'>
-			<form method='dialog' className='modal-box'>
-				<XButton />
-				<div className='font-bold mb-1'> Finding a Match... </div>
-				<div className='loading loading-dots loading-lg'></div>
-				<div> {formatTime(timeValue)} </div>
-			</form>
-			<BackDrop />
-		</dialog>
-	);
+	//console.log(gameWait);
+	switch (gameWait.status) {
+		case GameWaitStatus.MODE: // 게임 모드를 고르는 모달
+			return <GameModeModal show={show} onClose={onClose} />;
+		case GameWaitStatus.SEARCH: // 게임 대전자를 찾는 모달
+			return <GameMatchModal show={show} onClose={onClose} />;
+		default:
+			return;
+	}
 };
 
 export default GameWaitModal;
