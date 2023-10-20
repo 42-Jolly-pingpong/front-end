@@ -2,19 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { socket } from '../../../socket/socket';
 import { GameInfo, GameInfoType } from 'ts/states/game/game-info.state';
 import { useRecoilValue } from 'recoil';
-
-interface Object {
-	x: number;
-	y: number;
-	width: number;
-	height: number;
-}
-
-interface ObjectInfo {
-	ball: Object;
-	player1: Object;
-	player2: Object;
-}
+import ObjectInfo from 'ts/interfaces/game/object-info.model';
+import RoundInfo from './roundInfo';
 
 const initialObjectInfo: ObjectInfo = {
 	ball: { x: 0, y: 0, width: 0, height: 0 },
@@ -26,6 +15,9 @@ function GameCanvas() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 	const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
+	const [isWaitRound, setIsWaitRound] = useState<boolean>(false);
+	const [turn, setTurn] = useState<number>(1);
+	const [round, setRound] = useState<number>(1);
 	const gameInfo: GameInfoType = useRecoilValue(GameInfo);
 
 	const [ObjectInfo, setObjectInfo] = useState<ObjectInfo>(initialObjectInfo);
@@ -54,16 +46,23 @@ function GameCanvas() {
 				player2: newObjectInfo.player2,
 			}));
 		});
-		if (gameInfo.position == 1) {
-			socket.emit('getGameData', gameInfo.roomName);
-		}
+
+		socket.on('waitRound', (round, turn) => {
+			setRound(round);
+			setTurn(turn);
+			setIsWaitRound(true);
+		});
+
 
 		return () => {
-			socket.off('getGameData');
-		}
+			socket.emit('exitGame', gameInfo.roomName, gameInfo.position);
+		};
 	}, []);
 
-	
+	useEffect(() => {
+		if (!isWaitRound && gameInfo.position === 1)
+			socket.emit('getGameData', gameInfo.roomName)
+	}, [isWaitRound])
 
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
@@ -89,7 +88,6 @@ function GameCanvas() {
 
 		window.addEventListener('keydown', handleKeyPress);
 		window.addEventListener('keyup', handleKeyUp);
-
 
 		return () => {
 			window.removeEventListener('keydown', handleKeyPress);
@@ -142,7 +140,15 @@ function GameCanvas() {
 	}, [ObjectInfo]);
 
 	return (
-		<canvas ref={canvasRef} className='absolute border-2 border-black'></canvas>
+		<div className='flex flex-col items-center justify-center h-screen'>
+			<canvas
+				ref={canvasRef}
+				className='absolute border-2 border-white'
+			></canvas>
+			{isWaitRound ? (
+				<RoundInfo round={round} turn={turn} setIsWaitRound={setIsWaitRound} />
+			) : null}
+		</div>
 	);
 }
 
