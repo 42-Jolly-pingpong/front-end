@@ -1,28 +1,25 @@
-import FriendUnfriendModal from 'components/friend/sidebar/modal/friend-unfriend-modal';
-import { Dropdown, Modal } from 'flowbite-react';
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { Dropdown } from 'flowbite-react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import User from 'ts/interfaces/user.model';
+import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
+import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-state';
 
 interface FriendInfoProps {
 	user: User;
 }
 
 const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
-	const [unfriendModalState, setUnfriendModalState] = useState(false);
-	const [bannedModalState, setBannedModalState] = useState(false);
+	const [, setModalState] = useRecoilState(friendSidebarModalState);
 
 	const handleUnfriend = () => {
-		setUnfriendModalState(true);
+		console.log('unfriend가 클릭되었음');
+		setModalState({ type: FriendSidebarModalStatus.UNFRIEND, friend: user });
 	};
 
 	const handleBanned = () => {
-		setBannedModalState(true);
-	};
-
-	const handleClose = () => {
-		setUnfriendModalState(false);
-		setBannedModalState(false);
+		console.log('banned가 클릭되었음');
+		setModalState({ type: FriendSidebarModalStatus.BANNED, friend: user });
 	};
 
 	return (
@@ -45,13 +42,6 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 			<Dropdown.Item className='text-red-500' onClick={handleBanned}>
 				차단하기
 			</Dropdown.Item>
-			<FriendUnfriendModal
-				show={unfriendModalState}
-				onClose={handleClose}
-				user={user}
-			/>
-
-			<Modal show={bannedModalState} onClose={handleClose} user={user} />
 		</Dropdown>
 	);
 };
