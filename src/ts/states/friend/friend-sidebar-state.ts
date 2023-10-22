@@ -1,15 +1,18 @@
 import { atom, selector } from 'recoil';
 
 export const friendSidebarState = atom({
-	key: 'friendListState',
+	key: 'friendSidebarState',
 	default: false,
 });
 
 export const friendSidebarSelector = selector({
-	key: 'friendListSelector',
+	key: 'friendSidebarSelector',
 	get: ({ get }) => {
 		const state = get(friendSidebarState);
 
 		return state;
+	},
+	set: ({ set }, value) => {
+		set(friendSidebarState, value);
 	},
 });

@@ -7,7 +7,7 @@ import FriendSidebarNormal from 'components/friend/sidebar/friend-sidebar-normal
 const FriendSidebar = () => {
 	const friendListState = useRecoilValue(friendSidebarListState);
 
-	if (friendListState.status !== FriendListStatus.EMPTY) {
+	if (friendListState.status === FriendListStatus.EMPTY) {
 		return <FriendSidebarEmpty />;
 	}
 	return <FriendSidebarNormal />;
