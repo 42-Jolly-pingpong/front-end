@@ -2,7 +2,7 @@ import { Button } from 'flowbite-react';
 import useChangeSidebar from 'hooks/use-change-sidebar';
 import Status from 'pages/chat/components/status';
 import UserImg from 'pages/chat/components/user-img';
-import { UserStatus } from 'ts/enums/user-status.enum';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
 import { User } from 'ts/interfaces/user.model';
 
 const DmHeader = (props: { mate: User }) => {

@@ -13,26 +13,23 @@ const sendAPI = async ({
 	headers,
 	body,
 }: ApiOptions): Promise<any> => {
-	try {
-		const response = await fetch(`${BASE_URL}${url}`, {
-			method,
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-				origin: 'http://localhost:5173',
-				...headers,
-			},
-			body: body ? JSON.stringify(body) : undefined,
-		});
+	const response = await fetch(`${BASE_URL}${url}`, {
+		method,
+		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json',
+			origin: 'http://localhost:5173',
+			...headers,
+		},
+		body: body ? JSON.stringify(body) : undefined,
+	});
 
-		if (response.ok) {
-			const data = await response.text();
-			return data ? JSON.parse(data) : {};
-		} else {
-			console.log('response 실패');
-		}
-	} catch (e) {
-		console.log(e);
+	if (response.ok) {
+		const data = await response.text();
+		return data ? JSON.parse(data) : {};
+	} else {
+		console.log('response 실패');
+		return null;
 	}
 };
 

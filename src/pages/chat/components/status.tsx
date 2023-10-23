@@ -1,4 +1,4 @@
-import { UserStatus } from 'ts/enums/user-status.enum';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
 
 const Status = (props: { status: UserStatus }) => {
 	switch (props.status) {
