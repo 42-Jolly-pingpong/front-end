@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Modal } from 'flowbite-react';
 import UseCountdown from 'hooks/use-countdown';
-import WhiteButtonXl from 'components/button/white-button-xl';
 import TimeSpinner from 'components/modal/item/time-spinner';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
@@ -13,6 +12,7 @@ import {
 	COUNTDOWN_MATCH_INTERVAL,
 	COUNTDOWN_MATCH_VALUE,
 } from 'constants/values';
+import WhiteButton from 'components/button/white-button';
 
 const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const [seconds, setSeconds] = useState(COUNTDOWN_MATCH_VALUE);
@@ -49,7 +49,10 @@ const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 			<Modal.Body className='flex flex-col items-center text-center relative'>
 				<div className='text-xl font-extrabold mb-6'>대전자 찾는중...</div>
 				<TimeSpinner seconds={seconds} />
-				<WhiteButtonXl onClick={handleCancel}>취소하기</WhiteButtonXl>
+				<div className='mt-6' />
+				<WhiteButton size='xl' onClick={handleCancel}>
+					<div className='font-bold'>취소하기</div>
+				</WhiteButton>
 				<UseCountdown
 					value={seconds}
 					interval={COUNTDOWN_MATCH_INTERVAL}

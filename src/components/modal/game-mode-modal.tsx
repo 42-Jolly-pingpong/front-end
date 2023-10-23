@@ -1,10 +1,10 @@
-import { Modal } from 'flowbite-react';
 import { useRecoilState } from 'recoil';
-import YellowButtonLg from 'components/button/yellow-button-lg';
+import { Modal } from 'flowbite-react';
+import YellowButton from 'components/button/yellow-button';
 import GameModeRadio from 'components/modal/item/game-mode-radio';
+import ModalProps from 'ts/interfaces/game/modal-props';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
 import { gameWaitState } from 'ts/states/game/game-wait-state';
-import ModalProps from 'ts/interfaces/game/modal-props';
 
 const GameModeModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
@@ -18,7 +18,9 @@ const GameModeModal: React.FC<ModalProps> = ({ show, onClose }) => {
 			<Modal.Body className='flex flex-col my-2 m-6 '>
 				<div className='font-bold text-xl text-gray-900'>게임 옵션 선택</div>
 				<GameModeRadio />
-				<YellowButtonLg onClick={handleGameStart}> 게임 시작 </YellowButtonLg>
+				<YellowButton size='xl' onClick={handleGameStart}>
+					<div className='font-bold'>게임 시작 </div>
+				</YellowButton>
 			</Modal.Body>
 		</Modal>
 	);

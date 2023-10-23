@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import UseCountdown from 'hooks/use-countdown';
 import BannerIcon from 'components/banner/item/banner-icon';
-import CancelButtonXs from 'components/button/cancel-button-xs';
-import YellowButtonXs from 'components/button/yellow-button-xs';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import BannerMessage from 'components/banner/item/banner-message';
@@ -14,6 +12,8 @@ import {
 	COUNTDOWN_REQUEST_VALUE,
 	PROGRESS_DEFAULT_VALUE,
 } from 'constants/values';
+import YellowButton from 'components/button/yellow-button';
+import CancelButton from 'components/button/cancel-button';
 
 const GameRequestBanner = () => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
@@ -48,8 +48,11 @@ const GameRequestBanner = () => {
 							<BannerMessage message={GAME_REQ_MSG} />
 						</div>
 						<div className='flex items-center'>
-							<YellowButtonXs onClick={handleMatch}>승낙하기</YellowButtonXs>
-							<CancelButtonXs onClick={handleCancel} />
+							<YellowButton size='xs' onClick={handleMatch}>
+								승낙하기
+							</YellowButton>
+
+							<CancelButton size='xs' onClick={handleCancel} />
 						</div>
 					</div>
 					<BannerProgress progress={progressValue} />
