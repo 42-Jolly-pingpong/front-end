@@ -1,6 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Avatar, Dropdown } from 'flowbite-react';
 import { useRecoilState } from 'recoil';
+import { Avatar, Dropdown } from 'flowbite-react';
+import { FiUser } from 'react-icons/fi';
+import { FaArrowRightFromBracket } from 'react-icons/fa6';
+import { Link, useNavigate } from 'react-router-dom';
 import { userState } from 'ts/states/user-state';
 import { userSignOut } from 'api/auth-api';
 
@@ -26,10 +28,16 @@ const HeaderProfileIcon = () => {
 			label={<Avatar img='images/jollypong2.jpeg' rounded className='mr-3' />}
 		>
 			<Link to={`profile/${user!.nickname}`}>
-				<Dropdown.Item className='text-gray-700'>프로필 보기</Dropdown.Item>
+				<Dropdown.Item className='text-gray-700'>
+					<FiUser />
+					<div className='pl-3'>프로필 보기</div>
+				</Dropdown.Item>
 			</Link>
 			<Link to={'/'} onClick={handleSignOut}>
-				<Dropdown.Item className='text-red-500'>로그아웃</Dropdown.Item>
+				<Dropdown.Item className='text-red-500'>
+					<FaArrowRightFromBracket />
+					<div className='pl-3'>로그아웃</div>
+				</Dropdown.Item>
 			</Link>
 		</Dropdown>
 	);

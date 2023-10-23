@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Modal } from 'flowbite-react';
 import UseCountdown from 'hooks/use-countdown';
+import WhiteButton from 'components/button/white-button';
 import TimeSpinner from 'components/modal/item/time-spinner';
+import ModalProps from 'ts/interfaces/game/modal-props';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
-import { gameBannerState } from 'ts/states/game/game-banner-state';
 import { gameWaitState } from 'ts/states/game/game-wait-state';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
-import ModalProps from 'ts/interfaces/game/modal-props';
+import { gameBannerState } from 'ts/states/game/game-banner-state';
 import {
 	COUNTDOWN_MATCH_INTERVAL,
 	COUNTDOWN_MATCH_VALUE,
 } from 'constants/values';
-import WhiteButton from 'components/button/white-button';
 
 const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const [seconds, setSeconds] = useState(COUNTDOWN_MATCH_VALUE);

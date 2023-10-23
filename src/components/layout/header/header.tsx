@@ -8,10 +8,12 @@ const Header = () => {
 
 	if (user) {
 		return (
-			<header className='flex justify-between h-20 p-6 m-0'>
-				<HeaderLogo />
-				<HeaderRight />
-			</header>
+			<div className='flex justify-center'>
+				<header className='flex justify-between h-84 p-6 w-11/12'>
+					<HeaderLogo />
+					<HeaderRight />
+				</header>
+			</div>
 		);
 	}
 	return null;
