@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react';
 import { socket } from '../../socket/socket';
 import JoinButton from 'pages/main/components/join-button';
 import JoinIntro from 'pages/main/components/join-intro';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
+import { userState } from 'ts/states/user-state';
 
 const Main = () => {
 	const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
-	const [isGameStart, setIsGameStart] = useRecoilState(gameStartState);
+	const isGameStart = useRecoilValue(gameStartState);
+	const userInfo = useRecoilValue(userState)
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -19,13 +21,14 @@ const Main = () => {
 		function onDisconnect() {
 			setIsConnected(false);
 		}
+		
 		socket.on('connect', onConnect);
 		socket.on('disconnect', onDisconnect);
+		socket.emit('setId', userInfo?.id)
 	}, []);
 
 	useEffect(() => {
 		if (isGameStart) {
-			setIsGameStart(false);
 			navigate('/game');
 		}
 	});

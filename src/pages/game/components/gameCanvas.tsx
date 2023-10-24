@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { socket } from '../../../socket/socket';
-import { GameInfo, GameInfoType } from 'ts/states/game/game-info.state';
+import { gameInfoState, GameInfoType } from 'ts/states/game/game-info.state';
 import { useRecoilValue } from 'recoil';
 import ObjectInfo from 'ts/interfaces/game/object-info.model';
 import RoundInfo from './roundInfo';
@@ -18,7 +18,7 @@ function GameCanvas() {
 	const [isWaitRound, setIsWaitRound] = useState<boolean>(false);
 	const [turn, setTurn] = useState<number>(1);
 	const [round, setRound] = useState<number>(1);
-	const gameInfo: GameInfoType = useRecoilValue(GameInfo);
+	const gameInfo: GameInfoType = useRecoilValue(gameInfoState);
 
 	const [objectInfo, setObjectInfo] = useState<ObjectInfo>(initialObjectInfo);
 
@@ -54,7 +54,7 @@ function GameCanvas() {
 		});
 
 		return () => {
-			socket.emit('exitGame', gameInfo.roomName, gameInfo.position);
+			socket.emit('playerDesertion', gameInfo.roomName, gameInfo.position);
 		};
 	}, []);
 
@@ -152,7 +152,7 @@ function GameCanvas() {
 	}, [objectInfo]);
 
 	return (
-		<div className='flex flex-col items-center justify-center h-screen'>
+		<div className='flex flex-col items-center justify-center h-[610px]'>
 			<canvas
 				ref={canvasRef}
 				className='absolute border-2 border-white'

@@ -26,11 +26,11 @@ function App() {
 					<Routes>
 						<Route element={<Layout />}>
 							<Route path='/' element={<Root />} index />
-							<Route path='/game' element={<Game />} />
 							<Route path='/profile/:user_idx' element={<Profile />} />
 							<Route path='/chat' element={<Chat />} />
 							<Route path='/sign-up' element={<SignUp />} />
 						</Route>
+						<Route path='/game' element={<Game />} />
 						<Route path='*' element={<h1>NOT FOUND</h1>} />
 					</Routes>
 				</BrowserRouter>
