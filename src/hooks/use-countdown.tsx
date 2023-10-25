@@ -20,7 +20,7 @@ interface CountdownProps {
 	onTick: (value: number) => void;
 }
 
-const UseCountdown: React.FC<CountdownProps> = ({
+const useCountdown: React.FC<CountdownProps> = ({
 	value,
 	interval,
 	onTick,
@@ -45,4 +45,4 @@ const UseCountdown: React.FC<CountdownProps> = ({
 	return null;
 };
 
-export default UseCountdown;
+export default useCountdown;
