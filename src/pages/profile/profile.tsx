@@ -7,10 +7,6 @@ import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import useRedirectHome from 'hooks/use-redirect-home';
 import { getFriendState } from 'api/friend-api';
 import { getUserByNickname } from 'api/user-api';
-import ProfileNormal from 'pages/profile/profile-normal';
-import ProfileUnknown from 'pages/profile/profile-unknown';
-import ProfileBadge from 'pages/profile/components/header/field/profile-badge';
-import ProfileInfo from 'pages/profile/components/header/field/profile-info';
 import ProfileHeader from 'pages/profile/components/header/profile-header';
 import ProfileTab from 'pages/profile/components/tab/profile-tab';
 

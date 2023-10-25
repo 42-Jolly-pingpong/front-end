@@ -1,5 +1,17 @@
+import { useRecoilValue } from 'recoil';
+import { profileState } from 'ts/states/profile/profile-state';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import ProfileTabMine from 'pages/profile/components/tab/profile-tab-mine';
+import ProfileTabNormal from 'pages/profile/components/tab/profile-tab-normal';
+
 const ProfileTab = () => {
-	return <div> 네비게이션 3개 버튼</div>;
+	const profile = useRecoilValue(profileState);
+
+	if (profile.type === ProfileStatus.MINE) {
+		return <ProfileTabMine />;
+	} else {
+		return <ProfileTabNormal />;
+	}
 };
 
 export default ProfileTab;
