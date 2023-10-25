@@ -1,9 +1,9 @@
 import { Tabs } from 'flowbite-react';
 import { MdDashboard } from 'react-icons/md';
 import { FiUser, FiUsers } from 'react-icons/fi';
-import ProfileBlockedList from 'pages/profile/components/tab/item/profile-blocked-list';
-import ProfileFriendList from 'pages/profile/components/tab/item/profile-friend-list';
-import ProfileGameHistory from 'pages/profile/components/tab/item/profile-game-history';
+import ProfileFriendListTab from 'pages/profile/components/tab/field/profile-friend-list-tab';
+import ProfileGameHistoryTab from 'pages/profile/components/tab/field/profile-game-history-tab';
+import ProfileBlockedListTab from 'pages/profile/components/tab/field/profile-blocked-list-tab';
 
 const ProfileTabMine = () => {
 	return (
@@ -13,13 +13,13 @@ const ProfileTabMine = () => {
 				className=' justify-center items-center w-3/5'
 			>
 				<Tabs.Item icon={MdDashboard} title='경기 전적'>
-					<ProfileGameHistory />
+					<ProfileGameHistoryTab />
 				</Tabs.Item>
 				<Tabs.Item icon={FiUsers} title='친구 목록'>
-					<ProfileFriendList />
+					<ProfileFriendListTab />
 				</Tabs.Item>
 				<Tabs.Item icon={FiUser} title='차단 목록'>
-					<ProfileBlockedList />
+					<ProfileBlockedListTab />
 				</Tabs.Item>
 			</Tabs.Group>
 		</>
