@@ -138,9 +138,14 @@ export const addBlockedFriend = async (id: number): Promise<void> => {
 
 export const getFriendRelation = async (id: number): Promise<ProfileStatus> => {
 	try {
+		const token = getJwtValue();
+
 		const status = await sendAPI({
 			method: 'GET',
 			url: '/friends/' + id + '/state',
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
 		});
 		return status;
 	} catch (e) {

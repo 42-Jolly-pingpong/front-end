@@ -6,7 +6,6 @@ interface BlockedListProps {
 }
 
 const ProfileBlockedList: React.FC<BlockedListProps> = ({ blockedUsers }) => {
-	console.log(blockedUsers);
 	return (
 		<div className='flex flex-col items-center'>
 			{blockedUsers.map((blocked: User) => (

@@ -1,4 +1,3 @@
-import { BiUser } from 'react-icons/bi';
 import { useRecoilValue } from 'recoil';
 import { profileState } from 'ts/states/profile/profile-state';
 import { Avatar } from 'flowbite-react';

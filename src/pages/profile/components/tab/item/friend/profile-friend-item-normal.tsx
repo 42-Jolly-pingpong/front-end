@@ -17,7 +17,6 @@ const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
 		ProfileStatus.UNKNOWN
 	);
 
-	// [api 친구와 나와의 관계]
 	useEffect(() => {
 		const fetchRelation = async () => {
 			setRelation(await getFriendRelation(profile.user!.id));
@@ -38,11 +37,7 @@ const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
 					<div className='text-xs text-gray-500'>{user.email}</div>
 				</div>
 				<div className='pl-3' />
-				<ProfileFriendButton
-					profileUser={profile.user!}
-					relation={relation}
-					onClick={handleClick}
-				/>
+				<ProfileFriendButton relation={relation} onClick={handleClick} />
 			</div>
 		</>
 	);

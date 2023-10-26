@@ -1,22 +1,41 @@
+import { getFriendRelation } from 'api/friend-api';
+import GrayButton from 'components/button/gray-button';
+import ProfileHeaderSocialButton from 'pages/profile/components/button/profile-header-social-button';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { profileState } from 'ts/states/profile/profile-state';
 
 const ProfileSocialNormal = () => {
 	const profile = useRecoilValue(profileState);
-	return <div></div>;
-	//const
-	//// 친구(회색), 친구 요청됨(회색) , +친구 추가(노랑), 차단됨(빨강)
+	const [relation, setRelation] = useState<ProfileStatus>(
+		ProfileStatus.UNKNOWN
+	);
+	const handleClick = () => {
+		console.log('이벤트');
+	};
 
-	//return (
-	//	<div className='flex items-center h-9'>
-	//		<div className='text-xl text-center pr-5'>{profile.user?.nickname}</div>
-	//		<GrayButton size='xs' onClick={handleEdit}>
-	//			<div className='font-bold'>프로필 편집</div>
-	//		</GrayButton>
-	//		<div className='pr-2' />
-	//		<FiSettings onClick={handleLogout} className='hover:cursor-pointer' />
-	//	</div>
-	//);
+	const handleMessage = () => {
+		console.log('메시지 보내기');
+	};
+
+	useEffect(() => {
+		const fetchRelation = async () => {
+			setRelation(await getFriendRelation(profile.user!.id));
+		};
+		fetchRelation();
+	}, []);
+
+	return (
+		<div className='flex items-center h-9'>
+			<div className='text-xl text-center pr-5'>{profile.user?.nickname}</div>
+			<ProfileHeaderSocialButton relation={relation} onClick={handleClick} />
+			<div className='pr-2' />
+			<GrayButton size='xs' onClick={handleMessage}>
+				메시지
+			</GrayButton>
+		</div>
+	);
 };
 
 export default ProfileSocialNormal;

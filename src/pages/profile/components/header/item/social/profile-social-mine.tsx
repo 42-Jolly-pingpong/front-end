@@ -10,10 +10,6 @@ const ProfileSocialMine = () => {
 		console.log('edit 버튼 누름');
 	};
 
-	const handleLogout = () => {
-		console.log('logout 로직');
-	};
-
 	return (
 		<div className='flex items-center min-w-80 min-h-8'>
 			<div className='text-xl text-center pr-5'>{profile.user?.nickname}</div>
