@@ -1,14 +1,15 @@
-import GrayButton from 'components/button/gray-button';
 import { Avatar } from 'flowbite-react';
+import GrayButton from 'components/button/gray-button';
 import User from 'ts/interfaces/user.model';
+import { deleteFriend } from 'api/friend-api';
 
 interface FriendProps {
 	user: User;
 }
 
-const ProfileFriendItem: React.FC<FriendProps> = ({ user }) => {
-	const handleDelete = () => {
-		console.log('친구 삭제 API');
+const ProfileFriendItemMine: React.FC<FriendProps> = ({ user }) => {
+	const handleDelete = async () => {
+		await deleteFriend(user.id);
 	};
 
 	return (
@@ -28,4 +29,4 @@ const ProfileFriendItem: React.FC<FriendProps> = ({ user }) => {
 	);
 };
 
-export default ProfileFriendItem;
+export default ProfileFriendItemMine;

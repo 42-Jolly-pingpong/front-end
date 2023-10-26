@@ -1,0 +1,7 @@
+export enum ProfileFriendStatus {
+	FRIEND = 'FRIEND',
+	REQUESTED = 'REQUESTED',
+	BLOCKED = 'BLOCKED',
+	UNKNOWN = 'UNKNOWN',
+	UNDEFINED = 'UNDEFINED',
+}

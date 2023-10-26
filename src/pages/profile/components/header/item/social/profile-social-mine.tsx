@@ -20,8 +20,6 @@ const ProfileSocialMine = () => {
 			<GrayButton size='xs' onClick={handleEdit}>
 				<div className='font-bold'>프로필 편집</div>
 			</GrayButton>
-			<div className='pr-2' />
-			<FiSettings onClick={handleLogout} className='hover:cursor-pointer' />
 		</div>
 	);
 };

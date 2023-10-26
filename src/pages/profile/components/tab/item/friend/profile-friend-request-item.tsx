@@ -1,3 +1,4 @@
+import { acceptFriendRequest, denyFriendRequest } from 'api/friend-api';
 import GrayButton from 'components/button/gray-button';
 import YellowButton from 'components/button/yellow-button';
 import { Avatar } from 'flowbite-react';
@@ -8,12 +9,12 @@ interface requestProps {
 }
 
 const ProfileFriendRequestItem: React.FC<requestProps> = ({ user }) => {
-	const handleAccept = () => {
-		console.log('친구 요청 추가 api 붙이기');
+	const handleAccept = async () => {
+		await acceptFriendRequest(user.id);
 	};
 
-	const handleDeny = () => {
-		console.log('친구 요청삭제 api 붙이기');
+	const handleDeny = async () => {
+		await denyFriendRequest(user.id);
 	};
 
 	return (

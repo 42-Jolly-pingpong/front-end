@@ -3,6 +3,10 @@ import { getJwtValue } from 'components/utils/cookieUtils';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import User from 'ts/interfaces/user.model';
 
+/**
+ * url : friends/
+ */
+
 export const getFriendList = async (id: number): Promise<User[]> => {
 	try {
 		const token = getJwtValue();
@@ -37,6 +41,63 @@ export const deleteFriend = async (id: number): Promise<void> => {
 	}
 };
 
+/**
+ * url: friends/request/
+ */
+export const getFriendRequestList = async (id: number): Promise<User[]> => {
+	try {
+		const token = getJwtValue();
+
+		const requestList = await sendAPI({
+			method: 'GET',
+			url: '/friends/request/' + id,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return requestList;
+	} catch (e) {
+		console.log(e);
+		return [];
+	}
+};
+
+export const acceptFriendRequest = async (id: number): Promise<void> => {
+	try {
+		const token = getJwtValue();
+
+		await sendAPI({
+			method: 'POST',
+			url: '/friends/request/' + id,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+export const denyFriendRequest = async (id: number): Promise<void> => {
+	try {
+		const token = getJwtValue();
+
+		await sendAPI({
+			method: 'DELETE',
+			url: '/friends/request/' + id,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+/**
+ * url: friends/blocked/
+ */
+
 export const addBlockedFriend = async (id: number): Promise<void> => {
 	try {
 		const token = getJwtValue();
@@ -52,6 +113,10 @@ export const addBlockedFriend = async (id: number): Promise<void> => {
 		console.log(e);
 	}
 };
+
+/**
+ * url: friends/{id}/ + ...
+ */
 
 export const getFriendListBySearch = async (
 	id: number,

@@ -1,6 +1,6 @@
 import { BsRocketTakeoff } from 'react-icons/bs';
 
-const ProfileNoMatchList = () => {
+const ProfileNoGameHistory = () => {
 	return (
 		<div className='flex flex-col items-center justify-center pt-4'>
 			<div className='flex w-16 h-16 border-2 border-black rounded-full items-center'>
@@ -11,4 +11,4 @@ const ProfileNoMatchList = () => {
 	);
 };
 
-export default ProfileNoMatchList;
+export default ProfileNoGameHistory;

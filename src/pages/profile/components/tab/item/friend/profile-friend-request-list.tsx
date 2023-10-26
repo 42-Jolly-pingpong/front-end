@@ -8,10 +8,16 @@ interface RequestListProps {
 const ProfileFriendRequestList: React.FC<RequestListProps> = ({
 	requestFriends,
 }) => {
+	if (requestFriends === null) {
+		return;
+	}
 	return (
 		<div className='flex flex-col items-center'>
-			{requestFriends.map((friend: User) => (
-				<ProfileFriendRequestItem user={friend} key={friend.id} />
+			{requestFriends.map((requestFriends: User) => (
+				<ProfileFriendRequestItem
+					user={requestFriends}
+					key={requestFriends.id}
+				/>
 			))}
 		</div>
 	);
