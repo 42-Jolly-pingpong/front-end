@@ -1,13 +1,26 @@
-import ProfileNoBlockedList from 'pages/profile/components/tab/item/blocked/profile-no-blocked-list';
 import { useRecoilValue } from 'recoil';
-import { profileState } from 'ts/states/profile/profile-state';
+import { useEffect, useState } from 'react';
+import User from 'ts/interfaces/user.model';
+import { userState } from 'ts/states/user-state';
+import ProfileBlockedList from 'pages/profile/components/tab/item/blocked/profile-blocked-list';
+import ProfileNoBlockedList from 'pages/profile/components/tab/item/blocked/profile-no-blocked-list';
+import { getBlockedList } from 'api/friend-api';
 
 const ProfileBlockedListTab = () => {
-	const profile = useRecoilValue(profileState);
+	const user = useRecoilValue(userState);
+	const [blockedList, setBlockedList] = useState<User[]>([]);
 
-	// [api] 블락 리스트 받아오기
-	// if(블락 리스트가 없으면)
-	return <ProfileNoBlockedList />;
+	useEffect(() => {
+		const fetchBlocked = async () => {
+			setBlockedList(await getBlockedList(user!.id));
+		};
+		fetchBlocked();
+	}, []);
+
+	if (blockedList.length === 0) {
+		return <ProfileNoBlockedList />;
+	}
+	return <ProfileBlockedList blockedUsers={blockedList} />;
 };
 
 export default ProfileBlockedListTab;

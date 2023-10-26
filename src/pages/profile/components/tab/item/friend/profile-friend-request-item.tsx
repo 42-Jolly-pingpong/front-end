@@ -35,21 +35,6 @@ const ProfileFriendRequestItem: React.FC<requestProps> = ({ user }) => {
 			</div>
 		</>
 	);
-	return <div>hi</div>;
-	{
-		/*<Avatar size='sm' />
-			<div className='flex flex-col w-48 pl-2'>
-				<div>(유저 id)</div>
-				<div>(유저 email)</div>
-			</div>
-			<YellowButton size='xs' onClick={handleAccept}>
-				확인
-			</YellowButton>
-			<div className='px-1' />
-			<GrayButton size='xs' onClick={handleDeny}>
-				삭제
-			</GrayButton>*/
-	}
 };
 
 export default ProfileFriendRequestItem;

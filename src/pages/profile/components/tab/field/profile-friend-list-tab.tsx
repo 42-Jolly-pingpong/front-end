@@ -19,7 +19,8 @@ const ProfileFriendListTab = () => {
 			setFriendList(await getFriendList(profile.user!.id));
 			setFriendRequestList(await getFriendRequestList(profile.user!.id));
 
-			if (friendList.length === 0 && friendRequestList.length == 0) {
+			if (friendList.length == 0 && friendRequestList.length == 0) {
+				console.log('여기?');
 				return <ProfileNoFriendList />;
 			}
 		};
@@ -28,7 +29,10 @@ const ProfileFriendListTab = () => {
 		}
 	}, [profile]);
 
-	if (profileType === ProfileStatus.UNKNOWN) {
+	if (
+		profileType === ProfileStatus.UNKNOWN ||
+		(friendList.length === 0 && friendRequestList.length === 0)
+	) {
 		return <ProfileNoFriendList />;
 	} else if (profileType === ProfileStatus.MINE) {
 		return (

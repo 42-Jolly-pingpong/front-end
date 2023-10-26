@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { Avatar } from 'flowbite-react';
 import User from 'ts/interfaces/user.model';
 import { profileState } from 'ts/states/profile/profile-state';
-import { ProfileFriendStatus } from 'ts/enums/profile/profile-friend-status.enum';
-import ProfileFriendButton from 'pages/profile/components/tab/button/profile-friend-button';
+import ProfileFriendButton from 'pages/profile/components/button/profile-friend-button';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import { getFriendRelation } from 'api/friend-api';
 
 interface FriendProps {
 	user: User;
@@ -12,17 +13,18 @@ interface FriendProps {
 
 const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
 	const profile = useRecoilValue(profileState);
-	const [relation, setRelation] = useState<ProfileFriendStatus>(
-		ProfileFriendStatus.UNKNOWN
+	const [relation, setRelation] = useState<ProfileStatus>(
+		ProfileStatus.UNKNOWN
 	);
 
 	// [api 친구와 나와의 관계]
 	useEffect(() => {
 		const fetchRelation = async () => {
-			setRelation(await getFriendRelation());
+			setRelation(await getFriendRelation(profile.user!.id));
 		};
 		fetchRelation();
 	}, []);
+
 	const handleClick = () => {
 		console.log('친구 삭제 API');
 	};

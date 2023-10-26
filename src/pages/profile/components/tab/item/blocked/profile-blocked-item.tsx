@@ -2,11 +2,11 @@ import GrayButton from 'components/button/gray-button';
 import { Avatar } from 'flowbite-react';
 import User from 'ts/interfaces/user.model';
 
-interface requestProps {
+interface blockedProps {
 	user: User;
 }
 
-const ProfileFriendRequestItem: React.FC<requestProps> = ({ user }) => {
+const ProfileBlockedItem: React.FC<blockedProps> = ({ user }) => {
 	const handleDelete = () => {
 		console.log('차단 해제 api 붙이기');
 	};
@@ -27,4 +27,4 @@ const ProfileFriendRequestItem: React.FC<requestProps> = ({ user }) => {
 	);
 };
 
-export default ProfileFriendRequestItem;
+export default ProfileBlockedItem;

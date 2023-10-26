@@ -98,6 +98,24 @@ export const denyFriendRequest = async (id: number): Promise<void> => {
  * url: friends/blocked/
  */
 
+export const getBlockedList = async (id: number): Promise<User[]> => {
+	try {
+		const token = getJwtValue();
+
+		const blockedList = await sendAPI({
+			method: 'GET',
+			url: '/friends/blocked/' + id,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return blockedList;
+	} catch (e) {
+		console.log(e);
+		return [];
+	}
+};
+
 export const addBlockedFriend = async (id: number): Promise<void> => {
 	try {
 		const token = getJwtValue();
@@ -117,6 +135,19 @@ export const addBlockedFriend = async (id: number): Promise<void> => {
 /**
  * url: friends/{id}/ + ...
  */
+
+export const getFriendRelation = async (id: number): Promise<ProfileStatus> => {
+	try {
+		const status = await sendAPI({
+			method: 'GET',
+			url: '/friends/' + id + '/state',
+		});
+		return status;
+	} catch (e) {
+		console.log(e);
+		return ProfileStatus.UNKNOWN;
+	}
+};
 
 export const getFriendListBySearch = async (
 	id: number,
