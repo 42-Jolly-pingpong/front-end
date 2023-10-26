@@ -1,18 +1,20 @@
 import { Modal } from 'flowbite-react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import YellowButtonLg from 'components/button/yellow-button-lg';
 import GameModeRadio from 'components/modal/item/game-mode-radio';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
 import { gameWaitState } from 'ts/states/game/game-wait-state';
 import ModalProps from 'ts/interfaces/game/modal-props';
 import { socket } from 'socket/socket';
+import { userState } from 'ts/states/user-state';
 
 const GameModeModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
+	const user = useRecoilValue(userState)
 
 	const handleGameStart = () => {
 		setGameWait({ ...gameWait, status: GameWaitStatus.SEARCH });
-		socket.emit('matching')
+		socket.emit('matching', user?.id)
 	};
 
 	return (

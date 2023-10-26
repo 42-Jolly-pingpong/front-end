@@ -59,7 +59,7 @@ function GameCanvas() {
 	}, []);
 
 	useEffect(() => {
-		if (!isWaitRound && gameInfo.position === 1)
+		if (!isWaitRound)
 			socket.emit('getGameData', gameInfo.roomName);
 	}, [isWaitRound]);
 
@@ -84,9 +84,13 @@ function GameCanvas() {
 				);
 			}
 		};
+		const preventClose = () => {
+			socket.emit('playerDesertion', gameInfo.roomName, gameInfo.position);
+		}
 
 		window.addEventListener('keydown', handleKeyPress);
 		window.addEventListener('keyup', handleKeyUp);
+		window.addEventListener('beforeunload', preventClose);
 
 		return () => {
 			window.removeEventListener('keydown', handleKeyPress);

@@ -1,30 +1,17 @@
-import { BiExit, BiMessageAlt } from 'react-icons/bi';
+import { BiExit } from 'react-icons/bi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { opponentInfoState } from 'ts/states/game/opponent-info-state';
-import { userState } from 'ts/states/user-state';
 import { AiOutlineMessage, AiOutlineUserAdd } from 'react-icons/ai';
-import { MdReplay } from 'react-icons/md';
 import { gameInfoState } from 'ts/states/game/game-info.state';
 import { socket } from 'socket/socket';
-import { useEffect, useState } from 'react';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { gameResultState } from 'ts/states/game/game-result-state';
+import Confetti from 'react-confetti';
 
 export function GameResult() {
 	const gameInfo = useRecoilValue(gameInfoState)
 	const gameResult = useRecoilValue(gameResultState);
-	const myInfo = useRecoilValue(userState);
-	const opponentInfo = useRecoilValue(opponentInfoState);
-	const [isExitOpponent, setIsExitOpponent] = useState<boolean>(false)
 	const setIsGameStart = useSetRecoilState(gameStartState);
 	
-	useEffect(() => {
-		socket.on('exitOpponent', () => {
-			setIsExitOpponent(true);
-		});
-	})
-
-	useEffect(() => {})
 
 	const exitEvent = () => {
 		socket.emit('endGame', gameInfo.roomName);
@@ -33,6 +20,7 @@ export function GameResult() {
 
 	return (
 		<div className='w-[1128px] h-[900px] flex-col justify-center items-center gap-20 inline-flex'>
+			{gameResult === gameInfo.position ? <Confetti /> : null}
 			<div className="text-center text-white text-9xl font-bold font-['Inter'] leading-[192px]">
 				{gameResult === gameInfo.position ? 'VICTORY' : 'DEFEAT'}
 			</div>
@@ -41,13 +29,13 @@ export function GameResult() {
 				</div>
 				<div className='self-stretch justify-center items-center gap-6 inline-flex'>
 					<div className='justify-start items-start gap-2 flex'>
-						<button className='px-5 py-2.5 rounded-lg border border-yellow-400 justify-center items-center gap-2 flex'>
+						<button className='px-5 py-2.5 rounded-lg border border-yellow-400 hover:bg-gray-500 justify-center items-center gap-2 flex'>
 							<AiOutlineUserAdd size='23px' color='#FDCE02' />
 							<div className="text-yellow-400 text-sm font-medium font-['Inter'] leading-[21px]">
 								친구 신청
 							</div>
 						</button>
-						<button className='px-5 py-2.5 rounded-lg border border-yellow-400 justify-center items-center gap-2 flex'>
+						<button className='px-5 py-2.5 rounded-lg border border-yellow-400 hover:bg-gray-500 justify-center items-center gap-2 flex'>
 							<AiOutlineMessage color='#FDCE02' size='23px' />
 							<div className="text-yellow-400 text-sm font-medium font-['Inter'] leading-[21px]">
 								메시지
@@ -55,13 +43,7 @@ export function GameResult() {
 						</button>
 					</div>
 					<div className='justify-center items-center gap-2 flex'>
-						<button disabled={isExitOpponent} className='px-5 py-2.5 bg-yellow-400 rounded-lg justify-center items-center gap-2 flex'>
-							<div className="text-white text-sm font-medium font-['Inter'] leading-[21px]">
-								한번 더 하기!
-							</div>
-							<MdReplay size='23px' color='white' />
-						</button>
-						<button className='px-5 py-2.5 bg-yellow-400 rounded-lg justify-center items-center gap-2 flex' onClick={exitEvent}>
+						<button className='px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 rounded-lg justify-center items-center gap-2 flex' onClick={exitEvent}>
 							<div className="text-white text-sm font-medium font-['Inter'] leading-[21px]">
 								나가기
 							</div>
