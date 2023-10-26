@@ -9,9 +9,8 @@ const ProfileTab = () => {
 
 	if (profile.type === ProfileStatus.MINE) {
 		return <ProfileTabMine />;
-	} else {
-		return <ProfileTabNormal />;
 	}
+	return <ProfileTabNormal />;
 };
 
 export default ProfileTab;

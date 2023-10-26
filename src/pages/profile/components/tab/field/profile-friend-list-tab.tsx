@@ -1,11 +1,12 @@
-import { getFriendList } from 'api/friend-api';
-import ProfileFriendList from 'pages/profile/components/tab/item/profile-friend-list';
-import ProfileNoFriendList from 'pages/profile/components/tab/item/profile-no-friend-list';
-import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import { useEffect, useState } from 'react';
 import User from 'ts/interfaces/user.model';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { profileState } from 'ts/states/profile/profile-state';
+import ProfileFriendList from 'pages/profile/components/tab/item/friend/profile-friend-list';
+import ProfileNoFriendList from 'pages/profile/components/tab/item/friend/profile-no-friend-list';
+import { getFriendList } from 'api/friend-api';
+import ProfileFriendRequestList from 'pages/profile/components/tab/item/friend/profile-friend-request-list';
 
 const ProfileFriendListTab = () => {
 	const profile = useRecoilValue(profileState);
@@ -15,13 +16,11 @@ const ProfileFriendListTab = () => {
 
 	useEffect(() => {
 		const fetchFriends = async () => {
-			const friends = await getFriendList(profile.user!.id);
-			// 요청된 친구 리스트
-			//const friendRequests = await get
-			if (friends.length === 0) {
+			setFriendList(await getFriendList(profile.user!.id));
+			setFriendRequestList(await getFriendList(profile.user!.id));
+
+			if (friendList.length === 0 && friendRequestList.length == 0) {
 				return <ProfileNoFriendList />;
-			} else {
-				setFriendList(friends);
 			}
 		};
 		if (profileType !== ProfileStatus.UNKNOWN) {
@@ -29,11 +28,17 @@ const ProfileFriendListTab = () => {
 		}
 	}, [profile]);
 
-	if (profileType !== ProfileStatus.UNKNOWN) {
+	if (profileType === ProfileStatus.UNKNOWN) {
 		return <ProfileNoFriendList />;
 	}
 
-	return <ProfileFriendList requests={friendList} friends={friendList} />;
+	return (
+		<>
+			<div className='pt-2' />
+			<ProfileFriendRequestList requestFriends={friendRequestList} />
+			<ProfileFriendList friends={friendList} />
+		</>
+	);
 };
 
 export default ProfileFriendListTab;
