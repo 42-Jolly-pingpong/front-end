@@ -10,7 +10,6 @@ import { FiUser } from 'react-icons/fi';
 const HeaderProfileIcon = () => {
 	const [user, setUserState] = useRecoilState(userState);
 	const navigate = useNavigate();
-	const userAvatar = user?.avatarPath || BiUser;
 
 	const handleSignOut = async (e: React.MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault();
@@ -29,7 +28,7 @@ const HeaderProfileIcon = () => {
 			inline
 			label={
 				<Avatar
-					img={userAvatar}
+					img={user?.avatarPath || ''}
 					className='mr-3 border rounded-full overflow-hidden'
 				/>
 			}

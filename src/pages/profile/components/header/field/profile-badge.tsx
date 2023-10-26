@@ -5,10 +5,15 @@ import { Avatar } from 'flowbite-react';
 
 const ProfileBadge = () => {
 	const profile = useRecoilValue(profileState);
-	const avatarPath = profile?.user?.avatarPath || BiUser;
 
 	return (
-		<Avatar img={avatarPath} size='xl' rounded bordered className='px-8' />
+		<Avatar
+			img={profile.user?.avatarPath || ''}
+			size='xl'
+			rounded
+			bordered
+			className='px-8'
+		/>
 	);
 };
 
