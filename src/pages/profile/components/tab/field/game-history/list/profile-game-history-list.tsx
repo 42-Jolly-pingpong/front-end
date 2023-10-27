@@ -1,4 +1,4 @@
-import ProfileGameHistoryItem from 'pages/profile/components/tab/item/game-history/profile-game-history-item';
+import ProfileGameHistoryItem from 'pages/profile/components/tab/field/game-history/item/profile-game-history-item';
 
 interface HistoryProps {
 	historyList: string[];

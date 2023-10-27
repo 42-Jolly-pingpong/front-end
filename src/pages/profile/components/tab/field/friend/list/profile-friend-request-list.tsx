@@ -1,5 +1,5 @@
+import ProfileFriendRequestItem from 'pages/profile/components/tab/field/friend/item/profile-friend-request-item';
 import User from 'ts/interfaces/user.model';
-import ProfileFriendRequestItem from 'pages/profile/components/tab/item/friend/profile-friend-request-item';
 
 interface RequestListProps {
 	requestFriends: User[];

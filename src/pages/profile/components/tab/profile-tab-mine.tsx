@@ -1,9 +1,9 @@
 import { Tabs } from 'flowbite-react';
 import { MdDashboard } from 'react-icons/md';
 import { FiUser, FiUsers } from 'react-icons/fi';
-import ProfileFriendListTab from 'pages/profile/components/tab/field/profile-friend-list-tab';
-import ProfileGameHistoryTab from 'pages/profile/components/tab/field/profile-game-history-tab';
-import ProfileBlockedListTab from 'pages/profile/components/tab/field/profile-blocked-list-tab';
+import ProfileFriendListTab from 'pages/profile/components/tab/field/friend/profile-friend-list-tab';
+import ProfileGameHistoryTab from 'pages/profile/components/tab/field/game-history/profile-game-history-tab';
+import ProfileBlockedListTab from 'pages/profile/components/tab/field/blocked/profile-blocked-list-tab';
 
 const ProfileTabMine = () => {
 	return (

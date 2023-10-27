@@ -6,6 +6,7 @@ import { profileState } from 'ts/states/profile/profile-state';
 import ProfileFriendButton from 'pages/profile/components/button/profile-friend-button';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { getFriendRelation } from 'api/friend-api';
+import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
 
 interface FriendProps {
 	user: User;
@@ -22,21 +23,27 @@ const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
 			setRelation(await getFriendRelation(profile.user!.id));
 		};
 		fetchRelation();
-	}, []);
+	}, [profile]);
 
-	const handleClick = () => {
-		console.log('친구 삭제 API');
+	const handleClick = async () => {
+		if (relation === ProfileStatus.REQUESTED) {
+			setCancelModal(true);
+		} else if (relation === ProfileStatus.UNDEFINED) {
+			setFriendRequestModal(true);
+		}
+	};
+
+	const handleClose = () => {
+		setCancelModal(false);
+		setFriendRequestModal(false);
 	};
 
 	return (
 		<>
 			<div className='flex flex-row items-center py-4 border-b w-80'>
 				<Avatar size='sm' img={user.avatarPath || ''} />
-				<div className='flex flex-col w-48 pl-2'>
-					<div className='text-base font-semibold'>{user.nickname}</div>
-					<div className='text-xs text-gray-500'>{user.email}</div>
-				</div>
-				<div className='pl-3' />
+				<ProfileUserInfo nickname={user.nickname} email={user.email} />
+				<div className='pr-3' />
 				<ProfileFriendButton relation={relation} onClick={handleClick} />
 			</div>
 		</>

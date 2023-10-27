@@ -29,9 +29,3 @@ const ProfileFriendButton: React.FC<FriendButtonProps> = ({
 	}
 };
 export default ProfileFriendButton;
-
-{
-	/*<GrayButton size='xs' onClick={handleClick}>
-					친구 끊기
-				</GrayButton>*/
-}

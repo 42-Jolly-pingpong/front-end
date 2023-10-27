@@ -1,10 +1,11 @@
-import { getFriendRelation } from 'api/friend-api';
-import GrayButton from 'components/button/gray-button';
-import ProfileHeaderSocialButton from 'pages/profile/components/button/profile-header-social-button';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import GrayButton from 'components/button/gray-button';
+import ProfileHeaderSocialButton from 'pages/profile/components/button/profile-header-social-button';
+import ProfileSocialDropdown from 'pages/profile/components/header/item/social/profile-social-dropdown';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { profileState } from 'ts/states/profile/profile-state';
+import { getFriendRelation } from 'api/friend-api';
 
 const ProfileSocialNormal = () => {
 	const profile = useRecoilValue(profileState);
@@ -32,8 +33,10 @@ const ProfileSocialNormal = () => {
 			<ProfileHeaderSocialButton relation={relation} onClick={handleClick} />
 			<div className='pr-2' />
 			<GrayButton size='xs' onClick={handleMessage}>
-				메시지
+				<div>메시지</div>
 			</GrayButton>
+			<div className='pl-2' />
+			<ProfileSocialDropdown />
 		</div>
 	);
 };

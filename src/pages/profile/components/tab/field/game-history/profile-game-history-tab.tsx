@@ -1,8 +1,8 @@
 import { useRecoilValue } from 'recoil';
 import { profileState } from 'ts/states/profile/profile-state';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
-import ProfileNoMatchList from 'pages/profile/components/tab/item/game-history/profile-no-game-history';
-import ProfileMatchList from 'pages/profile/components/tab/item/game-history/profile-game-history-list';
+import ProfileNoMatchList from 'pages/profile/components/tab/field/game-history/item/profile-no-game-history';
+import ProfileMatchList from 'pages/profile/components/tab/field/game-history/list/profile-game-history-list';
 
 const ProfileGameHistoryTab = () => {
 	const profile = useRecoilValue(profileState);

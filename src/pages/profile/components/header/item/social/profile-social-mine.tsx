@@ -1,6 +1,5 @@
-import GrayButton from 'components/button/gray-button';
-import { FiSettings } from 'react-icons/fi';
 import { useRecoilValue } from 'recoil';
+import GrayButton from 'components/button/gray-button';
 import { profileState } from 'ts/states/profile/profile-state';
 
 const ProfileSocialMine = () => {

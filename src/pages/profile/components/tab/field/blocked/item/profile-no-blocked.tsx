@@ -1,6 +1,6 @@
 import { BsRocketTakeoff } from 'react-icons/bs';
 
-const ProfileNoBlockedList = () => {
+const ProfileNoBlocked = () => {
 	return (
 		<div className='flex flex-col items-center justify-center pt-4'>
 			<div className='flex w-16 h-16 border-2 border-black rounded-full items-center'>
@@ -12,4 +12,4 @@ const ProfileNoBlockedList = () => {
 	);
 };
 
-export default ProfileNoBlockedList;
+export default ProfileNoBlocked;

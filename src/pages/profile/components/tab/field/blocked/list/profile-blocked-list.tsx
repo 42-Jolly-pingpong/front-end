@@ -1,4 +1,4 @@
-import ProfileBlockedItem from 'pages/profile/components/tab/item/blocked/profile-blocked-item';
+import ProfileBlockedItem from 'pages/profile/components/tab/field/blocked/item/profile-blocked-item';
 import User from 'ts/interfaces/user.model';
 
 interface BlockedListProps {

@@ -21,25 +21,22 @@ const Profile = () => {
 	useEffect(() => {
 		const getProfileState = async () => {
 			setProfileState({ type: ProfileStatus.UNKNOWN, user: null });
-
-			if (user && user.nickname === nickname) {
-				if (user.isLeave === false) {
-					setProfileState({ type: ProfileStatus.MINE, user });
-				}
+			if (user && user.nickname === nickname && user.isLeave === false) {
+				setProfileState({ type: ProfileStatus.MINE, user });
 			} else {
 				const profileUser = await getUserByNickname(nickname);
-				if (profileUser) {
-					if (profileUser.isLeave === false) {
-						const state = await getFriendState(profileUser.id);
-						setProfileState({ type: state, user: profileUser });
-					}
+				if (profileUser && profileUser.isLeave === false) {
+					setProfileState({
+						type: await getFriendState(profileUser.id),
+						user: profileUser,
+					});
 				}
 			}
 			setLoading(false);
 		};
 
 		getProfileState();
-	}, []);
+	}, [nickname]);
 
 	if (loading) {
 		return;
