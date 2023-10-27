@@ -95,6 +95,7 @@ function GameCanvas() {
 		return () => {
 			window.removeEventListener('keydown', handleKeyPress);
 			window.removeEventListener('keyup', handleKeyUp);
+			window.removeEventListener('beforeunload', preventClose);
 		};
 	}, []);
 
