@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useEffect, useState } from 'react';
 import GrayButton from 'components/button/gray-button';
 import ProfileHeaderSocialButton from 'pages/profile/components/button/profile-header-social-button';
 import ProfileSocialDropdown from 'pages/profile/components/header/item/social/profile-social-dropdown';
@@ -12,6 +12,8 @@ const ProfileSocialNormal = () => {
 	const [relation, setRelation] = useState<ProfileStatus>(
 		ProfileStatus.UNKNOWN
 	);
+	const [showState, setShowState] = useState(true);
+
 	const handleClick = () => {
 		console.log('이벤트');
 	};
@@ -22,7 +24,11 @@ const ProfileSocialNormal = () => {
 
 	useEffect(() => {
 		const fetchRelation = async () => {
-			setRelation(await getFriendRelation(profile.user!.id));
+			const relation = await getFriendRelation(profile.user!.id);
+			setRelation(relation);
+			if (relation === ProfileStatus.BLOCKEDBYME) {
+				setShowState(false);
+			}
 		};
 		fetchRelation();
 	}, []);
@@ -36,7 +42,7 @@ const ProfileSocialNormal = () => {
 				<div>메시지</div>
 			</GrayButton>
 			<div className='pl-2' />
-			<ProfileSocialDropdown />
+			{showState && <ProfileSocialDropdown />}
 		</div>
 	);
 };

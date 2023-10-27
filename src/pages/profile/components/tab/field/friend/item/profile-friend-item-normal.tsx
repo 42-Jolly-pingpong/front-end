@@ -10,6 +10,7 @@ import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-in
 
 interface FriendProps {
 	user: User;
+	//나와의 관계
 }
 
 const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
@@ -17,6 +18,7 @@ const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
 	const [relation, setRelation] = useState<ProfileStatus>(
 		ProfileStatus.UNKNOWN
 	);
+	//내친구목록.. relation..?
 
 	useEffect(() => {
 		const fetchRelation = async () => {

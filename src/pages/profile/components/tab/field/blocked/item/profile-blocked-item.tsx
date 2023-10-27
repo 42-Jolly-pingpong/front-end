@@ -2,14 +2,15 @@ import GrayButton from 'components/button/gray-button';
 import { Avatar } from 'flowbite-react';
 import User from 'ts/interfaces/user.model';
 import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
+import { deleteBlockedFriend } from 'api/friend-api';
 
 interface blockedProps {
 	user: User;
 }
 
 const ProfileBlockedItem: React.FC<blockedProps> = ({ user }) => {
-	const handleDelete = () => {
-		console.log('차단 해제 api 붙이기');
+	const handleDelete = async () => {
+		await deleteBlockedFriend(user.id);
 	};
 
 	return (

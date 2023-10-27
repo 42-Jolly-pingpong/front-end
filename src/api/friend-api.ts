@@ -132,6 +132,22 @@ export const addBlockedFriend = async (id: number): Promise<void> => {
 	}
 };
 
+export const deleteBlockedFriend = async (id: number): Promise<void> => {
+	try {
+		const token = getJwtValue();
+
+		await sendAPI({
+			method: 'DELETE',
+			url: '/friends/blocked/' + id,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+
 /**
  * url: friends/{id}/ + ...
  */

@@ -8,6 +8,7 @@ import ProfileNoFriend from 'pages/profile/components/tab/field/friend/item/prof
 import ProfileFriendList from 'pages/profile/components/tab/field/friend/list/profile-friend-list';
 import ProfileFriendRequestList from 'pages/profile/components/tab/field/friend/list/profile-friend-request-list';
 
+// 내가 누구인지만 판단.
 const ProfileFriendListTab = () => {
 	const profile = useRecoilValue(profileState);
 	const profileType = profile.type;
