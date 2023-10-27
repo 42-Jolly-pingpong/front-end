@@ -23,7 +23,9 @@ const ProfileBlockedList = () => {
 		fetchBlocked();
 	}, []);
 
-	if (blockedList.length === 0) return <ProfileNoBlocked />;
+	if (blockedList.length === 0) {
+		return <ProfileNoBlocked />;
+	}
 
 	return (
 		<div className='flex flex-col items-center'>

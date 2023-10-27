@@ -5,11 +5,10 @@ import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { profileState } from 'ts/states/profile/profile-state';
 import { getFriendList, getFriendRequestList } from 'api/friend-api';
 import ProfileNoFriend from 'pages/profile/components/tab/field/friend/item/profile-no-friend';
-import ProfileFriendList from 'pages/profile/components/tab/field/friend/list/profile-friend-list';
 import ProfileFriendRequestList from 'pages/profile/components/tab/field/friend/list/profile-friend-request-list';
 
 // 내가 누구인지만 판단.
-const ProfileFriendListTab = () => {
+const ProfileFriendList = () => {
 	const profile = useRecoilValue(profileState);
 	const profileType = profile.type;
 	const [friendList, setFriendList] = useState<User[]>([]);
@@ -46,4 +45,4 @@ const ProfileFriendListTab = () => {
 	return <ProfileNoFriend />;
 };
 
-export default ProfileFriendListTab;
+export default ProfileFriendList;

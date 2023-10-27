@@ -1,43 +1,35 @@
-import { useRecoilValue } from 'recoil';
-import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { Avatar } from 'flowbite-react';
 import User from 'ts/interfaces/user.model';
-import { profileState } from 'ts/states/profile/profile-state';
 import ProfileFriendButton from 'pages/profile/components/button/profile-friend-button';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
-import { getFriendRelation } from 'api/friend-api';
 import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
+import { profileModalState } from 'ts/states/profile/profile-modal-state';
+import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
 
 interface FriendProps {
 	user: User;
-	//나와의 관계
+	relation: ProfileStatus;
+	onChangeRelation: (relation: ProfileStatus, otherId: number) => void;
 }
+const ProfileFriendItemNormal: React.FC<FriendProps> = ({
+	user,
+	relation,
+	onChangeRelation,
+}) => {
+	const [modalState, setModalState] = useRecoilState(profileModalState);
 
-const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
-	const profile = useRecoilValue(profileState);
-	const [relation, setRelation] = useState<ProfileStatus>(
-		ProfileStatus.UNKNOWN
-	);
-	//내친구목록.. relation..?
-
-	useEffect(() => {
-		const fetchRelation = async () => {
-			setRelation(await getFriendRelation(profile.user!.id));
-		};
-		fetchRelation();
-	}, [profile]);
-
-	const handleClick = async () => {
-		if (relation === ProfileStatus.REQUESTED) {
-			setCancelModal(true);
-		} else if (relation === ProfileStatus.UNDEFINED) {
-			setFriendRequestModal(true);
-		}
+	const handleClick = () => {
+		setModalState(true);
 	};
 
 	const handleClose = () => {
-		setCancelModal(false);
-		setFriendRequestModal(false);
+		setModalState(false);
+	};
+
+	const handleChange = () => {
+		onChangeRelation(relation, user.id);
+		setModalState(false);
 	};
 
 	return (
@@ -47,6 +39,12 @@ const ProfileFriendItemNormal: React.FC<FriendProps> = ({ user }) => {
 				<ProfileUserInfo nickname={user.nickname} email={user.email} />
 				<div className='pr-3' />
 				<ProfileFriendButton relation={relation} onClick={handleClick} />
+				<ProfileFriendModal
+					show={modalState}
+					relation={relation}
+					onRequest={handleChange}
+					onClose={handleClose}
+				/>
 			</div>
 		</>
 	);

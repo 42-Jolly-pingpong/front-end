@@ -9,7 +9,7 @@ interface FriendListProps {
 	friends: User[];
 }
 
-const ProfileFriendList: React.FC<FriendListProps> = ({ friends }) => {
+const ProfileFriendLista: React.FC<FriendListProps> = ({ friends }) => {
 	const profile = useRecoilValue(profileState);
 	// 이것도 각각 아이템 안에서
 	// 1. 여기서 들어오자마자, 친구목록 불러오고.(남의꺼);
@@ -37,4 +37,4 @@ const ProfileFriendList: React.FC<FriendListProps> = ({ friends }) => {
 	);
 };
 
-export default ProfileFriendList;
+export default ProfileFriendLista;

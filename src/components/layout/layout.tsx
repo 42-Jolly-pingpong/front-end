@@ -10,10 +10,12 @@ import { getUserByJwt } from 'api/auth-api';
 import { getFriendList } from 'api/friend-api';
 import { friendSidebarListState } from 'ts/states/friend/friend-sidebar-list-state';
 import { FriendListStatus } from 'ts/enums/friend/friendlist-status.enum';
+import { UserFriendsState } from 'ts/states/user/user-friends-state';
 
 const Layout = () => {
 	const setUserState = useSetRecoilState(userState);
 	const sidebarState = useRecoilValue(friendSidebarState);
+	const [, setUserFriendsState] = useRecoilValue(UserFriendsState);
 	const [, setFriendListState] = useRecoilState(friendSidebarListState);
 
 	const [loading, setLoading] = useState(true);

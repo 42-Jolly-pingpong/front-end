@@ -25,6 +25,22 @@ export const getFriendList = async (id: number): Promise<User[]> => {
 	}
 };
 
+export const updateFriend = async (id: number): Promise<void> => {
+	try {
+		const token = getJwtValue();
+
+		await sendAPI({
+			method: 'POST',
+			url: '/friends/' + id,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+
 export const deleteFriend = async (id: number): Promise<void> => {
 	try {
 		const token = getJwtValue();
