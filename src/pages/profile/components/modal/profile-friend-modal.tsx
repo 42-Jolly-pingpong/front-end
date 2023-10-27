@@ -2,6 +2,10 @@
 // 친구 -> 친구 끊기
 // 차단 -> 차단 풀기
 
+import {
+	friendModalButtonMessages,
+	friendModalMessage,
+} from 'constants/messages';
 import { Modal } from 'flowbite-react';
 import ProfileFriendModalBody from 'pages/profile/components/modal/profile-friend-modal-body';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
@@ -19,22 +23,12 @@ const ProfileFriendModal: React.FC<ModalProps> = ({
 	onRequest,
 	onClose,
 }) => {
-	let message = '';
-	let buttonMessage = '';
-
-	switch (relation) {
-		case ProfileStatus.BLOCKEDBYME:
-			message = '사용자를 차단 해제할까요?';
-			buttonMessage = '해제하기';
-			break;
-		case ProfileStatus.FRIEND:
-			message = '친구 관계를 끊을까요?';
-			buttonMessage = '친구 취소';
-			break;
-		case ProfileStatus.REQUESTED:
-			message = '친구 요청을 취소할까요?';
-			buttonMessage = '요청 취소';
-	}
+	const message =
+		friendModalMessage[relation as keyof typeof friendModalMessage];
+	const buttonMessage =
+		friendModalButtonMessages[
+			relation as keyof typeof friendModalButtonMessages
+		];
 
 	const handleRequest = () => {
 		onRequest();
