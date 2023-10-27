@@ -16,6 +16,7 @@ export default defineConfig({
 			pages: '/src/pages',
 			ts: '/src/ts',
 			hooks: '/src/hooks',
+			socket: '/src/socket'
 		},
 	},
 });
