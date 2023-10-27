@@ -2,27 +2,42 @@
 // 친구 -> 친구 끊기
 // 차단 -> 차단 풀기
 
-import GrayButton from 'components/button/gray-button';
-import RedButton from 'components/button/red-button';
 import { Modal } from 'flowbite-react';
-import { BsExclamationCircleFill } from 'react-icons/bs';
+import ProfileFriendModalBody from 'pages/profile/components/modal/profile-friend-modal-body';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
 interface ModalProps {
 	show: boolean;
-	userId: number;
+	relation: ProfileStatus;
+	onRequest: () => void;
 	onClose: () => void;
 }
 
 const ProfileFriendModal: React.FC<ModalProps> = ({
 	show,
-	userId,
+	relation,
+	onRequest,
 	onClose,
 }) => {
-	const handleClick = async () => {
-		// 여기에 request-cancel API
-		console.log(userId);
-		console.log('요청 취소 API 붙이기');
-		onClose();
+	let message = '';
+	let buttonMessage = '';
+
+	switch (relation) {
+		case ProfileStatus.BLOCKEDBYME:
+			message = '사용자를 차단 해제할까요?';
+			buttonMessage = '해제하기';
+			break;
+		case ProfileStatus.FRIEND:
+			message = '친구 관계를 끊을까요?';
+			buttonMessage = '친구 취소';
+			break;
+		case ProfileStatus.REQUESTED:
+			message = '친구 요청을 취소할까요?';
+			buttonMessage = '요청 취소';
+	}
+
+	const handleRequest = () => {
+		onRequest();
 	};
 
 	const handleCancel = () => {
@@ -32,23 +47,12 @@ const ProfileFriendModal: React.FC<ModalProps> = ({
 	return (
 		<Modal size='lg' show={show} onClose={onClose} dismissible>
 			<Modal.Header />
-			<Modal.Body className='flex flex-col my-2 m-6 items-center justify-center'>
-				<div className='flex flex-col'>
-					<BsExclamationCircleFill />
-					<div className='pt-1 text-gray-500 text-base'>
-						친구 요청을 취소할까요?
-					</div>
-					<div className='flex'>
-						<RedButton size='xl' onClick={handleClick}>
-							<div className='font-bold'>요청 취소</div>
-						</RedButton>
-						<div className='px-2' />
-						<GrayButton size='xl' onClick={handleCancel}>
-							그만두기
-						</GrayButton>
-					</div>
-				</div>
-			</Modal.Body>
+			<ProfileFriendModalBody
+				message={message}
+				buttonMessage={buttonMessage}
+				onRequest={handleRequest}
+				onCancel={handleCancel}
+			/>
 		</Modal>
 	);
 };

@@ -7,6 +7,7 @@ import { MdDashboard } from 'react-icons/md';
 import { FiUser, FiUsers } from 'react-icons/fi';
 import ProfileFriendListTab from 'pages/profile/components/tab/field/friend/profile-friend-list-tab';
 import ProfileBlockedListTab from 'pages/profile/components/tab/field/blocked/profile-blocked-list-tab';
+import ProfileBlockedList from 'pages/profile/components/tab/field/blocked/profile-blocked-list';
 
 const ProfileTab = () => {
 	const profile = useRecoilValue(profileState);
@@ -26,7 +27,7 @@ const ProfileTab = () => {
 				</Tabs.Item>
 				{myProfile && (
 					<Tabs.Item icon={FiUser} title='차단 목록'>
-						<ProfileBlockedListTab />
+						<ProfileBlockedList />
 					</Tabs.Item>
 				)}
 			</Tabs.Group>
