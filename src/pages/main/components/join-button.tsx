@@ -47,6 +47,7 @@ const JoinButton = () => {
 
 	const handleClose = () => {
 		resetGameWait();
+		socket.emit('cancel', userInfo?.id)
 		setModal(false);
 	};
 

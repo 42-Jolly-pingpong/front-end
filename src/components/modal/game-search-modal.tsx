@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Modal } from 'flowbite-react';
 import UseCountdown from 'hooks/use-countdown';
