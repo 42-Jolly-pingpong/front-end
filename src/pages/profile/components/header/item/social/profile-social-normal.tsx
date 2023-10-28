@@ -1,12 +1,19 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
 import GrayButton from 'components/button/gray-button';
 import ProfileHeaderSocialButton from 'pages/profile/components/button/profile-header-social-button';
 import ProfileSocialDropdown from 'pages/profile/components/header/item/social/profile-social-dropdown';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { profileState } from 'ts/states/profile/profile-state';
-import { getFriendRelation, updateFriend } from 'api/friend-api';
+import {
+	deleteBlockedFriend,
+	deleteFriend,
+	denyFriendRequest,
+	getFriendRelation,
+	updateFriend,
+} from 'api/friend-api';
 import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ProfileSocialNormal = () => {
 	const profile = useRecoilValue(profileState);
@@ -15,6 +22,7 @@ const ProfileSocialNormal = () => {
 	);
 	const [dropdownState, setDropdownState] = useState(true);
 	const [modalState, setModalState] = useState(false);
+	const friendsState = useRecoilState(userFriendsState);
 
 	const handleClick = async () => {
 		if (relation === ProfileStatus.UNDEFINED) {
@@ -26,8 +34,22 @@ const ProfileSocialNormal = () => {
 	};
 
 	const handleRequest = async () => {
+		switch (relation) {
+			case ProfileStatus.BLOCKEDBYME:
+				await deleteBlockedFriend(profile.user!.id);
+				break;
+			case ProfileStatus.FRIEND:
+				await deleteFriend(profile.user!.id);
+				break;
+			case ProfileStatus.REQUESTED:
+				await denyFriendRequest(profile.user!.id);
+				break;
+		}
+		setRelation(ProfileStatus.UNDEFINED);
+		setModalState(false);
 		return;
 	};
+
 	const handleMessage = () => {
 		console.log('메시지 보내기');
 	};
@@ -45,7 +67,7 @@ const ProfileSocialNormal = () => {
 			}
 		};
 		fetchRelation();
-	}, []);
+	}, [friendsState]);
 
 	return (
 		<div className='flex items-center h-9'>
