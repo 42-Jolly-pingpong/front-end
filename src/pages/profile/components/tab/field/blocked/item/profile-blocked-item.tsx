@@ -1,21 +1,24 @@
 import GrayButton from 'components/button/gray-button';
-import { Avatar } from 'flowbite-react';
+import { Avatar, Button, Modal } from 'flowbite-react';
 import User from 'ts/interfaces/user.model';
 import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
 import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
 import { useRecoilState } from 'recoil';
 import { profileModalState } from 'ts/states/profile/profile-modal-state';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import { useState } from 'react';
 
 interface blockedProps {
-	user: User;
+	friend: User;
 	onUnblock: (id: number) => void;
 }
 
-const ProfileBlockedItem: React.FC<blockedProps> = ({ user, onUnblock }) => {
-	const [modalState, setModalState] = useRecoilState(profileModalState);
+const ProfileBlockedItem: React.FC<blockedProps> = ({ friend, onUnblock }) => {
+	const [modalState, setModalState] = useState(false);
+	// profileModalState
 
 	const handleClick = () => {
+		console.log('모달을 띄울때는 : ', friend.nickname);
 		setModalState(true);
 	};
 
@@ -24,25 +27,38 @@ const ProfileBlockedItem: React.FC<blockedProps> = ({ user, onUnblock }) => {
 	};
 
 	const handleUnblocked = () => {
-		onUnblock(user.id);
+		console.log('진짜 차단할때는 : ', friend.nickname);
+		onUnblock(friend.id);
 		setModalState(false);
+	};
+
+	const handleMouse = () => {
+		console.log('출력 ', friend.nickname);
 	};
 
 	return (
 		<>
 			<div className='flex flex-row items-center border-b py-4 '>
-				<Avatar size='sm' img={user.avatarPath || ''} />
-				<ProfileUserInfo nickname={user.nickname} email={user.email} />
+				<Avatar size='sm' img={friend.avatarPath || ''} />
+				<ProfileUserInfo nickname={friend.nickname} email={friend.email} />
 				<GrayButton size='xs' onClick={handleClick}>
-					차단 해제
+					<div>차단 해제</div>
 				</GrayButton>
-				<ProfileFriendModal
+				<Modal size='lg' show={modalState} onClose={handleClose}>
+					<Modal.Header />
+					<Button color='failure' onClick={handleUnblocked}>
+						눌러보세여
+					</Button>
+				</Modal>
+			</div>
+
+			{/*<ProfileFriendModal
 					show={modalState}
 					relation={ProfileStatus.BLOCKEDBYME}
 					onRequest={handleUnblocked}
 					onClose={handleClose}
 				/>
-			</div>
+			</div>*/}
 		</>
 	);
 };

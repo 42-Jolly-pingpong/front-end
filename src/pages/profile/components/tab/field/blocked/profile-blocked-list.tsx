@@ -33,7 +33,7 @@ const ProfileBlockedList = () => {
 		<div className='flex flex-col items-center  h-96 overflow-y-auto'>
 			{blockedList.map((blocked: User) => (
 				<ProfileBlockedItem
-					user={blocked}
+					friend={blocked}
 					onUnblock={handleUnblock}
 					key={blocked.id}
 				/>

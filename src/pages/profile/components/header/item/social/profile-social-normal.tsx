@@ -15,7 +15,7 @@ const ProfileSocialNormal = () => {
 		ProfileStatus.UNKNOWN
 	);
 	const [showState, setShowState] = useState(true);
-	const [modalState, setModalState] = useRecoilState(profileModalState);
+	const [modalState, setModalState] = useRecoilState(false);
 
 	const handleClick = async () => {
 		if (relation === ProfileStatus.UNDEFINED) {
