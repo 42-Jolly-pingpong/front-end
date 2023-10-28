@@ -11,5 +11,5 @@ const FriendListEmpty = () => {
 		</div>
 	);
 };
-HiOutlineUserCircle;
+
 export default FriendListEmpty;

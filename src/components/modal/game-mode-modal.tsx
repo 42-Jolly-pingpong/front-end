@@ -1,6 +1,6 @@
-import YellowButton from 'components/button/yellow-button';
-import { Modal } from 'flowbite-react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { Modal } from 'flowbite-react';
+import YellowButton from 'components/button/yellow-button';
 import GameModeRadio from 'components/modal/item/game-mode-radio';
 import ModalProps from 'ts/interfaces/game/modal-props';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';

@@ -7,14 +7,12 @@ import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-s
 const FriendModal = () => {
 	const modalStatus = useRecoilValue(friendSidebarModalState);
 
-	switch (modalStatus.type) {
-		case FriendSidebarModalStatus.UNFRIEND:
-			return <FriendUnfriendModal />;
-		case FriendSidebarModalStatus.BANNED:
-			return <FriendBannedModal />;
-		default:
-			return;
+	if (modalStatus.type === FriendSidebarModalStatus.UNFRIEND) {
+		return <FriendUnfriendModal />;
+	} else if (modalStatus.type === FriendSidebarModalStatus.BANNED) {
+		return <FriendBannedModal />;
 	}
+	return; // 이후에 다른 케이스 없는지 보고 삭제 예정
 };
 
 export default FriendModal;
