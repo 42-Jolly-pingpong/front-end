@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { Outlet } from 'react-router';
 import Banner from 'components/banner/banner';
 import Header from 'components/layout/header/header';
 import FriendSidebar from 'components/layout/friend-sidebar/friend-sidebar';
 import { userState } from 'ts/states/user-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
 import { getUserByJwt } from 'api/auth-api';
 import {
@@ -12,33 +13,30 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const Layout = () => {
-	const setUserState = useSetRecoilState(userState);
+	const [user, setUserState] = useRecoilState(userState);
 	const sidebarState = useRecoilValue(friendSidebarState);
 	const [, setUserFriendsState] = useRecoilState(userFriendsState);
-
 	const [loading, setLoading] = useState(true);
 
+	const updateUser = async () => {
+		const user = await getUserByJwt();
+		setUserState(user);
+		if (user) {
+			const friends = await getFriendList(user.id);
+			const requestFriends = await getFriendRequestList(user.id);
+			const blockedFriends = await getBlockedList(user.id);
+			setUserFriendsState({ friends, requestFriends, blockedFriends });
+		}
+		setLoading(false);
+	};
+
 	useEffect(() => {
-		const updateUser = async () => {
-			try {
-				const user = await getUserByJwt();
-				if (user !== null) {
-					setUserState(user);
-					const friends = await getFriendList(user.id);
-					const requestFriends = await getFriendRequestList(user.id);
-					const blockedFriends = await getBlockedList(user.id);
-					setUserFriendsState({ friends, requestFriends, blockedFriends });
-				}
-			} catch (e) {
-				console.log(e);
-			} finally {
-				setLoading(false);
-			}
+		const fetchData = async () => {
+			await updateUser();
 		};
-		updateUser();
+		fetchData();
 	}, []);
 
 	if (loading === false) {

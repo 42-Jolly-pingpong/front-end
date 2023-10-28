@@ -65,7 +65,7 @@ const ProfileFriendListNormal = () => {
 		return <ProfileNoFriend />;
 	}
 	return (
-		<div className='flex flex-col items-center'>
+		<div className='flex flex-col items-center h-96 overflow-y-auto'>
 			{friendList.map((other: User) => (
 				<ProfileFriendItemNormal
 					user={other}

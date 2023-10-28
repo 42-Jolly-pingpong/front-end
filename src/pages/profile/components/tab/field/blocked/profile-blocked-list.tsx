@@ -5,9 +5,11 @@ import { userState } from 'ts/states/user-state';
 import ProfileNoBlocked from 'pages/profile/components/tab/field/blocked/item/profile-no-blocked';
 import ProfileBlockedItem from 'pages/profile/components/tab/field/blocked/item/profile-blocked-item';
 import { deleteBlockedFriend, getBlockedList } from 'api/friend-api';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ProfileBlockedList = () => {
 	const user = useRecoilValue(userState);
+	const friendsList = useRecoilValue(userFriendsState);
 	const [blockedList, setBlockedList] = useState<User[]>([]);
 
 	const fetchBlocked = async () => {
@@ -21,14 +23,14 @@ const ProfileBlockedList = () => {
 
 	useEffect(() => {
 		fetchBlocked();
-	}, []);
+	}, [friendsList]);
 
 	if (blockedList.length === 0) {
 		return <ProfileNoBlocked />;
 	}
 
 	return (
-		<div className='flex flex-col items-center'>
+		<div className='flex flex-col items-center  h-96 overflow-y-auto'>
 			{blockedList.map((blocked: User) => (
 				<ProfileBlockedItem
 					user={blocked}

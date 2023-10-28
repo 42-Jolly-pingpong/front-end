@@ -14,35 +14,33 @@ const Profile = () => {
 	const { nickname } = useParams();
 	const user = useRecoilValue(userState);
 	const [loading, setLoading] = useState(true);
-	const [profile, setProfileState] = useRecoilState(profileState);
+	const [, setProfileState] = useRecoilState(profileState);
 
 	useRedirectHome();
 
 	useEffect(() => {
 		const getProfileState = async () => {
-			setProfileState({ type: ProfileStatus.UNKNOWN, user: null });
-			if (user && user.nickname === nickname && user.isLeave === false) {
+			setLoading(true);
+			const profileUser = await getUserByNickname(nickname);
+			if (user!.nickname === nickname) {
 				setProfileState({ type: ProfileStatus.MINE, user });
+			} else if (profileUser && profileUser.isLeave === false) {
+				setProfileState({
+					type: await getFriendState(profileUser.id),
+					user: profileUser,
+				});
 			} else {
-				const profileUser = await getUserByNickname(nickname);
-				if (profileUser && profileUser.isLeave === false) {
-					setProfileState({
-						type: await getFriendState(profileUser.id),
-						user: profileUser,
-					});
-				}
+				setProfileState({ type: ProfileStatus.UNKNOWN, user: null });
 			}
 			setLoading(false);
 		};
 
 		getProfileState();
-	}, [nickname]);
+	}, [nickname, user, setProfileState]);
 
 	if (loading) {
 		return;
 	}
-
-	console.log('현재 보고 있는 페이지: ', profile.type);
 	return (
 		<div className='flex flex-col justify-center items-center'>
 			<ProfileHeader />

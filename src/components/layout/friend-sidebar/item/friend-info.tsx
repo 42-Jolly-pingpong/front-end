@@ -18,10 +18,9 @@ const FriendInfo: React.FC<FriendInfoProps> = ({ user }) => {
 			break;
 	}
 
-	console.log(user);
 	return (
 		<div className='flex flex-row items-center p-2'>
-			<Avatar img='/images/jollypong3.jpeg' />
+			<Avatar img={user.avatarPath || ''} />
 			<div className='text-sm font-bold pl-2 '>{user.nickname}</div>
 			<div className={`ml-2 w-2 h-2 rounded-full ${statusColor}`} />
 		</div>

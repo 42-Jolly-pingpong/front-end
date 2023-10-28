@@ -12,12 +12,12 @@ interface FriendInfoProps {
 const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 	const [, setModalState] = useRecoilState(friendSidebarModalState);
 
-	const handleUnfriend = () => {
+	const handleUnfriend = async () => {
 		console.log('unfriend가 클릭되었음');
 		setModalState({ type: FriendSidebarModalStatus.UNFRIEND, friend: user });
 	};
 
-	const handleBanned = () => {
+	const handleBanned = async () => {
 		console.log('banned가 클릭되었음');
 		setModalState({ type: FriendSidebarModalStatus.BANNED, friend: user });
 	};

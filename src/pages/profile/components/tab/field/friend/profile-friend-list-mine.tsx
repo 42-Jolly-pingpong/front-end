@@ -23,7 +23,7 @@ const ProfileFriendListMine = () => {
 	const fetchFriends = async () => {
 		const friends = await getFriendList(user!.id);
 		const requestFriends = await getFriendRequestList(user!.id);
-		setFriendsState({ friends, requestFriends });
+		setFriendsState({ ...friendsState, friends, requestFriends });
 	};
 
 	const handleRequest = async (res: boolean, id: number) => {

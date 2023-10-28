@@ -8,6 +8,7 @@ import GrayButton from 'components/button/gray-button';
 import {
 	acceptFriendRequest,
 	denyFriendRequest,
+	getBlockedList,
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
@@ -15,15 +16,17 @@ import { userState } from 'ts/states/user-state';
 
 const FriendSidebarList = () => {
 	const user = useRecoilValue(userState);
-	const [userFriends, setUserFriendsState] = useRecoilState(userFriendsState);
-	const friends = userFriends.friends;
-	const requestFriends = userFriends.requestFriends;
+	const [friendsState, setFriendsState] = useRecoilState(userFriendsState);
+	const friends = friendsState.friends;
+	const requestFriends = friendsState.requestFriends;
 
 	const fetchUserFriends = async () => {
 		const friends = await getFriendList(user!.id);
 		const requestFriends = await getFriendRequestList(user!.id);
-		setUserFriendsState({ friends, requestFriends });
+		const blockedFriends = await getBlockedList(user!.id);
+		setFriendsState({ friends, requestFriends, blockedFriends });
 	};
+
 	const handleAccept = async (id: number) => {
 		await acceptFriendRequest(id);
 		fetchUserFriends();
