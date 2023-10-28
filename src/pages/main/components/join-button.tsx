@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import YellowButtonXl from 'components/button/yellow-button-xl';
+import {
+	useRecoilState,
+	useRecoilValue,
+	useResetRecoilState,
+	useSetRecoilState,
+} from 'recoil';
 import GameWaitModal from 'components/modal/game-wait-modal';
 import { socket } from 'socket/socket';
 import { gameStartState } from 'ts/states/game/game-start-state';
@@ -8,6 +12,7 @@ import { gameInfoState, GameInfoType } from 'ts/states/game/game-info.state';
 import { gameWaitState } from 'ts/states/game/game-wait-state';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
+import YellowButton from 'components/button/yellow-button';
 import { userState } from 'ts/states/user-state';
 
 const JoinButton = () => {
@@ -15,7 +20,7 @@ const JoinButton = () => {
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const resetGameWait = useResetRecoilState(gameWaitState);
 	const resetGameBanner = useResetRecoilState(gameBannerState);
-	const userInfo = useRecoilValue(userState)
+	const userInfo = useRecoilValue(userState);
 
 	const setIsGameStart = useSetRecoilState(gameStartState);
 	const setGameInfo = useSetRecoilState(gameInfoState);
@@ -34,30 +39,29 @@ const JoinButton = () => {
 		return () => {
 			socket.off('getPlayerInfo');
 			socket.off('gameStart');
-		}
+		};
 	});
-
 
 	const handleButton = () => {
 		resetGameBanner();
 		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
-		socket.emit('cancel', userInfo?.id)
+		socket.emit('cancel', userInfo?.id);
 		setModal(true);
 	};
 
 	const handleClose = () => {
 		resetGameWait();
-		socket.emit('cancel', userInfo?.id)
+		socket.emit('cancel', userInfo?.id);
 		setModal(false);
 	};
 
 	return (
 		<>
-			<YellowButtonXl onClick={handleButton}>
+			<YellowButton size='xl' onClick={handleButton}>
 				<img src='images/fire.png' alt='fire' />
 				<div className='font-bold mx-3'> 게임하러 가기</div>
 				<img src='images/arrow-right.png' alt='arrow' />
-			</YellowButtonXl>
+			</YellowButton>
 			<GameWaitModal show={modal} onClose={handleClose} />
 		</>
 	);

@@ -2,7 +2,7 @@ import { getJsonValueByKey, getJwtValue } from 'components/utils/cookieUtils';
 import User from 'ts/interfaces/user.model';
 import sendAPI from 'api/sendAPI';
 
-export const getUserByJwt = async (): Promise<User | undefined> => {
+export const getUserByJwt = async (): Promise<User | null> => {
 	try {
 		const token = getJwtValue();
 
@@ -16,10 +16,10 @@ export const getUserByJwt = async (): Promise<User | undefined> => {
 			});
 			return user;
 		}
-		return undefined;
+		return null;
 	} catch (e) {
 		console.log(e);
-		return undefined;
+		return null;
 	}
 };
 

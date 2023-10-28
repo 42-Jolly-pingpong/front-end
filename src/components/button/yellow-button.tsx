@@ -2,15 +2,16 @@ import { Button } from 'flowbite-react';
 import { ReactNode } from 'react';
 
 interface ButtonProps {
-	onClick: () => void;
+	size: string;
 	children: ReactNode;
+	onClick: () => void;
 }
 
-const YellowButtonXs: React.FC<ButtonProps> = ({ onClick, children }) => {
+const YellowButton: React.FC<ButtonProps> = ({ size, children, onClick }) => {
 	return (
 		<Button
 			className='text-white bg-yellow-300 border border-transparent enabled:hover:bg-yellow-300 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-300'
-			size='xs'
+			size={size}
 			onClick={onClick}
 		>
 			{children}
@@ -18,4 +19,4 @@ const YellowButtonXs: React.FC<ButtonProps> = ({ onClick, children }) => {
 	);
 };
 
-export default YellowButtonXs;
+export default YellowButton;

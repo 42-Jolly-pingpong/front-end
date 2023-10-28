@@ -58,6 +58,15 @@ body {
 	.hide-scrollbar::-webkit-scrollbar {
 		display: none; /* for Chrome, Safari */
 	}
+
+	.friend-sidebar {
+		width: 368px;
+		height: 100%;
+	}
+
+	.friend-sidebar .Card {
+		justify-content: flex-start;
+	}
 }
 
 /*
