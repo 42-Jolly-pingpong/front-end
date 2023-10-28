@@ -6,6 +6,7 @@ import { userState } from 'ts/states/user-state';
 const Root = () => {
 	const user = useRecoilValue(userState);
 
+	//return <Main />;
 	return user ? <Main /> : <Welcome />;
 };
 
