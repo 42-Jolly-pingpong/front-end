@@ -1,12 +1,10 @@
 import { Avatar } from 'flowbite-react';
 import GrayButton from 'components/button/gray-button';
 import User from 'ts/interfaces/user.model';
-import { deleteFriend } from 'api/friend-api';
 import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
-import { useRecoilState } from 'recoil';
-import { profileModalState } from 'ts/states/profile/profile-modal-state';
 import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import { useState } from 'react';
 
 interface FriendProps {
 	user: User;
@@ -14,7 +12,7 @@ interface FriendProps {
 }
 
 const ProfileFriendItemMine: React.FC<FriendProps> = ({ user, onUnfriend }) => {
-	const [modalState, setModalState] = useRecoilState(profileModalState);
+	const [modalState, setModalState] = useState(false);
 
 	const handleClick = () => {
 		setModalState(true);

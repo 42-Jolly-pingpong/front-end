@@ -1,11 +1,10 @@
-import { useRecoilState } from 'recoil';
 import { Avatar } from 'flowbite-react';
 import User from 'ts/interfaces/user.model';
 import ProfileFriendButton from 'pages/profile/components/button/profile-friend-button';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
-import { profileModalState } from 'ts/states/profile/profile-modal-state';
 import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
+import { useState } from 'react';
 
 interface FriendProps {
 	user: User;
@@ -17,7 +16,7 @@ const ProfileFriendItemNormal: React.FC<FriendProps> = ({
 	relation,
 	onChangeRelation,
 }) => {
-	const [modalState, setModalState] = useRecoilState(profileModalState);
+	const [modalState, setModalState] = useState(false);
 
 	const handleClick = () => {
 		setModalState(true);
