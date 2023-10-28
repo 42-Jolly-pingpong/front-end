@@ -1,7 +1,3 @@
-// 친구 요청됨 -> 친구 요청 취소
-// 친구 -> 친구 끊기
-// 차단 -> 차단 풀기
-
 import {
 	friendModalButtonMessages,
 	friendModalMessage,
