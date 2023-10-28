@@ -1,5 +1,7 @@
+import { GameHistory } from 'ts/interfaces/game-history.model';
+
 interface FriendProps {
-	history: string;
+	history: GameHistory;
 }
 
 const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {

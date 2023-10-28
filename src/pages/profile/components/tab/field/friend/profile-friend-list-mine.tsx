@@ -34,6 +34,7 @@ const ProfileFriendListMine = () => {
 		}
 		fetchFriends();
 	};
+
 	const handleUnfriend = async (friendId: number) => {
 		await deleteFriend(friendId);
 		fetchFriends();
