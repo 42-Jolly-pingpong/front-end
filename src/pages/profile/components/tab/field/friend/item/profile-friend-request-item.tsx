@@ -1,4 +1,3 @@
-import { acceptFriendRequest, denyFriendRequest } from 'api/friend-api';
 import GrayButton from 'components/button/gray-button';
 import YellowButton from 'components/button/yellow-button';
 import { Avatar } from 'flowbite-react';
@@ -7,15 +6,19 @@ import User from 'ts/interfaces/user.model';
 
 interface requestProps {
 	user: User;
+	onRequest: (res: boolean, id: number) => void;
 }
 
-const ProfileFriendRequestItem: React.FC<requestProps> = ({ user }) => {
+const ProfileFriendRequestItem: React.FC<requestProps> = ({
+	user,
+	onRequest,
+}) => {
 	const handleAccept = async () => {
-		await acceptFriendRequest(user.id);
+		onRequest(true, user.id);
 	};
 
 	const handleDeny = async () => {
-		await denyFriendRequest(user.id);
+		onRequest(false, user.id);
 	};
 
 	return (

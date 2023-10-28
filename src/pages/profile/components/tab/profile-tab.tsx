@@ -5,9 +5,7 @@ import { Tabs } from 'flowbite-react';
 import ProfileGameHistoryTab from 'pages/profile/components/tab/field/game-history/profile-game-history-tab';
 import { MdDashboard } from 'react-icons/md';
 import { FiUser, FiUsers } from 'react-icons/fi';
-import ProfileFriendListTab from 'pages/profile/components/tab/field/friend/profile-friend-list-tab';
 import ProfileBlockedList from 'pages/profile/components/tab/field/blocked/profile-blocked-list';
-import ProfileFriendList from 'pages/profile/components/tab/field/friend/profile-friend-list-tab';
 import ProfileFriendListNormal from 'pages/profile/components/tab/field/friend/profile-friend-list-normal';
 import ProfileFriendListMine from 'pages/profile/components/tab/field/friend/profile-friend-list-mine';
 

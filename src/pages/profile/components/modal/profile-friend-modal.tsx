@@ -39,7 +39,7 @@ const ProfileFriendModal: React.FC<ModalProps> = ({
 	};
 
 	return (
-		<Modal size='lg' show={show} onClose={onClose} dismissible>
+		<Modal size='lg' show={show} onClose={onClose}>
 			<Modal.Header />
 			<ProfileFriendModalBody
 				message={message}

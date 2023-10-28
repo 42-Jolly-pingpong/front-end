@@ -2,33 +2,28 @@ import { Label, TextInput } from 'flowbite-react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { HiSearch } from 'react-icons/hi';
 import { userState } from 'ts/states/user-state';
-import { FriendListStatus } from 'ts/enums/friend/friendlist-status.enum';
-import { friendSidebarListState } from 'ts/states/friend/friend-sidebar-list-state';
-import { getFriendList, getFriendListBySearch } from 'api/friend-api';
+import { getFriendListBySearch } from 'api/friend-api';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { friendInputChangeState } from 'ts/states/friend/friend-input-change-state';
 
 const FriendSidebarSearch = () => {
 	const user = useRecoilValue(userState);
-	const [, setFriendsState] = useRecoilState(friendSidebarListState);
+	const userFriends = useRecoilValue(userFriendsState);
+	const [friendInputState, setFrinedInputState] = useRecoilState(
+		friendInputChangeState
+	);
 
 	const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const keyword = e.target.value;
 
-		let status = FriendListStatus.DEFAULT;
-		let friends = null;
+		setFrinedInputState({ ...friendInputState, state: false });
 
 		if (keyword.length === 0) {
-			friends = await getFriendList(user!.id);
+			setFrinedInputState({ friends: userFriends.friends, state: false });
 		} else {
-			friends = await getFriendListBySearch(user!.id, keyword);
+			const friends = await getFriendListBySearch(user!.id, keyword);
+			setFrinedInputState({ friends, state: true });
 		}
-
-		if (friends === null || friends.length === 0) {
-			status = keyword.length
-				? FriendListStatus.NOT_FOUND
-				: FriendListStatus.EMPTY;
-		}
-
-		setFriendsState({ status: status, friends: friends });
 	};
 
 	return (

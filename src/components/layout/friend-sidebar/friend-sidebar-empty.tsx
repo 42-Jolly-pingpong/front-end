@@ -1,6 +1,6 @@
 import { Card } from 'flowbite-react';
-import FriendListEmpty from 'components/friend/sidebar/item/friend-list-empty';
-import FriendSidebarHeader from 'components/friend/sidebar/field/friend-sidebar-header';
+import FriendListEmpty from 'components/layout/friend-sidebar/item/friend-list-empty';
+import FriendSidebarHeader from 'components/layout/friend-sidebar/field/friend-sidebar-header';
 
 const FriendSidebarEmpty = () => {
 	return (
