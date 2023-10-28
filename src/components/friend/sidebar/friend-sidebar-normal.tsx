@@ -6,14 +6,12 @@ import FriendModal from 'components/friend/sidebar/modal/friend-modal';
 
 const FriendSidebarNormal = () => {
 	return (
-		<>
-			<Card className='fixed flex flex-col right-0 friend-sidebar'>
-				<FriendSidebarHeader />
-				<FriendSidebarSearch />
-				<FriendSidebarList />
-				<FriendModal />
-			</Card>
-		</>
+		<Card className='fixed flex flex-col right-0 friend-sidebar'>
+			<FriendSidebarHeader />
+			<FriendSidebarSearch />
+			<FriendSidebarList />
+			<FriendModal />
+		</Card>
 	);
 };
 

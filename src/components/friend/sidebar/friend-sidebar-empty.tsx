@@ -4,12 +4,10 @@ import FriendSidebarHeader from 'components/friend/sidebar/field/friend-sidebar-
 
 const FriendSidebarEmpty = () => {
 	return (
-		<>
-			<Card className='fixed flex flex-col right-0 friend-sidebar'>
-				<FriendSidebarHeader />
-				<FriendListEmpty />
-			</Card>
-		</>
+		<Card className='fixed flex flex-col right-0 friend-sidebar'>
+			<FriendSidebarHeader />
+			<FriendListEmpty />
+		</Card>
 	);
 };
 
