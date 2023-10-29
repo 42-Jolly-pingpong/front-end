@@ -13,31 +13,47 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
+import { friendSidebarReloadState } from 'ts/states/friend/friend-sidebar-reload-state';
+import { socket } from 'socket/socket';
 
 const Layout = () => {
 	const [user, setUserState] = useRecoilState(userState);
 	const sidebarState = useRecoilValue(friendSidebarState);
 	const [, setUserFriendsState] = useRecoilState(userFriendsState);
 	const [loading, setLoading] = useState(true);
-
-	const updateUser = async () => {
-		const user = await getUserByJwt();
-		setUserState(user);
-		if (user) {
-			const friends = await getFriendList(user.id);
-			const requestFriends = await getFriendRequestList(user.id);
-			const blockedFriends = await getBlockedList(user.id);
-			setUserFriendsState({ friends, requestFriends, blockedFriends });
-		}
-		setLoading(false);
-	};
+	//const [reload, setReload] = useRecoilState(friendSidebarReloadState);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			await updateUser();
+		const updateUser = async () => {
+			const newUser = await getUserByJwt();
+			if (newUser) {
+				socket.emit('setClient', newUser.id);
+				setUserState(newUser);
+			}
 		};
-		fetchData();
+		updateUser();
 	}, []);
+
+	useEffect(() => {
+		const updateFriendList = async () => {
+			setLoading(true);
+			if (user) {
+				const friends = await getFriendList(user.id);
+				const requestFriends = await getFriendRequestList(user.id);
+				const blockedFriends = await getBlockedList(user.id);
+				setUserFriendsState({ friends, requestFriends, blockedFriends });
+			}
+			setLoading(false);
+		};
+
+		updateFriendList();
+
+		socket.on('reload', updateFriendList);
+
+		return () => {
+			socket.off('reload');
+		};
+	}, [user]);
 
 	if (loading === false) {
 		return (

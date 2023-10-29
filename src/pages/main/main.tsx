@@ -24,10 +24,8 @@ const Main = () => {
 
 		socket.on('connect', onConnect);
 		socket.on('disconnect', onDisconnect);
-		socket.on('updateFriendList', () => {
 
-		})
-		socket.emit('setClient', userInfo?.id)
+
 	}, []);
 
 	useEffect(() => {
