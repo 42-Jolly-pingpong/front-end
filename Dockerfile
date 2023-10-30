@@ -15,9 +15,8 @@ USER node
 WORKDIR /app
 
 COPY --chown=node:node package.json package-lock.json* ./
-RUN npm ci --include=dev && npm cache clean --force
 
-HEALTHCHECK --interval=30s CMD node healthcheck.js
+RUN npm ci --include=dev && npm cache clean --force
 
 COPY --chown=node:node . .
 
