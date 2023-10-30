@@ -1,6 +1,6 @@
 FROM node:lts-alpine3.17
 
-ARG NODE_ENV=production
+ARG NODE_ENV=development
 ENV NODE_ENV $NODE_ENV
 
 ARG PORT=5173
@@ -10,21 +10,17 @@ RUN npm i npm@latest -g
 
 RUN npm i -g vite
 
+USER node
+
 WORKDIR /app
 
-# USER node
-
-COPY package.json package-lock.json* ./
+COPY --chown=node:node package.json package-lock.json* ./
 RUN npm ci --include=dev && npm cache clean --force
-
-ENV PATH /app/node_modules/.bin:$PATH
-
-RUN ln -s /usr/local/lib/node_modules/ node_modules
 
 HEALTHCHECK --interval=30s CMD node healthcheck.js
 
-COPY . .
+COPY --chown=node:node . .
 
-EXPOSE 5173
+EXPOSE $PORT
 
-CMD [ "npm", "start", "--host" ]
+CMD [ "npm", "run", "dev"]
