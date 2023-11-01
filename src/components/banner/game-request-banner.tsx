@@ -51,7 +51,7 @@ const GameRequestBanner = () => {
 							<YellowButton size='xs' onClick={handleMatch}>
 								승낙하기
 							</YellowButton>
-
+							<div className='mr-4' />
 							<CancelButton size='xs' onClick={handleCancel} />
 						</div>
 					</div>

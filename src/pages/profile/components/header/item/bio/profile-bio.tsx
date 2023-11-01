@@ -8,7 +8,11 @@ const ProfileBio = () => {
 	const profile = useRecoilValue(profileState);
 	const user = profile.user;
 
-	if (user === null || profile.type === ProfileStatus.UNKNOWN) {
+	if (
+		user === null ||
+		profile.type === ProfileStatus.UNKNOWN ||
+		profile.type === ProfileStatus.BLOCKEDBYOTHER
+	) {
 		return <ProfileBioUnknown />;
 	}
 	return <ProfileBioNoraml />;

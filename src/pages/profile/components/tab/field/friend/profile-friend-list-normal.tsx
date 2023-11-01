@@ -35,7 +35,7 @@ const ProfileFriendListNormal = () => {
 
 	const handleRelation = async (relation: ProfileStatus, otherId: number) => {
 		switch (relation) {
-			case ProfileStatus.REQUESTED:
+			case ProfileStatus.REQUESTEDBYME:
 				await denyFriendRequest(otherId);
 				break;
 			case ProfileStatus.UNDEFINED:

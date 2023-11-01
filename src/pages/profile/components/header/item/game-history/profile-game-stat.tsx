@@ -10,7 +10,7 @@ const ProfileGameStat: React.FC<GameStatProps> = ({
 	loseMatch,
 }) => {
 	return (
-		<div className='flex justify-center py-5'>
+		<div className='flex justify-start py-5'>
 			<div className='flex text-sm'>
 				<div className='font-bold pr-1'>{match}</div>
 				<div>경기</div>

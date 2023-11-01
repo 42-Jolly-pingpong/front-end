@@ -12,11 +12,11 @@ export const GAME_REQ_MSG = '님이 게임 요청을 보냈어요!';
 export const friendModalMessage: { [key: string]: string } = {
 	BLOCKEDBYME: '사용자를 차단 해제할까요?',
 	FRIEND: '친구 관계를 끊을까요?',
-	REQUESTED: '친구 요청을 취소할까요?',
+	REQUESTEDBYME: '친구 요청을 취소할까요?',
 };
 
 export const friendModalButtonMessages: { [key: string]: string } = {
 	BLOCKEDBYME: '해제하기',
 	FRIEND: '친구 취소',
-	REQUESTED: '요청 취소',
+	REQUESTEDBYME: '요청 취소',
 };

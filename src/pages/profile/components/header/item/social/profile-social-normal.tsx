@@ -27,7 +27,7 @@ const ProfileSocialNormal = () => {
 	const handleClick = async () => {
 		if (relation === ProfileStatus.UNDEFINED) {
 			await updateFriend(profile.user!.id);
-			setRelation(ProfileStatus.REQUESTED);
+			setRelation(ProfileStatus.REQUESTEDBYME);
 		} else {
 			setModalState(true);
 		}
@@ -41,7 +41,7 @@ const ProfileSocialNormal = () => {
 			case ProfileStatus.FRIEND:
 				await deleteFriend(profile.user!.id);
 				break;
-			case ProfileStatus.REQUESTED:
+			case ProfileStatus.REQUESTEDBYME:
 				await denyFriendRequest(profile.user!.id);
 				break;
 		}

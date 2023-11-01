@@ -10,16 +10,11 @@ import ProfileFriendListMine from 'pages/profile/components/tab/field/friend/pro
 import ProfileGameHistoryList from 'pages/profile/components/tab/field/game-history/profile-game-history-list';
 
 const ProfileTab = () => {
-	// 이 프로필 상태
 	const profile = useRecoilValue(profileState);
 	const myProfile: boolean = profile.type === ProfileStatus.MINE;
-
 	return (
 		<>
-			<Tabs.Group
-				style='underline'
-				className=' justify-center items-center w-3/5'
-			>
+			<Tabs.Group style='underline'>
 				<Tabs.Item icon={MdDashboard} title='경기 전적'>
 					<ProfileGameHistoryList />
 				</Tabs.Item>

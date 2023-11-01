@@ -1,6 +1,7 @@
 import GrayButton from 'components/button/gray-button';
 import RedButton from 'components/button/red-button';
 import YellowButton from 'components/button/yellow-button';
+import { Button } from 'flowbite-react';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
 interface SocialButtonProps {
@@ -19,11 +20,20 @@ const ProfileHeaderSocialButton: React.FC<SocialButtonProps> = ({
 					친구
 				</GrayButton>
 			);
-		case ProfileStatus.REQUESTED:
+		case ProfileStatus.REQUESTEDBYME:
 			return (
 				<GrayButton size='xs' onClick={onClick}>
 					친구 요청됨
 				</GrayButton>
+			);
+		case ProfileStatus.REQUESTEDBYOTHER:
+			return (
+				<Button
+					className='text-black bg-gray-200 enabled:hover:bg-gray-200 focus:ring-0  border-gray-200 border-2 cursor-not-allowed'
+					size='xs'
+				>
+					수락 대기중
+				</Button>
 			);
 		case ProfileStatus.UNDEFINED:
 			return (

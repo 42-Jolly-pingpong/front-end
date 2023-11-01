@@ -1,9 +1,10 @@
+import CancelButton from 'components/button/cancel-button';
 import {
 	friendModalButtonMessages,
 	friendModalMessage,
 } from 'constants/messages';
 import { Modal } from 'flowbite-react';
-import ProfileFriendModalBody from 'pages/profile/components/modal/profile-friend-modal-body';
+import ProfileFriendModalBody from 'pages/profile/components/modal/item/profile-friend-modal-body';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
 interface ModalProps {
@@ -36,7 +37,9 @@ const ProfileFriendModal: React.FC<ModalProps> = ({
 
 	return (
 		<Modal size='lg' show={show} onClose={onClose}>
-			<Modal.Header />
+			<div className='mx-4 mt-4 flex justify-end'>
+				<CancelButton size='6' onClick={onClose} />
+			</div>
 			<ProfileFriendModalBody
 				message={message}
 				buttonMessage={buttonMessage}

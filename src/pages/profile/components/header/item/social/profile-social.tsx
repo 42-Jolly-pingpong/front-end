@@ -10,7 +10,10 @@ const ProfileSocial = () => {
 
 	if (profile.type === ProfileStatus.MINE) {
 		return <ProfileSocialMine />;
-	} else if (profile.type === ProfileStatus.UNKNOWN) {
+	} else if (
+		profile.type === ProfileStatus.UNKNOWN ||
+		profile.type === ProfileStatus.BLOCKEDBYOTHER
+	) {
 		return <ProfileSocialUnknown />;
 	} else {
 		return <ProfileSocialNormal />;
