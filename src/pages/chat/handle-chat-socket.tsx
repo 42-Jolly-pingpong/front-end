@@ -1,3 +1,4 @@
+import { getJwtValue } from 'components/utils/cookieUtils';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect } from 'react';
@@ -13,6 +14,7 @@ const HandleChatSocket = () => {
 	const [chat, setChat] = useRecoilState(chatState);
 	const setChatRoom = useChangeChat();
 	const setChatRoomList = useSetRecoilState(chatListState);
+	const token = getJwtValue();
 
 	useEffect(() => {}, []);
 
@@ -23,12 +25,16 @@ const HandleChatSocket = () => {
 	const user = userData[0]; //temp
 
 	useEffect(() => {
-		chatSocket.connect();
-
+		if (token !== undefined && chatSocket.disconnected) {
+			chatSocket.io.opts.extraHeaders = {
+				Authorization: `Bearer ${token}`,
+			};
+			chatSocket.connect();
+		}
 		return () => {
 			chatSocket.disconnect();
 		};
-	}, []);
+	}, [token]);
 
 	useEffect(() => {
 		if (chat.chatRoom) {
@@ -175,9 +181,17 @@ const HandleChatSocket = () => {
 			chatSocket.emit('requestJoin', { roomId: dm.id });
 		});
 
+		chatSocket.off('createChatRoom');
+		chatSocket.on('createChatRoom', (data: { chatRoom: ChatRoom }) => {
+			const { chatRoom } = data;
+
+			setChatRoom(chatRoom);
+		});
+
 		return () => {
 			chatSocket.off('addNewChatRoom');
 			chatSocket.off('addNewDm');
+			chatSocket.off('createChatRoom');
 		};
 	}, []);
 
