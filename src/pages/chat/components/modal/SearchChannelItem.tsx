@@ -14,8 +14,6 @@ import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
 import useChatAlert from 'hooks/use-chat-alert';
-import { userState } from 'ts/states/user-state';
-import User from 'ts/interfaces/user.model';
 
 export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);

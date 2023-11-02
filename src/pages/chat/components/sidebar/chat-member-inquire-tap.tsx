@@ -4,7 +4,6 @@ import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiDotsVerticalRounded, BiSearch } from 'react-icons/bi';
 import { FiUserPlus } from 'react-icons/fi';
-import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
@@ -16,6 +15,7 @@ import { chatSocket } from 'pages/chat/chat-socket';
 import User from 'ts/interfaces/user.model';
 import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import useChatAlert from 'hooks/use-chat-alert';
+import { userState } from 'ts/states/user-state';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,7 +36,7 @@ const ChatMemberInquireTap = (props: {
 	const getData = useFetch();
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
-	const user = userData[0]; //temp
+	const user = useRecoilValue(userState) as User;
 
 	useEffect(() => {
 		setStableParticipants(

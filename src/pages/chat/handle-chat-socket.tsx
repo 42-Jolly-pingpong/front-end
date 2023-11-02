@@ -2,27 +2,27 @@ import { getJwtValue } from 'components/utils/cookieUtils';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Chat } from 'ts/interfaces/chat.model';
 import { Dm } from 'ts/interfaces/dm.model';
-import userData from 'ts/mock/user-data';
+import User from 'ts/interfaces/user.model';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
+import { userState } from 'ts/states/user-state';
 
 const HandleChatSocket = () => {
 	const [chat, setChat] = useRecoilState(chatState);
 	const setChatRoom = useChangeChat();
 	const setChatRoomList = useSetRecoilState(chatListState);
 	const token = getJwtValue();
+	const user = useRecoilValue(userState) as User;
 
 	useEffect(() => {}, []);
 
 	chatSocket.on('connect', () => {
 		console.log('connected with server');
 	}); //위치 옮겨야 함
-
-	const user = userData[0]; //temp
 
 	useEffect(() => {
 		if (token !== undefined && chatSocket.disconnected) {

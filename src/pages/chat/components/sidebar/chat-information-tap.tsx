@@ -8,9 +8,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import userData from 'ts/mock/user-data';
+import User from 'ts/interfaces/user.model';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
+import { userState } from 'ts/states/user-state';
 
 const ChatInformationTap = () => {
 	const setProfile = useChangeSidebar('profile');
@@ -18,11 +19,10 @@ const ChatInformationTap = () => {
 	const setChat = useChangeChat();
 	const setChatList = useSetRecoilState(chatListState);
 	const setAlertModal = useChatAlert();
+	const user = useRecoilValue(userState) as User;
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
-
-	const user = userData[0]; //temp
 
 	const title = (label: string) => {
 		return <div className='text-sm font-bold'>{label}</div>;

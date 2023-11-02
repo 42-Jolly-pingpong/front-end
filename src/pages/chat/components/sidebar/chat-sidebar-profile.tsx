@@ -12,9 +12,10 @@ import HistoryDoughnutChart from 'pages/chat/components/sidebar/history-doughnut
 import { Dm } from 'ts/interfaces/dm.model';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatListSelector, chatListState } from 'ts/states/chat-list.state';
-import userData from 'ts/mock/user-data';
 import { chatSocket } from 'pages/chat/chat-socket';
 import useChatAlert from 'hooks/use-chat-alert';
+import { userState } from 'ts/states/user-state';
+import User from 'ts/interfaces/user.model';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
@@ -22,8 +23,7 @@ const ChatSidebarProfile = () => {
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
 	const setAlertModal = useChatAlert();
-
-	const user = userData[0]; //temp
+	const user = useRecoilValue(userState) as User;
 
 	if (otherUser === null) {
 		return null;

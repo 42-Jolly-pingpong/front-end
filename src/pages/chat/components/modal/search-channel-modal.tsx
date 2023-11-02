@@ -1,6 +1,6 @@
 import { Flowbite, ListGroup, Modal, TextInput } from 'flowbite-react';
 import { ListGroupTheme } from 'pages/chat/themes/list-group-theme';
-import { SearchChannelItem } from 'pages/chat/components/modal/search-channel-item';
+import { SearchChannelItem } from './SearchChannelItem';
 import { useEffect, useState } from 'react';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiSearch } from 'react-icons/bi';

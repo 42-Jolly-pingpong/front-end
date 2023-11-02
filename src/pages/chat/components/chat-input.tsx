@@ -7,8 +7,9 @@ import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Dm } from 'ts/interfaces/dm.model';
-import userData from 'ts/mock/user-data';
+import User from 'ts/interfaces/user.model';
 import { chatState } from 'ts/states/chat-state';
+import { userState } from 'ts/states/user-state';
 
 export const ChatInput = () => {
 	const [input, setInput] = useState<string>('');
@@ -16,8 +17,7 @@ export const ChatInput = () => {
 	const [scrollbar, setSrollbar] = useState<string>('hide-scrollbar');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const chat = useRecoilValue(chatState).chatRoom;
-
-	const user = userData[0]; //temp
+	const user = useRecoilValue(userState) as User;
 
 	useEffect(() => {
 		setIsMuted(false);
