@@ -1,25 +1,43 @@
-import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { Avatar, Dropdown } from 'flowbite-react';
-import { useRecoilValue } from 'recoil';
+import { FiUser } from 'react-icons/fi';
+import { FaArrowRightFromBracket } from 'react-icons/fa6';
+import { Link, useNavigate } from 'react-router-dom';
 import { userState } from 'ts/states/user-state';
+import { userSignOut } from 'api/auth-api';
 
 const HeaderProfileIcon = () => {
-	const user = useRecoilValue(userState)!;
+	const [user, setUserState] = useRecoilState(userState);
+	const navigate = useNavigate();
 
-	const a = () => {
-		console.log('로그아웃 기능');
+	const handleSignOut = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+		e.preventDefault();
+		try {
+			await userSignOut();
+			setUserState(null);
+			navigate('/');
+		} catch (err) {
+			console.log(err);
+		}
 	};
+
 	return (
 		<Dropdown
 			arrowIcon={false}
 			inline
 			label={<Avatar img='images/jollypong2.jpeg' rounded className='mr-3' />}
 		>
-			<Link to={`profile/${user.nickname}`}>
-				<Dropdown.Item className='text-gray-700'>프로필 보기</Dropdown.Item>
+			<Link to={`profile/${user!.nickname}`}>
+				<Dropdown.Item className='text-gray-700'>
+					<FiUser />
+					<div className='pl-3'>프로필 보기</div>
+				</Dropdown.Item>
 			</Link>
-			<Link to={'/'} onClick={a}>
-				<Dropdown.Item className='text-red-500'>로그아웃</Dropdown.Item>
+			<Link to={'/'} onClick={handleSignOut}>
+				<Dropdown.Item className='text-red-500'>
+					<FaArrowRightFromBracket />
+					<div className='pl-3'>로그아웃</div>
+				</Dropdown.Item>
 			</Link>
 		</Dropdown>
 	);

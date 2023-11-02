@@ -1,26 +1,55 @@
-import { getJwtValue } from 'components/utils/cookieUtils';
+import { getJsonValueByKey, getJwtValue } from 'components/utils/cookieUtils';
 import User from 'ts/interfaces/user.model';
+import sendAPI from 'api/sendAPI';
 
-export const getUserByJwt = async (
-	setUserState: any
-): Promise<User | undefined> => {
+export const getUserByJwt = async (): Promise<User | null> => {
 	try {
 		const token = getJwtValue();
 
-		const response = await fetch('http://localhost:3000/auth/user', {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-			},
-		});
-
-		if (response.ok) {
-			const user = await response.json();
-			console.log(user);
-			setUserState(user);
+		if (token) {
+			const user = await sendAPI({
+				method: 'POST',
+				url: '/auth/user',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			return user;
 		}
+		return null;
 	} catch (e) {
-		return undefined;
+		console.log(e);
+		return null;
+	}
+};
+
+export const userSignUp = async (nickname: string): Promise<void> => {
+	const cookies = getJsonValueByKey('user-data');
+
+	const signUpData = {
+		intraId: cookies.intraId,
+		email: cookies.email,
+		nickname,
+	};
+
+	try {
+		await sendAPI({
+			method: 'POST',
+			url: '/auth/signup',
+			body: signUpData,
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+export const userSignOut = async (): Promise<void> => {
+	try {
+		await sendAPI({
+			method: 'GET',
+			url: '/auth/signout',
+		});
+	} catch (e) {
+		console.log(e);
 	}
 };

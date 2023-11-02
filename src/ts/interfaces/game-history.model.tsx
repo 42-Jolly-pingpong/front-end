@@ -1,4 +1,4 @@
-import { GameMode } from 'ts/enums/game-mode.enum';
+import { GameMode } from 'ts/enums/game/game-mode.enum';
 
 export interface GameHistory {
 	historyIdx: number;
