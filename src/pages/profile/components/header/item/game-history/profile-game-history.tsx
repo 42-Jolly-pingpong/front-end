@@ -1,7 +1,7 @@
-import ProfileGameStat from 'pages/profile/components/header/item/game-history/profile-game-stat';
 import { useRecoilValue } from 'recoil';
-import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { profileState } from 'ts/states/profile/profile-state';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import ProfileGameStat from 'pages/profile/components/header/item/game-history/profile-game-stat';
 
 const ProfileGameHistory = () => {
 	const profile = useRecoilValue(profileState);

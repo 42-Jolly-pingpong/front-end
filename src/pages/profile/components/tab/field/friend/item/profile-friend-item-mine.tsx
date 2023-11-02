@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { Avatar } from 'flowbite-react';
 import GrayButton from 'components/button/gray-button';
 import User from 'ts/interfaces/user.model';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
 import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
-import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
-import { useState } from 'react';
 
 interface FriendProps {
 	user: User;

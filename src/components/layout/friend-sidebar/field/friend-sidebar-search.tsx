@@ -1,10 +1,10 @@
+import { HiSearch } from 'react-icons/hi';
 import { Label, TextInput } from 'flowbite-react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { HiSearch } from 'react-icons/hi';
 import { userState } from 'ts/states/user-state';
-import { getFriendListBySearch } from 'api/friend-api';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendInputChangeState } from 'ts/states/friend/friend-input-change-state';
+import { getFriendListBySearch } from 'api/friend-api';
 
 const FriendSidebarSearch = () => {
 	const user = useRecoilValue(userState);

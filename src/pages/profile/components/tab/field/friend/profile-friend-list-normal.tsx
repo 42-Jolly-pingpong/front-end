@@ -1,3 +1,10 @@
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import ProfileNoFriend from 'pages/profile/components/tab/field/friend/item/profile-no-friend';
+import ProfileFriendItemNormal from 'pages/profile/components/tab/field/friend/item/profile-friend-item-normal';
+import User from 'ts/interfaces/user.model';
+import { profileState } from 'ts/states/profile/profile-state';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import {
 	deleteBlockedFriend,
 	deleteFriend,
@@ -6,13 +13,6 @@ import {
 	getFriendRelation,
 	updateFriend,
 } from 'api/friend-api';
-import ProfileFriendItemNormal from 'pages/profile/components/tab/field/friend/item/profile-friend-item-normal';
-import ProfileNoFriend from 'pages/profile/components/tab/field/friend/item/profile-no-friend';
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
-import User from 'ts/interfaces/user.model';
-import { profileState } from 'ts/states/profile/profile-state';
 
 const ProfileFriendListNormal = () => {
 	const profile = useRecoilValue(profileState);

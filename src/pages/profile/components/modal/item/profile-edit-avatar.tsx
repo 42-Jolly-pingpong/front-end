@@ -1,7 +1,7 @@
 import { Avatar } from 'flowbite-react';
+import { useRecoilValue } from 'recoil';
 import { ChangeEvent, useState } from 'react';
 import { AiOutlineUpload } from 'react-icons/ai';
-import { useRecoilValue } from 'recoil';
 import { userState } from 'ts/states/user-state';
 
 interface AvatarProps {

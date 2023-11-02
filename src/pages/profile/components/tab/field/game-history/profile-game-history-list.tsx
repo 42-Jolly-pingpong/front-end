@@ -1,7 +1,7 @@
-import ProfileGameHistoryItem from 'pages/profile/components/tab/field/game-history/item/profile-game-history-item';
-import ProfileNoGameHistory from 'pages/profile/components/tab/field/game-history/item/profile-no-game-history';
 import { useEffect, useState } from 'react';
 import { GameHistory } from 'ts/interfaces/game-history.model';
+import ProfileNoGameHistory from 'pages/profile/components/tab/field/game-history/item/profile-no-game-history';
+import ProfileGameHistoryItem from 'pages/profile/components/tab/field/game-history/item/profile-game-history-item';
 
 const ProfileGameHistoryList = () => {
 	// 1. GameHistory model 변경 (erd 설계대로)

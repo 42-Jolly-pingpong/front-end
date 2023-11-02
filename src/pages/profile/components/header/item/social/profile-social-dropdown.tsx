@@ -1,22 +1,22 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Dropdown } from 'flowbite-react';
 import { BiUserMinus } from 'react-icons/bi';
 import { BsThreeDots } from 'react-icons/bs';
 import { VscDebugStart } from 'react-icons/vsc';
+import { userState } from 'ts/states/user-state';
 import { profileState } from 'ts/states/profile/profile-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 import {
 	addBlockedFriend,
 	getBlockedList,
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
-import { userState } from 'ts/states/user-state';
 
 const ProfileSocialDropdown = () => {
 	const user = useRecoilValue(userState);
 	const profile = useRecoilValue(profileState);
-	const [, setFriendsList] = useRecoilState(userFriendsState);
+	const setFriendsList = useSetRecoilState(userFriendsState);
 
 	const handleGame = () => {
 		// 여기에 게임 시작 모달 붙이기

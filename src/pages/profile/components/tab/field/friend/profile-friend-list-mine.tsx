@@ -1,3 +1,11 @@
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import User from 'ts/interfaces/user.model';
+import { userState } from 'ts/states/user-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
+import ProfileNoFriend from 'pages/profile/components/tab/field/friend/item/profile-no-friend';
+import ProfileFriendItemMine from 'pages/profile/components/tab/field/friend/item/profile-friend-item-mine';
+import ProfileFriendRequestItem from 'pages/profile/components/tab/field/friend/item/profile-friend-request-item';
 import {
 	acceptFriendRequest,
 	deleteFriend,
@@ -5,14 +13,6 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import ProfileFriendItemMine from 'pages/profile/components/tab/field/friend/item/profile-friend-item-mine';
-import ProfileFriendRequestItem from 'pages/profile/components/tab/field/friend/item/profile-friend-request-item';
-import ProfileNoFriend from 'pages/profile/components/tab/field/friend/item/profile-no-friend';
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import User from 'ts/interfaces/user.model';
-import { userState } from 'ts/states/user-state';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ProfileFriendListMine = () => {
 	const user = useRecoilValue(userState);

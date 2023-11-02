@@ -1,7 +1,7 @@
-import { useRecoilValue } from 'recoil';
-import GrayButton from 'components/button/gray-button';
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { userState } from 'ts/states/user-state';
+import GrayButton from 'components/button/gray-button';
 import ProfileEditModal from 'pages/profile/components/modal/profile-edit-modal';
 
 const ProfileSocialMine = () => {

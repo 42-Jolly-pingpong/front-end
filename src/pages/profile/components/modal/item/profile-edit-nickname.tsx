@@ -1,8 +1,8 @@
-import { getUserByNickname } from 'api/user-api';
-import { TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { TextInput } from 'flowbite-react';
 import { userState } from 'ts/states/user-state';
+import { getUserByNickname } from 'api/user-api';
 
 interface NicknameProps {
 	onChange: (nickname: string) => void;

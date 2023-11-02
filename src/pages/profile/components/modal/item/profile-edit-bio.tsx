@@ -1,6 +1,6 @@
-import { Textarea } from 'flowbite-react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { Textarea } from 'flowbite-react';
 import { userState } from 'ts/states/user-state';
 
 interface BioProps {

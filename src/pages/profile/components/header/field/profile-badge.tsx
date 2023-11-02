@@ -1,6 +1,6 @@
+import { Avatar } from 'flowbite-react';
 import { useRecoilValue } from 'recoil';
 import { profileState } from 'ts/states/profile/profile-state';
-import { Avatar } from 'flowbite-react';
 
 const ProfileBadge = () => {
 	const profile = useRecoilValue(profileState);

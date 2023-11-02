@@ -1,5 +1,5 @@
-import GrayButton from 'components/button/gray-button';
 import GoogleIcon from 'images/google.png';
+import GrayButton from 'components/button/gray-button';
 
 interface AuthProps {
 	onChange: (auth: boolean) => void;

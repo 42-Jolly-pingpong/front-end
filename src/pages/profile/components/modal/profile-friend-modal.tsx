@@ -1,11 +1,11 @@
+import { Modal } from 'flowbite-react';
 import CancelButton from 'components/button/cancel-button';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import ProfileFriendModalBody from 'pages/profile/components/modal/item/profile-friend-modal-body';
 import {
 	friendModalButtonMessages,
 	friendModalMessage,
 } from 'constants/messages';
-import { Modal } from 'flowbite-react';
-import ProfileFriendModalBody from 'pages/profile/components/modal/item/profile-friend-modal-body';
-import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
 interface ModalProps {
 	show: boolean;

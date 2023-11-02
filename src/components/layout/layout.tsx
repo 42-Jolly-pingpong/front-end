@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { Outlet } from 'react-router';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Banner from 'components/banner/banner';
 import Header from 'components/layout/header/header';
 import FriendSidebar from 'components/layout/friend-sidebar/friend-sidebar';
@@ -15,9 +15,9 @@ import {
 } from 'api/friend-api';
 
 const Layout = () => {
-	const [user, setUserState] = useRecoilState(userState);
+	const setUserState = useSetRecoilState(userState);
 	const sidebarState = useRecoilValue(friendSidebarState);
-	const [, setUserFriendsState] = useRecoilState(userFriendsState);
+	const setUserFriendsState = useSetRecoilState(userFriendsState);
 	const [loading, setLoading] = useState(true);
 
 	const updateUser = async () => {

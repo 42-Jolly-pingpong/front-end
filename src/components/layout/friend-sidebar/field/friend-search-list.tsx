@@ -1,7 +1,7 @@
-import FriendDropdown from 'components/layout/friend-sidebar/item/friend-dropdown';
-import FriendInfo from 'components/layout/friend-sidebar/item/friend-info';
-import FriendListEmpty from 'components/layout/friend-sidebar/item/friend-list-empty';
 import { useRecoilValue } from 'recoil';
+import FriendInfo from 'components/layout/friend-sidebar/item/friend-info';
+import FriendDropdown from 'components/layout/friend-sidebar/item/friend-dropdown';
+import FriendListEmpty from 'components/layout/friend-sidebar/item/friend-list-empty';
 import { friendInputChangeState } from 'ts/states/friend/friend-input-change-state';
 
 const FriendSearchList = () => {

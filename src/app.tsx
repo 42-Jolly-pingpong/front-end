@@ -1,11 +1,11 @@
-import Layout from 'components/layout/layout';
+import { RecoilRoot } from 'recoil';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Root from 'components/root/root';
+import Layout from 'components/layout/layout';
 import Chat from 'pages/chat/chat';
 import Game from 'pages/game/game';
-import Profile from 'pages/profile/profile';
 import SignUp from 'pages/sign-up/sign-up';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import Profile from 'pages/profile/profile';
 
 function App() {
 	return (

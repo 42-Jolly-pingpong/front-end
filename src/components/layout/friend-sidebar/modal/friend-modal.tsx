@@ -1,8 +1,8 @@
+import { useRecoilValue } from 'recoil';
 import FriendBannedModal from 'components/layout/friend-sidebar/modal/friend-banned-modal';
 import FriendUnfriendModal from 'components/layout/friend-sidebar/modal/friend-unfriend-modal';
-import { useRecoilValue } from 'recoil';
-import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
 import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-state';
+import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
 
 const FriendModal = () => {
 	const modalStatus = useRecoilValue(friendSidebarModalState);

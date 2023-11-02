@@ -1,10 +1,12 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import GrayButton from 'components/button/gray-button';
+import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
 import ProfileHeaderSocialButton from 'pages/profile/components/button/profile-header-social-button';
 import ProfileSocialDropdown from 'pages/profile/components/header/item/social/profile-social-dropdown';
-import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import { profileState } from 'ts/states/profile/profile-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import {
 	deleteBlockedFriend,
 	deleteFriend,
@@ -12,8 +14,6 @@ import {
 	getFriendRelation,
 	updateFriend,
 } from 'api/friend-api';
-import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ProfileSocialNormal = () => {
 	const profile = useRecoilValue(profileState);

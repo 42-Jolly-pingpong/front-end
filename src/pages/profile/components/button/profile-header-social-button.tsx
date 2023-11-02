@@ -1,7 +1,7 @@
-import GrayButton from 'components/button/gray-button';
-import RedButton from 'components/button/red-button';
-import YellowButton from 'components/button/yellow-button';
 import { Button } from 'flowbite-react';
+import RedButton from 'components/button/red-button';
+import GrayButton from 'components/button/gray-button';
+import YellowButton from 'components/button/yellow-button';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
 interface SocialButtonProps {

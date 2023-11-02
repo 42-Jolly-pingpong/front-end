@@ -1,6 +1,6 @@
-import { TextInput } from 'flowbite-react';
 import { HiMail } from 'react-icons/hi';
 import { useRecoilValue } from 'recoil';
+import { TextInput } from 'flowbite-react';
 import { userState } from 'ts/states/user-state';
 
 const ProfileEditEmail = () => {
