@@ -6,14 +6,11 @@ import SignUpEmailInput from 'pages/sign-up/components/sign-up-email-input';
 import SignUpNicknameInput from 'pages/sign-up/components/sign-up-nickname-input';
 import SignUpSubmitButton from 'pages/sign-up/components/sign-up-submit-button';
 import { useNavigate } from 'react-router-dom';
-import useRedirectHome from 'hooks/use-redirect-home';
 
 const SignUp = () => {
 	const [nickname, setNickname] = useState('');
 	const [validNickname, setValidNickname] = useState(false);
 	const navigate = useNavigate();
-
-	useRedirectHome();
 
 	const handleNickname = (nickname: string) => {
 		if (nickname) {
