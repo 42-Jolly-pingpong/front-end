@@ -1,8 +1,6 @@
 import { Modal } from 'flowbite-react';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'ts/states/user-state';
-import GoogleIcon from 'images/google.png';
-import GrayButton from 'components/button/gray-button';
 import ProfileEditHeader from 'pages/profile/components/modal/item/profile-edit-header';
 import ProfileEditEmail from 'pages/profile/components/modal/item/profile-edit-email';
 import ProfileEditAvatar from 'pages/profile/components/modal/item/profile-edit-avatar';
