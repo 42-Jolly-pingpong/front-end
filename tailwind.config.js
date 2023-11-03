@@ -48,7 +48,6 @@ module.exports = {
 	plugins: [
 		// eslint-disable-next-line no-undef
 		require('@tailwindcss/typography'),
-		require('daisyui'),
 		require('flowbite/plugin'),
 	],
 };
