@@ -1,5 +1,4 @@
 import { Avatar } from 'flowbite-react';
-import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { GameMode } from 'ts/enums/game/game-mode.enum';
 import { GameHistory } from 'ts/interfaces/game-history.model';

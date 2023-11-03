@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Outlet } from 'react-router';
 import Banner from 'components/banner/banner';
@@ -21,61 +21,50 @@ import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
 
 const Layout = () => {
-	const setUserState = useSetRecoilState(userState);
 	const sidebarState = useRecoilValue(friendSidebarState);
-	const [, setUserFriendsState] = useRecoilState(userFriendsState);
 	const gameSelectModal = useRecoilValue(gameModeSelectState);
-	const setGameInfo = useSetRecoilState(gameInfoState)
-	const setIsGame = useSetRecoilState(gameStartState)
-	const navigate = useNavigate()
+	const setGameInfo = useSetRecoilState(gameInfoState);
+	const setIsGame = useSetRecoilState(gameStartState);
+	const navigate = useNavigate();
 	const setUserFriendsState = useSetRecoilState(userFriendsState);
+	const [user, setUser] = useRecoilState(userState);
 	const [loading, setLoading] = useState(true);
 
-	const updateFriendList = async () => {
-		if (user) {
-			const friends = await getFriendList(user.id);
-			const requestFriends = await getFriendRequestList(user.id);
-			const blockedFriends = await getBlockedList(user.id);
+	const initData = async () => {
+		const newUser = await getUserByJwt();
+		console.log(newUser)
+		if (newUser) {
+			setUser(newUser);
+			console.log(user)
+			const friends = await getFriendList(newUser.id);
+			const requestFriends = await getFriendRequestList(newUser.id);
+			const blockedFriends = await getBlockedList(newUser.id);
 			setUserFriendsState({ friends, requestFriends, blockedFriends });
+			socket.emit('setClient', newUser.id);
 		}
 	};
 
-	const updateUser = async () => {
-		const newUser = await getUserByJwt();
-		console.log('new user = ', newUser)
-		if (newUser) {
-			socket.emit('setClient', newUser.id);
-			setUserState(newUser);
-		}
-	};
+	
 
 	useEffect(() => {
-		if (socket.connected) {
+		const initUserData = async () => {
+			setLoading(true);
+			await initData();
+			setLoading(false);
 			socket.on('getPlayerInfo', (message) => {
 				const newGameInfo: GameInfoType = message;
 				setGameInfo(newGameInfo);
 			});
 			socket.on('gameStart', () => {
-				console.log('게임 시작해요')
 				setIsGame(true);
 				navigate('/game');
 			});
-		}
-	})
-	
-	useEffect(() => {
-		updateUser();
-		
-		return () => {
-			socket.off('reload');
 		};
-	}, []);
-	
-	useEffect(() => {
-		socket.on('reload', updateFriendList);
-		updateFriendList();
-	}, [user]);
 
+		initUserData();
+	}, []);
+
+	if (loading) return;
 	return (
 		<div className='flex flex-col h-screen'>
 			<Banner />
