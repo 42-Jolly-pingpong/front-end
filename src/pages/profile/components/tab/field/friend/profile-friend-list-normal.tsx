@@ -13,8 +13,10 @@ import {
 	getFriendRelation,
 	updateFriend,
 } from 'api/friend-api';
+import { userState } from 'ts/states/user-state';
 
 const ProfileFriendListNormal = () => {
+	const user = useRecoilValue(userState);
 	const profile = useRecoilValue(profileState);
 	const profileType = profile.type;
 	const [friendList, setFriendList] = useState<User[]>([]);
@@ -23,15 +25,32 @@ const ProfileFriendListNormal = () => {
 	);
 
 	const fetchFriends = async () => {
-		setFriendList(await getFriendList(profile.user!.id));
-
-		const relationData: Record<number, ProfileStatus> = {};
-		for (const friend of friendList) {
-			const relation = await getFriendRelation(friend.id);
-			relationData[friend.id] = relation;
-		}
-		setRelationMap(relationData);
+		const fetchedFriendList = await getFriendList(profile.user!.id);
+		setFriendList(fetchedFriendList);
 	};
+
+	useEffect(() => {
+		fetchFriends();
+	}, []);
+
+	useEffect(() => {
+		const fetchRelations = async () => {
+			const relationData: Record<number, ProfileStatus> = {};
+			for (const friend of friendList) {
+				if (friend.id === user!.id) {
+					relationData[friend.id] = ProfileStatus.FRIEND;
+				} else {
+					const relation = await getFriendRelation(friend.id);
+					relationData[friend.id] = relation;
+				}
+			}
+			setRelationMap(relationData);
+		};
+
+		if (friendList.length > 0) {
+			fetchRelations();
+		}
+	}, [friendList]);
 
 	const handleRelation = async (relation: ProfileStatus, otherId: number) => {
 		switch (relation) {
@@ -52,10 +71,6 @@ const ProfileFriendListNormal = () => {
 		}
 		fetchFriends();
 	};
-
-	useEffect(() => {
-		fetchFriends();
-	}, []);
 
 	if (
 		profileType === ProfileStatus.UNKNOWN ||

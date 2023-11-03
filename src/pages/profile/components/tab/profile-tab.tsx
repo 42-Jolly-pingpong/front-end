@@ -14,19 +14,25 @@ const ProfileTab = () => {
 	const myProfile: boolean = profile.type === ProfileStatus.MINE;
 	return (
 		<>
-			<Tabs.Group style='underline'>
-				<Tabs.Item icon={MdDashboard} title='경기 전적'>
-					<ProfileGameHistoryList />
-				</Tabs.Item>
-				<Tabs.Item icon={FiUsers} title='친구 목록'>
-					{myProfile ? <ProfileFriendListMine /> : <ProfileFriendListNormal />}
-				</Tabs.Item>
-				{myProfile && (
-					<Tabs.Item icon={FiUser} title='차단 목록'>
-						<ProfileBlockedList />
+			<div className='w-1/3'>
+				<Tabs.Group style='underline' className='justify-center'>
+					<Tabs.Item icon={MdDashboard} title='경기 전적'>
+						<ProfileGameHistoryList />
 					</Tabs.Item>
-				)}
-			</Tabs.Group>
+					<Tabs.Item icon={FiUsers} title='친구 목록'>
+						{myProfile ? (
+							<ProfileFriendListMine />
+						) : (
+							<ProfileFriendListNormal />
+						)}
+					</Tabs.Item>
+					{myProfile && (
+						<Tabs.Item icon={FiUser} title='차단 목록'>
+							<ProfileBlockedList />
+						</Tabs.Item>
+					)}
+				</Tabs.Group>
+			</div>
 		</>
 	);
 };
