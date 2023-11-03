@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
 export enum GameMode  {
-	classic,
-	speed,
+	classic = 'NORMAL',
+	speed = 'SPEED',
 };
 
 export const gameModeState = atom<GameMode>({

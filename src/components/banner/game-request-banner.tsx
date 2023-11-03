@@ -26,8 +26,8 @@ const GameRequestBanner = ({ userInfo }: propsType) => {
 	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
+		socket.emit('acceptInvite', JSON.stringify({user: userInfo, mode: gameBanner.mode}));
 		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
-		socket.emit('acceptInvite', userInfo.id);
 	};
 
 	const handleCancel = () => {

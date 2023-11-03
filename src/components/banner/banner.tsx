@@ -34,7 +34,7 @@ const Banner = () => {
 	switch (banner.type) {
 		case GameBanner.GAMEREQUEST: // 게임 request가 왔을 때
 			if(userInfo)
-				return <GameRequestBanner userInfo={userInfo}/>;
+				return <GameRequestBanner userInfo={userInfo} />;
 			break;
 		case GameBanner.NOMATCH: // 게임 matching에 실패했을 때
 			return <NoMatchBanner />;

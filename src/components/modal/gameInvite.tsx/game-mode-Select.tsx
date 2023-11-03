@@ -9,7 +9,6 @@ import GameSearchModal from '../game-search-modal';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { useEffect } from 'react';
 import { socket } from 'socket/socket';
-import { gameModeState } from 'ts/states/game/game-mode-state';
 
 interface Props {
 	show: boolean;
@@ -19,7 +18,6 @@ const InviteGameModal = ({ show }: Props) => {
 	const setGameSelectModal = useSetRecoilState(gameModeSelectState);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const opponentInfo = useRecoilValue(opponentInfoState)
-	const gameMode = useRecoilValue(gameModeState)
 
 	useEffect(() => {
 		setGameWait({ ...gameWait, status: GameWaitStatus.MODE})
@@ -31,7 +29,7 @@ const InviteGameModal = ({ show }: Props) => {
 	};
 
 	const onClick = () => {
-		socket.emit('inviteGame', JSON.stringify({user: opponentInfo, mode: gameMode}));
+		socket.emit('inviteGame', JSON.stringify({user: opponentInfo, mode: gameWait.mode}));
 		setGameWait({...gameWait, status: GameWaitStatus.SEARCH})
 	};
 
