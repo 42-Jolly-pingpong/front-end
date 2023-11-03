@@ -49,5 +49,6 @@ module.exports = {
 		// eslint-disable-next-line no-undef
 		require('@tailwindcss/typography'),
 		require('flowbite/plugin'),
+		'prettier-plugin-tailwindcss',
 	],
 };

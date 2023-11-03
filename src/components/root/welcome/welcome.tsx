@@ -3,7 +3,7 @@ import WelcomeTitle from './components/welcome-title';
 
 const Welcome = () => {
 	return (
-		<div className='flex flex-col justify-center items-center h-screen w-screen'>
+		<div className='flex flex-col items-center justify-center h-screen w-screen'>
 			<WelcomeTitle />
 			<LoginButton />
 		</div>
