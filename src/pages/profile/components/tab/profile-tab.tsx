@@ -14,7 +14,7 @@ const ProfileTab = () => {
 	const myProfile: boolean = profile.type === ProfileStatus.MINE;
 	return (
 		<>
-			<div className='w-1/2'>
+			<div className='w-1/3'>
 				<Tabs.Group style='underline' className='justify-center'>
 					<Tabs.Item icon={MdDashboard} title='경기 전적'>
 						<ProfileGameHistoryList />
