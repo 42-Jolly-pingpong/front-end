@@ -14,14 +14,20 @@ import {
 } from 'constants/values';
 import YellowButton from 'components/button/yellow-button';
 import CancelButton from 'components/button/cancel-button';
+import { socket } from 'socket/socket';
+import User from 'ts/interfaces/user.model';
 
-const GameRequestBanner = () => {
+interface propsType {
+	userInfo: User;
+}
+
+const GameRequestBanner = ({ userInfo }: propsType) => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
 	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
 		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
-		// 게임을 수락했을 경우 소켓 로직 추가
+		socket.emit('acceptInvite', userInfo.id);
 	};
 
 	const handleCancel = () => {
@@ -45,7 +51,7 @@ const GameRequestBanner = () => {
 					<div className='flex justify-between p-4 items-center'>
 						<div className='flex'>
 							<BannerIcon />
-							<BannerMessage message={GAME_REQ_MSG} />
+							<BannerMessage message={userInfo.nickname + GAME_REQ_MSG} />
 						</div>
 						<div className='flex items-center'>
 							<YellowButton size='xs' onClick={handleMatch}>

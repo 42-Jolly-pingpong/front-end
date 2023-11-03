@@ -4,7 +4,6 @@ import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiDotsVerticalRounded, BiSearch } from 'react-icons/bi';
 import { FiUserPlus } from 'react-icons/fi';
-import { User } from 'ts/interfaces/user.model';
 import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
@@ -14,6 +13,7 @@ import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import useChangeChat from 'hooks/use-change-chat';
 import { useRecoilValue } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
+import User from 'ts/interfaces/user.model';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;

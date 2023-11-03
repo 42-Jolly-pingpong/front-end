@@ -1,9 +1,10 @@
 import { GameMode } from 'ts/enums/game/game-mode.enum';
+import User from './user.model';
 
 export interface GameHistory {
-	historyIdx: number;
-	winPlayerIdx: number;
-	losePlayerIdx: number;
+	id: number;
+	winner: User;
+	loser: User;
 	winScore: number;
 	loseScore: number;
 	playTime: number;
