@@ -13,7 +13,6 @@ const GameModeRadio = () => {
 	}, []);
 
 	const handleChange = (mode: GameMode) => {
-		console.log(mode)
 		setGameWait({ ...gameWait, mode: mode });
 	};
 

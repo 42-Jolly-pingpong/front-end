@@ -25,7 +25,6 @@ const Banner = () => {
 
 	useEffect(() => {
 		socket.on('inviteGame', (userInfo: User, mode: GameMode) => {
-			console.log(userInfo, mode)
 			setUserInfo(userInfo)
 			setBanner({type: GameBanner.GAMEREQUEST, mode})
 		})

@@ -29,7 +29,7 @@ const ProfileGameHistoryList = () => {
 	return (
 		<div className='flex flex-col items-center h-96 overflow-y-auto'>
 			{historyList.map((history: GameHistory) => (
-				<ProfileGameHistoryItem history={history} key={history.id} />
+				<ProfileGameHistoryItem history={history} key={history.roomName} />
 			))}
 		</div>
 	);
