@@ -3,14 +3,14 @@ import { Modal } from 'flowbite-react';
 import NormalButton from 'components/button/normal-button';
 import YellowButton from 'components/button/yellow-button';
 import { userState } from 'ts/states/user-state';
-import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-state';
+import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
 import {
 	addBlockedFriend,
 	getBlockedList,
 	getFriendList,
 } from 'api/friend-api';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const FriendBannedModal = () => {
 	const user = useRecoilValue(userState);

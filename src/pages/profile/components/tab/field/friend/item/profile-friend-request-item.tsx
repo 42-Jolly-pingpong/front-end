@@ -1,8 +1,8 @@
+import { Avatar } from 'flowbite-react';
+import User from 'ts/interfaces/user.model';
 import GrayButton from 'components/button/gray-button';
 import YellowButton from 'components/button/yellow-button';
-import { Avatar } from 'flowbite-react';
 import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
-import User from 'ts/interfaces/user.model';
 
 interface requestProps {
 	user: User;

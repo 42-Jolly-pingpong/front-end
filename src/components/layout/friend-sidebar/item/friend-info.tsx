@@ -1,6 +1,6 @@
 import { Avatar } from 'flowbite-react';
-import { UserStatus } from 'ts/enums/user/user-status.enum';
 import User from 'ts/interfaces/user.model';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
 
 interface FriendInfoProps {
 	user: User;

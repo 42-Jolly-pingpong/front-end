@@ -2,10 +2,10 @@ import { useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
 import User from 'ts/interfaces/user.model';
 import { userState } from 'ts/states/user-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 import ProfileNoBlocked from 'pages/profile/components/tab/field/blocked/item/profile-no-blocked';
 import ProfileBlockedItem from 'pages/profile/components/tab/field/blocked/item/profile-blocked-item';
 import { deleteBlockedFriend, getBlockedList } from 'api/friend-api';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ProfileBlockedList = () => {
 	const user = useRecoilValue(userState);

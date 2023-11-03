@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { Avatar } from 'flowbite-react';
 import User from 'ts/interfaces/user.model';
-import ProfileFriendButton from 'pages/profile/components/button/profile-friend-button';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
-import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
 import ProfileFriendModal from 'pages/profile/components/modal/profile-friend-modal';
-import { useState } from 'react';
+import ProfileUserInfo from 'pages/profile/components/tab/common/profile-user-info';
+import ProfileFriendButton from 'pages/profile/components/button/profile-friend-button';
 
 interface FriendProps {
 	user: User;

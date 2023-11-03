@@ -1,69 +1,68 @@
 {
-  "name": "jolly-pingpong",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@fortawesome/free-brands-svg-icons": "^6.4.2",
-    "@fortawesome/free-regular-svg-icons": "^6.4.2",
-    "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@react-icons/all-files": "^4.1.0",
-    "chart.js": "^4.4.0",
-    "flowbite": "^1.8.1",
-    "flowbite-react": "^0.6.0",
-    "react": "^18.2.0",
-    "react-canvas-confetti": "^1.4.0",
-    "react-chartjs-2": "^5.2.0",
-    "react-confetti": "^6.1.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "react-router-dom": "^6.15.0",
-    "recoil": "^0.7.7",
-    "recoil-persist": "^5.1.0",
-    "socket.io-client": "^4.7.2"
-  },
-  "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "@testing-library/react": "^14.0.0",
-    "@types/jest": "^29.5.4",
-    "@types/node": "^20.5.9",
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react-swc": "^3.3.2",
-    "autoprefixer": "^10.4.16",
-    "daisyui": "^3.7.3",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "postcss": "^8.4.30",
-    "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.4",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2",
-    "vite": "^4.4.9",
-    "vite-plugin-environment": "^1.1.3"
-  }
+	"name": "jolly-pingpong",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.4.2",
+		"@fortawesome/free-brands-svg-icons": "^6.4.2",
+		"@fortawesome/free-regular-svg-icons": "^6.4.2",
+		"@fortawesome/free-solid-svg-icons": "^6.4.2",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@react-icons/all-files": "^4.1.0",
+		"chart.js": "^4.4.0",
+		"flowbite": "^1.8.1",
+		"flowbite-react": "^0.6.0",
+		"react": "^18.2.0",
+		"react-canvas-confetti": "^1.4.0",
+		"react-chartjs-2": "^5.2.0",
+		"react-confetti": "^6.1.0",
+		"react-dom": "^18.2.0",
+		"react-icons": "^4.11.0",
+		"react-router-dom": "^6.15.0",
+		"recoil": "^0.7.7",
+		"recoil-persist": "^5.1.0",
+		"socket.io-client": "^4.7.2"
+	},
+	"scripts": {
+		"start": "vite",
+		"dev": "vite --host -m dev",
+		"build": "tsc && vite build",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@tailwindcss/typography": "^0.5.10",
+		"@testing-library/react": "^14.0.0",
+		"@types/jest": "^29.5.4",
+		"@types/node": "^20.5.9",
+		"@types/react": "^18.2.15",
+		"@types/react-dom": "^18.2.7",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0",
+		"@vitejs/plugin-react-swc": "^3.3.2",
+		"autoprefixer": "^10.4.16",
+		"eslint": "^8.45.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.3",
+		"postcss": "^8.4.30",
+		"prettier": "^3.0.3",
+		"prettier-plugin-tailwindcss": "^0.5.4",
+		"tailwindcss": "^3.3.3",
+		"typescript": "^5.2.2",
+		"vite": "^4.4.9",
+		"vite-plugin-environment": "^1.1.3"
+	}
 }

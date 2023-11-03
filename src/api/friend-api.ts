@@ -1,7 +1,7 @@
 import sendAPI from 'api/sendAPI';
 import { getJwtValue } from 'components/utils/cookieUtils';
-import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import User from 'ts/interfaces/user.model';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
 /**
  * url : friends/
@@ -60,6 +60,7 @@ export const deleteFriend = async (id: number): Promise<void> => {
 /**
  * url: friends/request/
  */
+
 export const getFriendRequestList = async (id: number): Promise<User[]> => {
 	try {
 		const token = getJwtValue();
@@ -213,7 +214,6 @@ export const getFriendState = async (id: number): Promise<ProfileStatus> => {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-
 		return state;
 	} catch (e) {
 		console.log(e);

@@ -1,10 +1,11 @@
+import { useRecoilState, useRecoilValue } from 'recoil';
+import GrayButton from 'components/button/gray-button';
+import YellowButton from 'components/button/yellow-button';
+import FriendInfo from 'components/layout/friend-sidebar/item/friend-info';
 import FriendDropdown from 'components/layout/friend-sidebar/item/friend-dropdown';
 import FriendNotFound from 'components/layout/friend-sidebar/item/friend-not-found';
-import FriendInfo from 'components/layout/friend-sidebar/item/friend-info';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
-import YellowButton from 'components/button/yellow-button';
-import GrayButton from 'components/button/gray-button';
 import {
 	acceptFriendRequest,
 	denyFriendRequest,
@@ -12,7 +13,6 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import { userState } from 'ts/states/user-state';
 
 const FriendSidebarList = () => {
 	const user = useRecoilValue(userState);

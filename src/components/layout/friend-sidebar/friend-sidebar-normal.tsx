@@ -1,11 +1,11 @@
 import { Card } from 'flowbite-react';
+import { useRecoilValue } from 'recoil';
+import FriendModal from 'components/layout/friend-sidebar/modal/friend-modal';
+import FriendSearchList from 'components/layout/friend-sidebar/field/friend-search-list';
+import FriendSidebarList from 'components/layout/friend-sidebar/field/friend-sidebar-list';
 import FriendSidebarHeader from 'components/layout/friend-sidebar/field/friend-sidebar-header';
 import FriendSidebarSearch from 'components/layout/friend-sidebar/field/friend-sidebar-search';
-import FriendSidebarList from 'components/layout/friend-sidebar/field/friend-sidebar-list';
-import FriendModal from 'components/layout/friend-sidebar/modal/friend-modal';
-import { useRecoilValue } from 'recoil';
 import { friendInputChangeState } from 'ts/states/friend/friend-input-change-state';
-import FriendSearchList from 'components/layout/friend-sidebar/field/friend-search-list';
 
 const FriendSidebarNormal = () => {
 	const friendInputState = useRecoilValue(friendInputChangeState);

@@ -6,11 +6,11 @@ export const getUserByNickname = async (
 ): Promise<User | undefined> => {
 	try {
 		if (nickname) {
-			const users = await sendAPI({
+			const users: User[] = await sendAPI({
 				method: 'GET',
 				url: '/user/search/' + nickname,
 			});
-			if (users[0] && users[0].nickname === nickname) {
+			if (users.length > 0) {
 				return users[0];
 			}
 		}

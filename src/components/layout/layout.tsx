@@ -21,13 +21,15 @@ import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
 
 const Layout = () => {
-	const [user, setUserState] = useRecoilState(userState);
+	const setUserState = useSetRecoilState(userState);
 	const sidebarState = useRecoilValue(friendSidebarState);
 	const [, setUserFriendsState] = useRecoilState(userFriendsState);
 	const gameSelectModal = useRecoilValue(gameModeSelectState);
 	const setGameInfo = useSetRecoilState(gameInfoState)
 	const setIsGame = useSetRecoilState(gameStartState)
 	const navigate = useNavigate()
+	const setUserFriendsState = useSetRecoilState(userFriendsState);
+	const [loading, setLoading] = useState(true);
 
 	const updateFriendList = async () => {
 		if (user) {

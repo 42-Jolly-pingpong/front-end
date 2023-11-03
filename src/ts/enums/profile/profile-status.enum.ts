@@ -1,9 +1,10 @@
 export enum ProfileStatus {
 	MINE = 'MINE',
 	FRIEND = 'FRIEND',
-	REQUESTED = 'REQUESTED',
+	REQUESTEDBYME = 'REQUESTEDBYME',
+	REQUESTEDBYOTHER = 'REQUESTEDBYOTHER',
 	BLOCKEDBYME = 'BLOCKEDBYME',
 	BLOCKEDBYOTHER = 'BLOCKEDBYOTHER',
-	UNKNOWN = 'UNKNOWN', // 탈퇴한 유저. 없는 유저. 내가 차단당한 유저일때
+	UNKNOWN = 'UNKNOWN', // 탈퇴한 유저. 없는 유저. 내가 누군가에게 차단당한 유저일때
 	UNDEFINED = 'UNDEFINED', //유저가 있지만 나랑 아무 관계가 아닐때
 }

@@ -35,6 +35,7 @@ const NoMatchBanner = () => {
 							<YellowButton size='xs' onClick={handleReMatch}>
 								다시 기다리기
 							</YellowButton>
+							<div className='mr-4' />
 							<CancelButton size='xs' onClick={handleCancel} />
 						</div>
 					</div>

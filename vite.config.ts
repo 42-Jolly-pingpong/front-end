@@ -16,7 +16,18 @@ export default defineConfig({
 			pages: '/src/pages',
 			ts: '/src/ts',
 			hooks: '/src/hooks',
-			socket: '/src/socket'
+			socket: '/src/socket',
 		},
+	},
+	server: {
+		watch: {
+			usePolling: true,
+		},
+		host: true, // needed for the Docker Container port mapping to work
+		hmr: {
+			clientPort: 5173,
+		},
+		strictPort: true,
+		port: 5173, // you can replace this port with any port
 	},
 });

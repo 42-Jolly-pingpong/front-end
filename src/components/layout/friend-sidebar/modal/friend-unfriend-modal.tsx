@@ -1,16 +1,16 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { Modal } from 'flowbite-react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import NormalButton from 'components/button/normal-button';
 import YellowButton from 'components/button/yellow-button';
-import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
+import { userState } from 'ts/states/user-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-state';
+import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
 import {
 	deleteFriend,
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import { userState } from 'ts/states/user-state';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const FriendUnfriendModal = () => {
 	const user = useRecoilValue(userState);

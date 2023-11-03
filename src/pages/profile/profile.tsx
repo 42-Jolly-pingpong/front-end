@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from 'ts/states/user-state';
 import { profileState } from 'ts/states/profile/profile-state';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import ProfileTab from 'pages/profile/components/tab/profile-tab';
+import ProfileHeader from 'pages/profile/components/header/profile-header';
 import useRedirectHome from 'hooks/use-redirect-home';
 import { getFriendState } from 'api/friend-api';
 import { getUserByNickname } from 'api/user-api';
-import ProfileHeader from 'pages/profile/components/header/profile-header';
-import ProfileTab from 'pages/profile/components/tab/profile-tab';
 
 const Profile = () => {
 	const { nickname } = useParams();
 	const user = useRecoilValue(userState);
 	const [loading, setLoading] = useState(true);
-	const [, setProfileState] = useRecoilState(profileState);
+	const setProfileState = useSetRecoilState(profileState);
 
 	useRedirectHome();
 

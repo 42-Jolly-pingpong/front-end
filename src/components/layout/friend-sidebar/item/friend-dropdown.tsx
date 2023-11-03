@@ -2,10 +2,10 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Dropdown } from 'flowbite-react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import User from 'ts/interfaces/user.model';
-import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
 import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-state';
 import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
+import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
 
 interface FriendInfoProps {
 	user: User;
