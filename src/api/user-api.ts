@@ -10,7 +10,7 @@ export const getUserByNickname = async (
 				method: 'GET',
 				url: '/user/search/' + nickname,
 			});
-			if (users.length > 0 && users[0].nickname === nickname) {
+			if (users.length > 0) {
 				return users[0];
 			}
 		}

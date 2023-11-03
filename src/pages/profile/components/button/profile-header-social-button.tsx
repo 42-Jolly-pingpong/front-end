@@ -3,6 +3,7 @@ import RedButton from 'components/button/red-button';
 import GrayButton from 'components/button/gray-button';
 import YellowButton from 'components/button/yellow-button';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import { BiPlus } from 'react-icons/bi';
 
 interface SocialButtonProps {
 	relation: ProfileStatus;
@@ -38,7 +39,10 @@ const ProfileHeaderSocialButton: React.FC<SocialButtonProps> = ({
 		case ProfileStatus.UNDEFINED:
 			return (
 				<YellowButton size='xs' onClick={onClick}>
-					+ 친구추가
+					<div className='flex flex-row items-center justify-center font-bold'>
+						<BiPlus size='16' />
+						<div className='text-xs pl-1'>친구 추가</div>
+					</div>
 				</YellowButton>
 			);
 		case ProfileStatus.BLOCKEDBYME:
