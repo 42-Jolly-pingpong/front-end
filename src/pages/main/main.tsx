@@ -10,7 +10,7 @@ import { userState } from 'ts/states/user-state';
 const Main = () => {
 	const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
 	const isGameStart = useRecoilValue(gameStartState);
-	const userInfo = useRecoilValue(userState)
+	const userInfo = useRecoilValue(userState);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -21,10 +21,10 @@ const Main = () => {
 		function onDisconnect() {
 			setIsConnected(false);
 		}
-		
+
 		socket.on('connect', onConnect);
 		socket.on('disconnect', onDisconnect);
-		socket.emit('setId', userInfo?.id)
+		socket.emit('setId', userInfo?.id);
 	}, []);
 
 	useEffect(() => {

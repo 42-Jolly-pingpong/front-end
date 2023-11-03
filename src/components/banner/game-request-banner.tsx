@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import UseCountdown from 'hooks/use-countdown';
+import CancelButton from 'components/button/cancel-button';
+import YellowButton from 'components/button/yellow-button';
 import BannerIcon from 'components/banner/item/banner-icon';
-import { gameBannerState } from 'ts/states/game/game-banner-state';
-import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import BannerMessage from 'components/banner/item/banner-message';
 import BannerProgress from 'components/banner/item/banner-progress';
+import { GameBanner } from 'ts/enums/game/game-banner.enum';
+import { gameBannerState } from 'ts/states/game/game-banner-state';
 import { GAME_REQ_MSG } from 'constants/messages';
 import {
 	COUNTDOWN_REQUEST_INTERVAL,
 	COUNTDOWN_REQUEST_VALUE,
 	PROGRESS_DEFAULT_VALUE,
 } from 'constants/values';
-import YellowButton from 'components/button/yellow-button';
-import CancelButton from 'components/button/cancel-button';
 
 const GameRequestBanner = () => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
@@ -51,7 +51,7 @@ const GameRequestBanner = () => {
 							<YellowButton size='xs' onClick={handleMatch}>
 								승낙하기
 							</YellowButton>
-
+							<div className='mr-4' />
 							<CancelButton size='xs' onClick={handleCancel} />
 						</div>
 					</div>
