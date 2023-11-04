@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import ProfileNoFriend from 'pages/profile/components/tab/field/friend/item/profile-no-friend';
 import ProfileFriendItemNormal from 'pages/profile/components/tab/field/friend/item/profile-friend-item-normal';
 import User from 'ts/interfaces/user.model';
+import { userState } from 'ts/states/user-state';
 import { profileState } from 'ts/states/profile/profile-state';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import {
@@ -13,7 +14,6 @@ import {
 	getFriendRelation,
 	updateFriend,
 } from 'api/friend-api';
-import { userState } from 'ts/states/user-state';
 
 const ProfileFriendListNormal = () => {
 	const user = useRecoilValue(userState);
@@ -25,8 +25,13 @@ const ProfileFriendListNormal = () => {
 	);
 
 	const fetchFriends = async () => {
-		const fetchedFriendList = await getFriendList(profile.user!.id);
-		setFriendList(fetchedFriendList);
+		if (
+			profileType !== ProfileStatus.BLOCKEDBYOTHER &&
+			profileType !== ProfileStatus.UNKNOWN
+		) {
+			const fetchedFriendList = await getFriendList(profile.user!.id);
+			setFriendList(fetchedFriendList);
+		}
 	};
 
 	useEffect(() => {

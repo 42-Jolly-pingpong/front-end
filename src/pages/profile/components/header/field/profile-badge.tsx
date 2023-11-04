@@ -4,7 +4,7 @@ import { profileState } from 'ts/states/profile/profile-state';
 
 const ProfileBadge = () => {
 	const profile = useRecoilValue(profileState);
-	console.log(profile.type);
+	//console.log(profile.type);
 
 	return (
 		<Avatar
