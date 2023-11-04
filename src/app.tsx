@@ -6,6 +6,7 @@ import Chat from 'pages/chat/chat';
 import Game from 'pages/game/game';
 import SignUp from 'pages/sign-up/sign-up';
 import Profile from 'pages/profile/profile';
+import Page404 from 'pages/error/page-404';
 
 function App() {
 	return (
@@ -20,7 +21,7 @@ function App() {
 							<Route path='/sign-up' element={<SignUp />} />
 						</Route>
 						<Route path='/game' element={<Game />} />
-						<Route path='*' element={<h1>NOT FOUND</h1>} />
+						<Route path='*' element={<Page404 />} />
 					</Routes>
 				</BrowserRouter>
 			</RecoilRoot>
