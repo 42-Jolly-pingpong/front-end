@@ -14,14 +14,20 @@ import {
 	COUNTDOWN_REQUEST_VALUE,
 	PROGRESS_DEFAULT_VALUE,
 } from 'constants/values';
+import { socket } from 'socket/socket';
+import User from 'ts/interfaces/user.model';
 
-const GameRequestBanner = () => {
+interface propsType {
+	userInfo: User;
+}
+
+const GameRequestBanner = ({ userInfo }: propsType) => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
 	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
+		socket.emit('acceptInvite', JSON.stringify({user: userInfo, mode: gameBanner.mode}));
 		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
-		// 게임을 수락했을 경우 소켓 로직 추가
 	};
 
 	const handleCancel = () => {
@@ -45,7 +51,7 @@ const GameRequestBanner = () => {
 					<div className='flex justify-between p-4 items-center'>
 						<div className='flex'>
 							<BannerIcon />
-							<BannerMessage message={GAME_REQ_MSG} />
+							<BannerMessage message={userInfo.nickname + GAME_REQ_MSG} />
 						</div>
 						<div className='flex items-center'>
 							<YellowButton size='xs' onClick={handleMatch}>

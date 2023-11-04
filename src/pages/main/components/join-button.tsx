@@ -21,25 +21,21 @@ const JoinButton = () => {
 	const resetGameWait = useResetRecoilState(gameWaitState);
 	const resetGameBanner = useResetRecoilState(gameBannerState);
 	const userInfo = useRecoilValue(userState);
-
 	const setIsGameStart = useSetRecoilState(gameStartState);
 	const setGameInfo = useSetRecoilState(gameInfoState);
 
 	useEffect(() => {
-		if (socket.connected) {
-			socket.on('getPlayerInfo', (message) => {
-				const newGameInfo: GameInfoType = message;
-				setGameInfo(newGameInfo);
-			});
-			socket.on('gameStart', () => {
-				setIsGameStart(true);
-			});
-		}
+		// if (socket.connected) {
+		// 	socket.on('getPlayerInfo', (message) => {
+		// 		const newGameInfo: GameInfoType = message;
+		// 		setGameInfo(newGameInfo);
+		// 	});
+		// }
 
-		return () => {
-			socket.off('getPlayerInfo');
-			socket.off('gameStart');
-		};
+		// return () => {
+		// 	socket.off('getPlayerInfo');
+		// 	socket.off('gameStart'); 
+		// };
 	});
 
 	const handleButton = () => {

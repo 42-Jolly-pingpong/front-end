@@ -9,12 +9,11 @@ import { gameWaitState } from 'ts/states/game/game-wait-state';
 const GameWaitModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const gameWait = useRecoilValue(gameWaitState);
 
-	//console.log(gameWait);
 	switch (gameWait.status) {
 		case GameWaitStatus.MODE: // 게임 모드를 고르는 모달
 			return <GameModeModal show={show} onClose={onClose} />;
 		case GameWaitStatus.SEARCH: // 게임 대전자를 찾는 모달
-			return <GameMatchModal show={show} onClose={onClose} />;
+			return <GameMatchModal show={show} onClose={onClose} message='대전자 찾는중...' />;
 		default:
 			return;
 	}
