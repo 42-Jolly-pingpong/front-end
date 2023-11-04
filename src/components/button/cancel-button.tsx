@@ -9,7 +9,7 @@ const CancelButton: React.FC<ButtonProps> = ({ size, onClick }) => {
 	return (
 		<HiX
 			onClick={onClick}
-			className={`h-${size} w-${size} cursor-pointer ml-4`}
+			className={`h-${size} w-${size} cursor-pointer text-gray-500`}
 		/>
 	);
 };

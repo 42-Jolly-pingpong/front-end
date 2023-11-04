@@ -1,27 +1,33 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import UseCountdown from 'hooks/use-countdown';
+import CancelButton from 'components/button/cancel-button';
+import YellowButton from 'components/button/yellow-button';
 import BannerIcon from 'components/banner/item/banner-icon';
-import { gameBannerState } from 'ts/states/game/game-banner-state';
-import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import BannerMessage from 'components/banner/item/banner-message';
 import BannerProgress from 'components/banner/item/banner-progress';
+import { GameBanner } from 'ts/enums/game/game-banner.enum';
+import { gameBannerState } from 'ts/states/game/game-banner-state';
 import { GAME_REQ_MSG } from 'constants/messages';
 import {
 	COUNTDOWN_REQUEST_INTERVAL,
 	COUNTDOWN_REQUEST_VALUE,
 	PROGRESS_DEFAULT_VALUE,
 } from 'constants/values';
-import YellowButton from 'components/button/yellow-button';
-import CancelButton from 'components/button/cancel-button';
+import { socket } from 'socket/socket';
+import User from 'ts/interfaces/user.model';
 
-const GameRequestBanner = () => {
+interface propsType {
+	userInfo: User;
+}
+
+const GameRequestBanner = ({ userInfo }: propsType) => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
 	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
+		socket.emit('acceptInvite', JSON.stringify({user: userInfo, mode: gameBanner.mode}));
 		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
-		// 게임을 수락했을 경우 소켓 로직 추가
 	};
 
 	const handleCancel = () => {
@@ -45,13 +51,13 @@ const GameRequestBanner = () => {
 					<div className='flex justify-between p-4 items-center'>
 						<div className='flex'>
 							<BannerIcon />
-							<BannerMessage message={GAME_REQ_MSG} />
+							<BannerMessage message={userInfo.nickname + GAME_REQ_MSG} />
 						</div>
 						<div className='flex items-center'>
 							<YellowButton size='xs' onClick={handleMatch}>
 								승낙하기
 							</YellowButton>
-
+							<div className='mr-4' />
 							<CancelButton size='xs' onClick={handleCancel} />
 						</div>
 					</div>

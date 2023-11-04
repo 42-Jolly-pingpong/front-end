@@ -1,8 +1,8 @@
 import { useRecoilState } from 'recoil';
 import { Avatar, Dropdown } from 'flowbite-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiUser } from 'react-icons/fi';
 import { FaArrowRightFromBracket } from 'react-icons/fa6';
-import { Link, useNavigate } from 'react-router-dom';
 import { userState } from 'ts/states/user-state';
 import { userSignOut } from 'api/auth-api';
 
@@ -25,7 +25,12 @@ const HeaderProfileIcon = () => {
 		<Dropdown
 			arrowIcon={false}
 			inline
-			label={<Avatar img='images/jollypong2.jpeg' rounded className='mr-3' />}
+			label={
+				<Avatar
+					img={user?.avatarPath || ''}
+					className='mr-3 border rounded-full overflow-hidden'
+				/>
+			}
 		>
 			<Link to={`profile/${user!.nickname}`}>
 				<Dropdown.Item className='text-gray-700'>

@@ -14,7 +14,13 @@ import {
 	COUNTDOWN_MATCH_VALUE,
 } from 'constants/values';
 
-const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
+interface Props {
+	show: boolean;
+	onClose: () => void;
+	message: string;
+}
+
+const GameSearchModal: React.FC<Props> = ({ show, onClose, message }) => {
 	const [seconds, setSeconds] = useState(COUNTDOWN_MATCH_VALUE);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
@@ -27,6 +33,7 @@ const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const handleNoMatch = () => {
 		setGameBanner({ ...gameBanner, type: GameBanner.NOMATCH });
 		setGameWait({ ...gameWait, status: GameWaitStatus.NONE });
+		onClose()
 	};
 
 	// 모달을 닫았을 경우
@@ -47,7 +54,7 @@ const GameSearchModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	return (
 		<Modal size='md' show={show} onClose={onClose} dismissible>
 			<Modal.Body className='flex flex-col items-center text-center relative'>
-				<div className='text-xl font-extrabold mb-6'>대전자 찾는중...</div>
+				<div className='text-xl font-extrabold mb-6'>{message}</div>
 				<TimeSpinner seconds={seconds} />
 				<div className='mt-6' />
 				<WhiteButton size='xl' onClick={handleCancel}>
