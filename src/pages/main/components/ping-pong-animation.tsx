@@ -1,6 +1,6 @@
 const PingPongAnimation = () => {
 	return (
-		<div className='ping-body w-full h-44'>
+		<div className='ping-body w-full h-56'>
 			<div className='pingpong'>
 				<div className='table'>
 					<div className='line' />
