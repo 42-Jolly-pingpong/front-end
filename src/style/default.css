@@ -262,32 +262,18 @@ body {
 	}
 
 	@media (max-width: 1280px) {
-		.ping-body {
-			/* font-family: 'Chewy', cursive; 한글이라 안씀 */
-			text-align: center;
-			font-size: 50px;
-			/* color: black; */
-			overflow: hidden;
-		}
-	
 		.ping {
-			position: absolute;
 			top: 20px; /* top 조절: top: 200px */
 			left: 0px; /* left 조절: left: -80px */
-			opacity: 0;		
 		}
 	
 		.pong {
-			position: absolute;
 			top: 20px; /* top 조절: top: 200px */
 			right: 0px; /* right 조절: right: -90px */
-			opacity: 0;
 		}	
 	
 		.pingpong {
-			margin: 0 auto;
 			margin-top: 10px; /* margin-top 조절: top: 200px */
-			position: relative;
 			width: 380px;
 			height: 150px;
 		}
@@ -295,132 +281,55 @@ body {
 		.table {
 			position: absolute;
 			top: 40px; /* top 조절: top: 210px */
-			left: 0px;
-			border-bottom: 80px solid #fff;
-			border-left: 80px solid transparent;
-			border-right: 80px solid transparent;
-			height: 0;
 			width: 220px;
 		}
 	
 		.table:before {
-			display: block;
-			content: ' ';
-			position: absolute;
-			top: 1px;
-			left: -78px;
-			border-bottom: 78px solid #2E4E80;
-			border-left: 78px solid transparent;
-			border-right: 78px solid transparent;
-			height: 0;
 			width: 220px;
-			box-sizing: content-box; /* 추가됨 */
 		}
-	
+
 		.table:after {
-			display: block;
-			content: ' ';
-			position: absolute;
-			top: 80px;
-			left: -80px;
-			height: 20px;
 			width: 380px;
-			background: #192A44;
 		}
 	
 		.line {
-			position: absolute;
 			width: 280px;
-			top: 30px;
-			left: -30px;
-			border-bottom: solid 1px white;
 		}
 	
 		.net-top {
-			position: absolute;
-			top: -25px;
 			margin-left: 106px;
 			margin-right: 106px;
-			width: 8px;
-			height: 25px;
-			background: #333;
-		}
-	
-		.net-top:before {
-			display: block;
-			content: " ";
-			position: absolute;
-			top: -3px;
-			width: 4px;
-			border-left: solid 2px transparent;
-			border-right: solid 2px transparent;
-			border-bottom: solid 3px rgb(115, 115, 115);
-			box-sizing: content-box; /* 추가됨 */
 		}
 	
 		.net-middle {
-			position: absolute;
-			top: -20px;
 			left: 109px;
-			width: 2px;
-			height: 80px;
-			background: white;
 		}
 	
-		.net-bottom {
-			position: absolute;
-			top: 65px;
+		.net-bottom {;
 			left: 104px;
-			width: 12px;
-			height: 43px;
-			background: #333;
-			z-index: 1;
-		}
-	
-		.net-bottom:before {
-			display: block;
-			content: " ";
-			position: absolute;
-	
-			top: -8px;
-			width: 10px;
-			border-left: solid 1px transparent;
-			border-right: solid 1px transparent;
-			border-bottom: solid 8px rgb(115, 115, 115);
-			box-sizing: content-box; /* 추가됨 */
 		}
 	
 		.net-shadow {
-			position: absolute;
 			left: 111px;
-			border-bottom: 80px solid rgba(0, 0, 0, 0.2);
-			border-right: 30px solid transparent;
-			height: 0;
-			width: 20px;
 		}
 	
 		.c1,
 		.c2 {
-			position: absolute;
 			width: 300px;
 			height: 300px;
 		}
 	
 		.c3,
 		.c4 {
-			position: absolute;
 			width: 150px;
-			height: 150px;
 		}
 	
 		.c1 {
 			top: 0px; /* top 조절: top: 180px */
-			left: 0;
 		}
 	
 		.c2 {
 			top: 0px; /* top 조절: top: 180px */
-			left: 80px;
 		}
 	
 		.c3 {
@@ -435,13 +344,11 @@ body {
 	
 		.b1,
 		.b2 {
-			top: -5px;
 			left: 145px;
 		}
 	
 		.b3,
 		.b4 {
-			top: -5px;
 			left: 70px;
 		}
 	}
