@@ -54,22 +54,12 @@ const JoinButton = () => {
 
 	return (
 		<>
-			<Button
-				size='lg'
-				onClick={handleButton}
-				// className='bg-yellow-300 enabled:hover:bg-yellow-400'
-			>
+			<YellowButton size='lg' onClick={handleButton}>
 				<HiCursorClick className='mr-2 h-5 w-5' />
 				게임하러 가기
 				<HiArrowRight className='ml-2 h-5 w-5' />
-			</Button>
-			<GameWaitModal show={modal} onClose={handleClose} />
-			{/* <YellowButton size='xl' onClick={handleButton}>
-				<img src='images/fire.png' alt='fire' />
-				<div className='font-bold mx-3'> 게임하러 가기</div>
-				<img src='images/arrow-right.png' alt='arrow' />
 			</YellowButton>
-			<GameWaitModal show={modal} onClose={handleClose} /> */}
+			<GameWaitModal show={modal} onClose={handleClose} />
 		</>
 	);
 };
