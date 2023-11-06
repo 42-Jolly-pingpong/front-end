@@ -5,6 +5,7 @@ import JoinIntro from 'pages/main/components/join-intro';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
+import PingPongAnimation from './components/ping-pong-animation';
 
 const Main = () => {
 	const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
@@ -22,8 +23,6 @@ const Main = () => {
 
 		socket.on('connect', onConnect);
 		socket.on('disconnect', onDisconnect);
-		
-
 	}, []);
 
 	useEffect(() => {
@@ -33,8 +32,9 @@ const Main = () => {
 	});
 
 	return (
-		<div className='flex flex-col justify-center items-center text-center mt-72'>
+		<div className='flex flex-col justify-center items-center text-center h-screen gap-y-6'>
 			<JoinIntro />
+			<PingPongAnimation />
 			<JoinButton />
 		</div>
 	);
