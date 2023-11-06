@@ -16,19 +16,19 @@ const HeaderMenu = () => {
 	};
 
 	return (
-		<div className='flex items-center'>
-			<button
-				className='font-medium text-yellow-300 border-gray-200 border-l-2 pl-4'
+		<div className='flex items-center gap-4'>
+			<a
+				className='capitalize text-sm font-medium text-yellow-300 cursor-pointer'
 				onClick={handleChat}
 			>
-				Chats
-			</button>
-			<button
-				className='font-medium text-yellow-300 pl-4'
+				chats
+			</a>
+			<a
+				className='capitalize text-sm font-medium text-yellow-300 cursor-pointer'
 				onClick={handleFriendSidebar}
 			>
 				friends
-			</button>
+			</a>
 		</div>
 	);
 };

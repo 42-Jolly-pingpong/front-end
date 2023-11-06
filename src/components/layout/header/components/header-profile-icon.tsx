@@ -28,7 +28,7 @@ const HeaderProfileIcon = () => {
 			label={
 				<Avatar
 					img={user?.avatarPath || ''}
-					className='mr-3 border rounded-full overflow-hidden'
+					className='w-8 h-8 rounded-full overflow-hidden'
 				/>
 			}
 		>

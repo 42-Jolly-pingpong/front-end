@@ -9,7 +9,7 @@ const Header = () => {
 	if (user) {
 		return (
 			<div className='flex justify-center'>
-				<header className='flex justify-between h-84 p-6 w-11/12'>
+				<header className='flex justify-between px-20 py-6 w-full'>
 					<HeaderLogo />
 					<HeaderRight />
 				</header>

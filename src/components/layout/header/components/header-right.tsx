@@ -3,8 +3,9 @@ import HeaderProfileIcon from 'components/layout/header/components/header-profil
 
 const HeaderRight = () => {
 	return (
-		<div className='flex p-2'>
+		<div className='flex gap-4'>
 			<HeaderProfileIcon />
+			<div className='h-8 border border-gray-200' />
 			<HeaderMenu />
 		</div>
 	);
