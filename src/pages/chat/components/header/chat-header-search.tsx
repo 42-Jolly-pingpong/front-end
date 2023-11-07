@@ -1,37 +1,19 @@
-import useFetch from 'hooks/use-fetch';
 import DmSearchedItem from 'pages/chat/components/header/dm-searched-item';
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import User from 'ts/interfaces/user.model';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ChatHeaderSearch = () => {
 	const [inputContent, setInputContent] = useState<string>('');
-	const [friendList, setFriendList] = useState<User[]>([]);
+	const friendList = useRecoilValue(userFriendsState).friends as User[];
 	const [searchedFriendList, setSearchedFriendList] = useState<User[]>([]);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const getData = useFetch();
 
 	useEffect(() => {
 		if (inputRef.current) {
 			inputRef.current.focus();
 		}
-	}, []);
-
-	useEffect(() => {
-		(async () => {
-			await getData('get', '/friends')
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data: User[]) =>
-					setFriendList(
-						data.sort((a, b) => a.nickname.localeCompare(b.nickname))
-					)
-				)
-				.catch((err) => console.log('chat-header', err));
-		})();
 	}, []);
 
 	useEffect(() => {

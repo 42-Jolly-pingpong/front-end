@@ -7,7 +7,6 @@ import { FiUserPlus } from 'react-icons/fi';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
-import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
@@ -16,14 +15,14 @@ import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import useChatAlert from 'hooks/use-chat-alert';
 import { userState } from 'ts/states/user-state';
 import { chatSocket } from 'pages/chat/chat-socket';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [input, setInput] = useState<string>('');
-	const [friendList, setFriendList] = useState<User[]>([]);
-	const [blockedList, setBlockedList] = useState<User[]>([]);
+	const relation = useRecoilValue(userFriendsState);
 	const [userRole, setUserRole] = useState<ChatParticipantRole>(
 		ChatParticipantRole.MEMBER
 	);
@@ -33,10 +32,12 @@ const ChatMemberInquireTap = (props: {
 	const [searchedParticipant, setSearchedParticipant] = useState<
 		ChatParticipant[]
 	>([]);
-	const getData = useFetch();
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
 	const user = useRecoilValue(userState) as User;
+
+	const friendList = relation.friends as User[];
+	const blockedList = relation.blockedFriends as User[];
 
 	useEffect(() => {
 		setStableParticipants(
@@ -63,28 +64,6 @@ const ChatMemberInquireTap = (props: {
 	}, [input, stableParticipants, chat]);
 
 	useEffect(() => {
-		(async () => {
-			await getData('get', '/friends')
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setFriendList(data))
-				.catch((err) => console.log('get Friend list', err));
-		})();
-		(async () => {
-			await getData('get', '/friends/black-list')
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setBlockedList(data))
-				.catch((err) => console.log('get blocked list', err));
-		})();
 		const participant = chat.participants.find(
 			(participant) => participant.user.id === user.id
 		);
@@ -189,14 +168,6 @@ const ChatMemberInquireTap = (props: {
 		otherUser: ChatParticipant
 	) => {
 		//temp
-		if (isBlocked) {
-			//temp
-			setBlockedList((pre) =>
-				pre.filter((user) => user.id !== otherUser?.user.id)
-			);
-			return;
-		}
-		setBlockedList((pre) => [...pre, otherUser.user]);
 	};
 
 	const manageBlockList = (isBlocked: boolean, otherUser: ChatParticipant) => {
