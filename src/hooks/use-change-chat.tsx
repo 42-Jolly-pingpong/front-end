@@ -1,13 +1,16 @@
 import useFetch from 'hooks/use-fetch';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { Chat } from 'ts/interfaces/chat.model';
 import { Dm } from 'ts/interfaces/dm.model';
+import User from 'ts/interfaces/user.model';
 import { chatHeaderState } from 'ts/states/chat-header-state';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { chatState } from 'ts/states/chat-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const useChangeChat = () => {
 	const setChatState = useSetRecoilState(chatState);
@@ -15,6 +18,13 @@ const useChangeChat = () => {
 	const setChatRoomList = useSetRecoilState(chatListState);
 	const setSidebarState = useSetRecoilState(chatSidebarState);
 	const getData = useFetch();
+	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
+
+	const chatsWithoutBlocked = (chats: Chat[]): Chat[] => {
+		return chats.filter((chat) => {
+			return !blockedUser.find((user) => user.id === chat.user.user.id);
+		});
+	};
 
 	const setChat = (
 		chat: ChatRoom | Dm | null,
@@ -32,7 +42,7 @@ const useChangeChat = () => {
 					.then((chats) =>
 						setChatState({
 							chatRoom: chat,
-							chats,
+							chats: chatsWithoutBlocked(chats),
 						})
 					)
 					.catch((err) => console.log('inside setChat', err));
