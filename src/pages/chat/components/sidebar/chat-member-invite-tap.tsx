@@ -7,22 +7,21 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { HiArrowUturnLeft } from 'react-icons/hi2';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
-import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { useRecoilValue } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
 import User from 'ts/interfaces/user.model';
 import { chatSocket } from 'pages/chat/chat-socket';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ChatMemberInviteTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [input, setInput] = useState<string>('');
-	const [friendList, setFriendList] = useState<User[]>([]);
+	const friendList = useRecoilValue(userFriendsState).friends as User[];
 	const [memberList, setMemberList] = useState<ChatParticipant[]>([]);
 	const [notMemberList, setNotMemberList] = useState<User[]>([]);
-	const getData = useFetch();
 
 	useEffect(() => {
 		setMemberList(
@@ -50,24 +49,6 @@ const ChatMemberInviteTap = (props: {
 				.sort((a, b) => a.nickname.localeCompare(b.nickname))
 		);
 	}, [friendList, input, chat]);
-
-	useEffect(() => {
-		(async () => {
-			await getData('get', '/friends')
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data: User[]) =>
-					setFriendList(
-						data.sort((a, b) => a.nickname.localeCompare(b.nickname))
-					)
-				)
-				.catch((err) => console.log('get friend list', err));
-		})();
-	}, []);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);

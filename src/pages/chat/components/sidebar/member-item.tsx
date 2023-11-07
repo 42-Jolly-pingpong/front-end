@@ -1,7 +1,6 @@
 import useChangeSidebar from 'hooks/use-change-sidebar';
 import Status from 'pages/chat/components/status';
 import UserImg from 'pages/chat/components/user-img';
-import { UserStatus } from 'ts/enums/user/user-status.enum';
 import User from 'ts/interfaces/user.model';
 
 const MemberItem = (props: { user: User; isMe: boolean }) => {
@@ -20,7 +19,7 @@ const MemberItem = (props: { user: User; isMe: boolean }) => {
 				{props.user.nickname}
 				{props.isMe && ' (나)'}
 			</div>
-			<Status status={UserStatus.ONLINE} />
+			<Status status={props.user.status} />
 		</div>
 	);
 };
