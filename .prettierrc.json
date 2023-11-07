@@ -11,5 +11,14 @@
 	"bracketSameLine": false,
 	"arrowParens": "always",
 	"proseWrap": "preserve",
-	"endOfLine": "auto"
+	"endOfLine": "auto",
+	"importOrder": [
+		"^@core/(.*)$",
+		"^@server/(.*)$",
+		"^@ui/(.*)$", "^[./]",
+		"<THIRD_PARTY_MODULES>",
+		"^components/(.*)$"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true
 }
