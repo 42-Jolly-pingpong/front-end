@@ -1,22 +1,12 @@
 import { Sidebar } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
+import AvatarStatus from 'pages/chat/components/avatar-status';
 import { Dm } from 'ts/interfaces/dm.model';
 
 const DmItem = (props: { dm: Dm; isSelected: boolean }) => {
 	const chatMate = props.dm.chatMate;
 
 	const setChat = useChangeChat();
-
-	const avatar = () => {
-		return (
-			<div className='w-6 h-6 overflow-hidden mr-2'>
-				<img
-					src={chatMate.avatarPath}
-					className='object-cover w-full h-full rounded-md'
-				/>
-			</div>
-		);
-	};
 
 	const onClickItem = () => {
 		setChat(props.dm);
@@ -28,11 +18,11 @@ const DmItem = (props: { dm: Dm; isSelected: boolean }) => {
 			className={props.isSelected ? 'bg-yellow-100 hover:bg-yellow-50' : ''}
 		>
 			<div className='flex items-center'>
-				{avatar()}
+				<AvatarStatus user={chatMate} />
 				<div
 					className={`flex items-center text-base ${
 						props.dm.leftToRead ? 'font-bold' : 'font-medium'
-					} ml-1 truncate`}
+					} ml-2 truncate`}
 				>
 					{chatMate.nickname}
 				</div>
