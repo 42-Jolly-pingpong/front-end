@@ -11,15 +11,3 @@ export const friendSidebarModalState = atom<FriendSidebarModalType>({
 	key: 'friendSidebarModalState',
 	default: { type: FriendSidebarModalStatus.CLOSE, friend: null },
 });
-
-//export const friendSidebarModalSelector = selector({
-//	key: 'friendSidebarSelector',
-//	get: ({ get }) => {
-//		const state = get(friendSidebarModalState);
-
-//		return state;
-//	},
-//	set: ({ set }, value) => {
-//		set(friendSidebarModalState, value);
-//	},
-//});

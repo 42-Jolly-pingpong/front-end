@@ -1,3 +1,4 @@
+import { COUNTDOWN_MATCH_INTERVAL } from 'constants/values';
 import { Label, Radio } from 'flowbite-react';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
@@ -8,7 +9,7 @@ const GameModeRadio = () => {
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 
 	useEffect(() => {
-		setGameWait({ ...gameWait, mode: GameMode.CLASSIC });
+		setGameWait({ ...gameWait, mode: GameMode.NORMAL });
 	}, []);
 
 	const handleChange = (mode: GameMode) => {
@@ -22,7 +23,7 @@ const GameModeRadio = () => {
 					defaultChecked
 					id='classic'
 					name='mode'
-					onChange={() => handleChange(GameMode.CLASSIC)}
+					onChange={() => handleChange(GameMode.NORMAL)}
 					className='enabled:hover:bg-yellow-300  focus:ring-yellow-300 text-yellow-300'
 				/>
 				<Label htmlFor='classic'>

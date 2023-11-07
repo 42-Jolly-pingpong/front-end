@@ -1,5 +1,5 @@
-import { Button } from 'flowbite-react';
 import { ReactNode } from 'react';
+import { Button } from 'flowbite-react';
 
 interface ButtonProps {
 	size: string;

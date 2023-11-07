@@ -23,15 +23,15 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 		const newTimeoutId = setTimeout(async () => {
 			let newErrorMessage = '';
 			if (nickname.length == 0) {
-				newErrorMessage = '닉네임을 입력해주세요.';
+				newErrorMessage = '닉네임을 입력해주세요';
 			} else if (nickname.length > 20) {
-				newErrorMessage = '닉네임은 20글자까지 입력할 수 있습니다.';
+				newErrorMessage = '닉네임은 20글자까지 입력할 수 있습니다';
 			} else if (nickname.indexOf(' ') !== -1) {
-				newErrorMessage = '닉네임에는 공백이 포함될 수 없습니다.';
+				newErrorMessage = '닉네임에는 공백이 포함될 수 없습니다';
 			} else {
 				const user = await getUserByNickname(nickname);
 				if (user !== undefined) {
-					newErrorMessage = '중복된 닉네임 입니다.';
+					newErrorMessage = '중복된 닉네임 입니다';
 				} else {
 					newErrorMessage = '';
 				}
@@ -43,8 +43,8 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 	};
 
 	return (
-		<>
-			<Label htmlFor='nickname' value='닉네임' className='mt-2' />
+		<div className="flex flex-col gap-y-2">
+			<Label htmlFor='nickname' value='닉네임' />
 			<TextInput
 				id='nickname'
 				type='search'
@@ -53,7 +53,7 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 				onChange={validateNickname}
 				required
 			/>
-		</>
+		</div>
 	);
 };
 

@@ -5,8 +5,8 @@ import { getJsonValueByKey } from 'components/utils/cookieUtils';
 const SignUpEmailInput = () => {
 	const cookies = getJsonValueByKey('user-data');
 	return (
-		<>
-			<Label htmlFor='email' value='이메일' className='mt-2' />
+		<div className="flex flex-col gap-y-2">
+			<Label htmlFor='email' value='이메일'/>
 			<TextInput
 				icon={HiMail}
 				id='email'
@@ -14,7 +14,7 @@ const SignUpEmailInput = () => {
 				placeholder={cookies.email}
 				readOnly
 			/>
-		</>
+		</div>
 	);
 };
 

@@ -15,7 +15,7 @@ const GameModeModal: React.FC<ModalProps> = ({ show, onClose }) => {
 
 	const handleGameStart = () => {
 		setGameWait({ ...gameWait, status: GameWaitStatus.SEARCH });
-		if (gameWait.mode == GameMode.CLASSIC) {
+		if (gameWait.mode == GameMode.NORMAL) {
 			console.log('노말');
 			socket.emit('normalMatching', user?.id);
 		} else {

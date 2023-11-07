@@ -11,11 +11,11 @@ import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
-import { chatSocket } from 'pages/chat/chat-socket';
 import User from 'ts/interfaces/user.model';
 import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import useChatAlert from 'hooks/use-chat-alert';
 import { userState } from 'ts/states/user-state';
+import { chatSocket } from 'pages/chat/chat-socket';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;

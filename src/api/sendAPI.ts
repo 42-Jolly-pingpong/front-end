@@ -26,7 +26,11 @@ const sendAPI = async ({
 
 	if (response.ok) {
 		const data = await response.text();
-		return data ? JSON.parse(data) : {};
+		try {
+			return data ? JSON.parse(data) : {};
+		} catch (e) {
+			return data;
+		}
 	} else {
 		console.log('response 실패');
 		return null;
