@@ -7,7 +7,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { HiOutlineUserAdd, HiOutlineUserRemove } from 'react-icons/hi';
 import { BsMailbox } from 'react-icons/bs';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import HistoryDoughnutChart from 'pages/chat/components/sidebar/history-doughnut-chart';
 import { Dm } from 'ts/interfaces/dm.model';
 import useChangeChat from 'hooks/use-change-chat';
@@ -20,6 +20,15 @@ import Status from 'pages/chat/components/status';
 import { UserStatus } from 'ts/enums/user/user-status.enum';
 import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
+import {
+	addBlockedFriend,
+	deleteBlockedFriend,
+	deleteFriend,
+	getBlockedList,
+	getFriendList,
+	updateFriend,
+} from 'api/friend-api';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
@@ -30,10 +39,19 @@ const ChatSidebarProfile = () => {
 	const user = useRecoilValue(userState) as User;
 	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
+	const [relation, setFriendsState] = useRecoilState(userFriendsState);
 
 	if (otherUser === null) {
 		return null;
 	}
+
+	const isFriend = (relation.friends as User[]).find(
+		(user) => user.id === otherUser.id
+	);
+
+	const isBlocked = (relation.blockedFriends as User[]).find(
+		(user) => user.id === otherUser.id
+	);
 
 	const statusInKorean = () => {
 		switch (otherUser.status) {
@@ -81,6 +99,30 @@ const ChatSidebarProfile = () => {
 		);
 	};
 
+	const onClickManageFriend = async () => {
+		if (isFriend) {
+			await deleteFriend(otherUser.id);
+			const friends = await getFriendList(user!.id);
+			setFriendsState((pre) => ({ ...pre, friends }));
+			return;
+		}
+		await updateFriend(otherUser.id);
+	};
+
+	const onClickManageBlock = async () => {
+		if (isBlocked) {
+			await deleteBlockedFriend(otherUser.id);
+			const friends = await getFriendList(user!.id);
+			const blockedFriends = await getBlockedList(user!.id);
+			setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
+			return;
+		}
+		await addBlockedFriend(otherUser.id);
+		const friends = await getFriendList(user!.id);
+		const blockedFriends = await getBlockedList(user!.id);
+		setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
+	};
+
 	const dotsButton = () => {
 		return (
 			<Dropdown
@@ -88,23 +130,23 @@ const ChatSidebarProfile = () => {
 				dismissOnClick={false}
 				renderTrigger={() => renderTrigger()}
 			>
-				<Dropdown.Item>
+				<Dropdown.Item onClick={onClickManageFriend}>
 					<div className='flex items-center font-normal text-sm text-gray-700'>
 						<HiOutlineUserAdd className='mr-2' />
-						친구 신청
+						{isFriend ? '친구 해제' : '친구 신청'}
 					</div>
 				</Dropdown.Item>
-				<Dropdown.Item>
+				<Dropdown.Item onClick={onClickManageBlock}>
 					<div className='flex items-center font-normal text-sm text-red-500'>
 						<HiOutlineUserRemove className='mr-2' />
-						차단하기
+						{isBlocked ? '차단 해제' : '차단하기'}
 					</div>
 				</Dropdown.Item>
 			</Dropdown>
 		);
 	};
 
-	const createNewDm = async () => {
+	const createNewDm = () => {
 		chatSocket.emit(
 			'createNewDm',
 			{ chatMate: otherUser },
