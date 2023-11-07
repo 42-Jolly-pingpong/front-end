@@ -16,6 +16,8 @@ import { chatSocket } from 'pages/chat/chat-socket';
 import useChatAlert from 'hooks/use-chat-alert';
 import { userState } from 'ts/states/user-state';
 import User from 'ts/interfaces/user.model';
+import Status from 'pages/chat/components/status';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
@@ -29,21 +31,16 @@ const ChatSidebarProfile = () => {
 		return null;
 	}
 
-	const status = () => {
-		return (
-			<div className='flex items-center mx-2 my-2'>
-				<div className='flex w-2 h-2 bg-green-400 rounded-full mr-3 text-sm font-normal'></div>
-				온라인
-			</div>
-		); //online
-
-		// return (
-		// 	<div className='flex items-center mx-2 my-2'>
-		// 		<div className='flex w-3 h-3 border border-gray-400 rounded-full mr-3 text-sm font-normal'></div>
-		// 		자리 비움
-		// 	</div> //offline
-		// );
-	}; //temp
+	const statusInKorean = () => {
+		switch (otherUser.status) {
+			case UserStatus.INGAME:
+				return '게임 중';
+			case UserStatus.OFFLINE:
+				return '온라인';
+			case UserStatus.ONLINE:
+				return '오프라인';
+		}
+	};
 
 	const button = (
 		icon: JSX.Element,
@@ -135,7 +132,10 @@ const ChatSidebarProfile = () => {
 			<div className='my-4 border-b'>
 				<div className='mx-4'>
 					<div className='font-bold text-xl'>{otherUser.nickname}</div>
-					{status()}
+					<div className='flex items-center m-2'>
+						<Status status={otherUser.status} />
+						<div className='ml-2'>{statusInKorean()}</div>
+					</div>
 					<div className='flex'>
 						{button(<RiMessage2Line size='12' />, '메시지', onClickFriend)}
 						{button(<MdOutlineRocketLaunch size='12' />, '게임 신청', () => {})}
