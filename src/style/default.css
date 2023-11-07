@@ -58,15 +58,6 @@ body {
 	.hide-scrollbar::-webkit-scrollbar {
 		display: none; /* for Chrome, Safari */
 	}
-
-	.friend-sidebar {
-		width: 368px;
-		height: 100%;
-	}
-
-	.friend-sidebar .Card {
-		justify-content: flex-start;
-	}
 }
 
 @layer utilities {
@@ -266,24 +257,24 @@ body {
 			top: 20px; /* top 조절: top: 200px */
 			left: 0px; /* left 조절: left: -80px */
 		}
-	
+
 		.pong {
 			top: 20px; /* top 조절: top: 200px */
 			right: 0px; /* right 조절: right: -90px */
-		}	
-	
+		}
+
 		.pingpong {
 			margin-top: 10px; /* margin-top 조절: top: 200px */
 			width: 380px;
 			height: 150px;
 		}
-	
+
 		.table {
 			position: absolute;
 			top: 40px; /* top 조절: top: 210px */
 			width: 220px;
 		}
-	
+
 		.table:before {
 			width: 220px;
 		}
@@ -291,62 +282,62 @@ body {
 		.table:after {
 			width: 380px;
 		}
-	
+
 		.line {
 			width: 280px;
 		}
-	
+
 		.net-top {
 			margin-left: 106px;
 			margin-right: 106px;
 		}
-	
+
 		.net-middle {
 			left: 109px;
 		}
-	
-		.net-bottom {;
+
+		.net-bottom {
 			left: 104px;
 		}
-	
+
 		.net-shadow {
 			left: 111px;
 		}
-	
+
 		.c1,
 		.c2 {
 			width: 300px;
 			height: 300px;
 		}
-	
+
 		.c3,
 		.c4 {
 			width: 150px;
 		}
-	
+
 		.c1 {
 			top: 0px; /* top 조절: top: 180px */
 		}
-	
+
 		.c2 {
 			top: 0px; /* top 조절: top: 180px */
 		}
-	
+
 		.c3 {
 			top: 40px; /* top 조절: top: 220px */
-			left: -10px; 
+			left: -10px;
 		}
-	
+
 		.c4 {
 			top: 40px; /* top 조절: top: 220px */
 			right: -10px;
 		}
-	
+
 		.b1,
 		.b2 {
 			left: 145px;
 		}
-	
+
 		.b3,
 		.b4 {
 			left: 70px;
