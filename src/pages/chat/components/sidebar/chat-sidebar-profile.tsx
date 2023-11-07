@@ -18,6 +18,8 @@ import { userState } from 'ts/states/user-state';
 import User from 'ts/interfaces/user.model';
 import Status from 'pages/chat/components/status';
 import { UserStatus } from 'ts/enums/user/user-status.enum';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
+import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
@@ -26,6 +28,8 @@ const ChatSidebarProfile = () => {
 	const setDmList = useSetRecoilState(chatListState);
 	const setAlertModal = useChatAlert();
 	const user = useRecoilValue(userState) as User;
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
+	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 
 	if (otherUser === null) {
 		return null;
@@ -127,6 +131,11 @@ const ChatSidebarProfile = () => {
 		createNewDm();
 	};
 
+	const onClickGame = () => {
+		setOpponentUserInfo(otherUser);
+		setGameModeSelect(true);
+	};
+
 	const profileField = () => {
 		return (
 			<div className='my-4 border-b'>
@@ -138,7 +147,11 @@ const ChatSidebarProfile = () => {
 					</div>
 					<div className='flex'>
 						{button(<RiMessage2Line size='12' />, '메시지', onClickFriend)}
-						{button(<MdOutlineRocketLaunch size='12' />, '게임 신청', () => {})}
+						{button(
+							<MdOutlineRocketLaunch size='12' />,
+							'게임 신청',
+							onClickGame
+						)}
 						{dotsButton()}
 					</div>
 				</div>

@@ -8,7 +8,7 @@ import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
 import User from 'ts/interfaces/user.model';
 import { chatAlertModalState } from 'ts/states/chat-alert-modal';
@@ -16,6 +16,13 @@ import useChatAlert from 'hooks/use-chat-alert';
 import { userState } from 'ts/states/user-state';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
+import { opponentInfoState } from 'ts/states/game/opponent-info-state';
+import {
+	deleteFriend,
+	getFriendList,
+	getFriendRequestList,
+} from 'api/friend-api';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,6 +42,9 @@ const ChatMemberInquireTap = (props: {
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
 	const user = useRecoilValue(userState) as User;
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
+	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
+	const [friendsState, setFriendsState] = useRecoilState(userFriendsState);
 
 	const friendList = relation.friends as User[];
 	const blockedList = relation.blockedFriends as User[];
@@ -116,7 +126,8 @@ const ChatMemberInquireTap = (props: {
 	};
 
 	const onClickInviteGame = (otherUser: ChatParticipant) => {
-		//temp
+		setOpponentUserInfo(otherUser.user);
+		setGameModeSelect(true);
 	};
 
 	const inviteGame = (otherUser: ChatParticipant) => {
@@ -129,8 +140,17 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
-	const manageFriend = (isFriend: boolean, otherUser: ChatParticipant) => {
-		//temp
+	const manageFriend = async (
+		isFriend: boolean,
+		otherUser: ChatParticipant
+	) => {
+		if (isFriend) {
+			await deleteFriend(otherUser.user.id);
+			const friends = await getFriendList(user!.id);
+			const requestFriends = await getFriendRequestList(user!.id);
+			setFriendsState({ ...friendsState, friends, requestFriends });
+			return;
+		}
 	};
 
 	const onClickManageFriend = (
