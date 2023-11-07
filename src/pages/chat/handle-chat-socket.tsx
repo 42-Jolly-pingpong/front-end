@@ -10,6 +10,7 @@ import User from 'ts/interfaces/user.model';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 import { userState } from 'ts/states/user-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const HandleChatSocket = () => {
 	const [chat, setChat] = useRecoilState(chatState);
@@ -17,6 +18,7 @@ const HandleChatSocket = () => {
 	const setChatRoomList = useSetRecoilState(chatListState);
 	const token = getJwtValue();
 	const user = useRecoilValue(userState) as User;
+	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
 
 	useEffect(() => {}, []);
 
@@ -41,6 +43,9 @@ const HandleChatSocket = () => {
 			chatSocket.off('getNewChat');
 			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
 				const { roomId, newChat } = data;
+				if (blockedUser.find((user) => user.id === newChat.user.user.id)) {
+					return;
+				}
 				if (roomId === chat.chatRoom?.id) {
 					setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
 				} else {
