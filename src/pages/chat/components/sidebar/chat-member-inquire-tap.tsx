@@ -19,9 +19,12 @@ import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import {
+	addBlockedFriend,
 	deleteFriend,
 	getFriendList,
-	getFriendRequestList,
+	getBlockedList,
+	deleteBlockedFriend,
+	updateFriend,
 } from 'api/friend-api';
 
 const ChatMemberInquireTap = (props: {
@@ -29,7 +32,6 @@ const ChatMemberInquireTap = (props: {
 }) => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [input, setInput] = useState<string>('');
-	const relation = useRecoilValue(userFriendsState);
 	const [userRole, setUserRole] = useState<ChatParticipantRole>(
 		ChatParticipantRole.MEMBER
 	);
@@ -44,7 +46,7 @@ const ChatMemberInquireTap = (props: {
 	const user = useRecoilValue(userState) as User;
 	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
-	const [friendsState, setFriendsState] = useRecoilState(userFriendsState);
+	const [relation, setFriendsState] = useRecoilState(userFriendsState);
 
 	const friendList = relation.friends as User[];
 	const blockedList = relation.blockedFriends as User[];
@@ -147,10 +149,11 @@ const ChatMemberInquireTap = (props: {
 		if (isFriend) {
 			await deleteFriend(otherUser.user.id);
 			const friends = await getFriendList(user!.id);
-			const requestFriends = await getFriendRequestList(user!.id);
-			setFriendsState({ ...friendsState, friends, requestFriends });
+			setFriendsState((pre) => ({ ...pre, friends }));
+			setAlertModal((pre) => ({ ...pre, status: false }));
 			return;
 		}
+		await updateFriend(otherUser.user.id);
 	};
 
 	const onClickManageFriend = (
@@ -183,11 +186,21 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
-	const onClickManageBlockList = (
+	const onClickManageBlockList = async (
 		isBlocked: boolean,
 		otherUser: ChatParticipant
 	) => {
-		//temp
+		if (isBlocked) {
+			await deleteBlockedFriend(otherUser.user.id);
+			const friends = await getFriendList(user!.id);
+			const blockedFriends = await getBlockedList(user!.id);
+			setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
+			return;
+		}
+		await addBlockedFriend(otherUser.user.id);
+		const friends = await getFriendList(user!.id);
+		const blockedFriends = await getBlockedList(user!.id);
+		setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
 	};
 
 	const manageBlockList = (isBlocked: boolean, otherUser: ChatParticipant) => {
