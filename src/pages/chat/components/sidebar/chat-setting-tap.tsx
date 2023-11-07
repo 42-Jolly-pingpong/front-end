@@ -134,9 +134,19 @@ const ChatSettingTap = () => {
 	};
 
 	const passwordField = () => {
+		const style =
+			chat.roomType === ChatRoomType.PRIVATE
+				? 'bg-gray-50 text-gray-400'
+				: 'bg-white hover:bg-gray-200';
+
 		return (
-			<button onClick={onClickPassword}>
-				<div className='flex justify-between px-5 py-4 bg-white hover:bg-gray-200 border-b text-left'>
+			<button
+				onClick={onClickPassword}
+				disabled={chat.roomType === ChatRoomType.PRIVATE}
+			>
+				<div
+					className={`flex justify-between px-5 py-4 border-b text-left ${style}`}
+				>
 					{title('비밀번호 변경')}
 					{chat.roomType === ChatRoomType.PROTECTED && (
 						<button
@@ -149,7 +159,7 @@ const ChatSettingTap = () => {
 				</div>
 			</button>
 		);
-	};
+	}; 
 
 	const onchangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
