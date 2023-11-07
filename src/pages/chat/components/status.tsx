@@ -6,10 +6,10 @@ const Status = (props: { status: UserStatus }) => {
 			return <div className='flex w-2 h-2 bg-green-500 rounded-full'></div>;
 		case UserStatus.OFFLINE:
 			return (
-				<div className='flex w-3 h-3 border border-gray-400 rounded-full'></div>
+				<div className='flex w-2 h-2 border border-gray-600 rounded-full'></div>
 			);
 		case UserStatus.INGAME:
-			return <div className='flex w-2 h-2 bg-yellow-500 rounded-full'></div>;
+			return <div className='flex w-2 h-2 bg-primary-500 rounded-full'></div>;
 	}
 };
 
