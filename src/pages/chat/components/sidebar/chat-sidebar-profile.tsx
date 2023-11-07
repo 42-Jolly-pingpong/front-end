@@ -36,9 +36,9 @@ const ChatSidebarProfile = () => {
 			case UserStatus.INGAME:
 				return '게임 중';
 			case UserStatus.OFFLINE:
-				return '온라인';
-			case UserStatus.ONLINE:
 				return '오프라인';
+			case UserStatus.ONLINE:
+				return '온라인';
 		}
 	};
 
