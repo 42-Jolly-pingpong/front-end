@@ -10,8 +10,7 @@ const HeaderProfileIcon = () => {
 	const [user, setUserState] = useRecoilState(userState);
 	const navigate = useNavigate();
 
-	const handleSignOut = async (e: React.MouseEvent<HTMLAnchorElement>) => {
-		e.preventDefault();
+	const handleSignOut = async () => {
 		try {
 			await userSignOut();
 			setUserState(null);
@@ -25,25 +24,25 @@ const HeaderProfileIcon = () => {
 		<Dropdown
 			arrowIcon={false}
 			inline
-			label={
-				<Avatar
-					img={user?.avatarPath || ''}
-					className='w-8 h-8 rounded-full overflow-hidden'
-				/>
-			}
+			label={<Avatar img={user?.avatarPath || ''} size='sm' rounded />}
+			className='w-40'
 		>
-			<Link to={`profile/${user!.nickname}`}>
-				<Dropdown.Item className='text-gray-700'>
-					<FiUser />
-					<div className='pl-3'>프로필 보기</div>
-				</Dropdown.Item>
-			</Link>
-			<Link to={'/'} onClick={handleSignOut}>
-				<Dropdown.Item className='text-red-500'>
-					<FaArrowRightFromBracket />
-					<div className='pl-3'>로그아웃</div>
-				</Dropdown.Item>
-			</Link>
+			<Dropdown.Item
+				icon={FiUser}
+				as={Link}
+				to={`profile/${user!.nickname}`}
+				className='text-gray-700'
+			>
+				프로필 보기
+			</Dropdown.Item>
+			<Dropdown.Divider />
+			<Dropdown.Item
+				icon={FaArrowRightFromBracket}
+				onClick={() => handleSignOut()}
+				className='text-red-500'
+			>
+				로그아웃
+			</Dropdown.Item>
 		</Dropdown>
 	);
 };

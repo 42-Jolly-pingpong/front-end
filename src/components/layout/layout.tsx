@@ -32,10 +32,10 @@ const Layout = () => {
 
 	const initData = async () => {
 		const newUser = await getUserByJwt();
-		console.log(newUser)
+		console.log(newUser);
 		if (newUser) {
 			setUser(newUser);
-			console.log(user)
+			console.log(user);
 			const friends = await getFriendList(newUser.id);
 			const requestFriends = await getFriendRequestList(newUser.id);
 			const blockedFriends = await getBlockedList(newUser.id);
@@ -43,8 +43,6 @@ const Layout = () => {
 			socket.emit('setClient', newUser.id);
 		}
 	};
-
-	
 
 	useEffect(() => {
 		const initUserData = async () => {

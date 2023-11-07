@@ -32,7 +32,7 @@ const Main = () => {
 	});
 
 	return (
-		<div className='flex flex-col justify-center items-center text-center h-screen gap-y-6'>
+		<div className='flex flex-col justify-center items-center text-center h-screen gap-y-12 2xl:gap-y-24'>
 			<JoinIntro />
 			<PingPongAnimation />
 			<JoinButton />
