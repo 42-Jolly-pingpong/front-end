@@ -4,24 +4,34 @@ import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiDotsVerticalRounded, BiSearch } from 'react-icons/bi';
 import { FiUserPlus } from 'react-icons/fi';
-import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import MemberItem from 'pages/chat/components/sidebar/member-item';
 import NoResult from 'pages/chat/components/sidebar/no-result';
-import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
-import useChangeChat from 'hooks/use-change-chat';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
 import User from 'ts/interfaces/user.model';
+import { chatAlertModalState } from 'ts/states/chat-alert-modal';
+import useChatAlert from 'hooks/use-chat-alert';
+import { userState } from 'ts/states/user-state';
+import { chatSocket } from 'pages/chat/chat-socket';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
+import { opponentInfoState } from 'ts/states/game/opponent-info-state';
+import {
+	addBlockedFriend,
+	deleteFriend,
+	getFriendList,
+	getBlockedList,
+	deleteBlockedFriend,
+	updateFriend,
+} from 'api/friend-api';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [input, setInput] = useState<string>('');
-	const [friendList, setFriendList] = useState<User[]>([]);
-	const [blockedList, setBlockedList] = useState<User[]>([]);
 	const [userRole, setUserRole] = useState<ChatParticipantRole>(
 		ChatParticipantRole.MEMBER
 	);
@@ -31,10 +41,15 @@ const ChatMemberInquireTap = (props: {
 	const [searchedParticipant, setSearchedParticipant] = useState<
 		ChatParticipant[]
 	>([]);
-	const setChat = useChangeChat();
-	const getData = useFetch();
+	const setAlertModal = useSetRecoilState(chatAlertModalState);
+	const setDefaultAlertModal = useChatAlert();
+	const user = useRecoilValue(userState) as User;
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
+	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
+	const [relation, setFriendsState] = useRecoilState(userFriendsState);
 
-	const user = userData[0]; //temp
+	const friendList = relation.friends as User[];
+	const blockedList = relation.blockedFriends as User[];
 
 	useEffect(() => {
 		setStableParticipants(
@@ -61,28 +76,6 @@ const ChatMemberInquireTap = (props: {
 	}, [input, stableParticipants, chat]);
 
 	useEffect(() => {
-		(async () => {
-			await getData('get', '/friends')
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setFriendList(data))
-				.catch((err) => console.log('get Friend list', err));
-		})();
-		(async () => {
-			await getData('get', '/friends/black-list')
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setBlockedList(data))
-				.catch((err) => console.log('get blocked list', err));
-		})();
 		const participant = chat.participants.find(
 			(participant) => participant.user.id === user.id
 		);
@@ -135,7 +128,8 @@ const ChatMemberInquireTap = (props: {
 	};
 
 	const onClickInviteGame = (otherUser: ChatParticipant) => {
-		//temp
+		setOpponentUserInfo(otherUser.user);
+		setGameModeSelect(true);
 	};
 
 	const inviteGame = (otherUser: ChatParticipant) => {
@@ -148,22 +142,41 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
+	const manageFriend = async (
+		isFriend: boolean,
+		otherUser: ChatParticipant
+	) => {
+		if (isFriend) {
+			await deleteFriend(otherUser.user.id);
+			const friends = await getFriendList(user!.id);
+			setFriendsState((pre) => ({ ...pre, friends }));
+			setAlertModal((pre) => ({ ...pre, status: false }));
+			return;
+		}
+		await updateFriend(otherUser.user.id);
+	};
+
 	const onClickManageFriend = (
 		isFriend: boolean,
 		otherUser: ChatParticipant
 	) => {
-		//temp
 		if (isFriend) {
-			//temp
-			setFriendList((pre) =>
-				pre.filter((friend) => friend.id !== otherUser?.user.id)
-			);
+			setAlertModal({
+				status: true,
+				title: `친구 목록에서 ${otherUser.user.nickname} 님을 제거하시겠습니까?`,
+				subText: '이 사용자는 더 이상 친구 목록에 존재하지 않습니다.',
+				confirmButtonText: `친구 목록에서 제거`,
+				exitButtonText: '취소',
+				onClickButton: () => {
+					manageFriend(isFriend, otherUser);
+				},
+			});
 			return;
 		}
-		setFriendList((pre) => [...pre, otherUser.user]);
+		manageFriend(isFriend, otherUser);
 	};
 
-	const manageFriend = (isFriend: boolean, otherUser: ChatParticipant) => {
+	const manageFriendList = (isFriend: boolean, otherUser: ChatParticipant) => {
 		return (
 			<Dropdown.Item onClick={() => onClickManageFriend(isFriend, otherUser)}>
 				<div className='flex items-center font-normal text-sm text-gray-700'>
@@ -173,19 +186,21 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
-	const onClickManageBlockList = (
+	const onClickManageBlockList = async (
 		isBlocked: boolean,
 		otherUser: ChatParticipant
 	) => {
-		//temp
 		if (isBlocked) {
-			//temp
-			setBlockedList((pre) =>
-				pre.filter((user) => user.id !== otherUser?.user.id)
-			);
+			await deleteBlockedFriend(otherUser.user.id);
+			const friends = await getFriendList(user!.id);
+			const blockedFriends = await getBlockedList(user!.id);
+			setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
 			return;
 		}
-		setBlockedList((pre) => [...pre, otherUser.user]);
+		await addBlockedFriend(otherUser.user.id);
+		const friends = await getFriendList(user!.id);
+		const blockedFriends = await getBlockedList(user!.id);
+		setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
 	};
 
 	const manageBlockList = (isBlocked: boolean, otherUser: ChatParticipant) => {
@@ -200,24 +215,40 @@ const ChatMemberInquireTap = (props: {
 		);
 	};
 
+	const manageAdmin = (isAdmin: boolean, otherUser: ChatParticipant) => {
+		chatSocket.emit(
+			'manageParticipantRole',
+			{
+				roomId: chat.id,
+				user: otherUser.user,
+				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
+			},
+			(status: number) => {
+				if (status === 200) {
+					setAlertModal((pre) => ({ ...pre, status: false }));
+				}
+			}
+		);
+	};
+
 	const onClickManageAdminList = (
 		isAdmin: boolean,
 		otherUser: ChatParticipant
 	) => {
-		(async () => {
-			await getData('PATCH', `/chat-rooms/${chat.id}/members/role`, {
-				user: otherUser.user,
-				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
-			})
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setChat(data, false))
-				.catch((err) => console.log('manage admin list', err));
-		})();
+		if (isAdmin) {
+			setAlertModal({
+				status: true,
+				title: `${chat.roomName} 채널 관리자 목록에서 ${otherUser.user.nickname} 님을 제거하시겠습니까?`,
+				subText: '이 사용자는 더 이상 채널을 관리할 수 없습니다.',
+				confirmButtonText: `채널 관리자 목록에서 제거`,
+				exitButtonText: '취소',
+				onClickButton: () => {
+					manageAdmin(isAdmin, otherUser);
+				},
+			});
+			return;
+		}
+		manageAdmin(isAdmin, otherUser);
 	};
 
 	const manageAdminList = (isAdmin: boolean, otherUser: ChatParticipant) => {
@@ -234,20 +265,19 @@ const ChatMemberInquireTap = (props: {
 		otherUser: ChatParticipant,
 		status: ChatParticipantStatus
 	) => {
-		(async () => {
-			await getData('PATCH', `/chat-rooms/${chat.id}/members/status`, {
+		chatSocket.emit(
+			'manageParticipantStatus',
+			{
+				roomId: chat.id,
 				user: otherUser.user,
 				status,
-			})
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => setChat(data, false))
-				.catch((err) => console.log('manage member-status', err));
-		})();
+			},
+			(status: number) => {
+				if (status !== 200) {
+					setDefaultAlertModal();
+				}
+			}
+		);
 	};
 
 	const manageMutedList = (otherUser: ChatParticipant) => {
@@ -320,7 +350,7 @@ const ChatMemberInquireTap = (props: {
 						renderTrigger={() => dotButton()}
 					>
 						{inviteGame(participant)}
-						{manageFriend(isFriend, participant)}
+						{manageFriendList(isFriend, participant)}
 						{manageBlockList(isBlocked, participant)}
 					</Dropdown>
 				);
@@ -332,7 +362,7 @@ const ChatMemberInquireTap = (props: {
 						renderTrigger={() => dotButton()}
 					>
 						{inviteGame(participant)}
-						{manageFriend(isFriend, participant)}
+						{manageFriendList(isFriend, participant)}
 						{manageBlockList(isBlocked, participant)}
 						{participant.role !== ChatParticipantRole.OWNER && (
 							<Dropdown.Divider />
@@ -350,7 +380,7 @@ const ChatMemberInquireTap = (props: {
 						renderTrigger={() => dotButton()}
 					>
 						{inviteGame(participant)}
-						{manageFriend(isFriend, participant)}
+						{manageFriendList(isFriend, participant)}
 						{manageBlockList(isBlocked, participant)}
 						<Dropdown.Divider />
 						{manageAdminList(isAdmin, participant)}

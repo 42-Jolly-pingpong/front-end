@@ -1,15 +1,15 @@
 import { UserStatus } from 'ts/enums/user/user-status.enum';
 
 const Status = (props: { status: UserStatus }) => {
+	const base = 'flex w-2 h-2 rounded-full';
+
 	switch (props.status) {
 		case UserStatus.ONLINE:
-			return <div className='flex w-2 h-2 bg-green-500 rounded-full'></div>;
+			return <div className={`${base} bg-green-500`}></div>;
 		case UserStatus.OFFLINE:
-			return (
-				<div className='flex w-3 h-3 border border-gray-400 rounded-full'></div>
-			);
+			return <div className={`${base} border border-gray-600 bg-white`}></div>;
 		case UserStatus.INGAME:
-			return <div className='flex w-2 h-2 bg-yellow-500 rounded-full'></div>;
+			return <div className={`${base} bg-primary-500`}></div>;
 	}
 };
 

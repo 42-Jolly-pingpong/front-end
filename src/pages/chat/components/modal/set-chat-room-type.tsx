@@ -1,7 +1,8 @@
 import { Button, Label, Radio, TextInput } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
-import useFetch from 'hooks/use-fetch';
+import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
+import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
@@ -30,7 +31,7 @@ const SetChatRoomType = (props: {
 	const setChat = useChangeChat();
 	const setChannelList = useSetRecoilState(chatListState);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const getData = useFetch();
+	const setAlertModal = useChatAlert();
 	const hash = useHash();
 	const { setPhase, chatRoomInfo, setChatRoomInfo } = props;
 
@@ -59,25 +60,22 @@ const SetChatRoomType = (props: {
 
 	useEffect(() => {
 		if (chatRoomInfo.roomType) {
-			(async () => {
-				await getData('POST', '/chat-rooms', chatRoomInfo)
-					.then((res) => {
-						if (res.ok) {
-							return res.json();
-						}
-						throw Error(res.statusText);
-					})
-					.then((data: ChatRoom) => {
+			chatSocket.emit(
+				'createChatRoom',
+				chatRoomInfo,
+				(response: { status: number; chatRoom: ChatRoom }) => {
+					if (response.status === 200) {
 						setChannelList((pre) => ({
 							...pre,
-							channelList: [...pre.channelList, data],
+							channelList: [...pre.channelList, response.chatRoom],
 						}));
-						setChat(data);
-					})
-					.catch((err) => console.log('set-chat-room-type', err));
-			})();
-
-			setModalStatus(ChatModalStatus.CLOSE);
+						setChat(response.chatRoom);
+					} else {
+						setAlertModal();
+					}
+					setModalStatus(ChatModalStatus.CLOSE);
+				}
+			);
 		}
 	}, [chatRoomInfo]);
 

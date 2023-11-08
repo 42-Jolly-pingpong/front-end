@@ -7,42 +7,62 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { HiOutlineUserAdd, HiOutlineUserRemove } from 'react-icons/hi';
 import { BsMailbox } from 'react-icons/bs';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import HistoryDoughnutChart from 'pages/chat/components/sidebar/history-doughnut-chart';
 import { Dm } from 'ts/interfaces/dm.model';
-import useFetch from 'hooks/use-fetch';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatListSelector, chatListState } from 'ts/states/chat-list.state';
-import userData from 'ts/mock/user-data';
+import { chatSocket } from 'pages/chat/chat-socket';
+import useChatAlert from 'hooks/use-chat-alert';
+import { userState } from 'ts/states/user-state';
+import User from 'ts/interfaces/user.model';
+import Status from 'pages/chat/components/status';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
+import { opponentInfoState } from 'ts/states/game/opponent-info-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
+import {
+	addBlockedFriend,
+	deleteBlockedFriend,
+	deleteFriend,
+	getBlockedList,
+	getFriendList,
+	updateFriend,
+} from 'api/friend-api';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
 	const dmList = useRecoilValue(chatListSelector).dmList;
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
-	const getData = useFetch();
-
-	const user = userData[0]; //temp
+	const setAlertModal = useChatAlert();
+	const user = useRecoilValue(userState) as User;
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
+	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
+	const [relation, setFriendsState] = useRecoilState(userFriendsState);
 
 	if (otherUser === null) {
 		return null;
 	}
 
-	const status = () => {
-		return (
-			<div className='flex items-center mx-2 my-2'>
-				<div className='flex w-2 h-2 bg-green-400 rounded-full mr-3 text-sm font-normal'></div>
-				온라인
-			</div>
-		); //online
+	const isFriend = (relation.friends as User[]).find(
+		(user) => user.id === otherUser.id
+	);
 
-		// return (
-		// 	<div className='flex items-center mx-2 my-2'>
-		// 		<div className='flex w-3 h-3 border border-gray-400 rounded-full mr-3 text-sm font-normal'></div>
-		// 		자리 비움
-		// 	</div> //offline
-		// );
-	}; //temp
+	const isBlocked = (relation.blockedFriends as User[]).find(
+		(user) => user.id === otherUser.id
+	);
+
+	const statusInKorean = () => {
+		switch (otherUser.status) {
+			case UserStatus.INGAME:
+				return '게임 중';
+			case UserStatus.OFFLINE:
+				return '오프라인';
+			case UserStatus.ONLINE:
+				return '온라인';
+		}
+	};
 
 	const button = (
 		icon: JSX.Element,
@@ -79,6 +99,30 @@ const ChatSidebarProfile = () => {
 		);
 	};
 
+	const onClickManageFriend = async () => {
+		if (isFriend) {
+			await deleteFriend(otherUser.id);
+			const friends = await getFriendList(user!.id);
+			setFriendsState((pre) => ({ ...pre, friends }));
+			return;
+		}
+		await updateFriend(otherUser.id);
+	};
+
+	const onClickManageBlock = async () => {
+		if (isBlocked) {
+			await deleteBlockedFriend(otherUser.id);
+			const friends = await getFriendList(user!.id);
+			const blockedFriends = await getBlockedList(user!.id);
+			setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
+			return;
+		}
+		await addBlockedFriend(otherUser.id);
+		const friends = await getFriendList(user!.id);
+		const blockedFriends = await getBlockedList(user!.id);
+		setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
+	};
+
 	const dotsButton = () => {
 		return (
 			<Dropdown
@@ -86,47 +130,52 @@ const ChatSidebarProfile = () => {
 				dismissOnClick={false}
 				renderTrigger={() => renderTrigger()}
 			>
-				<Dropdown.Item>
+				<Dropdown.Item onClick={onClickManageFriend}>
 					<div className='flex items-center font-normal text-sm text-gray-700'>
 						<HiOutlineUserAdd className='mr-2' />
-						친구 신청
+						{isFriend ? '친구 해제' : '친구 신청'}
 					</div>
 				</Dropdown.Item>
-				<Dropdown.Item>
+				<Dropdown.Item onClick={onClickManageBlock}>
 					<div className='flex items-center font-normal text-sm text-red-500'>
 						<HiOutlineUserRemove className='mr-2' />
-						차단하기
+						{isBlocked ? '차단 해제' : '차단하기'}
 					</div>
 				</Dropdown.Item>
 			</Dropdown>
 		);
 	};
 
-	const createNewDm = async () => {
-		await getData('POST', '/chat-rooms/dm', { chatMate: otherUser })
-			.then((res) => {
-				if (res.ok) {
-					return res.json();
+	const createNewDm = () => {
+		chatSocket.emit(
+			'createNewDm',
+			{ chatMate: otherUser },
+			(response: { status: number; dm: Dm }) => {
+				if (response.status === 200) {
+					setDmList((pre) => ({
+						...pre,
+						dmList: [...pre.dmList, response.dm],
+					}));
+					setChat(response.dm);
+					return;
 				}
-				throw Error(res.statusText);
-			})
-			.then((data: Dm) => {
-				setDmList((pre) => ({
-					...pre,
-					dmList: [...pre.dmList, data],
-				}));
-				setChat(data, false);
-			})
-			.catch((err) => console.log('create new Dm', err));
+				setAlertModal();
+			}
+		);
 	};
 
 	const onClickFriend = () => {
 		const dm = dmList.find((dm) => dm.chatMate.id === otherUser.id);
 		if (dm) {
-			setChat(dm, false);
+			setChat(dm);
 			return;
 		}
 		createNewDm();
+	};
+
+	const onClickGame = () => {
+		setOpponentUserInfo(otherUser);
+		setGameModeSelect(true);
 	};
 
 	const profileField = () => {
@@ -134,10 +183,17 @@ const ChatSidebarProfile = () => {
 			<div className='my-4 border-b'>
 				<div className='mx-4'>
 					<div className='font-bold text-xl'>{otherUser.nickname}</div>
-					{status()}
+					<div className='flex items-center m-2'>
+						<Status status={otherUser.status} />
+						<div className='ml-2'>{statusInKorean()}</div>
+					</div>
 					<div className='flex'>
 						{button(<RiMessage2Line size='12' />, '메시지', onClickFriend)}
-						{button(<MdOutlineRocketLaunch size='12' />, '게임 신청', () => {})}
+						{button(
+							<MdOutlineRocketLaunch size='12' />,
+							'게임 신청',
+							onClickGame
+						)}
 						{dotsButton()}
 					</div>
 				</div>

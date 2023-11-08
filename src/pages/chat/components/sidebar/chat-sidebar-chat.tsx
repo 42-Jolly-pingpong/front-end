@@ -3,17 +3,18 @@ import ChatSidebarHeader from 'pages/chat/components/sidebar/chat-sidebar-header
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
-import userData from 'ts/mock/user-data';
 import ChatSidebarForAdmin from 'pages/chat/components/sidebar/chat-sidebar-for-admin';
 import ChatSidebarForMember from 'pages/chat/components/sidebar/chat-sidebar-for-member';
 import { tapsTheme } from 'pages/chat/themes/taps.theme';
 import { chatState } from 'ts/states/chat-state';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { userState } from 'ts/states/user-state';
+import User from 'ts/interfaces/user.model';
 
 const ChatSidebarChat = () => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [isOwner, setIsOwner] = useState<boolean>(false);
-	const user = userData[0]; //temp
+	const user = useRecoilValue(userState) as User;
 
 	useEffect(() => {
 		const participantWithSameId = chat.participants.find(

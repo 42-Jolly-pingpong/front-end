@@ -8,6 +8,8 @@ import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { useEffect } from 'react';
 import useFetch from 'hooks/use-fetch';
 import { chatListState } from 'ts/states/chat-list.state';
+import HandleChatSocket from 'pages/chat/handle-chat-socket';
+import ChatAlertModel from 'pages/chat/chat-alert-modal';
 
 const Chat = () => {
 	const hasChatSidebar =
@@ -45,10 +47,12 @@ const Chat = () => {
 
 	return (
 		<div className='flex max-h-screen max-w-screen'>
+			<HandleChatSocket />
 			<ChatList />
 			<ChatContent hasChatSidebar={hasChatSidebar} />
 			{hasChatSidebar && <ChatSidebar />}
 			<ChannelModal />
+			<ChatAlertModel />
 		</div>
 	);
 };

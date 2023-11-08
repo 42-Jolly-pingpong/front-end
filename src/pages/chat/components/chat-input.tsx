@@ -1,14 +1,15 @@
 import { Textarea } from 'flowbite-react';
-import useFetch from 'hooks/use-fetch';
+import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend } from 'react-icons/io5';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Dm } from 'ts/interfaces/dm.model';
-import userData from 'ts/mock/user-data';
+import User from 'ts/interfaces/user.model';
 import { chatState } from 'ts/states/chat-state';
+import { userState } from 'ts/states/user-state';
 
 export const ChatInput = () => {
 	const [input, setInput] = useState<string>('');
@@ -16,10 +17,7 @@ export const ChatInput = () => {
 	const [scrollbar, setSrollbar] = useState<string>('hide-scrollbar');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const chat = useRecoilValue(chatState).chatRoom;
-	const addChats = useSetRecoilState(chatState);
-	const getData = useFetch();
-
-	const user = userData[0]; //temp
+	const user = useRecoilValue(userState) as User;
 
 	useEffect(() => {
 		setIsMuted(false);
@@ -61,27 +59,8 @@ export const ChatInput = () => {
 
 	const onClickSend = () => {
 		if (chat) {
-			(async () => {
-				getData('POST', `/chat-rooms/${chat?.id}/chats`, {
-					content: input.trim(),
-				})
-					.then((res) => {
-						if (res.statusText === 'Unauthorized') {
-							throw Error(res.statusText);
-						}
-						return res.json();
-					})
-					.then((data) => {
-						addChats((pre) => ({ ...pre, chats: [...pre.chats, data] }));
-						setInput('');
-						if (textareaRef.current) textareaRef.current.focus();
-					})
-					.catch((err) => {
-						if (err.message === 'Unauthorized') {
-							console.log('음소거 상태');
-						}
-					});
-			})();
+			chatSocket.emit('sendChat', { content: input.trim(), roomId: chat.id });
+			setInput('');
 		}
 	};
 
