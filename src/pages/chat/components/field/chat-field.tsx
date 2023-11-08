@@ -21,14 +21,14 @@ const ChatField = () => {
 	const chats = chat.chats;
 
 	useEffect(() => {
-		setShowedChats(chatsWithoutBlocked(chats));
-	}, [chats, blockedUser]);
-
-	useEffect(() => {
 		if (scrollRef.current) {
 			scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 		}
-	}, [scrollRef, chatRoom, chats]);
+	}, [scrollRef, chatRoom, showedChats]);
+
+	useEffect(() => {
+		setShowedChats(chatsWithoutBlocked(chats));
+	}, [chats, blockedUser]);
 
 	const chatsWithoutBlocked = (chats: Chat[]): Chat[] => {
 		return chats.filter((chat) => {
