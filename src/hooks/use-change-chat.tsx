@@ -1,4 +1,5 @@
-import useFetch from 'hooks/use-fetch';
+import useChatAlert from 'hooks/use-chat-alert';
+import { chatSocket } from 'pages/chat/chat-socket';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
@@ -17,7 +18,7 @@ const useChangeChat = () => {
 	const setChatHeaderState = useSetRecoilState(chatHeaderState);
 	const setChatRoomList = useSetRecoilState(chatListState);
 	const setSidebarState = useSetRecoilState(chatSidebarState);
-	const getData = useFetch();
+	const setAlertModal = useChatAlert();
 	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
 
 	const chatsWithoutBlocked = (chats: Chat[]): Chat[] => {
@@ -26,29 +27,9 @@ const useChangeChat = () => {
 		});
 	};
 
-	const setChat = (
-		chat: ChatRoom | Dm | null,
-		closeSidebar: boolean = true
-	) => {
-		if (chat) {
-			(async () => {
-				await getData('get', `/chat-rooms/${chat?.id}/chats`)
-					.then((res) => {
-						if (res.ok) {
-							return res.json();
-						}
-						throw Error(res.statusText);
-					})
-					.then((chats) =>
-						setChatState({
-							chatRoom: chat,
-							chats: chatsWithoutBlocked(chats),
-						})
-					)
-					.catch((err) => console.log('inside setChat', err));
-			})();
-
-			if (chat.roomType === ChatRoomType.DM) {
+	const markChannelAsRead = (chat: ChatRoom | Dm) => {
+		switch (chat.roomType) {
+			case ChatRoomType.DM:
 				setChatRoomList((pre) => ({
 					...pre,
 					dmList: pre.dmList.map((dm) => {
@@ -58,7 +39,8 @@ const useChangeChat = () => {
 						return dm;
 					}),
 				}));
-			} else {
+				break;
+			default:
 				setChatRoomList((pre) => ({
 					...pre,
 					channelList: pre.channelList.map((channel) => {
@@ -68,7 +50,30 @@ const useChangeChat = () => {
 						return channel;
 					}),
 				}));
-			}
+		}
+	};
+
+	const setChat = (
+		chat: ChatRoom | Dm | null,
+		closeSidebar: boolean = true
+	) => {
+		if (chat) {
+			chatSocket.emit(
+				'getChats',
+				{ roomId: chat.id },
+				(response: { status: number; chats: Chat[] }) => {
+					if (response.status === 200) {
+						setChatState({
+							chatRoom: chat,
+							chats: chatsWithoutBlocked(response.chats),
+						});
+					} else {
+						setAlertModal();
+					}
+				}
+			);
+
+			markChannelAsRead(chat);
 		} else {
 			setChatState({ chatRoom: null, chats: [] });
 		}
