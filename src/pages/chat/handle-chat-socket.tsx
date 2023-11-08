@@ -1,8 +1,9 @@
 import { getJwtValue } from 'components/utils/cookieUtils';
+import useAddChat from 'hooks/use-add-chat';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Chat } from 'ts/interfaces/chat.model';
 import { Dm } from 'ts/interfaces/dm.model';
@@ -13,18 +14,37 @@ import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const HandleChatSocket = () => {
-	const [chat, setChat] = useRecoilState(chatState);
+	const chat = useRecoilValue(chatState);
 	const setChatRoom = useChangeChat();
 	const setChatRoomList = useSetRecoilState(chatListState);
 	const token = getJwtValue();
 	const user = useRecoilValue(userState) as User;
 	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
+	const addNewChat = useAddChat();
 
-	useEffect(() => {}, []);
+	const markChannelAsUnread = (roomId: number) => {
+		setChatRoomList((pre) => ({
+			...pre,
+			channelList: pre.channelList.map((channel) => {
+				if (channel.id === roomId) {
+					return { ...channel, leftToRead: true };
+				}
+				return channel;
+			}),
+		}));
+	};
 
-	chatSocket.on('connect', () => {
-		console.log('connected with server');
-	}); //위치 옮겨야 함
+	const markDmAsUnread = (roomId: number) => {
+		setChatRoomList((pre) => ({
+			...pre,
+			channelList: pre.channelList.map((channel) => {
+				if (channel.id === roomId) {
+					return { ...channel, leftToRead: true };
+				}
+				return channel;
+			}),
+		}));
+	};
 
 	useEffect(() => {
 		if (token !== undefined && chatSocket.disconnected) {
@@ -47,17 +67,10 @@ const HandleChatSocket = () => {
 					return;
 				}
 				if (roomId === chat.chatRoom?.id) {
-					setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
+					addNewChat(newChat);
+					chatSocket.emit('readChat', { roomId });
 				} else {
-					setChatRoomList((pre) => ({
-						...pre,
-						channelList: pre.channelList.map((channel) => {
-							if (channel.id === roomId) {
-								return { ...channel, leftToRead: true };
-							}
-							return channel;
-						}),
-					}));
+					markChannelAsUnread(roomId);
 				}
 			});
 
@@ -67,17 +80,10 @@ const HandleChatSocket = () => {
 				(data: { roomId: number; newChat: Chat }) => {
 					const { roomId, newChat } = data;
 					if (roomId === chat.chatRoom?.id) {
-						setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
+						addNewChat(newChat);
+						chatSocket.emit('readChat', { roomId });
 					} else {
-						setChatRoomList((pre) => ({
-							...pre,
-							dmList: pre.dmList.map((dm) => {
-								if (dm.id === roomId) {
-									return { ...dm, leftToRead: true };
-								}
-								return dm;
-							}),
-						}));
+						markDmAsUnread(roomId);
 					}
 				}
 			);
@@ -118,15 +124,7 @@ const HandleChatSocket = () => {
 			chatSocket.off('getNewChat');
 			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
 				const { roomId } = data;
-				setChatRoomList((pre) => ({
-					...pre,
-					channelList: pre.channelList.map((channel) => {
-						if (channel.id === roomId) {
-							return { ...channel, leftToRead: true };
-						}
-						return channel;
-					}),
-				}));
+				markChannelAsUnread(roomId);
 			});
 
 			chatSocket.off('getNewChatOnDm');
@@ -134,15 +132,7 @@ const HandleChatSocket = () => {
 				'getNewChatOnDm',
 				(data: { roomId: number; newChat: Chat }) => {
 					const { roomId } = data;
-					setChatRoomList((pre) => ({
-						...pre,
-						dmList: pre.dmList.map((dm) => {
-							if (dm.id === roomId) {
-								return { ...dm, leftToRead: true };
-							}
-							return dm;
-						}),
-					}));
+					markDmAsUnread(roomId);
 				}
 			);
 		}
