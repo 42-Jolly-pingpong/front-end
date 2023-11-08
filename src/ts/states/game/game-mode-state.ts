@@ -1,11 +1,7 @@
-import { atom } from "recoil";
-
-export enum GameMode  {
-	classic = 'NORMAL',
-	speed = 'SPEED',
-};
+import { atom } from 'recoil';
+import { GameMode } from 'ts/enums/game/game-mode.enum';
 
 export const gameModeState = atom<GameMode>({
 	key: 'gameModeState',
-	default: GameMode.classic,
+	default: GameMode.NORMAL,
 });
