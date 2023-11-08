@@ -33,7 +33,10 @@ const HandleChatSocket = () => {
 		}));
 	};
 
-	const markDmAsUnread = (roomId: number) => {
+	const markDmAsUnread = (roomId: number, newChat: Chat) => {
+		if (blockedUser.some((user) => user.id === newChat.user.user.id)) {
+			return;
+		}
 		setChatRoomList((pre) => ({
 			...pre,
 			channelList: pre.channelList.map((channel) => {
@@ -86,7 +89,7 @@ const HandleChatSocket = () => {
 						addNewChat(newChat);
 						chatSocket.emit('readChat', { roomId });
 					} else {
-						markDmAsUnread(roomId);
+						markDmAsUnread(roomId, newChat);
 					}
 				}
 			);
@@ -135,7 +138,7 @@ const HandleChatSocket = () => {
 				'getNewChatOnDm',
 				(data: { roomId: number; newChat: Chat }) => {
 					const { roomId } = data;
-					markDmAsUnread(roomId);
+					markDmAsUnread(roomId, data.newChat);
 				}
 			);
 		}
