@@ -1,5 +1,4 @@
 import { getJwtValue } from 'components/utils/cookieUtils';
-import useAddChat from 'hooks/use-add-chat';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect } from 'react';
@@ -20,7 +19,7 @@ const HandleChatSocket = () => {
 	const token = getJwtValue();
 	const user = useRecoilValue(userState) as User;
 	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
-	const addNewChat = useAddChat();
+	const setChat = useSetRecoilState(chatState);
 
 	const markChannelAsUnread = (roomId: number) => {
 		setChatRoomList((pre) => ({
@@ -44,6 +43,10 @@ const HandleChatSocket = () => {
 				return channel;
 			}),
 		}));
+	};
+
+	const addNewChat = (newChat: Chat) => {
+		setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
 	};
 
 	useEffect(() => {
