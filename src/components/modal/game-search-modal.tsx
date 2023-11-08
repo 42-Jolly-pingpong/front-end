@@ -4,7 +4,6 @@ import { Modal } from 'flowbite-react';
 import UseCountdown from 'hooks/use-countdown';
 import WhiteButton from 'components/button/white-button';
 import TimeSpinner from 'components/modal/item/time-spinner';
-import ModalProps from 'ts/interfaces/game/modal-props';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import { gameWaitState } from 'ts/states/game/game-wait-state';
 import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
@@ -24,7 +23,6 @@ const GameSearchModal: React.FC<Props> = ({ show, onClose, message }) => {
 	const [seconds, setSeconds] = useState(COUNTDOWN_MATCH_VALUE);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
-	
 
 	/**
 	 * 카운트다운 안에 매칭이 이루어지지 않을 경우
@@ -33,7 +31,7 @@ const GameSearchModal: React.FC<Props> = ({ show, onClose, message }) => {
 	const handleNoMatch = () => {
 		setGameBanner({ ...gameBanner, type: GameBanner.NOMATCH });
 		setGameWait({ ...gameWait, status: GameWaitStatus.NONE });
-		onClose()
+		onClose();
 	};
 
 	// 모달을 닫았을 경우
@@ -52,13 +50,14 @@ const GameSearchModal: React.FC<Props> = ({ show, onClose, message }) => {
 	};
 
 	return (
-		<Modal size='md' show={show} onClose={onClose} dismissible>
-			<Modal.Body className='flex flex-col items-center text-center relative'>
-				<div className='text-xl font-extrabold mb-6'>{message}</div>
+		<Modal size={'md'} show={show} onClose={onClose} dismissible>
+			<Modal.Body className='flex flex-col items-center text-center gap-6'>
+				<div className='text-xl font-extrabold'>
+					{1 == 1 ? '대전자 찾는 중...' : '응답을 기다리는 중...'}
+				</div>
 				<TimeSpinner seconds={seconds} />
-				<div className='mt-6' />
-				<WhiteButton size='xl' onClick={handleCancel}>
-					<div className='font-bold'>취소하기</div>
+				<WhiteButton size='sm' onClick={handleCancel}>
+					취소하기
 				</WhiteButton>
 				<UseCountdown
 					value={seconds}
