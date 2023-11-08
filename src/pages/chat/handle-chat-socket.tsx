@@ -105,13 +105,13 @@ const HandleChatSocket = () => {
 			chatSocket.on('chatRoomDeleted', (roomId: number) => {
 				if (roomId === chat.chatRoom?.id) {
 					setChatRoom(null);
-					setChatRoomList((pre) => ({
-						...pre,
-						channelList: pre.channelList.filter(
-							(channel) => channel.id !== roomId
-						),
-					}));
 				}
+				setChatRoomList((pre) => ({
+					...pre,
+					channelList: pre.channelList.filter(
+						(channel) => channel.id !== roomId
+					),
+				}));
 			});
 
 			chatSocket.off('updateChatRoomOnList');
