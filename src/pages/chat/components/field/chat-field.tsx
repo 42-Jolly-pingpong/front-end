@@ -75,7 +75,7 @@ const ChatField = () => {
 					hasTopBorder={
 						id === 0
 							? true
-							: hasTopBorder(chats[id - 1].sentTime, chat.sentTime)
+							: hasTopBorder(showedChats[id - 1].sentTime, chat.sentTime)
 					}
 					key={id}
 				/>
