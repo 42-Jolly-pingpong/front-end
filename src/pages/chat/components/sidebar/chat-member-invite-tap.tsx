@@ -4,26 +4,24 @@ import { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import { User } from 'ts/interfaces/user.model';
 import { HiArrowUturnLeft } from 'react-icons/hi2';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
-import useFetch from 'hooks/use-fetch';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
-import useChangeChat from 'hooks/use-change-chat';
 import { useRecoilValue } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
+import User from 'ts/interfaces/user.model';
+import { chatSocket } from 'pages/chat/chat-socket';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ChatMemberInviteTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [input, setInput] = useState<string>('');
-	const [friendList, setFriendList] = useState<User[]>([]);
+	const friendList = useRecoilValue(userFriendsState).friends as User[];
 	const [memberList, setMemberList] = useState<ChatParticipant[]>([]);
 	const [notMemberList, setNotMemberList] = useState<User[]>([]);
-	const setChat = useChangeChat();
-	const getData = useFetch();
 
 	useEffect(() => {
 		setMemberList(
@@ -51,24 +49,6 @@ const ChatMemberInviteTap = (props: {
 				.sort((a, b) => a.nickname.localeCompare(b.nickname))
 		);
 	}, [friendList, input, chat]);
-
-	useEffect(() => {
-		(async () => {
-			await getData('get', '/friends')
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data: User[]) =>
-					setFriendList(
-						data.sort((a, b) => a.nickname.localeCompare(b.nickname))
-					)
-				)
-				.catch((err) => console.log('get friend list', err));
-		})();
-	}, []);
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);
@@ -124,21 +104,10 @@ const ChatMemberInviteTap = (props: {
 	};
 
 	const onClickAddUser = (user: User) => {
-		(async () => {
-			await getData('post', `/chat-rooms/${chat.id}/members`, {
-				participants: [user.id],
-			})
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => {
-					setChat(data, false);
-				})
-				.catch((err) => console.log('add user', err));
-		})();
+		chatSocket.emit('inviteUser', {
+			roomId: chat.id,
+			participants: [user.id],
+		});
 	};
 
 	const notInChannelList = () => {

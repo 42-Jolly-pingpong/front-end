@@ -19,7 +19,7 @@ const ChatSidebar = () => {
 	};
 
 	return (
-		<div className='max-h-screen chat-right-sidebar shadow-xl'>
+		<div className='max-h-screen chat-right-sidebar shadow-2xl'>
 			{sidebarContent()}
 		</div>
 	);

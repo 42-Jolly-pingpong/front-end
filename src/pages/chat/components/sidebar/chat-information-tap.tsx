@@ -1,27 +1,28 @@
 import useChangeChat from 'hooks/use-change-chat';
 import useChangeSidebar from 'hooks/use-change-sidebar';
-import useFetch from 'hooks/use-fetch';
+import useChatAlert from 'hooks/use-chat-alert';
+import { chatSocket } from 'pages/chat/chat-socket';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import formattedDate from 'pages/chat/components/formatted-date';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import userData from 'ts/mock/user-data';
+import User from 'ts/interfaces/user.model';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
+import { userState } from 'ts/states/user-state';
 
 const ChatInformationTap = () => {
 	const setProfile = useChangeSidebar('profile');
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const setChat = useChangeChat();
 	const setChatList = useSetRecoilState(chatListState);
-	const getData = useFetch();
+	const setAlertModal = useChatAlert();
+	const user = useRecoilValue(userState) as User;
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
-
-	const user = userData[0]; //temp
 
 	const title = (label: string) => {
 		return <div className='text-sm font-bold'>{label}</div>;
@@ -121,28 +122,24 @@ const ChatInformationTap = () => {
 		);
 	};
 
-	const onClickLeave = () => {
-		(async () => {
-			await getData('DELETE', `/chat-rooms/${chat.id}/members`)
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					}
-					throw Error(res.statusText);
-				})
-				.then((data) => {
+	const onClickLeave = async () => {
+		chatSocket.emit(
+			'participantLeave',
+			{ roomId: chat.id },
+			(response: { status: number; chatRoom: ChatRoom }) => {
+				if (response.status === 200 && response.chatRoom) {
+					setChatList((pre) => ({
+						...pre,
+						channelList: pre.channelList.filter(
+							(channel) => channel.id !== response.chatRoom.id
+						),
+					}));
 					setChat(null);
-					setChatList((pre) => {
-						return {
-							...pre,
-							channelList: pre.channelList.filter(
-								(channel) => channel.id !== data.id
-							),
-						};
-					});
-				})
-				.catch((err) => console.log('chat-information-tap', err));
-		})();
+				} else {
+					setAlertModal();
+				}
+			}
+		);
 	};
 
 	const leaveField = () => {

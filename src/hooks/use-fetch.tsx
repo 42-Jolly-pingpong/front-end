@@ -1,5 +1,7 @@
+import { getJwtValue } from 'components/utils/cookieUtils';
+
 const useFetch = () => {
-	//토큰 꺼내오기
+	const token = getJwtValue();
 
 	const baseUrl = process.env.REACT_APP_BASE_URL;
 	/**
@@ -12,11 +14,15 @@ const useFetch = () => {
 		if (body === null) {
 			return fetch(baseUrl + url, {
 				method,
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
 			});
 		}
 		return fetch(baseUrl + url, {
-			method: method,
+			method,
 			headers: {
+				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(body),

@@ -6,7 +6,10 @@ const HistoryDoughnutChart = (props: {
 	loseCount: number;
 }) => {
 	const { winCount, loseCount } = props;
-	const winRate = ((winCount / (winCount + loseCount)) * 100).toFixed(1);
+	const winRate =
+		winCount === 0 && loseCount === 0
+			? (0.0).toFixed(1)
+			: ((winCount / (winCount + loseCount)) * 100).toFixed(1);
 
 	const data = {
 		datasets: [

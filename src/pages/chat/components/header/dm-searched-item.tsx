@@ -1,9 +1,10 @@
 import { Avatar } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
-import useFetch from 'hooks/use-fetch';
+import useChatAlert from 'hooks/use-chat-alert';
+import { chatSocket } from 'pages/chat/chat-socket';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Dm } from 'ts/interfaces/dm.model';
-import { User } from 'ts/interfaces/user.model';
+import User from 'ts/interfaces/user.model';
 import { chatListSelector, chatListState } from 'ts/states/chat-list.state';
 
 const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
@@ -11,24 +12,24 @@ const DmSearchedItem = (props: { friend: User; isTheLast: boolean }) => {
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
 	const dmList = useRecoilValue(chatListSelector).dmList;
-	const getData = useFetch();
+	const setAlertModal = useChatAlert();
 
 	const createNewDm = async () => {
-		await getData('POST', '/chat-rooms/dm', { chatMate: friend })
-			.then((res) => {
-				if (res.ok) {
-					return res.json();
+		chatSocket.emit(
+			'createNewDm',
+			{ chatMate: friend },
+			(response: { status: number; dm: Dm }) => {
+				if (response.status === 200) {
+					setDmList((pre) => ({
+						...pre,
+						dmList: [...pre.dmList, response.dm],
+					}));
+					setChat(response.dm);
+					return;
 				}
-				throw Error(res.statusText);
-			})
-			.then((data: Dm) => {
-				setDmList((pre) => ({
-					...pre,
-					dmList: [...pre.dmList, data],
-				}));
-				setChat(data);
-			})
-			.catch((err) => console.log('dm-seached-item', err));
+				setAlertModal();
+			}
+		);
 	};
 
 	const onClickFriend = () => {

@@ -3,17 +3,19 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { BiCheck, BiHash, BiLock } from 'react-icons/bi';
 import { ListGroup, TextInput } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
-import userData from 'ts/mock/user-data';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { BsDot } from 'react-icons/bs';
 import useChangeChat from 'hooks/use-change-chat';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { chatListState } from 'ts/states/chat-list.state';
-import useFetch from 'hooks/use-fetch';
 import { chatModalState } from 'ts/states/chat-modal-state';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import useHash from 'hooks/use-hash';
+import { chatSocket } from 'pages/chat/chat-socket';
+import useChatAlert from 'hooks/use-chat-alert';
+import { userState } from 'ts/states/user-state';
+import User from 'ts/interfaces/user.model';
 
 export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -23,13 +25,14 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 	const setChat = useChangeChat();
 	const setChannelList = useSetRecoilState(chatListState);
 	const setModalStatus = useSetRecoilState(chatModalState);
-	const getData = useFetch();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
+	const setAlertModal = useChatAlert();
+	const user = useRecoilValue(userState) as User;
+
 	const owner = props.channel.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
-	const user = userData[0]; //temp
 	const isUserInChannel =
 		props.channel.participants.filter(
 			(participant) =>
@@ -117,32 +120,29 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 		if (enterPassword) {
 			password = await hash(input);
 		}
-		(async () => {
-			await getData('POST', `/chat-rooms/${props.channel.id}`, { password })
-				.then((res) => {
-					if (res.statusText === 'Unauthorized') {
-						throw Error(res.statusText);
-					}
-					return res.json();
-				})
-				.then((data: ChatRoom) => {
-					setChannelList((pre) => {
-						return {
-							...pre,
-							channelList: [...pre.channelList, data],
-						};
-					});
-					setChat(data);
+
+		chatSocket.emit(
+			'enterChatRoom',
+			{ roomId: props.channel.id, password },
+			(response: { status: number; chatRoom: ChatRoom }) => {
+				if (response.status !== 200) {
+					changeInput();
+					setInput('');
+					setAlertModal();
 					setModalStatus(ChatModalStatus.CLOSE);
-				})
-				.catch((err) => {
-					if (err.message === 'Unauthorized') {
-						console.log('비번 틀림');
-						changeInput();
-						setInput('');
-					}
+					return;
+				}
+				setChannelList((pre) => {
+					return {
+						...pre,
+						channelList: [...pre.channelList, response.chatRoom],
+					};
 				});
-		})();
+				setChat(response.chatRoom);
+				setModalStatus(ChatModalStatus.CLOSE);
+				return;
+			}
+		);
 	};
 
 	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {

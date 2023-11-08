@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
-import { User } from 'ts/interfaces/user.model';
+import User from 'ts/interfaces/user.model';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 
 const useChangeSidebar = (state: string) => {

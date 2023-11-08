@@ -1,12 +1,12 @@
-import { Button, TextInput } from 'flowbite-react';
-import useChangeChat from 'hooks/use-change-chat';
-import useFetch from 'hooks/use-fetch';
+import { Button, Label, Radio, TextInput } from 'flowbite-react';
+import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
+import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
+import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
-import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatSettingTap = () => {
@@ -14,10 +14,8 @@ const ChatSettingTap = () => {
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
 	const inputRef = useRef<HTMLInputElement>(null);
-	const getData = useFetch();
-	const setChat = useChangeChat();
-	const setChatList = useSetRecoilState(chatListState);
 	const hash = useHash();
+	const setAlertModal = useChatAlert();
 
 	useEffect(() => {
 		if (inputRef.current && settingPassword) {
@@ -50,6 +48,63 @@ const ChatSettingTap = () => {
 		}
 	};
 
+	const onClickChangeRoomType = (roomType: ChatRoomType) => {
+		chatSocket.emit(
+			'setChatRoom',
+			{
+				...chat,
+				roomId: chat.id,
+				roomType,
+				password: null,
+			},
+			(status: number) => {
+				if (status !== 200) {
+					setAlertModal();
+				}
+			}
+		);
+	};
+
+	const roomTypeField = () => {
+		return (
+			<div className='mt-4 px-5 py-4 bg-white rounded-t-xl border-b text-left'>
+				{title('가시성')}
+				<fieldset className='flex mt-3 gap-4' id='radio'>
+					<div
+						className='flex items-center gap-2'
+						onClick={() => onClickChangeRoomType(ChatRoomType.PUBLIC)}
+					>
+						<Radio
+							defaultChecked={
+								chat.roomType !== ChatRoomType.PRIVATE ? true : false
+							}
+							id='public'
+							name='roomType'
+							value='public'
+							className='checked:bg-primary-700'
+						/>
+						<Label htmlFor='public'>공개 - 누구나</Label>
+					</div>
+					<div
+						className='flex items-center gap-2'
+						onClick={() => onClickChangeRoomType(ChatRoomType.PRIVATE)}
+					>
+						<Radio
+							defaultChecked={
+								chat.roomType !== ChatRoomType.PRIVATE ? false : true
+							}
+							id='private'
+							name='roomType'
+							value='private'
+							className='checked:bg-primary-700'
+						/>
+						<Label htmlFor='private'>비공개 - 일부 사람만</Label>
+					</div>
+				</fieldset>
+			</div>
+		);
+	};
+
 	const onClickPassword = () => {
 		setPassword('');
 		setSettingPassword(true);
@@ -59,15 +114,52 @@ const ChatSettingTap = () => {
 		}
 	};
 
+	const onClickDeletePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+
+		chatSocket.emit(
+			'setChatRoom',
+			{
+				...chat,
+				roomId: chat.id,
+				roomType: ChatRoomType.PUBLIC,
+				password: null,
+			},
+			(status: number) => {
+				if (status !== 200) {
+					setAlertModal();
+				}
+			}
+		);
+	};
+
 	const passwordField = () => {
+		const style =
+			chat.roomType === ChatRoomType.PRIVATE
+				? 'bg-gray-50 text-gray-400'
+				: 'bg-white hover:bg-gray-200';
+
 		return (
-			<button onClick={onClickPassword}>
-				<div className='mt-4 px-5 py-4 bg-white rounded-t-xl hover:bg-gray-200 border-b text-left'>
+			<button
+				onClick={onClickPassword}
+				disabled={chat.roomType === ChatRoomType.PRIVATE}
+			>
+				<div
+					className={`flex justify-between px-5 py-4 border-b text-left ${style}`}
+				>
 					{title('비밀번호 변경')}
+					{chat.roomType === ChatRoomType.PROTECTED && (
+						<button
+							className='text-sm font-normal hover:underline'
+							onClick={onClickDeletePassword}
+						>
+							삭제
+						</button>
+					)}
 				</div>
 			</button>
 		);
-	};
+	}; 
 
 	const onchangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
@@ -79,22 +171,31 @@ const ChatSettingTap = () => {
 
 	const onClickChange = async () => {
 		const encryptedPassword = await hash(password);
-		await getData('PUT', `/chat-rooms/${chat.id}`, {
-			...chat,
-			password: encryptedPassword,
-		})
-			.then((res) => {
-				if (!res.ok) {
-					throw Error('비밀번호 변경 실패');
+		const roomType =
+			password.length === 0 ? ChatRoomType.PUBLIC : ChatRoomType.PROTECTED;
+
+		chatSocket.emit(
+			'setChatRoom',
+			{
+				...chat,
+				roomId: chat.id,
+				roomType,
+				password: encryptedPassword,
+			},
+			(status: number) => {
+				if (status === 200) {
+					setPassword('');
+					setSettingPassword(false);
+					return;
 				}
-				setSettingPassword(false);
-			})
-			.catch((err) => console.log(err.message));
+				setAlertModal();
+			}
+		);
 	};
 
 	const setPasswordField = () => {
 		return (
-			<div className='mt-4 px-5 py-4 bg-white rounded-t-xl border-b text-left'>
+			<div className='px-5 py-4 bg-white border-b text-left'>
 				{title('비밀번호 변경')}
 				<TextInput
 					ref={inputRef}
@@ -122,22 +223,11 @@ const ChatSettingTap = () => {
 	};
 
 	const onClickDelete = () => {
-		(async () => {
-			getData('DELETE', `/chat-rooms/${chat.id}`)
-				.then((res) => {
-					if (!res.ok) {
-						throw Error('삭제 불가');
-					}
-					setChatList((pre) => ({
-						...pre,
-						channelList: pre.channelList.filter(
-							(channel) => channel.id !== chat.id
-						),
-					}));
-					setChat(null);
-				})
-				.catch(() => console.log('삭제 불가'));
-		})();
+		chatSocket.emit('deleteChatRoom', { roomId: chat.id }, (status: number) => {
+			if (status !== 200) {
+				setAlertModal();
+			}
+		});
 	};
 
 	const deleteField = () => {
@@ -153,6 +243,7 @@ const ChatSettingTap = () => {
 	return (
 		<div className='flex flex-col w-full chat-right-sidebar-tap bg-gray-100 p-4'>
 			{ownerField()}
+			{roomTypeField()}
 			{settingPassword ? setPasswordField() : passwordField()}
 			{deleteField()}
 		</div>

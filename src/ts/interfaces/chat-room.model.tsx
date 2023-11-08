@@ -10,4 +10,5 @@ export interface ChatRoom {
 	status: boolean;
 	currentPeople: number;
 	participants: ChatParticipant[];
+	leftToRead: boolean;
 }
