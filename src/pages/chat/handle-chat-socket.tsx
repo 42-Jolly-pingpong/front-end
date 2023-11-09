@@ -13,18 +13,74 @@ import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const HandleChatSocket = () => {
-	const [chat, setChat] = useRecoilState(chatState);
+	const chat = useRecoilValue(chatState);
 	const setChatRoom = useChangeChat();
-	const setChatRoomList = useSetRecoilState(chatListState);
+	const [chatRoomList, setChatRoomList] = useRecoilState(chatListState);
 	const token = getJwtValue();
 	const user = useRecoilValue(userState) as User;
 	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
+	const setChat = useSetRecoilState(chatState);
 
-	useEffect(() => {}, []);
+	const markChannelAsUnread = (roomId: number) => {
+		setChatRoomList((pre) => ({
+			...pre,
+			channelList: pre.channelList.map((channel) => {
+				if (channel.id === roomId) {
+					return { ...channel, leftToRead: true };
+				}
+				return channel;
+			}),
+		}));
+	};
 
-	chatSocket.on('connect', () => {
-		console.log('connected with server');
-	}); //위치 옮겨야 함
+	const markDmAsUnread = (roomId: number) => {
+		setChatRoomList((pre) => ({
+			...pre,
+			dmList: pre.dmList.map((dm) => {
+				if (dm.id === roomId) {
+					return { ...dm, leftToRead: true };
+				}
+				return dm;
+			}),
+		}));
+	};
+
+	const addNewChat = (newChat: Chat) => {
+		setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
+	};
+
+	const getNewChat = (roomId: number, newChat: Chat) => {
+		if (blockedUser.find((user) => user.id === newChat.user.user.id)) {
+			return;
+		}
+		if (chat.chatRoom !== null && roomId === chat.chatRoom?.id) {
+			addNewChat(newChat);
+			chatSocket.emit('readChat', { roomId });
+			return;
+		}
+		markChannelAsUnread(roomId);
+	};
+
+	const getNewChatOnDm = (roomId: number, newChat: Chat) => {
+		if (chat.chatRoom !== null && roomId === chat.chatRoom?.id) {
+			addNewChat(newChat);
+			chatSocket.emit('readChat', { roomId });
+			return;
+		}
+		markDmAsUnread(roomId);
+	};
+
+	const deleteChatRoom = (roomId: number) => {
+		if (chat.chatRoom !== null && roomId === chat.chatRoom.id) {
+			setChatRoom(null);
+		}
+		setChatRoomList((pre) => ({
+			...pre,
+			channelList: pre.channelList.filter((channel) => channel.id !== roomId),
+		}));
+	};
+
+	/* mamage connection */
 
 	useEffect(() => {
 		if (token !== undefined && chatSocket.disconnected) {
@@ -38,67 +94,14 @@ const HandleChatSocket = () => {
 		};
 	}, [token]);
 
+	/* listener */
+
 	useEffect(() => {
 		if (chat.chatRoom) {
-			chatSocket.off('getNewChat');
-			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
-				const { roomId, newChat } = data;
-				if (blockedUser.find((user) => user.id === newChat.user.user.id)) {
-					return;
-				}
-				if (roomId === chat.chatRoom?.id) {
-					setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
-				} else {
-					setChatRoomList((pre) => ({
-						...pre,
-						channelList: pre.channelList.map((channel) => {
-							if (channel.id === roomId) {
-								return { ...channel, leftToRead: true };
-							}
-							return channel;
-						}),
-					}));
-				}
-			});
-
-			chatSocket.off('getNewChatOnDm');
-			chatSocket.on(
-				'getNewChatOnDm',
-				(data: { roomId: number; newChat: Chat }) => {
-					const { roomId, newChat } = data;
-					if (roomId === chat.chatRoom?.id) {
-						setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
-					} else {
-						setChatRoomList((pre) => ({
-							...pre,
-							dmList: pre.dmList.map((dm) => {
-								if (dm.id === roomId) {
-									return { ...dm, leftToRead: true };
-								}
-								return dm;
-							}),
-						}));
-					}
-				}
-			);
-
 			chatSocket.off('updateChatRoom');
 			chatSocket.on('updateChatRoom', (chatRoom: ChatRoom) => {
 				if (chatRoom.id === chat.chatRoom?.id) {
 					setChatRoom(chatRoom, false);
-				}
-			});
-
-			chatSocket.off('chatRoomDeleted');
-			chatSocket.on('chatRoomDeleted', (roomId: number) => {
-				if (roomId === chat.chatRoom?.id) {
-					setChatRoom(null);
-					setChatRoomList((pre) => ({
-						...pre,
-						channelList: pre.channelList.filter(
-							(channel) => channel.id !== roomId
-						),
-					}));
 				}
 			});
 
@@ -114,45 +117,45 @@ const HandleChatSocket = () => {
 					}),
 				}));
 			});
-		} else {
-			chatSocket.off('getNewChat');
-			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
-				const { roomId } = data;
-				setChatRoomList((pre) => ({
-					...pre,
-					channelList: pre.channelList.map((channel) => {
-						if (channel.id === roomId) {
-							return { ...channel, leftToRead: true };
-						}
-						return channel;
-					}),
-				}));
-			});
-
-			chatSocket.off('getNewChatOnDm');
-			chatSocket.on(
-				'getNewChatOnDm',
-				(data: { roomId: number; newChat: Chat }) => {
-					const { roomId } = data;
-					setChatRoomList((pre) => ({
-						...pre,
-						dmList: pre.dmList.map((dm) => {
-							if (dm.id === roomId) {
-								return { ...dm, leftToRead: true };
-							}
-							return dm;
-						}),
-					}));
-				}
-			);
 		}
+
+		chatSocket.off('getNewChat');
+		chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
+			const { roomId, newChat } = data;
+			getNewChat(roomId, newChat);
+		});
+
+		chatSocket.off('getNewChatOnDm');
+		chatSocket.on(
+			'getNewChatOnDm',
+			(data: { roomId: number; newChat: Chat }) => {
+				const { roomId, newChat } = data;
+				getNewChatOnDm(roomId, newChat);
+			}
+		);
+
+		chatSocket.off('chatRoomDeleted');
+		chatSocket.on('chatRoomDeleted', (roomId: number) => {
+			deleteChatRoom(roomId);
+		});
+
+		chatSocket.off('leaveTheChannel');
+		chatSocket.on(
+			'leaveTheChannel',
+			(data: { roomId: number; userId: number }) => {
+				if (data.userId !== user.id) return;
+				deleteChatRoom(data.roomId);
+				chatSocket.emit('requestLeave', { roomId: data.roomId });
+			}
+		);
 
 		return () => {
 			chatSocket.off('getNewChat');
 			chatSocket.off('getNewChatOnDm');
 			chatSocket.off('updateChatRoom');
-			chatSocket.off('chatRoomDeleted');
 			chatSocket.off('updateChatRoomOnList');
+			chatSocket.off('chatRoomDeleted');
+			chatSocket.off('leaveTheChannel');
 		};
 	}, [chat.chatRoom]);
 
@@ -163,6 +166,11 @@ const HandleChatSocket = () => {
 			(data: { chatRoom: ChatRoom; userId: number[] }) => {
 				const { chatRoom, userId } = data;
 				if (userId.find((one) => one === user.id) === undefined) {
+					return;
+				}
+				if (
+					chatRoomList.channelList.some((channel) => channel.id === chatRoom.id)
+				) {
 					return;
 				}
 				setChatRoomList((pre) => ({
@@ -179,6 +187,9 @@ const HandleChatSocket = () => {
 			if (userId !== user.id) {
 				return;
 			}
+			if (chatRoomList.dmList.some((dm) => dm.id === dm.id)) {
+				return;
+			}
 			setChatRoomList((pre) => ({
 				...pre,
 				dmList: [...pre.dmList, dm],
@@ -186,6 +197,13 @@ const HandleChatSocket = () => {
 			chatSocket.emit('requestJoin', { roomId: dm.id });
 		});
 
+		return () => {
+			chatSocket.off('addNewChatRoom');
+			chatSocket.off('addNewDm');
+		};
+	}, [chatRoomList]);
+
+	useEffect(() => {
 		chatSocket.off('createChatRoom');
 		chatSocket.on('createChatRoom', (data: { chatRoom: ChatRoom }) => {
 			const { chatRoom } = data;
@@ -194,8 +212,6 @@ const HandleChatSocket = () => {
 		});
 
 		return () => {
-			chatSocket.off('addNewChatRoom');
-			chatSocket.off('addNewDm');
 			chatSocket.off('createChatRoom');
 		};
 	}, []);
