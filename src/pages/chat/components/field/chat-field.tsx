@@ -1,26 +1,40 @@
 import ChannelHeader from 'pages/chat/components/field/channel-header';
 import ChatItem from 'pages/chat/components/field/chat-item';
 import DmHeader from 'pages/chat/components/field/dm-header';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { Chat } from 'ts/interfaces/chat.model';
 import { Dm } from 'ts/interfaces/dm.model';
+import User from 'ts/interfaces/user.model';
 import { chatState } from 'ts/states/chat-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
 
 const ChatField = () => {
 	const chat = useRecoilValue(chatState);
 	const scrollRef = useRef<HTMLDivElement>(null);
+	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
+	const [showedChats, setShowedChats] = useState<Chat[]>([]);
+
 	const chatRoom = chat.chatRoom;
-	const chats = [...chat.chats].sort(
-		(a, b) => new Date(a.sentTime).getTime() - new Date(b.sentTime).getTime()
-	);
+	const chats = chat.chats;
 
 	useEffect(() => {
 		if (scrollRef.current) {
 			scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
 		}
-	}, [scrollRef, chatRoom, chats]);
+	}, [scrollRef, chatRoom, showedChats]);
+
+	useEffect(() => {
+		setShowedChats(chatsWithoutBlocked(chats));
+	}, [chats, blockedUser]);
+
+	const chatsWithoutBlocked = (chats: Chat[]): Chat[] => {
+		return chats.filter((chat) => {
+			return !blockedUser.find((user) => user.id === chat.user.user.id);
+		});
+	};
 
 	if (chatRoom === null) {
 		return <></>;
@@ -55,13 +69,13 @@ const ChatField = () => {
 			) : (
 				<ChannelHeader channel={chatRoom as ChatRoom} />
 			)}
-			{chats.map((chat, id) => (
+			{showedChats.map((chat, id) => (
 				<ChatItem
 					chat={chat}
 					hasTopBorder={
 						id === 0
 							? true
-							: hasTopBorder(chats[id - 1].sentTime, chat.sentTime)
+							: hasTopBorder(showedChats[id - 1].sentTime, chat.sentTime)
 					}
 					key={id}
 				/>

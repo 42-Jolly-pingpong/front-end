@@ -43,7 +43,8 @@ const ChatMemberInviteTap = (props: {
 							(participant) =>
 								participant.user.id === friend.id &&
 								(participant.status === ChatParticipantStatus.DEFAULT ||
-									participant.status === ChatParticipantStatus.MUTED)
+									participant.status === ChatParticipantStatus.MUTED ||
+									participant.status === ChatParticipantStatus.BANNED)
 						) && friend.nickname.includes(input)
 				)
 				.sort((a, b) => a.nickname.localeCompare(b.nickname))
