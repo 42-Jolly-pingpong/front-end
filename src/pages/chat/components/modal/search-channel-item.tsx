@@ -125,9 +125,12 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 			'enterChatRoom',
 			{ roomId: props.channel.id, password },
 			(response: { status: number; chatRoom: ChatRoom }) => {
-				if (response.status !== 200) {
+				if (response.status === 401) {
 					changeInput();
 					setInput('');
+					return;
+				}
+				if (response.status !== 200) {
 					setAlertModal();
 					setModalStatus(ChatModalStatus.CLOSE);
 					return;
