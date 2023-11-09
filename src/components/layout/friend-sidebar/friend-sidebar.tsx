@@ -9,7 +9,6 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import { Card } from 'flowbite-react';
 import FriendSidebarHeader from './field/friend-sidebar-header';
 import FriendListEmpty from './item/friend-list-empty';
 import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
@@ -46,7 +45,7 @@ const FriendSidebar = () => {
 		>
 			<div className='h-full overflow-y-auto bg-white dark:bg-gray-800 shadow-2xl'>
 				<FriendSidebarHeader />
-				{userFrieds.friends!.length + userFrieds.requestFriends!.length > 0 ? (
+				{0 < userFrieds.friends.length + userFrieds.requestFriends.length ? (
 					<FriendSidebarNormal />
 				) : (
 					<FriendListEmpty />
