@@ -16,9 +16,9 @@ function App() {
 					<Route element={<Layout />}>
 						<Route path='/' element={<Root />} index />
 						<Route path='/profile/:nickname' element={<Profile />} />
-						<Route path='/chat' element={<Chat />} />
 						<Route path='/sign-up' element={<SignUp />} />
 					</Route>
+					<Route path='/chat' element={<Chat />} />
 					<Route path='/game' element={<Game />} />
 					<Route path='*' element={<Page404 />} />
 				</Routes>

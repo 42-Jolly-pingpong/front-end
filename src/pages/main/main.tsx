@@ -2,15 +2,11 @@ import { useEffect, useState } from 'react';
 import { socket } from '../../socket/socket';
 import JoinButton from 'pages/main/components/join-button';
 import JoinIntro from 'pages/main/components/join-intro';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { gameStartState } from 'ts/states/game/game-start-state';
-import { useNavigate } from 'react-router-dom';
-import PingPongAnimation from './components/ping-pong-animation';
+import PingPongAnimation from 'pages/main/components/ping-pong-animation';
 
 const Main = () => {
 	const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
-	const setIsGame = useSetRecoilState(gameStartState);
-	const navigate = useNavigate();
+	// const setIsGame = useSetRecoilState(gameStartState);
 
 	useEffect(() => {
 		if (!isConnected) socket.connect();
@@ -24,12 +20,6 @@ const Main = () => {
 		socket.on('connect', onConnect);
 		socket.on('disconnect', onDisconnect);
 	}, []);
-
-	useEffect(() => {
-		// if (isGameStart) {
-		// 	navigate('/game');
-		// }
-	});
 
 	return (
 		<div className='flex flex-col justify-center items-center text-center h-screen gap-y-12 2xl:gap-y-24'>

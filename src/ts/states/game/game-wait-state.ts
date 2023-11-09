@@ -16,7 +16,22 @@ export const gameModalState = atom<GameModalType>({
 		status: GameModalStatus.NONE,
 		mode: GameMode.NORMAL,
 		invite: false,
-		show: true,
+		show: false,
+	},
+});
+
+export const gameModalSelector = selector<GameModalType>({
+	key: 'GameModalSelector',
+	get: ({ get }) => {
+		const gameModal = get(gameModalState);
+		return gameModal;
+	},
+	set: ({ set }, newValue) => {
+		if (newValue instanceof DefaultValue) {
+			set(gameModalState, newValue);
+		} else {
+			set(gameModalState, newValue);
+		}
 	},
 });
 
@@ -26,12 +41,20 @@ export const gameModalShowSelector = selector<boolean>({
 		const gameModal = get(gameModalState);
 		return gameModal.show;
 	},
-	set: ({ set, get }, newValue) => {
-		set(gameModalState, newValue instanceof DefaultValue ? newValue : newValue / 100),
+	set: ({ set }, newValue) => {
+		console.log(newValue);
 		if (newValue instanceof DefaultValue) {
-			set(gameModalState, newValue);
+			// If you want to reset to the default value, you can do that here
+			set(gameModalState, (prevValue) => ({
+				...prevValue,
+				show: true, // Set it to the default value
+			}));
 		} else {
-			set(gameModalState);
+			// Toggle the 'show' property
+			set(gameModalState, (prevValue) => ({
+				...prevValue,
+				show: !prevValue.show,
+			}));
 		}
 	},
 });
