@@ -12,8 +12,10 @@ import {
 import { Card } from 'flowbite-react';
 import FriendSidebarHeader from './field/friend-sidebar-header';
 import FriendListEmpty from './item/friend-list-empty';
+import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
 
 const FriendSidebar = () => {
+	const showFriendsSidebar = useRecoilValue(friendSidebarState);
 	const [userFrieds, setUserFriendsState] = useRecoilState(userFriendsState);
 	const user = useRecoilValue(userState);
 
@@ -35,14 +37,22 @@ const FriendSidebar = () => {
 	}, []);
 
 	return (
-		<Card className='fixed flex flex-col right-0 h-full'>
-			<FriendSidebarHeader />
-			{userFrieds.friends!.length + userFrieds.requestFriends!.length > 0 ? (
-				<FriendSidebarNormal />
-			) : (
-				<FriendListEmpty />
-			)}
-		</Card>
+		<aside
+			id='friend-sidebar'
+			className={`fixed top-0 right-0 z-40 w-96 h-screen transition-transform -translate-x-full sm:translate-x-0 ${
+				showFriendsSidebar ? 'visible' : 'invisible'
+			}`}
+			aria-label='Sidebar'
+		>
+			<div className='h-full overflow-y-auto bg-white dark:bg-gray-800 shadow-2xl'>
+				<FriendSidebarHeader />
+				{userFrieds.friends!.length + userFrieds.requestFriends!.length > 0 ? (
+					<FriendSidebarNormal />
+				) : (
+					<FriendListEmpty />
+				)}
+			</div>
+		</aside>
 	);
 };
 
