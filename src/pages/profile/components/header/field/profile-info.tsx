@@ -4,7 +4,7 @@ import ProfileGameHistory from 'pages/profile/components/header/item/game-histor
 
 const ProfileInfo = () => {
 	return (
-		<div className='flex flex-col pl-8'>
+		<div className='flex flex-col'>
 			<ProfileSocial />
 			<ProfileGameHistory />
 			<ProfileBio />
