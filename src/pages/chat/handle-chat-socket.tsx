@@ -2,7 +2,7 @@ import { getJwtValue } from 'components/utils/cookieUtils';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import { Chat } from 'ts/interfaces/chat.model';
 import { Dm } from 'ts/interfaces/dm.model';
@@ -15,7 +15,7 @@ import { userFriendsState } from 'ts/states/user/user-friends-state';
 const HandleChatSocket = () => {
 	const chat = useRecoilValue(chatState);
 	const setChatRoom = useChangeChat();
-	const setChatRoomList = useSetRecoilState(chatListState);
+	const [chatRoomList, setChatRoomList] = useRecoilState(chatListState);
 	const token = getJwtValue();
 	const user = useRecoilValue(userState) as User;
 	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
@@ -168,6 +168,11 @@ const HandleChatSocket = () => {
 				if (userId.find((one) => one === user.id) === undefined) {
 					return;
 				}
+				if (
+					chatRoomList.channelList.some((channel) => channel.id === chatRoom.id)
+				) {
+					return;
+				}
 				setChatRoomList((pre) => ({
 					...pre,
 					channelList: [...pre.channelList, chatRoom],
@@ -182,6 +187,9 @@ const HandleChatSocket = () => {
 			if (userId !== user.id) {
 				return;
 			}
+			if (chatRoomList.dmList.some((dm) => dm.id === dm.id)) {
+				return;
+			}
 			setChatRoomList((pre) => ({
 				...pre,
 				dmList: [...pre.dmList, dm],
@@ -189,6 +197,13 @@ const HandleChatSocket = () => {
 			chatSocket.emit('requestJoin', { roomId: dm.id });
 		});
 
+		return () => {
+			chatSocket.off('addNewChatRoom');
+			chatSocket.off('addNewDm');
+		};
+	}, [chatRoomList]);
+
+	useEffect(() => {
 		chatSocket.off('createChatRoom');
 		chatSocket.on('createChatRoom', (data: { chatRoom: ChatRoom }) => {
 			const { chatRoom } = data;
@@ -197,8 +212,6 @@ const HandleChatSocket = () => {
 		});
 
 		return () => {
-			chatSocket.off('addNewChatRoom');
-			chatSocket.off('addNewDm');
 			chatSocket.off('createChatRoom');
 		};
 	}, []);
