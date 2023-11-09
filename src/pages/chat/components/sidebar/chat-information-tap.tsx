@@ -9,6 +9,7 @@ import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import User from 'ts/interfaces/user.model';
+import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 import { userState } from 'ts/states/user-state';
@@ -20,6 +21,7 @@ const ChatInformationTap = () => {
 	const setChatList = useSetRecoilState(chatListState);
 	const setAlertModal = useChatAlert();
 	const user = useRecoilValue(userState) as User;
+	const setChatAlertModal = useSetRecoilState(chatAlertModalState);
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
 	);
@@ -122,7 +124,7 @@ const ChatInformationTap = () => {
 		);
 	};
 
-	const onClickLeave = async () => {
+	const leaveThechannel = async () => {
 		chatSocket.emit(
 			'participantLeave',
 			{ roomId: chat.id },
@@ -135,11 +137,23 @@ const ChatInformationTap = () => {
 						),
 					}));
 					setChat(null);
+					setChatAlertModal((pre) => ({ ...pre, status: false }));
 				} else {
 					setAlertModal();
 				}
 			}
 		);
+	};
+
+	const onClickLeave = async () => {
+		setChatAlertModal({
+			status: true,
+			title: `${chat.roomName} 채널에서 나가시겠습니까?`,
+			subText: '채널에서 나가게 돼요.',
+			confirmButtonText: `나가기`,
+			exitButtonText: '취소',
+			onClickButton: leaveThechannel,
+		});
 	};
 
 	const leaveField = () => {
