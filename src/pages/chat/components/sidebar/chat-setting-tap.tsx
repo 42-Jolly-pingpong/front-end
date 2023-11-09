@@ -14,6 +14,7 @@ const ChatSettingTap = () => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
+	const [inputFail, setInputFail] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
 	const setAlertModal = useChatAlert();
@@ -180,7 +181,19 @@ const ChatSettingTap = () => {
 		setSettingPassword(false);
 	};
 
+	const changeInput = () => {
+		setInputFail(true);
+
+		setTimeout(() => {
+			setInputFail(false);
+		}, 1000);
+	};
+
 	const onClickChange = async () => {
+		if (password.length === 0) {
+			changeInput();
+			return;
+		}
 		const encryptedPassword = await hash(password);
 
 		onClickChangeRoomType(ChatRoomType.PROTECTED, encryptedPassword);
@@ -191,6 +204,16 @@ const ChatSettingTap = () => {
 			<div className='px-5 py-4 bg-white border-b text-left'>
 				{title('비밀번호 변경')}
 				<TextInput
+					color={inputFail ? 'failure' : 'gray'}
+					helperText={
+						inputFail ? (
+							<>
+								<span className='text-xs font-normal text-red-600'>
+									비밀번호를 입력해주세요.
+								</span>
+							</>
+						) : null
+					}
 					ref={inputRef}
 					type='password'
 					value={password}
