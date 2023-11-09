@@ -120,7 +120,7 @@ const ChatMemberInquireTap = (props: {
 	const dotButton = () => {
 		return (
 			<div>
-				<button className='rounded-lg flex items-stretch items-center justify-center p-2 text-center text-gray-900 bg-white border border-gray-300 enabled:hover:bg-gray-100 focus:ring-4 focus:ring-cyan-300 '>
+				<button className='rounded-lg p-2 text-gray-900 bg-white border border-gray-300 enabled:hover:bg-gray-100 focus:ring-4 focus:ring-cyan-300 '>
 					<BiDotsVerticalRounded size={12} />
 				</button>
 			</div>
