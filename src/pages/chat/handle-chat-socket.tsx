@@ -33,17 +33,14 @@ const HandleChatSocket = () => {
 		}));
 	};
 
-	const markDmAsUnread = (roomId: number, newChat: Chat) => {
-		if (blockedUser.some((user) => user.id === newChat.user.user.id)) {
-			return;
-		}
+	const markDmAsUnread = (roomId: number) => {
 		setChatRoomList((pre) => ({
 			...pre,
-			channelList: pre.channelList.map((channel) => {
-				if (channel.id === roomId) {
-					return { ...channel, leftToRead: true };
+			dmList: pre.dmList.map((dm) => {
+				if (dm.id === roomId) {
+					return { ...dm, leftToRead: true };
 				}
-				return channel;
+				return dm;
 			}),
 		}));
 	};
@@ -70,7 +67,7 @@ const HandleChatSocket = () => {
 			chatSocket.emit('readChat', { roomId });
 			return;
 		}
-		markDmAsUnread(roomId, newChat);
+		markDmAsUnread(roomId);
 	};
 
 	const deleteChatRoom = (roomId: number) => {
