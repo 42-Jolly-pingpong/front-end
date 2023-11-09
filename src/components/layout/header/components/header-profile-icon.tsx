@@ -7,14 +7,14 @@ import { userState } from 'ts/states/user-state';
 import { userSignOut } from 'api/auth-api';
 
 const HeaderProfileIcon = () => {
-	const [user, setUserState] = useRecoilState(userState);
+	const [user, setUser] = useRecoilState(userState);
 	const navigate = useNavigate();
 
 	const handleSignOut = async () => {
 		try {
 			await userSignOut();
-			setUserState(null);
-			navigate('/');
+			setUser(null);
+			navigate('/', { replace: true });
 		} catch (err) {
 			console.log(err);
 		}

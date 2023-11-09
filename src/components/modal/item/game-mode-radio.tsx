@@ -1,10 +1,10 @@
 import { Label, Radio } from 'flowbite-react';
 import { useRecoilState } from 'recoil';
 import { GameMode } from 'ts/enums/game/game-mode.enum';
-import { gameWaitState } from 'ts/states/game/game-wait-state';
+import { gameModalState } from 'ts/states/game/game-wait-state';
 
 const GameModeRadio = () => {
-	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
+	const [gameWait, setGameWait] = useRecoilState(gameModalState);
 
 	const handleChange = (mode: GameMode) => {
 		setGameWait({ ...gameWait, mode: mode });
