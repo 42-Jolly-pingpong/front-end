@@ -110,10 +110,8 @@ const ChatSettingTap = () => {
 						onClick={() => onClickChangeRoomType(ChatRoomType.PUBLIC)}
 					>
 						<Radio
+							readOnly
 							checked={chat.roomType !== ChatRoomType.PRIVATE ? true : false}
-							defaultChecked={
-								chat.roomType !== ChatRoomType.PRIVATE ? true : false
-							}
 							id='public'
 							name='roomType'
 							value='public'
@@ -126,10 +124,8 @@ const ChatSettingTap = () => {
 						onClick={() => onClickChangeRoomType(ChatRoomType.PRIVATE)}
 					>
 						<Radio
+							readOnly
 							checked={chat.roomType !== ChatRoomType.PRIVATE ? false : true}
-							defaultChecked={
-								chat.roomType !== ChatRoomType.PRIVATE ? false : true
-							}
 							id='private'
 							name='roomType'
 							value='private'
@@ -209,11 +205,9 @@ const ChatSettingTap = () => {
 					color={inputFail ? 'failure' : 'gray'}
 					helperText={
 						inputFail ? (
-							<>
-								<span className='text-xs font-normal text-red-600'>
-									비밀번호를 입력해주세요.
-								</span>
-							</>
+							<span className='text-xs font-normal text-red-600'>
+								비밀번호를 입력해주세요.
+							</span>
 						) : null
 					}
 					ref={inputRef}

@@ -163,11 +163,9 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 				color={inputFail ? 'failure' : 'gray'}
 				helperText={
 					inputFail ? (
-						<>
-							<span className='text-xs font-normal text-red-600'>
-								비밀번호가 일치하지 않습니다.
-							</span>
-						</>
+						<span className='text-xs font-normal text-red-600'>
+							비밀번호가 일치하지 않습니다.
+						</span>
 					) : null
 				}
 				onClick={onClickInput}
