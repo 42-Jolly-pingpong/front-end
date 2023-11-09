@@ -52,6 +52,27 @@ const HandleChatSocket = () => {
 		setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
 	};
 
+	const getNewChat = (roomId: number, newChat: Chat) => {
+		if (blockedUser.find((user) => user.id === newChat.user.user.id)) {
+			return;
+		}
+		if (chat.chatRoom !== null && roomId === chat.chatRoom?.id) {
+			addNewChat(newChat);
+			chatSocket.emit('readChat', { roomId });
+			return;
+		}
+		markChannelAsUnread(roomId);
+	};
+
+	const getNewChatOnDm = (roomId: number, newChat: Chat) => {
+		if (chat.chatRoom !== null && roomId === chat.chatRoom?.id) {
+			addNewChat(newChat);
+			chatSocket.emit('readChat', { roomId });
+			return;
+		}
+		markDmAsUnread(roomId, newChat);
+	};
+
 	const deleteChatRoom = (roomId: number) => {
 		if (chat.chatRoom !== null && roomId === chat.chatRoom.id) {
 			setChatRoom(null);
@@ -76,34 +97,6 @@ const HandleChatSocket = () => {
 
 	useEffect(() => {
 		if (chat.chatRoom) {
-			chatSocket.off('getNewChat');
-			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
-				const { roomId, newChat } = data;
-				if (blockedUser.find((user) => user.id === newChat.user.user.id)) {
-					return;
-				}
-				if (roomId === chat.chatRoom?.id) {
-					addNewChat(newChat);
-					chatSocket.emit('readChat', { roomId });
-				} else {
-					markChannelAsUnread(roomId);
-				}
-			});
-
-			chatSocket.off('getNewChatOnDm');
-			chatSocket.on(
-				'getNewChatOnDm',
-				(data: { roomId: number; newChat: Chat }) => {
-					const { roomId, newChat } = data;
-					if (roomId === chat.chatRoom?.id) {
-						addNewChat(newChat);
-						chatSocket.emit('readChat', { roomId });
-					} else {
-						markDmAsUnread(roomId, newChat);
-					}
-				}
-			);
-
 			chatSocket.off('updateChatRoom');
 			chatSocket.on('updateChatRoom', (chatRoom: ChatRoom) => {
 				if (chatRoom.id === chat.chatRoom?.id) {
@@ -123,22 +116,22 @@ const HandleChatSocket = () => {
 					}),
 				}));
 			});
-		} else {
-			chatSocket.off('getNewChat');
-			chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
-				const { roomId } = data;
-				markChannelAsUnread(roomId);
-			});
-
-			chatSocket.off('getNewChatOnDm');
-			chatSocket.on(
-				'getNewChatOnDm',
-				(data: { roomId: number; newChat: Chat }) => {
-					const { roomId } = data;
-					markDmAsUnread(roomId, data.newChat);
-				}
-			);
 		}
+
+		chatSocket.off('getNewChat');
+		chatSocket.on('getNewChat', (data: { roomId: number; newChat: Chat }) => {
+			const { roomId, newChat } = data;
+			getNewChat(roomId, newChat);
+		});
+
+		chatSocket.off('getNewChatOnDm');
+		chatSocket.on(
+			'getNewChatOnDm',
+			(data: { roomId: number; newChat: Chat }) => {
+				const { roomId, newChat } = data;
+				getNewChatOnDm(roomId, newChat);
+			}
+		);
 
 		chatSocket.off('chatRoomDeleted');
 		chatSocket.on('chatRoomDeleted', (roomId: number) => {
