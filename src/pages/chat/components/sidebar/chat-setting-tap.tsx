@@ -3,25 +3,39 @@ import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatSettingTap = () => {
 	const chat = useRecoilValue(chatState).chatRoom as ChatRoom;
 	const [settingPassword, setSettingPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>('');
+	const [inputFail, setInputFail] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
 	const setAlertModal = useChatAlert();
+	const setChatAlertModal = useSetRecoilState(chatAlertModalState);
 
 	useEffect(() => {
 		if (inputRef.current && settingPassword) {
 			inputRef.current.focus();
 		}
 	}, [settingPassword]);
+
+	const channelTypeInKorean = (type: ChatRoomType) => {
+		switch (type) {
+			case ChatRoomType.PRIVATE:
+				return '비공개';
+			case ChatRoomType.PUBLIC:
+				return '공개';
+			case ChatRoomType.PROTECTED:
+				return '비밀번호 요구';
+		}
+	};
 
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
@@ -48,21 +62,42 @@ const ChatSettingTap = () => {
 		}
 	};
 
-	const onClickChangeRoomType = (roomType: ChatRoomType) => {
+	const changeRoomInformation = (
+		roomType: ChatRoomType,
+		password: string | null
+	) => {
 		chatSocket.emit(
 			'setChatRoom',
 			{
 				...chat,
 				roomId: chat.id,
 				roomType,
-				password: null,
+				password: password,
 			},
 			(status: number) => {
-				if (status !== 200) {
-					setAlertModal();
+				if (status === 200) {
+					setChatAlertModal((pre) => ({ ...pre, status: false }));
+					setPassword('');
+					setSettingPassword(false);
+					return;
 				}
+				setAlertModal();
 			}
 		);
+	};
+
+	const onClickChangeRoomType = (
+		roomType: ChatRoomType,
+		password: string | null = null
+	) => {
+		setChatAlertModal({
+			status: true,
+			title: `${chat.roomName} 채널 공개 범위를 변경하시겠습니까?`,
+			subText: `해당 채널이 ${channelTypeInKorean(roomType)}로 변경됩니다`,
+			confirmButtonText: `${channelTypeInKorean(roomType)}로 변경`,
+			exitButtonText: '취소',
+			onClickButton: () => changeRoomInformation(roomType, password),
+		});
 	};
 
 	const roomTypeField = () => {
@@ -75,9 +110,8 @@ const ChatSettingTap = () => {
 						onClick={() => onClickChangeRoomType(ChatRoomType.PUBLIC)}
 					>
 						<Radio
-							defaultChecked={
-								chat.roomType !== ChatRoomType.PRIVATE ? true : false
-							}
+							readOnly
+							checked={chat.roomType !== ChatRoomType.PRIVATE ? true : false}
 							id='public'
 							name='roomType'
 							value='public'
@@ -90,9 +124,8 @@ const ChatSettingTap = () => {
 						onClick={() => onClickChangeRoomType(ChatRoomType.PRIVATE)}
 					>
 						<Radio
-							defaultChecked={
-								chat.roomType !== ChatRoomType.PRIVATE ? false : true
-							}
+							readOnly
+							checked={chat.roomType !== ChatRoomType.PRIVATE ? false : true}
 							id='private'
 							name='roomType'
 							value='private'
@@ -117,36 +150,13 @@ const ChatSettingTap = () => {
 	const onClickDeletePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 
-		chatSocket.emit(
-			'setChatRoom',
-			{
-				...chat,
-				roomId: chat.id,
-				roomType: ChatRoomType.PUBLIC,
-				password: null,
-			},
-			(status: number) => {
-				if (status !== 200) {
-					setAlertModal();
-				}
-			}
-		);
+		onClickChangeRoomType(ChatRoomType.PUBLIC);
 	};
 
 	const passwordField = () => {
-		const style =
-			chat.roomType === ChatRoomType.PRIVATE
-				? 'bg-gray-50 text-gray-400'
-				: 'bg-white hover:bg-gray-200';
-
 		return (
-			<button
-				onClick={onClickPassword}
-				disabled={chat.roomType === ChatRoomType.PRIVATE}
-			>
-				<div
-					className={`flex justify-between px-5 py-4 border-b text-left ${style}`}
-				>
+			<button onClick={onClickPassword}>
+				<div className='flex justify-between px-5 py-4 border-b text-left bg-white hover:bg-gray-200'>
 					{title('비밀번호 변경')}
 					{chat.roomType === ChatRoomType.PROTECTED && (
 						<button
@@ -159,7 +169,7 @@ const ChatSettingTap = () => {
 				</div>
 			</button>
 		);
-	}; 
+	};
 
 	const onchangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
@@ -169,28 +179,22 @@ const ChatSettingTap = () => {
 		setSettingPassword(false);
 	};
 
-	const onClickChange = async () => {
-		const encryptedPassword = await hash(password);
-		const roomType =
-			password.length === 0 ? ChatRoomType.PUBLIC : ChatRoomType.PROTECTED;
+	const changeInput = () => {
+		setInputFail(true);
 
-		chatSocket.emit(
-			'setChatRoom',
-			{
-				...chat,
-				roomId: chat.id,
-				roomType,
-				password: encryptedPassword,
-			},
-			(status: number) => {
-				if (status === 200) {
-					setPassword('');
-					setSettingPassword(false);
-					return;
-				}
-				setAlertModal();
-			}
-		);
+		setTimeout(() => {
+			setInputFail(false);
+		}, 1000);
+	};
+
+	const onClickChange = async () => {
+		if (password.length === 0) {
+			changeInput();
+			return;
+		}
+		const encryptedPassword = await hash(password);
+
+		onClickChangeRoomType(ChatRoomType.PROTECTED, encryptedPassword);
 	};
 
 	const setPasswordField = () => {
@@ -198,6 +202,14 @@ const ChatSettingTap = () => {
 			<div className='px-5 py-4 bg-white border-b text-left'>
 				{title('비밀번호 변경')}
 				<TextInput
+					color={inputFail ? 'failure' : 'gray'}
+					helperText={
+						inputFail ? (
+							<span className='text-xs font-normal text-red-600'>
+								비밀번호를 입력해주세요.
+							</span>
+						) : null
+					}
 					ref={inputRef}
 					type='password'
 					value={password}
