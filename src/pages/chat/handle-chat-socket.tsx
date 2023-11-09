@@ -80,6 +80,8 @@ const HandleChatSocket = () => {
 		}));
 	};
 
+	/* mamage connection */
+
 	useEffect(() => {
 		if (token !== undefined && chatSocket.disconnected) {
 			chatSocket.io.opts.extraHeaders = {
@@ -91,6 +93,8 @@ const HandleChatSocket = () => {
 			chatSocket.disconnect();
 		};
 	}, [token]);
+
+	/* listener */
 
 	useEffect(() => {
 		if (chat.chatRoom) {
