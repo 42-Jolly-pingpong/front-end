@@ -52,6 +52,16 @@ const HandleChatSocket = () => {
 		setChat((pre) => ({ ...pre, chats: [...pre.chats, newChat] }));
 	};
 
+	const deleteChatRoom = (roomId: number) => {
+		if (chat.chatRoom !== null && roomId === chat.chatRoom.id) {
+			setChatRoom(null);
+		}
+		setChatRoomList((pre) => ({
+			...pre,
+			channelList: pre.channelList.filter((channel) => channel.id !== roomId),
+		}));
+	};
+
 	useEffect(() => {
 		if (token !== undefined && chatSocket.disconnected) {
 			chatSocket.io.opts.extraHeaders = {
@@ -101,19 +111,6 @@ const HandleChatSocket = () => {
 				}
 			});
 
-			chatSocket.off('chatRoomDeleted');
-			chatSocket.on('chatRoomDeleted', (roomId: number) => {
-				if (roomId === chat.chatRoom?.id) {
-					setChatRoom(null);
-				}
-				setChatRoomList((pre) => ({
-					...pre,
-					channelList: pre.channelList.filter(
-						(channel) => channel.id !== roomId
-					),
-				}));
-			});
-
 			chatSocket.off('updateChatRoomOnList');
 			chatSocket.on('updateChatRoomOnList', (chatRoom: ChatRoom) => {
 				setChatRoomList((pre) => ({
@@ -143,12 +140,28 @@ const HandleChatSocket = () => {
 			);
 		}
 
+		chatSocket.off('chatRoomDeleted');
+		chatSocket.on('chatRoomDeleted', (roomId: number) => {
+			deleteChatRoom(roomId);
+		});
+
+		chatSocket.off('leaveTheChannel');
+		chatSocket.on(
+			'leaveTheChannel',
+			(data: { roomId: number; userId: number }) => {
+				if (data.userId !== user.id) return;
+				deleteChatRoom(data.roomId);
+				chatSocket.emit('requestLeave', { roomId: data.roomId });
+			}
+		);
+
 		return () => {
 			chatSocket.off('getNewChat');
 			chatSocket.off('getNewChatOnDm');
 			chatSocket.off('updateChatRoom');
-			chatSocket.off('chatRoomDeleted');
 			chatSocket.off('updateChatRoomOnList');
+			chatSocket.off('chatRoomDeleted');
+			chatSocket.off('leaveTheChannel');
 		};
 	}, [chat.chatRoom]);
 
