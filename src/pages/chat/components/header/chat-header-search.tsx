@@ -8,6 +8,7 @@ const ChatHeaderSearch = () => {
 	const [inputContent, setInputContent] = useState<string>('');
 	const friendList = useRecoilValue(userFriendsState).friends as User[];
 	const [searchedFriendList, setSearchedFriendList] = useState<User[]>([]);
+	const [showPad, setShowPad] = useState<boolean>(true);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -18,7 +19,7 @@ const ChatHeaderSearch = () => {
 
 	useEffect(() => {
 		if (inputContent.length === 0) {
-			setSearchedFriendList([]);
+			setSearchedFriendList(friendList);
 		} else {
 			setSearchedFriendList(
 				friendList?.filter((friend) => friend.nickname.includes(inputContent))
@@ -30,9 +31,20 @@ const ChatHeaderSearch = () => {
 		setInputContent(e.target.value);
 	};
 
+	const onFocusInput = () => {
+		setShowPad(true);
+	};
+	const onBlurInput = () => {
+		setShowPad(false);
+	};
+
 	const input = () => {
 		return (
-			<div className='flex items-center w-full h-12'>
+			<div
+				className='flex items-center w-full h-12'
+				onFocus={onFocusInput}
+				onBlur={onBlurInput}
+			>
 				<div className='text-gray-500 ml-3'>대상:</div>
 				<input
 					ref={inputRef}
@@ -75,9 +87,7 @@ const ChatHeaderSearch = () => {
 				</div>
 				{input()}
 			</div>
-			<div className='relative'>
-				{inputContent.length === 0 ? null : searchedPad()}
-			</div>
+			<div className='relative'>{showPad ? searchedPad() : null}</div>
 		</div>
 	);
 };
