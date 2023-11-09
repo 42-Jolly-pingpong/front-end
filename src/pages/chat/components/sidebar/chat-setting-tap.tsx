@@ -3,10 +3,11 @@ import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
+import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import { chatState } from 'ts/states/chat-state';
 
 const ChatSettingTap = () => {
@@ -16,12 +17,24 @@ const ChatSettingTap = () => {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const hash = useHash();
 	const setAlertModal = useChatAlert();
+	const setChatAlertModal = useSetRecoilState(chatAlertModalState);
 
 	useEffect(() => {
 		if (inputRef.current && settingPassword) {
 			inputRef.current.focus();
 		}
 	}, [settingPassword]);
+
+	const channelTypeInKorean = (type: ChatRoomType) => {
+		switch (type) {
+			case ChatRoomType.PRIVATE:
+				return '비공개';
+			case ChatRoomType.PUBLIC:
+				return '공개';
+			case ChatRoomType.PROTECTED:
+				return '비밀번호 요구';
+		}
+	};
 
 	const owner = chat.participants.find(
 		(participant) => participant.role === ChatParticipantRole.OWNER
@@ -48,7 +61,7 @@ const ChatSettingTap = () => {
 		}
 	};
 
-	const onClickChangeRoomType = (roomType: ChatRoomType) => {
+	const changeRoomType = (roomType: ChatRoomType) => {
 		chatSocket.emit(
 			'setChatRoom',
 			{
@@ -58,11 +71,24 @@ const ChatSettingTap = () => {
 				password: null,
 			},
 			(status: number) => {
-				if (status !== 200) {
-					setAlertModal();
+				if (status === 200) {
+					setChatAlertModal((pre) => ({ ...pre, status: false }));
+					return;
 				}
+				setAlertModal();
 			}
 		);
+	};
+
+	const onClickChangeRoomType = (roomType: ChatRoomType) => {
+		setChatAlertModal({
+			status: true,
+			title: `${chat.roomName} 채널 공개 범위를 변경하시겠습니까?`,
+			subText: `해당 채널이 ${channelTypeInKorean(roomType)}로 변경됩니다`,
+			confirmButtonText: `${channelTypeInKorean(roomType)}로 변경`,
+			exitButtonText: '취소',
+			onClickButton: () => changeRoomType(roomType),
+		});
 	};
 
 	const roomTypeField = () => {
@@ -159,7 +185,7 @@ const ChatSettingTap = () => {
 				</div>
 			</button>
 		);
-	}; 
+	};
 
 	const onchangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
