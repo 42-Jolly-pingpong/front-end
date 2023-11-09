@@ -110,6 +110,7 @@ const ChatSettingTap = () => {
 						onClick={() => onClickChangeRoomType(ChatRoomType.PUBLIC)}
 					>
 						<Radio
+							checked={chat.roomType !== ChatRoomType.PRIVATE ? true : false}
 							defaultChecked={
 								chat.roomType !== ChatRoomType.PRIVATE ? true : false
 							}
@@ -125,6 +126,7 @@ const ChatSettingTap = () => {
 						onClick={() => onClickChangeRoomType(ChatRoomType.PRIVATE)}
 					>
 						<Radio
+							checked={chat.roomType !== ChatRoomType.PRIVATE ? false : true}
 							defaultChecked={
 								chat.roomType !== ChatRoomType.PRIVATE ? false : true
 							}
