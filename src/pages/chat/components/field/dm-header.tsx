@@ -1,7 +1,6 @@
-import { Button } from 'flowbite-react';
+import { Avatar, Button } from 'flowbite-react';
 import useChangeSidebar from 'hooks/use-change-sidebar';
 import Status from 'pages/chat/components/status';
-import UserImg from 'pages/chat/components/user-img';
 import User from 'ts/interfaces/user.model';
 
 const DmHeader = (props: { mate: User }) => {
@@ -15,7 +14,7 @@ const DmHeader = (props: { mate: User }) => {
 	return (
 		<div className='my-5'>
 			<div className='flex items-center'>
-				<UserImg src={mate.avatarPath} size={36} />
+				<Avatar img={mate.avatarPath} size='xl' />
 				<div className='mx-2 font-bold text-sm'>{mate.nickname}</div>
 				<Status status={mate.status} />
 			</div>
