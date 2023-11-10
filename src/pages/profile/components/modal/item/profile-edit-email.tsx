@@ -7,15 +7,15 @@ const ProfileEditEmail = () => {
 	const user = useRecoilValue(userState);
 
 	return (
-		<div className='flex flex-row mt-5'>
-			<div className='font-bold text-sm w-16 mx-6'>이메일 </div>
+		<div className='flex gap-6'>
+			<div className='font-bold text-sm w-16'>이메일</div>
 			<TextInput
 				icon={HiMail}
 				id='email'
 				type='email'
 				placeholder={user?.email}
 				readOnly
-				className=' w-full'
+				className='w-full'
 			/>
 		</div>
 	);

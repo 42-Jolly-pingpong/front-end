@@ -7,7 +7,6 @@ import UpdateUserDto from 'ts/interfaces/user/update-user.model';
 import ProfileEditBio from 'pages/profile/components/modal/item/profile-edit-bio';
 import ProfileEditAuth from 'pages/profile/components/modal/item/profile-edit-auth';
 import ProfileEditEmail from 'pages/profile/components/modal/item/profile-edit-email';
-import ProfileEditHeader from 'pages/profile/components/modal/item/profile-edit-header';
 import ProfileEditAvatar from 'pages/profile/components/modal/item/profile-edit-avatar';
 import ProfileEditButton from 'pages/profile/components/modal/item/profile-edit-button';
 import ProfileEditNickname from 'pages/profile/components/modal/item/profile-edit-nickname';
@@ -64,13 +63,16 @@ const ProfileEditModal: React.FC<ModalProps> = ({ show, onClose }) => {
 
 	return (
 		<Modal size='lg' show={show} onClose={onClose}>
-			<ProfileEditHeader onClose={onClose} />
-			<Modal.Body className='flex flex-col pt-0 px-8'>
+			<Modal.Header>프로필 편집</Modal.Header>
+			{/* <ProfileEditHeader onClose={onClose} /> */}
+			<Modal.Body className='flex flex-col gap-6'>
 				<ProfileEditAvatar onUpload={handleUpload} />
-				<ProfileEditEmail />
-				<ProfileEditNickname onChange={handleNickname} />
-				<ProfileEditBio onChange={handleBio} />
-				<ProfileEditAuth onChange={handleAuth} />
+				<div className='flex flex-col gap-5 ml-5'>
+					<ProfileEditEmail />
+					<ProfileEditNickname onChange={handleNickname} />
+					<ProfileEditBio onChange={handleBio} />
+					<ProfileEditAuth onChange={handleAuth} />
+				</div>
 				<ProfileEditButton onChange={handleSubmit} disabled={!validate} />
 			</Modal.Body>
 		</Modal>

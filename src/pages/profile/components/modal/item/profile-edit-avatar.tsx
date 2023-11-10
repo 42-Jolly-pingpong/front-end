@@ -1,8 +1,8 @@
 import { Avatar } from 'flowbite-react';
 import { useRecoilValue } from 'recoil';
 import { ChangeEvent, useState } from 'react';
-import { AiOutlineUpload } from 'react-icons/ai';
 import { userState } from 'ts/states/user-state';
+import { FiUpload } from 'react-icons/fi';
 
 interface AvatarProps {
 	onUpload: (path: string) => void;
@@ -46,24 +46,16 @@ const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 	};
 
 	return (
-		<>
+		<div className='flex-flex-col'>
 			<Avatar img={avatarImage || user?.avatarPath || ''} rounded size='lg' />
 			<label
-				className='flex justify-center items-center pt-2'
+				className='flex items-center justify-center gap-2 py-2 hover:cursor-pointer'
 				htmlFor='input-file'
 			>
-				<div className='hover:cursor-pointer'>
-					<AiOutlineUpload size='20' />
-				</div>
-				{fileChange ? (
-					<div className='pl-2 text-xs font-medium hover:cursor-pointer'>
-						다시 선택하기
-					</div>
-				) : (
-					<div className='pl-2 text-xs font-medium hover:cursor-pointer'>
-						이미지 업로드
-					</div>
-				)}
+				<FiUpload size='16' />
+				<span className='text-xs font-medium'>
+					{fileChange ? '다시 선택하기' : '이미지 업로드'}
+				</span>
 				<input
 					type='file'
 					id='input-file'
@@ -72,7 +64,7 @@ const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 					onChange={handleUpload}
 				/>
 			</label>
-		</>
+		</div>
 	);
 };
 

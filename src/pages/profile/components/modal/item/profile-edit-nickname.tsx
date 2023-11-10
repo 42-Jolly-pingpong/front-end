@@ -46,19 +46,19 @@ const ProfileEditNickname: React.FC<NicknameProps> = ({ onChange }) => {
 	};
 
 	return (
-		<div className='flex flex-row mt-5'>
-			<div className='font-bold text-sm w-16 mx-6'>닉네임</div>
-			<div className='flex flex-col w-full'>
-				<TextInput
-					type='search'
-					placeholder={user?.nickname}
-					defaultValue={user?.nickname}
-					color={errorMessage ? 'failure' : nickname ? 'success' : undefined}
-					onChange={validateNickname}
-					helperText={errorMessage}
-					required
-				/>
-			</div>
+		<div className='flex gap-6'>
+			<div className='font-bold text-sm w-16'>닉네임</div>
+			<TextInput
+				type='search'
+				placeholder={user?.nickname}
+				defaultValue={user?.nickname}
+				// TODO 처음 들어왔을 때 success로 뜨는 문제 해결하기
+				color={errorMessage ? 'failure' : nickname ? 'success' : undefined}
+				onChange={validateNickname}
+				helperText={errorMessage}
+				required
+				className='w-full'
+			/>
 		</div>
 	);
 };
