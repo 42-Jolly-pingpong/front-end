@@ -39,7 +39,8 @@ const SetChatRoomName = (props: {
 	};
 
 	const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setNameLength(80 - e.target.value.length);
+		const currLength = 80 - e.target.value.length;
+		setNameLength(currLength < 0 ? 0 : currLength);
 	};
 
 	return (

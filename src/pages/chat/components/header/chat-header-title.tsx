@@ -1,3 +1,4 @@
+import useChangeSidebar from 'hooks/use-change-sidebar';
 import AvatarStatus from 'pages/chat/components/avatar-status';
 import ChannelIcon from 'pages/chat/components/channel-icon';
 import ChatInfoButton from 'pages/chat/components/header/chat-info-button';
@@ -9,17 +10,25 @@ import { chatState } from 'ts/states/chat-state';
 
 const ChatHeaderTitle = () => {
 	const chatRoom = useRecoilValue(chatState).chatRoom;
+	const setChatSidebar = useChangeSidebar('profile');
+
 	const headerForDm = () => {
 		if (chatRoom === null) {
 			return;
 		}
 		const chatMate = (chatRoom as Dm).chatMate;
 
+		const onClickChatMate = () => {
+			setChatSidebar(chatMate);
+		};
+
 		return (
-			<div className='relative flex items-center h-12 ml-6'>
-				<AvatarStatus user={chatMate} />
-				<div className='ml-2 font-bold'>{chatMate.nickname}</div>
-			</div>
+			<button onClick={onClickChatMate}>
+				<div className='relative flex items-center h-12 ml-6'>
+					<AvatarStatus user={chatMate} />
+					<div className='ml-2 font-bold'>{chatMate.nickname}</div>
+				</div>
+			</button>
 		);
 	};
 

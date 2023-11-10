@@ -1,6 +1,6 @@
 import { Button, Dropdown } from 'flowbite-react';
 import ChatSidebarHeader from 'pages/chat/components/sidebar/chat-sidebar-header';
-import UserImg from 'pages/chat/components/user-img';
+import BigUserImg from 'pages/chat/components/big-user-img';
 import { RiMessage2Line } from 'react-icons/ri';
 import { MdOutlineRocketLaunch } from 'react-icons/md';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
@@ -241,7 +241,7 @@ const ChatSidebarProfile = () => {
 			<ChatSidebarHeader title='프로필' />
 			<div className='grow'>
 				<div className='flex justify-center my-3'>
-					<UserImg src={otherUser.avatarPath} size='64' />
+					<BigUserImg src={otherUser.avatarPath} />
 				</div>
 				{profileField()}
 				{contactField()}
