@@ -17,13 +17,13 @@ const ProfileSocialMine = () => {
 	};
 
 	return (
-		<div className='flex items-center min-w-80 min-h-8'>
+		<>
 			<div className='text-xl text-center pr-5'>{user?.nickname}</div>
 			<GrayButton size='xs' onClick={handleClick}>
 				<div className='font-bold'>프로필 편집</div>
 			</GrayButton>
 			<ProfileEditModal show={modalState} onClose={handleClose} />
-		</div>
+		</>
 	);
 };
 

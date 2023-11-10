@@ -42,7 +42,7 @@ const Profile = () => {
 		return;
 	}
 	return (
-		<div className='flex flex-col items-center'>
+		<div className='flex flex-col items-center gap-y-11'>
 			<ProfileHeader />
 			<ProfileTab />
 		</div>

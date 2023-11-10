@@ -6,7 +6,7 @@ const ProfileBadge = () => {
 	const profile = useRecoilValue(profileState);
 
 	return (
-		<div className=''>
+		<div className='px-8'>
 			<Avatar img={profile.user?.avatarPath || ''} size='xl' rounded />
 		</div>
 	);

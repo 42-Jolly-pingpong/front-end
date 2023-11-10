@@ -9,20 +9,29 @@ const ProfileGameStat: React.FC<GameStatProps> = ({
 	winMatch,
 	loseMatch,
 }) => {
+	const stats = [
+		{
+			title: '경기',
+			value: match,
+		},
+		{
+			title: '승리',
+			value: winMatch,
+		},
+		{
+			title: '패배',
+			value: loseMatch,
+		},
+	];
+
 	return (
-		<div className='flex justify-start py-5'>
-			<div className='flex text-sm'>
-				<div className='font-bold pr-1'>{match}</div>
-				<div>경기</div>
-			</div>
-			<div className='flex text-sm px-10'>
-				<div className='font-bold pr-1'>{winMatch}</div>
-				<div>승리</div>
-			</div>
-			<div className='flex text-sm'>
-				<div className='font-bold pr-1'>{loseMatch}</div>
-				<div>패배</div>
-			</div>
+		<div className='flex justify-start items-center gap-5'>
+			{stats.map((stat, index) => (
+				<div key={index} className={`flex text-sm gap-1 flex-1`}>
+					<div className='font-bold'>{stat.value}</div>
+					{stat.title}
+				</div>
+			))}
 		</div>
 	);
 };

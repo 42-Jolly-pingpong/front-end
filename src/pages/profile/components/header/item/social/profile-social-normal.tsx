@@ -70,7 +70,7 @@ const ProfileSocialNormal = () => {
 	}, [friendsState]);
 
 	return (
-		<div className='flex items-center h-9'>
+		<>
 			<div className='text-xl text-center pr-5'>{profile.user?.nickname}</div>
 			<ProfileHeaderSocialButton relation={relation} onClick={handleClick} />
 			<ProfileFriendModal
@@ -81,11 +81,11 @@ const ProfileSocialNormal = () => {
 			/>
 			<div className='pr-2' />
 			<GrayButton size='xs' onClick={handleMessage}>
-				<div>메시지</div>
+				메시지
 			</GrayButton>
 			<div className='pl-2' />
 			{dropdownState && <ProfileSocialDropdown />}
-		</div>
+		</>
 	);
 };
 
