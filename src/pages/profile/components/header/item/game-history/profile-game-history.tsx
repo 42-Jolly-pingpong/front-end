@@ -10,7 +10,7 @@ const ProfileGameHistory = () => {
 	if (
 		user === null ||
 		profile.type === ProfileStatus.UNKNOWN ||
-		profile.type === ProfileStatus.BLOCKEDBYOTHER
+		profile.type === ProfileStatus.BLOCKED_BY_OTHER
 	) {
 		return <ProfileGameStat match={0} winMatch={0} loseMatch={0} />;
 	} else {

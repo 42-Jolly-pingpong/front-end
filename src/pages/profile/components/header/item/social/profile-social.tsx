@@ -12,7 +12,7 @@ const ProfileSocial = () => {
 			{profile.type === ProfileStatus.MINE ? (
 				<ProfileSocialMine />
 			) : profile.type === ProfileStatus.UNKNOWN ||
-			  profile.type === ProfileStatus.BLOCKEDBYOTHER ? (
+			  profile.type === ProfileStatus.BLOCKED_BY_OTHER ? (
 				<></>
 			) : (
 				<ProfileSocialNormal />

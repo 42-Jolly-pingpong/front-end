@@ -8,7 +8,7 @@ const ProfileBioNoraml = () => {
 	return (
 		<div className='flex flex-col items-start gap-3'>
 			<div className='font-bold text-sm'>{user?.intraId}</div>
-			{user?.bio ? <div className='text-sm'>{user?.bio}</div> : <></>}
+			{user?.bio && <div className='text-sm'>{user?.bio}</div>}
 		</div>
 	);
 };

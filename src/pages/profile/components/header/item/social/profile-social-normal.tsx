@@ -27,7 +27,7 @@ const ProfileSocialNormal = () => {
 	const handleClick = async () => {
 		if (relation === ProfileStatus.UNDEFINED) {
 			await updateFriend(profile.user!.id);
-			setRelation(ProfileStatus.REQUESTEDBYME);
+			setRelation(ProfileStatus.REQUESTED_BY_ME);
 		} else {
 			setModalState(true);
 		}
@@ -35,13 +35,13 @@ const ProfileSocialNormal = () => {
 
 	const handleRequest = async () => {
 		switch (relation) {
-			case ProfileStatus.BLOCKEDBYME:
+			case ProfileStatus.BLOCKED_BY_ME:
 				await deleteBlockedFriend(profile.user!.id);
 				break;
 			case ProfileStatus.FRIEND:
 				await deleteFriend(profile.user!.id);
 				break;
-			case ProfileStatus.REQUESTEDBYME:
+			case ProfileStatus.REQUESTED_BY_ME:
 				await denyFriendRequest(profile.user!.id);
 				break;
 		}
@@ -62,7 +62,7 @@ const ProfileSocialNormal = () => {
 		const fetchRelation = async () => {
 			const relation = await getFriendRelation(profile.user!.id);
 			setRelation(relation);
-			if (relation === ProfileStatus.BLOCKEDBYME) {
+			if (relation === ProfileStatus.BLOCKED_BY_ME) {
 				setDropdownState(false);
 			}
 		};

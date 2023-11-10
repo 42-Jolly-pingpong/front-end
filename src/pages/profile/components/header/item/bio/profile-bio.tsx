@@ -11,7 +11,7 @@ const ProfileBio = () => {
 	if (
 		user === null ||
 		profile.type === ProfileStatus.UNKNOWN ||
-		profile.type === ProfileStatus.BLOCKEDBYOTHER
+		profile.type === ProfileStatus.BLOCKED_BY_OTHER
 	) {
 		return <ProfileBioUnknown />;
 	}
