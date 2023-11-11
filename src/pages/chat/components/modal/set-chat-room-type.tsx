@@ -144,7 +144,7 @@ const SetChatRoomType = (props: {
 	};
 
 	return (
-		<form onSubmit={onSubmitChannel}>
+		<form onSubmit={onSubmitChannel} name='chat-type'>
 			<h3 className='mb-4'>채널 타입</h3>
 			<fieldset className='flex max-w-md flex-col gap-4' id='radio'>
 				{radioButton('public', 'PUBLIC', '공개 - 누구나', '')}

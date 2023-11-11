@@ -44,7 +44,7 @@ const SetChatRoomName = (props: {
 
 	return (
 		<div className='relative'>
-			<form onSubmit={onSubmitName}>
+			<form onSubmit={onSubmitName} name='chat-name'>
 				<h3>이름</h3>
 				<TextInput
 					ref={inputRef}
