@@ -28,7 +28,6 @@ const Layout = () => {
 
 	const initData = async () => {
 		const newUser = await getUserByJwt();
-		// console.log(newUser);
 		if (newUser) {
 			if (Object.keys(newUser).length === 0) {
 				await userSignOut();

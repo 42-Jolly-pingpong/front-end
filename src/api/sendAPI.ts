@@ -9,12 +9,7 @@ interface ApiOptions {
 
 const BASE_URL = 'http://localhost:3000';
 
-const sendAPI = async ({
-	method,
-	url,
-	headers,
-	body,
-}: ApiOptions): Promise<any> => {
+const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 	const token = getJwtValue();
 
 	if (token) {

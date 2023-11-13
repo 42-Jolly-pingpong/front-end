@@ -10,7 +10,7 @@ const useFetch = () => {
 	 * @param url start with '/'
 	 * @param body
 	 */
-	const sendMsg = (method: string, url: string, body: any = null) => {
+	const sendMsg = (method: string, url: string, body = null) => {
 		if (body === null) {
 			return fetch(baseUrl + url, {
 				method,

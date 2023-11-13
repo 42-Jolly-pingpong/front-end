@@ -7,6 +7,7 @@ import Game from 'pages/game/game';
 import SignUp from 'pages/sign-up/sign-up';
 import Profile from 'pages/profile/profile';
 import Page404 from 'pages/error/page-404';
+import Otp from 'pages/otp/otp';
 
 function App() {
 	return (
@@ -16,8 +17,9 @@ function App() {
 					<Route element={<Layout />}>
 						<Route path='/' element={<Root />} index />
 						<Route path='/profile/:nickname' element={<Profile />} />
-						<Route path='/sign-up' element={<SignUp />} />
 					</Route>
+					<Route path='/sign-up' element={<SignUp />} />
+					<Route path='/opt' element={<Otp />} />
 					<Route path='/chat' element={<Chat />} />
 					<Route path='/game' element={<Game />} />
 					<Route path='*' element={<Page404 />} />

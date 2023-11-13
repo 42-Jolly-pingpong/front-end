@@ -1,12 +1,13 @@
 import sendAPI from 'api/sendAPI';
 import YellowButton from 'components/button/yellow-button';
 import { Modal } from 'flowbite-react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
+import User from 'ts/interfaces/user.model';
 import { profileAuthModalState } from 'ts/states/profile/profile-modal-state';
 import { userState } from 'ts/states/user-state';
 
 const ProfileAuthModal = () => {
-	const user = useRecoilValue(userState);
+	const [user, setUser] = useRecoilState(userState);
 	const [authModal, setAuthModal] = useRecoilState(profileAuthModalState);
 
 	const handleClose = () => {
@@ -14,16 +15,13 @@ const ProfileAuthModal = () => {
 	};
 
 	const handleComplete = async () => {
-		const data = await sendAPI({
+		await sendAPI({
 			method: 'POST',
 			url: `/user/${user?.id}/otp`,
-			body: {
-				secret: authModal.secret,
-				qr_code: authModal.qr_code,
-			},
+			body: { secret: authModal.secret },
 		});
-		console.log(data);
 		setAuthModal({ show: false, secret: '', qr_code: '' });
+		setUser({ ...user, auth: true } as User);
 	};
 
 	return (
