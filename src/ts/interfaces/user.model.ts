@@ -5,13 +5,14 @@ interface User {
 	intraId: string;
 	email: string;
 	nickname: string;
-	avatarPath: string;
+	avatarPath?: string;
 	status: UserStatus;
 	auth: boolean;
-	bio: string;
+	bio?: string;
 	winCount: number;
 	loseCount: number;
 	isLeave: boolean;
+	secret?: string;
 }
 
 export default User;

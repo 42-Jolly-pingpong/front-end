@@ -3,19 +3,19 @@ import BannerIcon from 'components/banner/item/banner-icon';
 import BannerMessage from 'components/banner/item/banner-message';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
-import { gameWaitState } from 'ts/states/game/game-wait-state';
-import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
+import { gameModalState } from 'ts/states/game/game-wait-state';
+import { GameModalStatus } from 'ts/enums/game/game-wait.enum';
 import { NO_MATCH_MSG } from 'constants/messages';
 import YellowButton from 'components/button/yellow-button';
 import CancelButton from 'components/button/cancel-button';
 
 const NoMatchBanner = () => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
-	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
+	const [gameWait, setGameWait] = useRecoilState(gameModalState);
 
 	const handleReMatch = () => {
 		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
-		setGameWait({ ...gameWait, status: GameWaitStatus.SEARCH });
+		setGameWait({ ...gameWait, status: GameModalStatus.SEARCH });
 	};
 
 	const handleCancel = () => {

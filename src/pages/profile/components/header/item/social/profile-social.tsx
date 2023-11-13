@@ -3,21 +3,19 @@ import { profileState } from 'ts/states/profile/profile-state';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 import ProfileSocialMine from 'pages/profile/components/header/item/social/profile-social-mine';
 import ProfileSocialNormal from 'pages/profile/components/header/item/social/profile-social-normal';
-import ProfileSocialUnknown from 'pages/profile/components/header/item/social/profile-social-unknown';
 
 const ProfileSocial = () => {
 	const profile = useRecoilValue(profileState);
 
-	if (profile.type === ProfileStatus.MINE) {
-		return <ProfileSocialMine />;
-	} else if (
-		profile.type === ProfileStatus.UNKNOWN ||
-		profile.type === ProfileStatus.BLOCKEDBYOTHER
-	) {
-		return <ProfileSocialUnknown />;
-	} else {
-		return <ProfileSocialNormal />;
-	}
+	return (
+		<div className='flex items-center w-72'>
+			{profile.type === ProfileStatus.MINE && <ProfileSocialMine />}
+			{(profile.type === ProfileStatus.UNKNOWN ||
+				profile.type === ProfileStatus.BLOCKED_BY_OTHER) && (
+				<ProfileSocialNormal />
+			)}
+		</div>
+	);
 };
 
 export default ProfileSocial;

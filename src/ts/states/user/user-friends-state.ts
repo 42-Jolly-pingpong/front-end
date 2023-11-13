@@ -2,12 +2,12 @@ import { atom } from 'recoil';
 import User from 'ts/interfaces/user.model';
 
 export type UserFriendsType = {
-	friends: User[] | null;
-	requestFriends: User[] | null;
-	blockedFriends: User[] | null;
+	friends: User[];
+	requestFriends: User[];
+	blockedFriends: User[];
 };
 
 export const userFriendsState = atom<UserFriendsType>({
 	key: 'userFriendsState',
-	default: { friends: null, requestFriends: null, blockedFriends: null },
+	default: { friends: [], requestFriends: [], blockedFriends: [] },
 });

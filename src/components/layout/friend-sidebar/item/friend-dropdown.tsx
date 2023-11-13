@@ -3,9 +3,9 @@ import { Dropdown } from 'flowbite-react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import User from 'ts/interfaces/user.model';
 import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-state';
-import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
+import { gameModalState } from 'ts/states/game/game-wait-state';
 
 interface FriendInfoProps {
 	user: User;
@@ -13,9 +13,8 @@ interface FriendInfoProps {
 
 const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 	const [, setModalState] = useRecoilState(friendSidebarModalState);
-	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
-	const setOpponentUserInfo = useSetRecoilState(opponentInfoState)
-
+	const [gameModal, setGameModal] = useRecoilState(gameModalState);
+	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 
 	const handleUnfriend = async () => {
 		console.log('unfriend가 클릭되었음');
@@ -28,8 +27,8 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 	};
 
 	const handleInviteGame = () => {
-		setOpponentUserInfo(user)
-		setGameModeSelect(true);
+		setOpponentUserInfo(user);
+		setGameModal({ ...gameModal, show: true, invite: true });
 	};
 
 	return (

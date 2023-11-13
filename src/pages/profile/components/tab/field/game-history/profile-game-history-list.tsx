@@ -25,7 +25,7 @@ const ProfileGameHistoryList = () => {
 
 	useEffect(() => {
 		if (
-			profileType !== ProfileStatus.BLOCKEDBYOTHER &&
+			profileType !== ProfileStatus.BLOCKED_BY_OTHER &&
 			profileType !== ProfileStatus.UNKNOWN
 		) {
 			fetchHistoryList();

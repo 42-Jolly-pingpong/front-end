@@ -26,7 +26,7 @@ const ProfileFriendListNormal = () => {
 
 	const fetchFriends = async () => {
 		if (
-			profileType !== ProfileStatus.BLOCKEDBYOTHER &&
+			profileType !== ProfileStatus.BLOCKED_BY_OTHER &&
 			profileType !== ProfileStatus.UNKNOWN
 		) {
 			const fetchedFriendList = await getFriendList(profile.user!.id);
@@ -59,7 +59,7 @@ const ProfileFriendListNormal = () => {
 
 	const handleRelation = async (relation: ProfileStatus, otherId: number) => {
 		switch (relation) {
-			case ProfileStatus.REQUESTEDBYME:
+			case ProfileStatus.REQUESTED_BY_ME:
 				await denyFriendRequest(otherId);
 				break;
 			case ProfileStatus.UNDEFINED:
@@ -68,7 +68,7 @@ const ProfileFriendListNormal = () => {
 			case ProfileStatus.FRIEND:
 				await deleteFriend(otherId);
 				break;
-			case ProfileStatus.BLOCKEDBYME:
+			case ProfileStatus.BLOCKED_BY_ME:
 				await deleteBlockedFriend(otherId);
 				break;
 			default:
@@ -79,7 +79,7 @@ const ProfileFriendListNormal = () => {
 
 	if (
 		profileType === ProfileStatus.UNKNOWN ||
-		profileType === ProfileStatus.BLOCKEDBYOTHER ||
+		profileType === ProfileStatus.BLOCKED_BY_OTHER ||
 		friendList.length === 0
 	) {
 		return <ProfileNoFriend />;

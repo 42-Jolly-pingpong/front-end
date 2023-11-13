@@ -25,21 +25,19 @@ const ProfileEditBio: React.FC<BioProps> = ({ onChange }) => {
 	};
 
 	return (
-		<>
-			<div className='flex flex-row mt-5'>
-				<div className='font-bold text-sm w-16 mx-6'>소개글 </div>
+		<div className='flex gap-5'>
+			<div className='font-bold text-sm w-16'>소개글</div>
+			<div className='flex flex-col w-full gap-3'>
 				<Textarea
 					placeholder={user?.bio || '여기에 본인을 설명해주세요!'}
-					className='w-full'
 					rows={6}
 					value={bio}
 					onChange={handleInputChange}
+					className='w-full'
 				/>
+				<div className='flex text-xs text-gray-500'>{bio.length}/150</div>
 			</div>
-			<div className='flex text-xs text-gray-500 mt-3 ml-24'>
-				{bio.length}/150
-			</div>
-		</>
+		</div>
 	);
 };
 

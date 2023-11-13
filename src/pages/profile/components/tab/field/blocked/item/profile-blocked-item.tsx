@@ -36,7 +36,7 @@ const ProfileBlockedItem: React.FC<blockedProps> = ({ friend, onUnblock }) => {
 			</GrayButton>
 			<ProfileFriendModal
 				show={modalState}
-				relation={ProfileStatus.BLOCKEDBYME}
+				relation={ProfileStatus.BLOCKED_BY_ME}
 				onRequest={handleUnblocked}
 				onClose={handleClose}
 			/>

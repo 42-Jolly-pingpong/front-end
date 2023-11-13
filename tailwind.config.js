@@ -76,6 +76,7 @@ module.exports = {
 		// eslint-disable-next-line no-undef
 		require('@tailwindcss/typography'),
 		require('flowbite/plugin'),
+		'@trivago/prettier-plugin-sort-imports',
 		'prettier-plugin-tailwindcss',
 	],
 };

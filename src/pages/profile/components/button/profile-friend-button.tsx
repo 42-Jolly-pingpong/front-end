@@ -14,7 +14,7 @@ const ProfileFriendButton: React.FC<FriendButtonProps> = ({
 	switch (relation) {
 		case ProfileStatus.MINE || ProfileStatus.FRIEND:
 			return;
-		case ProfileStatus.REQUESTEDBYME:
+		case ProfileStatus.REQUESTED_BY_ME:
 			return (
 				<GrayButton size='xs' onClick={onClick}>
 					<div>요청됨</div>

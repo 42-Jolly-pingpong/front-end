@@ -9,7 +9,7 @@ export type GameBannerType = {
 
 export const gameBannerState = atom<GameBannerType>({
 	key: 'gameBannerState',
-	default: { type: GameBanner.NONE, mode: GameMode.CLASSIC },
+	default: { type: GameBanner.NONE, mode: GameMode.NORMAL },
 });
 
 export const gameBannerSelector = selector({

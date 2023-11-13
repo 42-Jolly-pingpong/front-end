@@ -1,3 +1,5 @@
+import { getJwtValue } from 'components/utils/cookieUtils';
+
 interface ApiOptions {
 	method: string;
 	url: string;
@@ -7,19 +9,23 @@ interface ApiOptions {
 
 const BASE_URL = 'http://localhost:3000';
 
-const sendAPI = async ({
-	method,
-	url,
-	headers,
-	body,
-}: ApiOptions): Promise<any> => {
+const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
+	const token = getJwtValue();
+
+	if (token) {
+		headers = {
+			...headers,
+			Authorization: `Bearer ${token}`,
+		};
+	}
+
 	const response = await fetch(`${BASE_URL}${url}`, {
 		method,
 		credentials: 'include',
 		headers: {
-			'Content-Type': 'application/json',
-			origin: 'http://localhost:5173',
 			...headers,
+			'Content-Type': 'application/json;charset=UTF-8',
+			origin: 'http://localhost:5173',
 		},
 		body: body ? JSON.stringify(body) : undefined,
 	});
@@ -27,7 +33,7 @@ const sendAPI = async ({
 	if (response.ok) {
 		const data = await response.text();
 		try {
-			return data ? JSON.parse(data) : {};
+			return JSON.parse(data);
 		} catch (e) {
 			return data;
 		}

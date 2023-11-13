@@ -16,3 +16,12 @@ export const profileModalSelector = selector({
 		set(profileModalState, value);
 	},
 });
+
+export const profileAuthModalState = atom({
+	key: 'profileAuthModalState',
+	default: {
+		show: false,
+		secret: '',
+		qr_code: '',
+	},
+});

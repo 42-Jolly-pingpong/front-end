@@ -43,11 +43,11 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 	};
 
 	return (
-		<div className="flex flex-col gap-y-2">
+		<div className='flex flex-col gap-y-2'>
 			<Label htmlFor='nickname' value='닉네임' />
 			<TextInput
 				id='nickname'
-				type='search'
+				type='text'
 				color={errorMessage ? 'failure' : nickname ? 'success' : undefined}
 				helperText={errorMessage}
 				onChange={validateNickname}

@@ -11,13 +11,13 @@ interface NicknameProps {
 const ProfileEditNickname: React.FC<NicknameProps> = ({ onChange }) => {
 	const user = useRecoilValue(userState);
 	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-	const [nickname, setNickname] = useState<string>(user!.nickname);
+	const [nickname, setNickname] = useState<string>('');
 	const [errorMessage, setErrorMessage] = useState<string>('');
 
 	const validateNickname = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChange('');
 		const nickname = e.target.value;
-		setNickname(nickname);
+		if (nickname === '') setNickname(nickname);
 
 		if (timeoutId) {
 			clearTimeout(timeoutId);
@@ -46,12 +46,11 @@ const ProfileEditNickname: React.FC<NicknameProps> = ({ onChange }) => {
 	};
 
 	return (
-		<div className='flex flex-row mt-5'>
-			<div className='font-bold text-sm w-16 mx-6'>닉네임</div>
+		<div className='flex gap-6'>
+			<div className='font-bold text-sm w-16'>닉네임</div>
 			<div className='flex flex-col w-full'>
 				<TextInput
 					type='search'
-					placeholder={user?.nickname}
 					defaultValue={user?.nickname}
 					color={errorMessage ? 'failure' : nickname ? 'success' : undefined}
 					onChange={validateNickname}

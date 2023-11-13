@@ -6,9 +6,9 @@ const ProfileBioNoraml = () => {
 	const user = profile.user;
 
 	return (
-		<div className='flex flex-col items-start'>
-			<div className='font-bold pb-2 text-sm'>{user?.intraId}</div>
-			<div className='min-h-6'>{user?.bio}</div>
+		<div className='flex flex-col items-start gap-3'>
+			<div className='font-bold text-sm'>{user?.intraId}</div>
+			{user?.bio && <div className='text-sm'>{user?.bio}</div>}
 		</div>
 	);
 };

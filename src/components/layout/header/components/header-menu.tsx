@@ -7,28 +7,35 @@ const HeaderMenu = () => {
 	const [friendSidebar, setFriendSidebarState] =
 		useRecoilState(friendSidebarState);
 
-	const handleChat = () => {
-		navigate('/chat');
-	};
-
-	const handleFriendSidebar = async () => {
-		setFriendSidebarState(!friendSidebar);
-	};
+	const menus = [
+		{
+			title: 'chat',
+			clickHandler: () => {
+				navigate('/chat');
+			},
+		},
+		{
+			title: 'friends',
+			clickHandler: () => {
+				setFriendSidebarState(!friendSidebar);
+			},
+		},
+	];
 
 	return (
-		<div className='flex items-center'>
-			<button
-				className='font-medium text-yellow-300 border-gray-200 border-l-2 pl-4'
-				onClick={handleChat}
-			>
-				Chats
-			</button>
-			<button
-				className='font-medium text-yellow-300 pl-4'
-				onClick={handleFriendSidebar}
-			>
-				friends
-			</button>
+		<div className='flex items-center gap-4'>
+			{menus.map(({ title, clickHandler }) => (
+				<a
+					key={title}
+					className='capitalize text-sm font-medium text-yellow-300 cursor-pointer'
+					data-drawer-show='drawer-right-example'
+					data-drawer-placement='right'
+					aria-controls='drawer-right-example'
+					onClick={clickHandler}
+				>
+					{title}
+				</a>
+			))}
 		</div>
 	);
 };

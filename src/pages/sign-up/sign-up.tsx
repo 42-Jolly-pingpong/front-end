@@ -31,7 +31,11 @@ const SignUp = () => {
 	return (
 		<div className='flex justify-center items-center h-screen'>
 			<Card className='w-96'>
-				<form className='flex flex-col gap-y-6' onSubmit={handleSubmit}>
+				<form
+					name='create-user'
+					className='flex flex-col gap-y-6'
+					onSubmit={handleSubmit}
+				>
 					<SignUpTitle />
 					<SignUpEmailInput />
 					<SignUpNicknameInput onChange={handleNickname} />

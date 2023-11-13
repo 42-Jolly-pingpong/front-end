@@ -1,5 +1,4 @@
 import sendAPI from 'api/sendAPI';
-import { getJwtValue } from 'components/utils/cookieUtils';
 import User from 'ts/interfaces/user.model';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
@@ -9,14 +8,9 @@ import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
 
 export const getFriendList = async (id: number): Promise<User[]> => {
 	try {
-		const token = getJwtValue();
-
 		const friendList = await sendAPI({
 			method: 'GET',
 			url: '/friends/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		return friendList;
 	} catch (e) {
@@ -27,14 +21,9 @@ export const getFriendList = async (id: number): Promise<User[]> => {
 
 export const updateFriend = async (id: number): Promise<void> => {
 	try {
-		const token = getJwtValue();
-
 		await sendAPI({
 			method: 'POST',
 			url: '/friends/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 	} catch (e) {
 		console.log(e);
@@ -43,14 +32,9 @@ export const updateFriend = async (id: number): Promise<void> => {
 
 export const deleteFriend = async (id: number): Promise<void> => {
 	try {
-		const token = getJwtValue();
-
 		await sendAPI({
 			method: 'DELETE',
 			url: '/friends/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 	} catch (e) {
 		console.log(e);
@@ -63,14 +47,9 @@ export const deleteFriend = async (id: number): Promise<void> => {
 
 export const getFriendRequestList = async (id: number): Promise<User[]> => {
 	try {
-		const token = getJwtValue();
-
 		const requestList = await sendAPI({
 			method: 'GET',
 			url: '/friends/request/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		return requestList;
 	} catch (e) {
@@ -81,14 +60,9 @@ export const getFriendRequestList = async (id: number): Promise<User[]> => {
 
 export const acceptFriendRequest = async (id: number): Promise<void> => {
 	try {
-		const token = getJwtValue();
-
 		await sendAPI({
 			method: 'POST',
 			url: '/friends/request/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 	} catch (e) {
 		console.log(e);
@@ -97,14 +71,9 @@ export const acceptFriendRequest = async (id: number): Promise<void> => {
 
 export const denyFriendRequest = async (id: number): Promise<void> => {
 	try {
-		const token = getJwtValue();
-
 		await sendAPI({
 			method: 'DELETE',
 			url: '/friends/request/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 	} catch (e) {
 		console.log(e);
@@ -117,14 +86,9 @@ export const denyFriendRequest = async (id: number): Promise<void> => {
 
 export const getBlockedList = async (id: number): Promise<User[]> => {
 	try {
-		const token = getJwtValue();
-
 		const blockedList = await sendAPI({
 			method: 'GET',
 			url: '/friends/blocked/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		return blockedList;
 	} catch (e) {
@@ -135,14 +99,9 @@ export const getBlockedList = async (id: number): Promise<User[]> => {
 
 export const addBlockedFriend = async (id: number): Promise<void> => {
 	try {
-		const token = getJwtValue();
-
 		await sendAPI({
 			method: 'POST',
 			url: '/friends/blocked/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 	} catch (e) {
 		console.log(e);
@@ -151,14 +110,9 @@ export const addBlockedFriend = async (id: number): Promise<void> => {
 
 export const deleteBlockedFriend = async (id: number): Promise<void> => {
 	try {
-		const token = getJwtValue();
-
 		await sendAPI({
 			method: 'DELETE',
 			url: '/friends/blocked/' + id,
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 	} catch (e) {
 		console.log(e);
@@ -171,14 +125,9 @@ export const deleteBlockedFriend = async (id: number): Promise<void> => {
 
 export const getFriendRelation = async (id: number): Promise<ProfileStatus> => {
 	try {
-		const token = getJwtValue();
-
 		const status = await sendAPI({
 			method: 'GET',
 			url: '/friends/' + id + '/state',
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		return status;
 	} catch (e) {
@@ -205,14 +154,9 @@ export const getFriendListBySearch = async (
 
 export const getFriendState = async (id: number): Promise<ProfileStatus> => {
 	try {
-		const token = getJwtValue();
-
 		const state: ProfileStatus = await sendAPI({
 			method: 'GET',
 			url: '/friends/' + id + '/state',
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
 		});
 		return state;
 	} catch (e) {
