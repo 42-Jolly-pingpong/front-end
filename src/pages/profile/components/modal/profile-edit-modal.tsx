@@ -10,6 +10,8 @@ import ProfileEditEmail from 'pages/profile/components/modal/item/profile-edit-e
 import ProfileEditAvatar from 'pages/profile/components/modal/item/profile-edit-avatar';
 import ProfileEditButton from 'pages/profile/components/modal/item/profile-edit-button';
 import ProfileEditNickname from 'pages/profile/components/modal/item/profile-edit-nickname';
+import sendAPI from 'api/sendAPI';
+import User from 'ts/interfaces/user.model';
 
 interface ModalProps {
 	show: boolean;
@@ -18,10 +20,9 @@ interface ModalProps {
 
 const ProfileEditModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const [user, setUserState] = useRecoilState(userState);
-	const userData: UpdateUserDto = user!;
-	const [validate, setValidate] = useState(true);
+	const [validate, setValidate] = useState(false);
 	const [profile, setProfile] = useRecoilState(profileState);
-	const [updateUserDto, setUpdateUserDto] = useState<UpdateUserDto>(userData);
+	const [updateUserDto, setUpdateUserDto] = useState<UpdateUserDto>(user!);
 
 	const handleUpload = (avatarPath: string) => {
 		setUpdateUserDto({ ...updateUserDto, avatarPath });
@@ -42,23 +43,21 @@ const ProfileEditModal: React.FC<ModalProps> = ({ show, onClose }) => {
 		}
 	};
 
-	/**
-	 *
-	 * 2차 인증 핸들링 영억 (./profile-edit-auth)
-	 * auth가 boolean에서 변할 수 있음 (레퍼런스 보니까 바뀌어야 함)
-	 */
-	const handleAuth = (auth: boolean) => {
-		// 지금은 항상 false를 반환하고 있음.
-		setUpdateUserDto({ ...updateUserDto, auth });
-		setValidate(true);
-	};
-
 	const handleSubmit = async () => {
 		console.log('이제 저장해야지');
 		// 1. updateUserDto를 백엔드 api에 넘겨 저장
-		//	-> src/api/user-api에 추가하면 됨(back-end에서 가드를 쓴다면, 헤더에 '꼭' 토큰 담아서 보내기. 다른 코드 참조)
+		await sendAPI({
+			method: 'PATCH',
+			url: `/user/${user?.id}`,
+			body: updateUserDto,
+		});
 		// 2. (recoil)userState update
+		setUserState({ ...user, ...updateUserDto } as User);
 		// 3. (recoil)profileState의 user update. type은 건드릴 거 없음.
+		setProfile({
+			...profile,
+			user: { ...profile.user, ...updateUserDto } as User,
+		});
 	};
 
 	return (
@@ -71,7 +70,7 @@ const ProfileEditModal: React.FC<ModalProps> = ({ show, onClose }) => {
 					<ProfileEditEmail />
 					<ProfileEditNickname onChange={handleNickname} />
 					<ProfileEditBio onChange={handleBio} />
-					<ProfileEditAuth onChange={handleAuth} />
+					<ProfileEditAuth />
 				</div>
 				<ProfileEditButton onChange={handleSubmit} disabled={!validate} />
 			</Modal.Body>
