@@ -17,6 +17,7 @@ import { GameInfoType, gameInfoState } from 'ts/states/game/game-info.state';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
 import GameModal from 'components/modal/game-modal';
+import { useLocation } from 'react-router-dom';
 
 const Layout = () => {
 	const setGameInfo = useSetRecoilState(gameInfoState);
@@ -25,6 +26,8 @@ const Layout = () => {
 	const setUserFriendsState = useSetRecoilState(userFriendsState);
 	const [, setUser] = useRecoilState(userState);
 	const [loading, setLoading] = useState(true);
+	const pathname = useLocation().pathname;
+	const hasLayout = pathname === '/chat' ? false : true;
 
 	const initData = async () => {
 		const newUser = await getUserByJwt();
@@ -66,9 +69,9 @@ const Layout = () => {
 	return (
 		<div className='flex flex-col h-screen'>
 			<Banner />
-			<Header />
+			{hasLayout && <Header />}
 			<Outlet />
-			<FriendSidebar />
+			{hasLayout && <FriendSidebar />}
 			<GameModal />
 		</div>
 	);

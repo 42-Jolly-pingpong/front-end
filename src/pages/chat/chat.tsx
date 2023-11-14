@@ -10,14 +10,22 @@ import useFetch from 'hooks/use-fetch';
 import { chatListState } from 'ts/states/chat-list.state';
 import HandleChatSocket from 'pages/chat/handle-chat-socket';
 import ChatAlertModel from 'pages/chat/chat-alert-modal';
+import useRedirectHome from 'hooks/use-redirect-home';
+import { getJwtValue } from 'components/utils/cookieUtils';
 
 const Chat = () => {
 	const hasChatSidebar =
 		useRecoilValue(chatSidebarState).status !== ChatSidebarStatus.CLOSE;
 	const setChatList = useSetRecoilState(chatListState);
 	const getData = useFetch();
+	const token = getJwtValue();
+
+	useRedirectHome();
 
 	useEffect(() => {
+		if (!token) {
+			return;
+		}
 		(async () => {
 			await getData('get', '/chat-rooms')
 				.then((res) => {
@@ -43,7 +51,7 @@ const Chat = () => {
 				})
 				.catch((err) => console.log('chat', err));
 		})();
-	}, []);
+	}, [token]);
 
 	return (
 		<div className='flex max-h-screen max-w-screen'>
