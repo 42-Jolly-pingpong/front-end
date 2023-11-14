@@ -11,21 +11,22 @@ import { useNavigate } from 'react-router-dom';
 import { gameResultState } from 'ts/states/game/game-result-state';
 
 const Game = () => {
-	const gameInfo = useRecoilValue(gameInfoState)
+	const gameInfo = useRecoilValue(gameInfoState);
 	const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
-	const [opponentInfo, setOpponentInfo] = useRecoilState(opponentInfoState)
+	const [opponentInfo, setOpponentInfo] = useRecoilState(opponentInfoState);
 	const [isGameStart, setIsGameStart] = useRecoilState(gameStartState);
-	const setGameResult = useSetRecoilState(gameResultState)
-	const navigate = useNavigate()
-	
+	const setGameResult = useSetRecoilState(gameResultState);
+	const navigate = useNavigate();
 
 	const getUser = async (id: number) => {
 		const json = await (
 			await fetch(
-				`http://localhost:3000/user/${id}`
+				`${
+					process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000'
+				}/user/${id}`
 			)
 		).json();
-		setOpponentInfo(json)
+		setOpponentInfo(json);
 	};
 
 	useEffect(() => {
@@ -36,7 +37,7 @@ const Game = () => {
 
 		socket.on('exitGame', () => {
 			setIsGameStart(false);
-		})
+		});
 
 		getUser(gameInfo.opponent);
 
@@ -47,9 +48,8 @@ const Game = () => {
 	}, []);
 
 	useEffect(() => {
-		if (!isGameStart)
-			navigate('/')
-	}, [isGameStart])
+		if (!isGameStart) navigate('/');
+	}, [isGameStart]);
 
 	return (
 		<div className='flex flex-col items-center bg-black  justify-center h-screen'>
