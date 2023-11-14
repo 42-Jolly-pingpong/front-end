@@ -234,11 +234,25 @@ const ChatSettingTap = () => {
 		);
 	};
 
-	const onClickDelete = () => {
+	const deleteChannel = () => {
 		chatSocket.emit('deleteChatRoom', { roomId: chat.id }, (status: number) => {
 			if (status !== 200) {
+				setChatAlertModal((pre) => ({ ...pre, status: false }));
 				setAlertModal();
+				return;
 			}
+			setChatAlertModal((pre) => ({ ...pre, status: false }));
+		});
+	};
+
+	const onClickDelete = () => {
+		setChatAlertModal({
+			status: true,
+			title: `${chat.roomName} 채널을 삭제하겠습니까?`,
+			subText: '채널이 영구적으로 삭제돼요.',
+			confirmButtonText: `삭제하기`,
+			exitButtonText: '취소',
+			onClickButton: deleteChannel,
 		});
 	};
 
