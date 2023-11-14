@@ -19,7 +19,7 @@ function App() {
 						<Route path='/profile/:nickname' element={<Profile />} />
 					</Route>
 					<Route path='/sign-up' element={<SignUp />} />
-					<Route path='/opt' element={<Otp />} />
+					<Route path='/otp' element={<Otp />} />
 					<Route path='/chat' element={<Chat />} />
 					<Route path='/game' element={<Game />} />
 					<Route path='*' element={<Page404 />} />
