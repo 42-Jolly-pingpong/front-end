@@ -9,11 +9,14 @@ const ProfileSocial = () => {
 
 	return (
 		<div className='flex items-center w-72'>
-			{profile.type === ProfileStatus.MINE && <ProfileSocialMine />}
-			{(profile.type === ProfileStatus.UNKNOWN ||
-				profile.type === ProfileStatus.BLOCKED_BY_OTHER) && (
+			{profile.type === ProfileStatus.MINE ? (
+				<ProfileSocialMine />
+			) : !(
+					profile.type === ProfileStatus.UNKNOWN ||
+					profile.type === ProfileStatus.BLOCKED_BY_OTHER
+			  ) ? (
 				<ProfileSocialNormal />
-			)}
+			) : null}
 		</div>
 	);
 };
