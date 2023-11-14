@@ -13,7 +13,7 @@ const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 		return <div className='border-t mb-3'></div>;
 	};
 
-	const onClickAvatar = () => {
+	const onClickUser = () => {
 		setChatSidebar(user as User);
 	};
 
@@ -24,12 +24,16 @@ const ChatItem = (props: { chat: Chat; hasTopBorder: boolean }) => {
 		<div>
 			{props.hasTopBorder && topBorder()}
 			<div className='flex items-start mb-2 mt-2'>
-				<button onClick={onClickAvatar} className='pt- min-w-12 h-12'>
+				<button onClick={onClickUser} className='pt- min-w-12 h-12'>
 					<Avatar img={user.avatarPath} />
 				</button>
 				<div className='ml-3'>
 					<div className='flex items-center'>
-						<div className='mr-1 font-bold text-sm'>{user.nickname}</div>
+						<button onClick={onClickUser}>
+							<div className='mr-1 font-bold text-sm hover:underline'>
+								{user.nickname}
+							</div>
+						</button>
 						<div className='ml-1'>
 							<ChatTime time={chat.sentTime} />
 						</div>
