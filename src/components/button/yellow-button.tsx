@@ -14,7 +14,7 @@ const YellowButton: React.FC<ButtonProps> = ({
 }) => {
 	return (
 		<Button
-			className='text-white bg-yellow-300 enabled:hover:bg-yellow-400 focus:ring-yellow-300'
+			className='text-white bg-primary-700 focus:ring-0 hover:enabled:bg-primary-800'
 			size={size}
 			onClick={onClick}
 		>

@@ -10,7 +10,7 @@ interface ButtonProps {
 const GrayButton: React.FC<ButtonProps> = ({ size, children, onClick }) => {
 	return (
 		<Button
-			className='text-black bg-gray-200 enabled:hover:bg-white focus:ring-0  border-gray-200 border-2'
+			className='text-gray-800 bg-gray-200 focus:ring-0 hover:enabled:bg-gray-100'
 			size={size}
 			onClick={onClick}
 		>
