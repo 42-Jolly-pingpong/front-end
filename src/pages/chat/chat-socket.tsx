@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
 
-export const chatSocket = io(`${process.env.REACT_APP_BASE_URL}/chat`, {
+export const chatSocket = io(`http://localhost:3000/chat`, {
 	autoConnect: false,
 });
