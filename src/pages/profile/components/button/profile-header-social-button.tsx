@@ -21,13 +21,13 @@ const ProfileHeaderSocialButton: React.FC<SocialButtonProps> = ({
 					친구
 				</GrayButton>
 			);
-		case ProfileStatus.REQUESTED_BY_ME:
+		case ProfileStatus.REQUESTEDBYME:
 			return (
 				<GrayButton size='xs' onClick={onClick}>
 					친구 요청됨
 				</GrayButton>
 			);
-		case ProfileStatus.REQUESTED_BY_OTHER:
+		case ProfileStatus.REQUESTEDBYOTHER:
 			return (
 				<Button
 					className='text-black bg-gray-200 enabled:hover:bg-gray-200 focus:ring-0  border-gray-200 border-2 cursor-not-allowed'
@@ -45,7 +45,7 @@ const ProfileHeaderSocialButton: React.FC<SocialButtonProps> = ({
 					</div>
 				</YellowButton>
 			);
-		case ProfileStatus.BLOCKED_BY_ME:
+		case ProfileStatus.BLOCKEDBYME:
 			return (
 				<RedButton size='xs' onClick={onClick}>
 					차단됨

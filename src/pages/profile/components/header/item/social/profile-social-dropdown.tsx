@@ -20,6 +20,7 @@ const ProfileSocialDropdown = () => {
 
 	const handleGame = () => {
 		// 여기에 게임 시작 모달 붙이기
+		alert('게임 시작');
 	};
 
 	const handleBlock = async () => {
