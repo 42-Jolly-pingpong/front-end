@@ -38,11 +38,11 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 				inline
 				label={
 					<HiEllipsisVertical
-						className='mr-2 hidden group-hover:block group-hover:bg-white rounded'
-						size='22'
+						className='hidden group-hover:block group-hover:bg-white rounded'
+						size='28'
 					/>
 				}
-				size='sm'
+				size='md'
 			>
 				<Dropdown.Item className='text-gray-700'>메시지 보내기</Dropdown.Item>
 				<Dropdown.Item className='text-gray-700' onClick={handleInviteGame}>

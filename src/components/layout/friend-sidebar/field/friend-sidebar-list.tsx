@@ -45,36 +45,34 @@ const FriendSidebarList = () => {
 		<div className='flex flex-col h-full border-t pt-2 overflow-y-auto'>
 			{requestFriends &&
 				requestFriends.map((requestFriend, index) => (
-					<div
-						className='flex justify-between h-12 items-center transition hover:bg-gray-200 mb-2 group'
-						key={index}
-					>
-						<FriendInfo user={requestFriend} />
-						<div className='flex'>
-							<YellowButton
-								size='xs'
-								onClick={() => handleAccept(requestFriend.id)}
-							>
-								확인
-							</YellowButton>
-							<div className='px-1' />
-							<GrayButton
-								size='xs'
-								onClick={() => handleDeny(requestFriend.id)}
-							>
-								삭제
-							</GrayButton>
+					<div className='hover:bg-gray-200 group' key={index}>
+						<div className='flex justify-between items-center mx-4 my-3'>
+							<FriendInfo user={requestFriend} />
+							<div className='flex'>
+								<YellowButton
+									size='xs'
+									onClick={() => handleAccept(requestFriend.id)}
+								>
+									확인
+								</YellowButton>
+								<div className='px-1' />
+								<GrayButton
+									size='xs'
+									onClick={() => handleDeny(requestFriend.id)}
+								>
+									삭제
+								</GrayButton>
+							</div>
 						</div>
 					</div>
 				))}
 			{friends &&
 				friends.map((friend, index) => (
-					<div
-						className='flex justify-between h-12 items-center transition hover:bg-gray-200 mb-2 group'
-						key={index}
-					>
-						<FriendInfo user={friend} />
-						<FriendDropdown user={friend} />
+					<div className='hover:bg-gray-200 group' key={index}>
+						<div className='flex justify-between items-center mx-4 my-3'>
+							<FriendInfo user={friend} />
+							<FriendDropdown user={friend} />
+						</div>
 					</div>
 				))}
 		</div>
