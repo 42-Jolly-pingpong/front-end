@@ -9,6 +9,7 @@ const ChatHeaderSearch = () => {
 	const friendList = useRecoilValue(userFriendsState).friends as User[];
 	const [searchedFriendList, setSearchedFriendList] = useState<User[]>([]);
 	const [showPad, setShowPad] = useState<boolean>(true);
+	const [isPadClicked, setIsPadClicked] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -36,13 +37,13 @@ const ChatHeaderSearch = () => {
 	};
 
 	const onBlurInput = () => {
-		setShowPad(false);
+		if (!isPadClicked) setShowPad(false);
 	};
 
-	const input = () => {
+	const searchInput = () => {
 		return (
 			<div
-				className='flex items-center w-full h-12'
+				className='flex items-center w-full h-12 relative'
 				onFocus={onFocusInput}
 				onBlur={onBlurInput}
 			>
@@ -55,32 +56,42 @@ const ChatHeaderSearch = () => {
 					value={inputContent}
 					onChange={onChangeInput}
 				/>
+				<div className=''>{showPad ? searchedPad() : null}</div>
 			</div>
 		);
 	};
 
+	const onMouseEnterPad = () => {
+		setIsPadClicked(true);
+	};
+
+	const onMouseLeavePad = () => {
+		setIsPadClicked(false);
+	};
+
 	const searchedPad = () => {
-		const location = 'absolute -top-4 left-9';
+		const location = 'absolute top-8 left-9';
 		const commonStyle = 'm-2 bg-white border rounded-lg chat-pad';
 
-		if (searchedFriendList.length === 0) {
-			return (
-				<div className={`${location} p-3 text-gray-500 ${commonStyle}`}>
-					{friendList.length === 0
-						? `친구가 존재하지 않습니다.`
-						: `'${inputContent}'가 포함된 친구가 존재하지 않습니다.`}
-				</div>
-			);
-		}
 		return (
-			<div className={`${location} py-3 overflow-y-auto ${commonStyle}`}>
-				{searchedFriendList.map((friend, id) => (
-					<DmSearchedItem
-						friend={friend}
-						isTheLast={searchedFriendList.length - 1 === id}
-						key={id}
-					/>
-				))}
+			<div onMouseEnter={onMouseEnterPad} onMouseLeave={onMouseLeavePad}>
+				{searchedFriendList.length === 0 ? (
+					<div className={`${location} p-3 text-gray-500 ${commonStyle}`}>
+						{friendList.length === 0
+							? `친구가 존재하지 않습니다.`
+							: `'${inputContent}'가 포함된 친구가 존재하지 않습니다.`}
+					</div>
+				) : (
+					<div className={`${location} py-3 overflow-y-auto ${commonStyle}`}>
+						{searchedFriendList.map((friend, id) => (
+							<DmSearchedItem
+								friend={friend}
+								isTheLast={searchedFriendList.length - 1 === id}
+								key={id}
+							/>
+						))}
+					</div>
+				)}
 			</div>
 		);
 	};
@@ -91,9 +102,8 @@ const ChatHeaderSearch = () => {
 				<div className='flex items-center chat-content h-12 border-b font-bold'>
 					<div className='p-3 m-2'>새 메시지</div>
 				</div>
-				{input()}
+				{searchInput()}
 			</div>
-			<div className='relative'>{showPad ? searchedPad() : null}</div>
 		</div>
 	);
 };
