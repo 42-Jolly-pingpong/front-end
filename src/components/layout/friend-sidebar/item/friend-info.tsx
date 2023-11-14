@@ -7,11 +7,11 @@ interface FriendInfoProps {
 }
 
 const FriendInfo: React.FC<FriendInfoProps> = ({ user }) => {
-	let statusColor = 'bg-white border-2 border-gray-800';
+	let statusColor = 'border-2 border-gray-800';
 
 	switch (user.status) {
 		case UserStatus.ONLINE:
-			statusColor = 'bg-emerald-600';
+			statusColor = 'bg-green-500';
 			break;
 		case UserStatus.INGAME:
 			statusColor = 'bg-primary-500';
@@ -19,10 +19,10 @@ const FriendInfo: React.FC<FriendInfoProps> = ({ user }) => {
 	}
 
 	return (
-		<div className='flex flex-row items-center p-2'>
-			<Avatar img={user.avatarPath || ''} />
-			<div className='text-sm font-bold pl-2 '>{user.nickname}</div>
-			<div className={`ml-2 w-2 h-2 rounded-full ${statusColor}`} />
+		<div className='flex flex-row items-center gap-2'>
+			<Avatar img={user.avatarPath || ''} size={'sm'} />
+			<div className='text-sm font-bold'>{user.nickname}</div>
+			<div className={`w-2 h-2 rounded-full ${statusColor}`} />
 		</div>
 	);
 };

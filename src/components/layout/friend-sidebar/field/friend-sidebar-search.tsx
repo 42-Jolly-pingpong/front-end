@@ -27,19 +27,15 @@ const FriendSidebarSearch = () => {
 	};
 
 	return (
-		<div className='max-w-md h-12'>
-			<div className='block '>
-				<Label htmlFor='search' color='white' />
-			</div>
-			<TextInput
-				id='search'
-				icon={HiSearch}
-				type='search'
-				placeholder='멤버 찾기'
-				onChange={handleInputChange}
-				required
-			/>
-		</div>
+		<TextInput
+			id='search'
+			icon={HiSearch}
+			type='search'
+			placeholder='멤버 찾기'
+			onChange={handleInputChange}
+			required
+			className='m-4'
+		/>
 	);
 };
 
