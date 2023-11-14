@@ -34,6 +34,7 @@ const ChatHeaderSearch = () => {
 	const onFocusInput = () => {
 		setShowPad(true);
 	};
+
 	const onBlurInput = () => {
 		setShowPad(false);
 	};
@@ -59,15 +60,20 @@ const ChatHeaderSearch = () => {
 	};
 
 	const searchedPad = () => {
+		const location = 'absolute -top-4 left-9';
+		const commonStyle = 'm-2 bg-white border rounded-lg chat-pad';
+
 		if (searchedFriendList.length === 0) {
 			return (
-				<div className='absolute p-3 m-2 -top-4 left-9 bg-white border rounded-lg chat-pad text-gray-500'>
-					'{inputContent}'가 포함된 친구가 존재하지 않습니다.
+				<div className={`${location} p-3 text-gray-500 ${commonStyle}`}>
+					{friendList.length === 0
+						? `친구가 존재하지 않습니다.`
+						: `'${inputContent}'가 포함된 친구가 존재하지 않습니다.`}
 				</div>
 			);
 		}
 		return (
-			<div className='absolute py-3 m-2 -top-4 left-9 bg-white border rounded-lg chat-pad overflow-y-auto'>
+			<div className={`${location} py-3 overflow-y-auto ${commonStyle}`}>
 				{searchedFriendList.map((friend, id) => (
 					<DmSearchedItem
 						friend={friend}
