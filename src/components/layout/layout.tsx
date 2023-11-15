@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Outlet } from 'react-router';
 import Banner from 'components/banner/banner';
 import Header from 'components/layout/header/header';
@@ -28,7 +28,7 @@ const Layout = () => {
 	const setIsGame = useSetRecoilState(gameStartState);
 	const navigate = useNavigate();
 	const setUserFriendsState = useSetRecoilState(userFriendsState);
-	const [user, setUser] = useRecoilState(userState);
+	const setUser = useSetRecoilState(userState);
 	const [loading, setLoading] = useState(true);
 
 	const initData = async () => {

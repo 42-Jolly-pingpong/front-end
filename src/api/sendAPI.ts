@@ -32,8 +32,9 @@ const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 
 	if (response.ok) {
 		const data = await response.text();
+
 		try {
-			return JSON.parse(data);
+			return data ? JSON.parse(data) : {};
 		} catch (e) {
 			return data;
 		}
