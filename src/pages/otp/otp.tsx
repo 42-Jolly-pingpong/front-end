@@ -1,12 +1,25 @@
+import { getUserByJwt } from 'api/auth-api';
 import sendAPI from 'api/sendAPI';
 import { Button, Card, Label, TextInput } from 'flowbite-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Otp = () => {
 	const naviate = useNavigate();
 	const [code, setCode] = useState<string>('');
 	const [errorMessage, setErrorMessage] = useState<string>('');
+
+	useEffect(() => {
+		// 2차 인증을 하지 않은 사용자는 메인 페이지로 이동
+		const initData = async () => {
+			const user = await getUserByJwt();
+			if (user) {
+				if (user.auth) return;
+			}
+			naviate('/', { replace: true });
+		};
+		initData();
+	}, []);
 
 	const handleSubmit = async () => {
 		const data = await sendAPI({
