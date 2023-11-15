@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Outlet } from 'react-router';
 import Banner from 'components/banner/banner';
 import Header from 'components/layout/header/header';
 import FriendSidebar from 'components/layout/friend-sidebar/friend-sidebar';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
 import { getUserByJwt, userSignOut } from 'api/auth-api';
 import {
 	getBlockedList,
@@ -13,18 +14,21 @@ import {
 	getFriendRequestList,
 } from 'api/friend-api';
 import { socket } from 'socket/socket';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { GameInfoType, gameInfoState } from 'ts/states/game/game-info.state';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
-import GameModal from 'components/modal/game-modal';
 import { clearCookies } from 'components/utils/cookieUtils';
+import InviteGameModal from 'components/modal/item/game-mode-select';
 
 const Layout = () => {
+	const sidebarState = useRecoilValue(friendSidebarState);
+	const gameSelectModal = useRecoilValue(gameModeSelectState);
 	const setGameInfo = useSetRecoilState(gameInfoState);
 	const setIsGame = useSetRecoilState(gameStartState);
 	const navigate = useNavigate();
 	const setUserFriendsState = useSetRecoilState(userFriendsState);
-	const [, setUser] = useRecoilState(userState);
+	const [user, setUser] = useRecoilState(userState);
 	const [loading, setLoading] = useState(true);
 
 	const initData = async () => {
@@ -71,8 +75,8 @@ const Layout = () => {
 			<Banner />
 			<Header />
 			<Outlet />
-			<FriendSidebar />
-			<GameModal />
+			{sidebarState && <FriendSidebar />}
+			{gameSelectModal && <InviteGameModal show={gameSelectModal} />}
 		</div>
 	);
 };

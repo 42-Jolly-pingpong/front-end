@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
 	useRecoilState,
 	useRecoilValue,
@@ -8,16 +8,18 @@ import {
 import { socket } from 'socket/socket';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { gameInfoState } from 'ts/states/game/game-info.state';
-import { gameModalState } from 'ts/states/game/game-wait-state';
-import { GameModalStatus } from 'ts/enums/game/game-wait.enum';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
 import YellowButton from 'components/button/yellow-button';
 import { userState } from 'ts/states/user-state';
 import { HiArrowRight, HiCursorClick } from 'react-icons/hi';
+import { gameWaitState } from 'ts/states/game/game-wait-state';
+import { GameWaitStatus } from 'ts/enums/game/game-wait.enum';
+import GameWaitModal from 'components/modal/game-wait-modal';
 
 const JoinButton = () => {
-	const [gameModal, setGameModal] = useRecoilState(gameModalState);
-	const resetGameModal = useResetRecoilState(gameModalState);
+	const [modal, setModal] = useState(false);
+	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
+	const resetGameWait = useResetRecoilState(gameWaitState);
 	const resetGameBanner = useResetRecoilState(gameBannerState);
 	const userInfo = useRecoilValue(userState);
 	const setIsGameStart = useSetRecoilState(gameStartState);
@@ -38,21 +40,26 @@ const JoinButton = () => {
 
 	const handleButton = () => {
 		resetGameBanner();
-		setGameModal({ ...gameModal, status: GameModalStatus.MODE, show: true });
+		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
 		socket.emit('cancel', userInfo?.id);
+		setModal(true);
 	};
 
 	const handleClose = () => {
-		resetGameModal();
+		resetGameWait();
 		socket.emit('cancel', userInfo?.id);
+		setModal(false);
 	};
 
 	return (
-		<YellowButton size='lg' onClick={handleButton}>
-			<HiCursorClick className='mr-2 h-5 w-5' />
-			게임하러 가기
-			<HiArrowRight className='ml-2 h-5 w-5' />
-		</YellowButton>
+		<>
+			<YellowButton size='lg' onClick={handleButton}>
+				<HiCursorClick className='mr-2 h-5 w-5' />
+				게임하러 가기
+				<HiArrowRight className='ml-2 h-5 w-5' />
+			</YellowButton>
+			<GameWaitModal show={modal} onClose={handleClose} />
+		</>
 	);
 };
 

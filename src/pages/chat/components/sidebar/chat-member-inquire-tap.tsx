@@ -16,6 +16,7 @@ import useChatAlert from 'hooks/use-chat-alert';
 import { userState } from 'ts/states/user-state';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import {
 	addBlockedFriend,
@@ -25,7 +26,6 @@ import {
 	deleteBlockedFriend,
 	updateFriend,
 } from 'api/friend-api';
-import { gameModalState } from 'ts/states/game/game-wait-state';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +44,7 @@ const ChatMemberInquireTap = (props: {
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
 	const user = useRecoilValue(userState) as User;
-	const [gameModal, setGameModal] = useRecoilState(gameModalState);
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 	const [relation, setFriendsState] = useRecoilState(userFriendsState);
 
@@ -129,7 +129,7 @@ const ChatMemberInquireTap = (props: {
 
 	const onClickInviteGame = (otherUser: ChatParticipant) => {
 		setOpponentUserInfo(otherUser.user);
-		setGameModal({ ...gameModal, show: true, invite: true });
+		setGameModeSelect(true);
 	};
 
 	const inviteGame = (otherUser: ChatParticipant) => {

@@ -17,23 +17,20 @@ import User from 'ts/interfaces/user.model';
  *
  */
 
-
-
 const Banner = () => {
 	const [banner, setBanner] = useRecoilState(gameBannerState);
 	const [userInfo, setUserInfo] = useState<User | null>(null);
 
 	useEffect(() => {
 		socket.on('inviteGame', (userInfo: User, mode: GameMode) => {
-			setUserInfo(userInfo)
-			setBanner({type: GameBanner.GAMEREQUEST, mode})
-		})
-	})
+			setUserInfo(userInfo);
+			setBanner({ type: GameBanner.GAMEREQUEST, mode });
+		});
+	});
 
 	switch (banner.type) {
 		case GameBanner.GAMEREQUEST: // 게임 request가 왔을 때
-			if(userInfo)
-				return <GameRequestBanner userInfo={userInfo} />;
+			if (userInfo) return <GameRequestBanner userInfo={userInfo} />;
 			break;
 		case GameBanner.NOMATCH: // 게임 matching에 실패했을 때
 			return <NoMatchBanner />;
