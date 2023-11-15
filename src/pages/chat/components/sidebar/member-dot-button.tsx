@@ -12,7 +12,7 @@ import useChatAlert from 'hooks/use-chat-alert';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useState } from 'react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
@@ -21,6 +21,7 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import User from 'ts/interfaces/user.model';
 import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import { chatState } from 'ts/states/chat-state';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
@@ -29,7 +30,7 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 	const user = useRecoilValue(userState) as User;
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
-	// const [gameModal, setGameModal] = useRecoilState(gameModalState);
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 	const [userRole, setUserRole] = useState<ChatParticipantRole>(
 		ChatParticipantRole.MEMBER
@@ -75,7 +76,7 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 
 	const onClickInviteGame = () => {
 		setOpponentUserInfo(otherUser);
-		// setGameModal({ ...gameModal, show: true, invite: true });
+		setGameModeSelect(true);
 	};
 
 	const inviteGame = () => {
