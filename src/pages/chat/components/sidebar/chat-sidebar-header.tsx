@@ -9,7 +9,6 @@ const ChatSidebarHeader = (props: { title: string }) => {
 	const onClickClear = () => {
 		setChatSidebar({
 			status: ChatSidebarStatus.CLOSE,
-			chat: null,
 			profile: null,
 		});
 	};
