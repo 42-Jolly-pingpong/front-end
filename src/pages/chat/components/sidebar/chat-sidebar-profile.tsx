@@ -18,6 +18,7 @@ import { userState } from 'ts/states/user-state';
 import User from 'ts/interfaces/user.model';
 import Status from 'pages/chat/components/status';
 import { UserStatus } from 'ts/enums/user/user-status.enum';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 import {
@@ -28,7 +29,6 @@ import {
 	getFriendList,
 	updateFriend,
 } from 'api/friend-api';
-import { gameModalState } from 'ts/states/game/game-wait-state';
 
 const ChatSidebarProfile = () => {
 	const otherUser = useRecoilValue(chatSidebarState).profile;
@@ -37,7 +37,7 @@ const ChatSidebarProfile = () => {
 	const setDmList = useSetRecoilState(chatListState);
 	const setAlertModal = useChatAlert();
 	const user = useRecoilValue(userState) as User;
-	const setGameModal = useSetRecoilState(gameModalState);
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 	const [relation, setFriendsState] = useRecoilState(userFriendsState);
 
@@ -175,7 +175,7 @@ const ChatSidebarProfile = () => {
 
 	const onClickGame = () => {
 		setOpponentUserInfo(otherUser);
-		setGameModal({ show: true });
+		setGameModeSelect(true);
 	};
 
 	const profileField = () => {

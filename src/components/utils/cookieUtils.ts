@@ -6,7 +6,7 @@ export const getJsonValueByKey = (key: string) => {
 		cookieObject[key] = decodeURIComponent(value);
 	});
 
-	return JSON.parse(cookieObject[key]) || {};
+	return cookieObject[key] ? JSON.parse(cookieObject[key]) : {};
 };
 
 export const getJwtValue = () => {
@@ -18,4 +18,11 @@ export const getJwtValue = () => {
 	});
 
 	return cookieObject['access-token'] || undefined;
+};
+
+export const clearCookies = () => {
+	document.cookie.split(';').forEach((cookie) => {
+		const [key] = cookie.trim().split('=');
+		document.cookie = `${key}=; expires=Thu, 01 Jan 1999 00:00:10 GMT;`;
+	});
 };

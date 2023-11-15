@@ -7,6 +7,7 @@ export const getUserByJwt = async (): Promise<User | null> => {
 		method: 'POST',
 		url: '/auth/user',
 	});
+
 	return user ? user : null;
 };
 
