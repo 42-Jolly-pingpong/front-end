@@ -2,7 +2,6 @@ import {
 	addBlockedFriend,
 	deleteBlockedFriend,
 	deleteFriend,
-	getBlockedList,
 	getFriendList,
 	getFriendRelation,
 	updateFriend,
@@ -154,23 +153,19 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const onClickManageBlockList = async (isBlocked: boolean) => {
+	const onClickManageBlockList = async () => {
 		if (isBlocked) {
 			await deleteBlockedFriend(otherUser.id);
-			const friends = await getFriendList(user!.id);
-			const blockedFriends = await getBlockedList(user!.id);
-			setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
-			return;
+		} else {
+			await addBlockedFriend(otherUser.id);
 		}
-		await addBlockedFriend(otherUser.id);
-		const friends = await getFriendList(user!.id);
-		const blockedFriends = await getBlockedList(user!.id);
-		setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
+		const newRelation = await getFriendRelation(otherUser.id);
+		setRelation(newRelation);
 	};
 
 	const manageBlockList = () => {
 		return (
-			<Dropdown.Item onClick={() => onClickManageBlockList(isBlocked)}>
+			<Dropdown.Item onClick={onClickManageBlockList}>
 				<div className='flex items-center font-normal text-sm text-red-500'>
 					{isBlocked ? '사용자 차단 해제하기' : '사용자 차단하기'}
 				</div>
@@ -178,7 +173,7 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const manageAdmin = (isAdmin: boolean) => {
+	const manageAdmin = () => {
 		chatSocket.emit(
 			'manageParticipantRole',
 			{
@@ -202,13 +197,11 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 				subText: '이 사용자는 더 이상 채널을 관리할 수 없습니다.',
 				confirmButtonText: `채널 관리자 목록에서 제거`,
 				exitButtonText: '취소',
-				onClickButton: () => {
-					manageAdmin(isAdmin);
-				},
+				onClickButton: manageAdmin,
 			});
 			return;
 		}
-		manageAdmin(isAdmin);
+		manageAdmin();
 	};
 
 	const manageAdminList = () => {

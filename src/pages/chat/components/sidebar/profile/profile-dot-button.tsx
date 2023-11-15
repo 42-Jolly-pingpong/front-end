@@ -2,7 +2,6 @@ import {
 	addBlockedFriend,
 	deleteBlockedFriend,
 	deleteFriend,
-	getBlockedList,
 	getFriendList,
 	getFriendRelation,
 	updateFriend,
@@ -40,7 +39,7 @@ const ProfileDotButton = () => {
 		relation === ProfileStatus.REQUESTEDBYME ||
 		relation === ProfileStatus.REQUESTEDBYOTHER;
 
-	const textForRelation = (() => {
+	const textForFriendRelation = (() => {
 		switch (relation) {
 			case ProfileStatus.FRIEND:
 				return '친구 제거하기';
@@ -81,15 +80,11 @@ const ProfileDotButton = () => {
 	const onClickManageBlock = async () => {
 		if (isBlocked) {
 			await deleteBlockedFriend(otherUser.id);
-			const friends = await getFriendList(user!.id);
-			const blockedFriends = await getBlockedList(user!.id);
-			setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
-			return;
+		} else {
+			await addBlockedFriend(otherUser.id);
 		}
-		await addBlockedFriend(otherUser.id);
-		const friends = await getFriendList(user!.id);
-		const blockedFriends = await getBlockedList(user!.id);
-		setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
+		const newRelation = await getFriendRelation(otherUser.id);
+		setRelation(newRelation);
 	};
 
 	return (
@@ -105,7 +100,7 @@ const ProfileDotButton = () => {
 					}`}
 				>
 					<HiOutlineUserAdd className='mr-2' />
-					{textForRelation}
+					{textForFriendRelation}
 				</div>
 			</Dropdown.Item>
 			<Dropdown.Item onClick={onClickManageBlock}>
