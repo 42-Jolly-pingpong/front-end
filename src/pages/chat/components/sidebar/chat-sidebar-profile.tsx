@@ -7,7 +7,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { HiOutlineUserAdd, HiOutlineUserRemove } from 'react-icons/hi';
 import { BsMailbox } from 'react-icons/bs';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import HistoryDoughnutChart from 'pages/chat/components/sidebar/history-doughnut-chart';
 import { Dm } from 'ts/interfaces/dm.model';
 import useChangeChat from 'hooks/use-change-chat';
@@ -27,11 +27,14 @@ import {
 	deleteFriend,
 	getBlockedList,
 	getFriendList,
+	getFriendRelation,
 	updateFriend,
 } from 'api/friend-api';
+import { ProfileStatus } from 'ts/enums/profile/profile-status.enum';
+import { useEffect, useState } from 'react';
 
 const ChatSidebarProfile = () => {
-	const otherUser = useRecoilValue(chatSidebarState).profile;
+	const otherUser = useRecoilValue(chatSidebarState).profile as User;
 	const dmList = useRecoilValue(chatListSelector).dmList;
 	const setChat = useChangeChat();
 	const setDmList = useSetRecoilState(chatListState);
@@ -39,19 +42,24 @@ const ChatSidebarProfile = () => {
 	const user = useRecoilValue(userState) as User;
 	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
-	const [relations, setFriendsState] = useRecoilState(userFriendsState);
+	const setFriendsState = useSetRecoilState(userFriendsState);
+	const [relation, setRelation] = useState<ProfileStatus>(
+		ProfileStatus.UNDEFINED
+	);
+
+	useEffect(() => {
+		(async () => {
+			const relation = await getFriendRelation(otherUser.id);
+			setRelation(relation);
+		})();
+	}, []);
 
 	if (otherUser === null) {
 		return null;
 	}
 
-	const isFriend = (relations.friends as User[]).find(
-		(user) => user.id === otherUser.id
-	);
-
-	const isBlocked = (relations.blockedFriends as User[]).find(
-		(user) => user.id === otherUser.id
-	);
+	const isFriend = relation === ProfileStatus.FRIEND;
+	const isBlocked = relation === ProfileStatus.BLOCKEDBYME;
 
 	const statusInKorean = () => {
 		switch (otherUser.status) {
@@ -104,9 +112,11 @@ const ChatSidebarProfile = () => {
 			await deleteFriend(otherUser.id);
 			const friends = await getFriendList(user!.id);
 			setFriendsState((pre) => ({ ...pre, friends }));
-			return;
+		} else {
+			await updateFriend(otherUser.id);
 		}
-		await updateFriend(otherUser.id);
+		const newRelation = await getFriendRelation(otherUser.id);
+		setRelation(newRelation);
 	};
 
 	const onClickManageBlock = async () => {
@@ -124,16 +134,37 @@ const ChatSidebarProfile = () => {
 	};
 
 	const dotsButton = () => {
+		const isPending =
+			relation === ProfileStatus.REQUESTEDBYME ||
+			relation === ProfileStatus.REQUESTEDBYOTHER;
+
+		const textForRelation = (() => {
+			switch (relation) {
+				case ProfileStatus.FRIEND:
+					return '친구 제거하기';
+				case ProfileStatus.REQUESTEDBYME:
+					return '수락 대기 중';
+				case ProfileStatus.REQUESTEDBYOTHER:
+					return '응답 대기 중';
+				default:
+					return '친구 신청하기';
+			}
+		})();
+
 		return (
 			<Dropdown
 				label=''
 				dismissOnClick={false}
 				renderTrigger={() => renderTrigger()}
 			>
-				<Dropdown.Item onClick={onClickManageFriend}>
-					<div className='flex items-center font-normal text-sm text-gray-700'>
+				<Dropdown.Item onClick={onClickManageFriend} disabled={isPending}>
+					<div
+						className={`flex items-center font-normal text-sm ${
+							isPending ? 'text-gray-400' : 'text-gray-700'
+						}`}
+					>
 						<HiOutlineUserAdd className='mr-2' />
-						{isFriend ? '친구 해제' : '친구 신청'}
+						{textForRelation}
 					</div>
 				</Dropdown.Item>
 				<Dropdown.Item onClick={onClickManageBlock}>
