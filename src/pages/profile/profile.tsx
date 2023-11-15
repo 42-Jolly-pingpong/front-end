@@ -22,19 +22,20 @@ const Profile = () => {
 		const getProfileState = async () => {
 			setLoading(true);
 			const profileUser = await getUserByNickname(nickname);
-			if (user!.nickname === nickname) {
-				setProfileState({ type: ProfileStatus.MINE, user });
-			} else if (profileUser && profileUser.isLeave === false) {
-				setProfileState({
-					type: await getFriendState(profileUser.id),
-					user: profileUser,
-				});
-			} else {
-				setProfileState({ type: ProfileStatus.UNKNOWN, user: null });
+			if (user) {
+				if (user!.nickname === nickname) {
+					setProfileState({ type: ProfileStatus.MINE, user });
+				} else if (profileUser && profileUser.isLeave === false) {
+					setProfileState({
+						type: await getFriendState(profileUser.id),
+						user: profileUser,
+					});
+				} else {
+					setProfileState({ type: ProfileStatus.UNKNOWN, user: null });
+				}
 			}
 			setLoading(false);
 		};
-
 		getProfileState();
 	}, [nickname, user, setProfileState]);
 
