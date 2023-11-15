@@ -17,6 +17,7 @@ import { GameInfoType, gameInfoState } from 'ts/states/game/game-info.state';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
 import GameModal from 'components/modal/game-modal';
+import { clearCookies } from 'components/utils/cookieUtils';
 
 const Layout = () => {
 	const setGameInfo = useSetRecoilState(gameInfoState);
@@ -41,6 +42,8 @@ const Layout = () => {
 			const blockedFriends = await getBlockedList(newUser.id);
 			setUserFriendsState({ friends, requestFriends, blockedFriends });
 			socket.emit('setClient', newUser.id);
+		} else {
+			clearCookies();
 		}
 	};
 

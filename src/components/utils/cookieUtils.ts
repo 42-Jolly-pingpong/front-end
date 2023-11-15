@@ -19,3 +19,10 @@ export const getJwtValue = () => {
 
 	return cookieObject['access-token'] || undefined;
 };
+
+export const clearCookies = () => {
+	document.cookie.split(';').forEach((cookie) => {
+		const [key] = cookie.trim().split('=');
+		document.cookie = `${key}=; expires=Thu, 01 Jan 1999 00:00:10 GMT;`;
+	});
+};
