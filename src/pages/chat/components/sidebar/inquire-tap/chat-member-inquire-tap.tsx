@@ -8,7 +8,7 @@ import NoResult from 'pages/chat/components/sidebar/no-result';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { useRecoilValue } from 'recoil';
 import { chatState } from 'ts/states/chat-state';
-import MemberInquireItem from 'pages/chat/components/sidebar/member-inquire-item';
+import MemberInquireItem from 'pages/chat/components/sidebar/inquire-tap/member-inquire-item';
 
 const ChatMemberInquireTap = (props: {
 	setIsInquireTap: React.Dispatch<React.SetStateAction<boolean>>;

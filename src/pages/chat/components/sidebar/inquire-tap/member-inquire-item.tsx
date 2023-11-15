@@ -1,5 +1,5 @@
 import { Badge } from 'flowbite-react';
-import MemberDotButton from 'pages/chat/components/sidebar/member-dot-button';
+import MemberDotButton from 'pages/chat/components/sidebar/inquire-tap/member-dot-button';
 import MemberInfo from 'pages/chat/components/sidebar/member-info';
 import { useRecoilValue } from 'recoil';
 import { ChatParticipantRole } from 'ts/enums/chat-participants-role.enum';

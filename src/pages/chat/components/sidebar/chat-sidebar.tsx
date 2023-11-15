@@ -1,5 +1,5 @@
 import ChatSidebarChat from 'pages/chat/components/sidebar/chat-sidebar-chat';
-import ChatSidebarProfile from 'pages/chat/components/sidebar/chat-sidebar-profile';
+import ChatSidebarProfile from 'pages/chat/components/sidebar/profile/chat-sidebar-profile';
 import { useRecoilValue } from 'recoil';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
