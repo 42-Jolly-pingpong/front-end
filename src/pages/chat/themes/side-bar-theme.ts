@@ -8,7 +8,7 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 		},
 		collapse: {
 			button:
-				'group flex flex-row-reverse w-full items-center rounded-lg py-1.5 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100',
+				'group flex flex-row-reverse w-full items-center rounded-lg py-1.5 text-base font-normal text-gray-900 transition duration-75 hover:bg-yellow-50',
 			icon: {
 				base: 'h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900',
 				open: {
@@ -29,7 +29,7 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 			list: 'space-y-1 py-1',
 		},
 		item: {
-			base: 'flex items-center justify-center rounded-lg py-1 text-base text-gray-900 hover:bg-gray-100',
+			base: 'flex items-center justify-center rounded-lg py-1 text-base text-gray-900 hover:bg-yellow-50',
 			active: 'bg-gray-100 dark:bg-gray-700',
 			collapsed: {
 				insideCollapse: 'group w-full transition duration-75',
