@@ -1,7 +1,7 @@
 import { Tabs } from 'flowbite-react';
 import ChatInformationTap from 'pages/chat/components/sidebar/chat-information-tap';
 import ChatMemberTap from 'pages/chat/components/sidebar/chat-member-tap';
-import ChatSettingTap from 'pages/chat/components/sidebar/chat-setting-tap';
+import ChatSettingTap from 'pages/chat/components/sidebar/setting-tap/chat-setting-tap';
 import { FiInfo, FiSettings, FiUsers } from 'react-icons/fi';
 
 const ChatSidebarForAdmin = () => {
