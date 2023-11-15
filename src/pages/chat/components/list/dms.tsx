@@ -21,7 +21,7 @@ const Dms = () => {
 	}, [dmList]);
 
 	return (
-		<Sidebar.Collapse label='다이렉트 메시지'>
+		<Sidebar.Collapse label='다이렉트 메시지' open>
 			{dms?.map((dm, id) => (
 				<DmItem key={id} dm={dm} isSelected={chat?.id === dm.id} />
 			))}
