@@ -5,7 +5,7 @@ import User from 'ts/interfaces/user.model';
 import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
-import { gameModalState } from 'ts/states/game/game-wait-state';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 
 interface FriendInfoProps {
 	user: User;
@@ -13,7 +13,7 @@ interface FriendInfoProps {
 
 const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 	const [, setModalState] = useRecoilState(friendSidebarModalState);
-	const [gameModal, setGameModal] = useRecoilState(gameModalState);
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 
 	const handleUnfriend = async () => {
@@ -28,7 +28,7 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 
 	const handleInviteGame = () => {
 		setOpponentUserInfo(user);
-		setGameModal({ ...gameModal, show: true, invite: true });
+		setGameModeSelect(true);
 	};
 
 	return (
@@ -38,11 +38,11 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 				inline
 				label={
 					<HiEllipsisVertical
-						className='mr-2 hidden group-hover:block group-hover:bg-white rounded'
-						size='22'
+						className='hidden group-hover:block group-hover:bg-white rounded'
+						size='28'
 					/>
 				}
-				size='sm'
+				size='md'
 			>
 				<Dropdown.Item className='text-gray-700'>메시지 보내기</Dropdown.Item>
 				<Dropdown.Item className='text-gray-700' onClick={handleInviteGame}>

@@ -7,7 +7,7 @@ interface ApiOptions {
 	body?: any;
 }
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
 
 const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 	const token = getJwtValue();
@@ -25,15 +25,16 @@ const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 		headers: {
 			...headers,
 			'Content-Type': 'application/json;charset=UTF-8',
-			origin: 'http://localhost:5173',
+			origin: process.env.REACT_APP_FRONTEND_URL || 'http://localhost:5173',
 		},
 		body: body ? JSON.stringify(body) : undefined,
 	});
 
 	if (response.ok) {
 		const data = await response.text();
+
 		try {
-			return JSON.parse(data);
+			return data ? JSON.parse(data) : {};
 		} catch (e) {
 			return data;
 		}

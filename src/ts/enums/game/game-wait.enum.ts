@@ -1,4 +1,4 @@
-export enum GameModalStatus {
+export enum GameWaitStatus {
 	MODE,
 	SEARCH,
 	NONE,
