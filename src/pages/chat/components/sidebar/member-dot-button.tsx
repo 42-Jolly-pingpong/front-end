@@ -143,7 +143,11 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 				onClick={() => onClickManageFriend(isFriend)}
 				disabled={isPending}
 			>
-				<div className='flex items-center font-normal text-sm text-gray-700'>
+				<div
+					className={`flex items-center font-normal text-sm ${
+						isPending ? 'text-gray-400' : 'text-gray-700'
+					}`}
+				>
 					{text}
 				</div>
 			</Dropdown.Item>
