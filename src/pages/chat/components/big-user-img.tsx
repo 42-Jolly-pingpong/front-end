@@ -1,4 +1,4 @@
-const BigUserImg = (props: { src: string }) => {
+const BigUserImg = (props: { src?: string }) => {
 	if (props.src === null) {
 		return (
 			<div
