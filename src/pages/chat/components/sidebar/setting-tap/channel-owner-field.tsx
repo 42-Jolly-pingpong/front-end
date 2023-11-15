@@ -1,5 +1,5 @@
-import ChannelPropertyContent from 'pages/chat/components/sidebar/setting-tap/channel-property-content';
-import ChannelPropertyTitle from 'pages/chat/components/sidebar/setting-tap/channel-property-title';
+import ChannelPropertyContent from 'pages/chat/components/sidebar/channel-property-content';
+import ChannelPropertyTitle from 'pages/chat/components/sidebar/channel-property-title';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
 
 const ChannelOwnerField = (props: { owner?: ChatParticipant }) => {

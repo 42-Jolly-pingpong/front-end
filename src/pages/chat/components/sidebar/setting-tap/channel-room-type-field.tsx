@@ -2,7 +2,7 @@ import { Button, Label, Radio, TextInput } from 'flowbite-react';
 import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
 import { chatSocket } from 'pages/chat/chat-socket';
-import ChannelPropertyTitle from 'pages/chat/components/sidebar/setting-tap/channel-property-title';
+import ChannelPropertyTitle from 'pages/chat/components/sidebar/channel-property-title';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';

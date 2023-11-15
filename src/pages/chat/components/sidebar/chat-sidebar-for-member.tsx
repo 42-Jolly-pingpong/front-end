@@ -1,5 +1,5 @@
 import { Tabs } from 'flowbite-react';
-import ChatInformationTap from 'pages/chat/components/sidebar/chat-information-tap';
+import ChatInformationTap from 'pages/chat/components/sidebar/information-tap/chat-information-tap';
 import ChatMemberTap from 'pages/chat/components/sidebar/chat-member-tap';
 import { FiInfo, FiUsers } from 'react-icons/fi';
 
