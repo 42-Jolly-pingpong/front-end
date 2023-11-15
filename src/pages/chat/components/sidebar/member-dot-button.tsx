@@ -21,7 +21,6 @@ import { ChatRoom } from 'ts/interfaces/chat-room.model';
 import User from 'ts/interfaces/user.model';
 import { chatAlertModalState } from 'ts/states/chat-alert-modal';
 import { chatState } from 'ts/states/chat-state';
-import { gameModalState } from 'ts/states/game/game-wait-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
@@ -30,7 +29,7 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 	const user = useRecoilValue(userState) as User;
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
-	const [gameModal, setGameModal] = useRecoilState(gameModalState);
+	// const [gameModal, setGameModal] = useRecoilState(gameModalState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 	const [userRole, setUserRole] = useState<ChatParticipantRole>(
 		ChatParticipantRole.MEMBER
@@ -43,7 +42,7 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 
 	const { participant } = props;
 	const otherUser = participant.user;
-	const isBlocked = relation === ProfileStatus.BLOCKED_BY_ME;
+	const isBlocked = relation === ProfileStatus.BLOCKEDBYME;
 	const isAdmin =
 		participant.role === ChatParticipantRole.ADMIN ||
 		participant.role === ChatParticipantRole.OWNER;
@@ -74,14 +73,14 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const onClickInviteGame = (otherUser: ChatParticipant) => {
-		setOpponentUserInfo(otherUser.user);
-		setGameModal({ ...gameModal, show: true, invite: true });
+	const onClickInviteGame = () => {
+		setOpponentUserInfo(otherUser);
+		// setGameModal({ ...gameModal, show: true, invite: true });
 	};
 
-	const inviteGame = (otherUser: ChatParticipant) => {
+	const inviteGame = () => {
 		return (
-			<Dropdown.Item onClick={() => onClickInviteGame(otherUser)}>
+			<Dropdown.Item onClick={() => onClickInviteGame()}>
 				<div className='flex items-center font-normal text-sm text-gray-700'>
 					게임 초대하기
 				</div>
@@ -89,55 +88,47 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const manageFriend = async (
-		isFriend: boolean,
-		otherUser: ChatParticipant
-	) => {
+	const manageFriend = async (isFriend: boolean) => {
 		if (isFriend) {
-			await deleteFriend(otherUser.user.id);
+			await deleteFriend(otherUser.id);
 			const friends = await getFriendList(user!.id);
 			setFriendsState((pre) => ({ ...pre, friends }));
 			setAlertModal((pre) => ({ ...pre, status: false }));
 			return;
 		}
-		await updateFriend(otherUser.user.id);
+		await updateFriend(otherUser.id);
 	};
 
-	const onClickManageFriend = (
-		isFriend: boolean,
-		otherUser: ChatParticipant
-	) => {
+	const onClickManageFriend = (isFriend: boolean) => {
 		if (isFriend) {
 			setAlertModal({
 				status: true,
-				title: `친구 목록에서 ${otherUser.user.nickname} 님을 제거하시겠습니까?`,
+				title: `친구 목록에서 ${otherUser.nickname} 님을 제거하시겠습니까?`,
 				subText: '이 사용자는 더 이상 친구 목록에 존재하지 않습니다.',
 				confirmButtonText: `친구 목록에서 제거`,
 				exitButtonText: '취소',
 				onClickButton: () => {
-					manageFriend(isFriend, otherUser);
+					manageFriend(isFriend);
 				},
 			});
 			return;
 		}
-		manageFriend(isFriend, otherUser);
+		manageFriend(isFriend);
 	};
 
-	const manageFriendList = (
-		relation: ProfileStatus,
-		otherUser: ChatParticipant
-	) => {
+	const manageFriendList = () => {
 		const isFriend = relation === ProfileStatus.FRIEND;
 		const isPending =
-			relation === ProfileStatus.REQUESTED_BY_ME ||
-			relation === ProfileStatus.REQUESTED_BY_OTHER;
+			relation === ProfileStatus.REQUESTEDBYME ||
+			relation === ProfileStatus.REQUESTEDBYOTHER;
+
 		const text = (() => {
 			switch (relation) {
 				case ProfileStatus.FRIEND:
 					return '친구 제거하기';
-				case ProfileStatus.REQUESTED_BY_ME:
+				case ProfileStatus.REQUESTEDBYME:
 					return '수락 대기 중';
-				case ProfileStatus.REQUESTED_BY_OTHER:
+				case ProfileStatus.REQUESTEDBYOTHER:
 					return '?';
 				default:
 					return '친구 신청하기';
@@ -146,7 +137,7 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 
 		return (
 			<Dropdown.Item
-				onClick={() => onClickManageFriend(isFriend, otherUser)}
+				onClick={() => onClickManageFriend(isFriend)}
 				disabled={isPending}
 			>
 				<div className='flex items-center font-normal text-sm text-gray-700'>
@@ -156,28 +147,23 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const onClickManageBlockList = async (
-		isBlocked: boolean,
-		otherUser: ChatParticipant
-	) => {
+	const onClickManageBlockList = async (isBlocked: boolean) => {
 		if (isBlocked) {
-			await deleteBlockedFriend(otherUser.user.id);
+			await deleteBlockedFriend(otherUser.id);
 			const friends = await getFriendList(user!.id);
 			const blockedFriends = await getBlockedList(user!.id);
 			setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
 			return;
 		}
-		await addBlockedFriend(otherUser.user.id);
+		await addBlockedFriend(otherUser.id);
 		const friends = await getFriendList(user!.id);
 		const blockedFriends = await getBlockedList(user!.id);
 		setFriendsState((pre) => ({ ...pre, friends, blockedFriends }));
 	};
 
-	const manageBlockList = (isBlocked: boolean, otherUser: ChatParticipant) => {
+	const manageBlockList = () => {
 		return (
-			<Dropdown.Item
-				onClick={() => onClickManageBlockList(isBlocked, otherUser)}
-			>
+			<Dropdown.Item onClick={() => onClickManageBlockList(isBlocked)}>
 				<div className='flex items-center font-normal text-sm text-red-500'>
 					{isBlocked ? '사용자 차단 해제하기' : '사용자 차단하기'}
 				</div>
@@ -185,12 +171,12 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const manageAdmin = (isAdmin: boolean, otherUser: ChatParticipant) => {
+	const manageAdmin = (isAdmin: boolean) => {
 		chatSocket.emit(
 			'manageParticipantRole',
 			{
 				roomId: chat.id,
-				user: otherUser.user,
+				user: otherUser,
 				role: isAdmin ? ChatParticipantRole.MEMBER : ChatParticipantRole.ADMIN,
 			},
 			(status: number) => {
@@ -201,29 +187,26 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const onClickManageAdminList = (
-		isAdmin: boolean,
-		otherUser: ChatParticipant
-	) => {
+	const onClickManageAdminList = (isAdmin: boolean) => {
 		if (isAdmin) {
 			setAlertModal({
 				status: true,
-				title: `${chat.roomName} 채널 관리자 목록에서 ${otherUser.user.nickname} 님을 제거하시겠습니까?`,
+				title: `${chat.roomName} 채널 관리자 목록에서 ${otherUser.nickname} 님을 제거하시겠습니까?`,
 				subText: '이 사용자는 더 이상 채널을 관리할 수 없습니다.',
 				confirmButtonText: `채널 관리자 목록에서 제거`,
 				exitButtonText: '취소',
 				onClickButton: () => {
-					manageAdmin(isAdmin, otherUser);
+					manageAdmin(isAdmin);
 				},
 			});
 			return;
 		}
-		manageAdmin(isAdmin, otherUser);
+		manageAdmin(isAdmin);
 	};
 
-	const manageAdminList = (isAdmin: boolean, otherUser: ChatParticipant) => {
+	const manageAdminList = () => {
 		return (
-			<Dropdown.Item onClick={() => onClickManageAdminList(isAdmin, otherUser)}>
+			<Dropdown.Item onClick={() => onClickManageAdminList(isAdmin)}>
 				<div className='flex items-center font-normal text-sm text-gray-700'>
 					{isAdmin ? '관리자 해제하기' : '관리자 임명하기'}
 				</div>
@@ -231,15 +214,12 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const onClickManageMemberStatus = (
-		otherUser: ChatParticipant,
-		status: ChatParticipantStatus
-	) => {
+	const onClickManageMemberStatus = (status: ChatParticipantStatus) => {
 		chatSocket.emit(
 			'manageParticipantStatus',
 			{
 				roomId: chat.id,
-				user: otherUser.user,
+				user: otherUser,
 				status,
 			},
 			(status: number) => {
@@ -250,15 +230,13 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const manageMutedList = (otherUser: ChatParticipant) => {
-		if (otherUser.role === ChatParticipantRole.OWNER) {
+	const manageMutedList = () => {
+		if (participant.role === ChatParticipantRole.OWNER) {
 			return null;
 		}
 		return (
 			<Dropdown.Item
-				onClick={() =>
-					onClickManageMemberStatus(otherUser, ChatParticipantStatus.MUTED)
-				}
+				onClick={() => onClickManageMemberStatus(ChatParticipantStatus.MUTED)}
 			>
 				<div className='flex items-center font-normal text-sm text-gray-700'>
 					조용히 시키기
@@ -267,15 +245,13 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const manageKickedList = (otherUser: ChatParticipant) => {
-		if (otherUser.role === ChatParticipantRole.OWNER) {
+	const manageKickedList = () => {
+		if (participant.role === ChatParticipantRole.OWNER) {
 			return null;
 		}
 		return (
 			<Dropdown.Item
-				onClick={() =>
-					onClickManageMemberStatus(otherUser, ChatParticipantStatus.KICKED)
-				}
+				onClick={() => onClickManageMemberStatus(ChatParticipantStatus.KICKED)}
 			>
 				<div className='flex items-center font-normal text-sm text-red-500'>
 					채널에서 제거
@@ -284,15 +260,13 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const manageBannedList = (otherUser: ChatParticipant) => {
-		if (otherUser.role === ChatParticipantRole.OWNER) {
+	const manageBannedList = () => {
+		if (participant.role === ChatParticipantRole.OWNER) {
 			return null;
 		}
 		return (
 			<Dropdown.Item
-				onClick={() =>
-					onClickManageMemberStatus(otherUser, ChatParticipantStatus.BANNED)
-				}
+				onClick={() => onClickManageMemberStatus(ChatParticipantStatus.BANNED)}
 			>
 				<div className='flex items-center font-normal text-sm text-red-500'>
 					채널에서 추방
@@ -309,9 +283,9 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 					dismissOnClick={false}
 					renderTrigger={() => dotButton()}
 				>
-					{inviteGame(participant)}
-					{manageFriendList(relation, participant)}
-					{manageBlockList(isBlocked, participant)}
+					{inviteGame()}
+					{manageFriendList()}
+					{manageBlockList()}
 				</Dropdown>
 			);
 		case ChatParticipantRole.ADMIN:
@@ -321,15 +295,15 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 					dismissOnClick={false}
 					renderTrigger={() => dotButton()}
 				>
-					{inviteGame(participant)}
-					{manageFriendList(relation, participant)}
-					{manageBlockList(isBlocked, participant)}
+					{inviteGame()}
+					{manageFriendList()}
+					{manageBlockList()}
 					{participant.role !== ChatParticipantRole.OWNER && (
 						<Dropdown.Divider />
 					)}
-					{manageMutedList(participant)}
-					{manageKickedList(participant)}
-					{manageBannedList(participant)}
+					{manageMutedList()}
+					{manageKickedList()}
+					{manageBannedList()}
 				</Dropdown>
 			);
 		case ChatParticipantRole.OWNER:
@@ -339,14 +313,14 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 					dismissOnClick={false}
 					renderTrigger={() => dotButton()}
 				>
-					{inviteGame(participant)}
-					{manageFriendList(relation, participant)}
-					{manageBlockList(isBlocked, participant)}
+					{inviteGame()}
+					{manageFriendList()}
+					{manageBlockList()}
 					<Dropdown.Divider />
-					{manageAdminList(isAdmin, participant)}
-					{manageMutedList(participant)}
-					{manageKickedList(participant)}
-					{manageBannedList(participant)}
+					{manageAdminList()}
+					{manageMutedList()}
+					{manageKickedList()}
+					{manageBannedList()}
 				</Dropdown>
 			);
 	}
