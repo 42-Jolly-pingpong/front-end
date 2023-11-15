@@ -6,7 +6,7 @@ export const getJsonValueByKey = (key: string) => {
 		cookieObject[key] = decodeURIComponent(value);
 	});
 
-	return JSON.parse(cookieObject[key]) || {};
+	return cookieObject[key] ? JSON.parse(cookieObject[key]) : {};
 };
 
 export const getJwtValue = () => {
