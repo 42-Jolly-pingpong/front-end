@@ -94,9 +94,11 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 			const friends = await getFriendList(user!.id);
 			setFriendsState((pre) => ({ ...pre, friends }));
 			setAlertModal((pre) => ({ ...pre, status: false }));
-			return;
+		} else {
+			await updateFriend(otherUser.id);
 		}
-		await updateFriend(otherUser.id);
+		const newRelation = await getFriendRelation(otherUser.id);
+		setRelation(newRelation);
 	};
 
 	const onClickManageFriend = (isFriend: boolean) => {
@@ -129,7 +131,7 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 				case ProfileStatus.REQUESTEDBYME:
 					return '수락 대기 중';
 				case ProfileStatus.REQUESTEDBYOTHER:
-					return '?';
+					return '응답 대기 중';
 				default:
 					return '친구 신청하기';
 			}
