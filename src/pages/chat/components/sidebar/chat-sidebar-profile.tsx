@@ -39,17 +39,17 @@ const ChatSidebarProfile = () => {
 	const user = useRecoilValue(userState) as User;
 	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
-	const [relation, setFriendsState] = useRecoilState(userFriendsState);
+	const [relations, setFriendsState] = useRecoilState(userFriendsState);
 
 	if (otherUser === null) {
 		return null;
 	}
 
-	const isFriend = (relation.friends as User[]).find(
+	const isFriend = (relations.friends as User[]).find(
 		(user) => user.id === otherUser.id
 	);
 
-	const isBlocked = (relation.blockedFriends as User[]).find(
+	const isBlocked = (relations.blockedFriends as User[]).find(
 		(user) => user.id === otherUser.id
 	);
 
