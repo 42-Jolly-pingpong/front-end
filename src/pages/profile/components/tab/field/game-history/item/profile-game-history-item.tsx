@@ -1,9 +1,9 @@
+import GamePlayRecord from 'components/game/game-play-record';
 import { Avatar } from 'flowbite-react';
 import { useRecoilValue } from 'recoil';
 import { GameMode } from 'ts/enums/game/game-mode.enum';
 import { GameHistory } from 'ts/interfaces/game-history.model';
 import { profileState } from 'ts/states/profile/profile-state';
-import ProfileGameHistoryBorder from './profile-game-history-border';
 
 interface FriendProps {
 	history: GameHistory;
@@ -29,7 +29,12 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 			}`}
 		>
 			<div className='flex justify-start items-center gap-2'>
-				<ProfileGameHistoryBorder isWinner={amIaWinner} />
+				{/* h-full로 바꿔보기 */}
+				<div
+					className={`w-2 h-[120px] rounded-l-lg  ${
+						amIaWinner ? 'bg-blue-500' : 'bg-red-500'
+					}`}
+				/>
 				<div className='flex flex-col justify-center items-start gap-1'>
 					<div className='text-xs font-bold'>
 						{history.mode === GameMode.NORMAL ? '클래식' : '스피드'}
@@ -75,6 +80,7 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 						<div className='w-[18px] h-[18px] relative flex-col justify-start items-start flex' />
 					</div>
 				</div> */}
+			<GamePlayRecord playTime={11000} />
 		</div>
 	);
 };
