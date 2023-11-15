@@ -1,5 +1,5 @@
 import { Badge, TextInput } from 'flowbite-react';
-import MemberItem from 'pages/chat/components/sidebar/member-item';
+import MemberInfo from 'pages/chat/components/sidebar/member-info';
 import { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { ChatParticipant } from 'ts/interfaces/chat-participant.model';
@@ -96,7 +96,7 @@ const ChatMemberInviteTap = (props: {
 						className='px-4 py-3 flex items-center w-full hover:bg-gray-200'
 						key={id}
 					>
-						<MemberItem user={member.user} isMe={false} />
+						<MemberInfo user={member.user} isMe={false} />
 						<div className='ml-2'>{roleBadge(member.role)}</div>
 					</div>
 				))}
@@ -132,7 +132,7 @@ const ChatMemberInviteTap = (props: {
 						className='p-3 flex items-center justify-between w-full hover:bg-gray-200'
 						key={id}
 					>
-						<MemberItem user={user} isMe={false} />
+						<MemberInfo user={user} isMe={false} />
 						<button
 							className='text-sm font-medium text-blue-600 hover:underline'
 							onClick={() => onClickAddUser(user)}

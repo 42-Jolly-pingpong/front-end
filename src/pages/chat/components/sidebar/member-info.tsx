@@ -3,7 +3,7 @@ import useChangeSidebar from 'hooks/use-change-sidebar';
 import Status from 'pages/chat/components/status';
 import User from 'ts/interfaces/user.model';
 
-const MemberItem = (props: { user: User; isMe: boolean }) => {
+const MemberInfo = (props: { user: User; isMe: boolean }) => {
 	const setChatSidebar = useChangeSidebar('profile');
 
 	const onClickUser = () => {
@@ -26,4 +26,4 @@ const MemberItem = (props: { user: User; isMe: boolean }) => {
 	);
 };
 
-export default MemberItem;
+export default MemberInfo;
