@@ -16,7 +16,7 @@ const MemberItem = (props: { user: User; isMe: boolean }) => {
 				<Avatar img={props.user.avatarPath} size='sm' />
 			</button>
 			<button onClick={onClickUser}>
-				<div className='text-sm font-bold text-gray-900 mx-2'>
+				<div className='text-sm font-bold text-gray-900 mx-2 truncate'>
 					{props.user.nickname}
 					{props.isMe && ' (나)'}
 				</div>
