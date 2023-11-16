@@ -38,9 +38,7 @@ const Layout = () => {
 		const newUser = await getUserByJwt();
 		if (newUser) {
 			if (Object.keys(newUser).length === 0) {
-				await userSignOut();
-				setUser(null);
-				navigate('/', { replace: true });
+				clearCookies();
 				return;
 			}
 			setUser(newUser);
@@ -49,8 +47,6 @@ const Layout = () => {
 			const blockedFriends = await getBlockedList(newUser.id);
 			setUserFriendsState({ friends, requestFriends, blockedFriends });
 			socket.emit('setClient', newUser.id);
-		} else {
-			clearCookies();
 		}
 	};
 
@@ -78,7 +74,7 @@ const Layout = () => {
 			<Banner />
 			{hasLayout && <Header />}
 			<Outlet />
-			{(hasLayout && sidebarState) && <FriendSidebar />}
+			{hasLayout && sidebarState && <FriendSidebar />}
 			{gameSelectModal && <InviteGameModal show={gameSelectModal} />}
 		</div>
 	);
