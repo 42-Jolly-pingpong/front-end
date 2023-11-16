@@ -36,7 +36,10 @@ const InviteGameModal = ({ show }: Props) => {
 	};
 
 	const cancelInvite = () => {
-		// 게임 초대 취소하는 로직
+		socket.emit(
+			'inviteCencel',
+			JSON.stringify({ user: opponentInfo, mode: gameWait.mode })
+		);
 		setGameSelectModal(false);
 		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
 	};

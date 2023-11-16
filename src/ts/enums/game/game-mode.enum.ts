@@ -1,4 +1,4 @@
 export enum GameMode {
-	NORMAL,
-	SPEED,
+	NORMAL = 'NORMAL',
+	SPEED = 'SPEED',
 }

@@ -25,19 +25,6 @@ const JoinButton = () => {
 	const setIsGameStart = useSetRecoilState(gameStartState);
 	const setGameInfo = useSetRecoilState(gameInfoState);
 
-	// useEffect(() => {
-	// if (socket.connected) {
-	// 	socket.on('getPlayerInfo', (message) => {
-	// 		const newGameInfo: GameInfoType = message;
-	// 		setGameInfo(newGameInfo);
-	// 	});
-	// }
-	// return () => {
-	// 	socket.off('getPlayerInfo');
-	// 	socket.off('gameStart');
-	// };
-	// });
-
 	const handleButton = () => {
 		resetGameBanner();
 		setGameWait({ ...gameWait, status: GameWaitStatus.MODE });
