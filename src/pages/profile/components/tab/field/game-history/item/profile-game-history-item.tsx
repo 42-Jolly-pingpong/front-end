@@ -58,7 +58,7 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 				<div className='flex grow h-[120px] justify-center items-center gap-6'>
 					<div className='justify-start items-center gap-2 flex '>
 						<div className='text-lg truncate max-w-[140px]'>
-							{leftUser.nickname}asdasldkjasldkjaslkdjaslkd
+							{leftUser.nickname}
 						</div>
 						<Avatar img={leftUser.avatarPath || ''} rounded size='lg' />
 					</div>
@@ -74,7 +74,7 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 					<div className='justify-start items-center gap-2 flex '>
 						<Avatar img={rightUser.avatarPath || ''} rounded size='lg' />
 						<div className='text-lg truncate max-w-[140px]'>
-							{rightUser.nickname}asdasldkjasldkjaslkdjaslkd
+							{rightUser.nickname}
 						</div>
 					</div>
 				</div>
