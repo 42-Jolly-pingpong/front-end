@@ -20,6 +20,7 @@ const ProfileSocialNormal = () => {
 	const [relation, setRelation] = useState<ProfileStatus>(
 		ProfileStatus.UNKNOWN
 	);
+
 	const [dropdownState, setDropdownState] = useState(true);
 	const [modalState, setModalState] = useState(false);
 	const friendsState = useRecoilState(userFriendsState);
@@ -37,6 +38,7 @@ const ProfileSocialNormal = () => {
 		switch (relation) {
 			case ProfileStatus.BLOCKEDBYME:
 				await deleteBlockedFriend(profile.user!.id);
+				setDropdownState(true);
 				break;
 			case ProfileStatus.FRIEND:
 				await deleteFriend(profile.user!.id);
@@ -67,24 +69,26 @@ const ProfileSocialNormal = () => {
 			}
 		};
 		fetchRelation();
-	}, [friendsState]);
+	}, [friendsState, profile.user]);
 
 	return (
 		<>
-			<div className='text-xl text-center pr-5'>{profile.user?.nickname}</div>
-			<ProfileHeaderSocialButton relation={relation} onClick={handleClick} />
-			<ProfileFriendModal
-				show={modalState}
-				relation={relation}
-				onRequest={handleRequest}
-				onClose={handleClose}
-			/>
-			<div className='pr-2' />
-			<GrayButton size='xs' onClick={handleMessage}>
-				메시지
-			</GrayButton>
-			<div className='pl-2' />
-			{dropdownState && <ProfileSocialDropdown />}
+			<div className='flex items-center w-72'>
+				<div className='text-xl text-center pr-5'>{profile.user?.nickname}</div>
+				<ProfileHeaderSocialButton relation={relation} onClick={handleClick} />
+				<ProfileFriendModal
+					show={modalState}
+					relation={relation}
+					onRequest={handleRequest}
+					onClose={handleClose}
+				/>
+				<div className='pr-2' />
+				<GrayButton size='xs' onClick={handleMessage}>
+					메시지
+				</GrayButton>
+				<div className='pl-2' />
+				{dropdownState && <ProfileSocialDropdown />}
+			</div>
 		</>
 	);
 };

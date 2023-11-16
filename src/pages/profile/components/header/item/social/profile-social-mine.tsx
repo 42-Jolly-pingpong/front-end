@@ -19,12 +19,14 @@ const ProfileSocialMine = () => {
 
 	return (
 		<>
-			<div className='text-xl text-center pr-5'>{user?.nickname}</div>
-			<GrayButton size='xs' onClick={handleClick}>
-				<div className='font-bold'>프로필 편집</div>
-			</GrayButton>
-			<ProfileEditModal show={modalState} onClose={handleClose} />
-			<ProfileAuthModal />
+			<div className='flex items-center w-72'>
+				<div className='text-xl text-center pr-5'>{user?.nickname}</div>
+				<GrayButton size='xs' onClick={handleClick}>
+					<div className='font-bold'>프로필 편집</div>
+				</GrayButton>
+				<ProfileEditModal show={modalState} onClose={handleClose} />
+				<ProfileAuthModal />
+			</div>
 		</>
 	);
 };
