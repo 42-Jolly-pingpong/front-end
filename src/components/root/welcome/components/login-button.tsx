@@ -1,7 +1,10 @@
 import { Button } from 'flowbite-react';
 
 const handleLogin = () => {
-	location.href = `${'http://localhost:3000'}/auth/intra`;
+	//location.href = `${'http://localhost:3000'}/auth/intra`;
+	location.href = `${
+		process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000'
+	}/auth/intra`;
 };
 
 const LoginButton = () => {
