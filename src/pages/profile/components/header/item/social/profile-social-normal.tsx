@@ -17,13 +17,12 @@ import {
 
 const ProfileSocialNormal = () => {
 	const profile = useRecoilValue(profileState);
+	const friendsState = useRecoilState(userFriendsState);
 	const [relation, setRelation] = useState<ProfileStatus>(
 		ProfileStatus.UNKNOWN
 	);
-
-	const [dropdownState, setDropdownState] = useState(true);
 	const [modalState, setModalState] = useState(false);
-	const friendsState = useRecoilState(userFriendsState);
+	const [dropdownState, setDropdownState] = useState(true);
 
 	const handleClick = async () => {
 		if (relation === ProfileStatus.UNDEFINED) {
@@ -38,7 +37,6 @@ const ProfileSocialNormal = () => {
 		switch (relation) {
 			case ProfileStatus.BLOCKEDBYME:
 				await deleteBlockedFriend(profile.user!.id);
-				setDropdownState(true);
 				break;
 			case ProfileStatus.FRIEND:
 				await deleteFriend(profile.user!.id);
@@ -66,6 +64,8 @@ const ProfileSocialNormal = () => {
 			setRelation(relation);
 			if (relation === ProfileStatus.BLOCKEDBYME) {
 				setDropdownState(false);
+			} else {
+				setDropdownState(true);
 			}
 		};
 		fetchRelation();
