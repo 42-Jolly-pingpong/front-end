@@ -19,13 +19,13 @@ const ChannelHeader = (props: { channel: ChatRoom }) => {
 
 	return (
 		<div className='my-5'>
-			<div className='flex items-center text-3xl font-bold'>
-				<div className='mr-2'>
+			<div className='flex items-start text-3xl font-bold break-all'>
+				<div className='mr-2 mt-1'>
 					<ChannelIcon roomType={channel.roomType} size={28} />
 				</div>
 				{channel.roomName}
 			</div>
-			<div className='text-base font-light mt-2 mb-4'>
+			<div className='text-base font-light mt-2 mb-4 break-all'>
 				{`날짜: ${formattedDate(
 					channel.createdAt,
 					false

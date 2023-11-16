@@ -68,7 +68,7 @@ export const ChatInput = () => {
 		const isDisabled = input.trim().length === 0;
 		return (
 			<button
-				className={`mx-3 ${isDisabled ? 'text-gray-400' : 'text-primary-700'}`}
+				className={`ml-3 ${isDisabled ? 'text-gray-400' : 'text-primary-700'}`}
 				disabled={chat === null}
 				onClick={onClickSend}
 			>
@@ -98,13 +98,13 @@ export const ChatInput = () => {
 		}
 	};
 	return (
-		<div className='flex mx-4 mb-3 bg-gray-100 border border-gray-300 rounded-lg items-center justify-stretch'>
+		<div className='flex mx-6 mb-6 bg-gray-50 border border-gray-300 rounded-lg items-center justify-stretch p-3'>
 			<Textarea
 				disabled={chat === null}
 				ref={textareaRef}
 				placeholder={placeholder()}
 				rows={1}
-				className={`bg-white my-2 ml-2 resize-none rounded-lg border border-gray-300 max-h-20 overflow-y-auto ${scrollbar} focus:ring-0 focus:border focus:border-gray-400`}
+				className={`bg-white resize-none rounded-lg border border-gray-300 h-[42px] max-h-20 overflow-y-auto ${scrollbar} focus:ring-0 focus:border focus:border-gray-400`}
 				value={input}
 				onChange={onChangeInput}
 				onKeyDown={onDownEnter}
