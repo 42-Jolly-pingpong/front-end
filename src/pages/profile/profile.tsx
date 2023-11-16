@@ -23,7 +23,7 @@ const Profile = () => {
 			setLoading(true);
 			const profileUser = await getUserByNickname(nickname);
 			if (user) {
-				if (user!.nickname === nickname) {
+				if (user!.id === profileUser?.id) {
 					setProfileState({ type: ProfileStatus.MINE, user });
 				} else if (profileUser && profileUser.isLeave === false) {
 					setProfileState({

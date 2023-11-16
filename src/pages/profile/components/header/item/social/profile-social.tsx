@@ -7,6 +7,8 @@ import ProfileSocialNormal from 'pages/profile/components/header/item/social/pro
 const ProfileSocial = () => {
 	const profile = useRecoilValue(profileState);
 
+	//console.log(profile.type);
+
 	switch (profile.type) {
 		case ProfileStatus.MINE:
 			return <ProfileSocialMine />;

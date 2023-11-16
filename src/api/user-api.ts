@@ -11,8 +11,10 @@ export const getUserByNickname = async (
 				method: 'GET',
 				url: '/user/search/' + nickname,
 			});
-			if (users.length > 0) {
+			if (users.length > 0 && nickname === users[0].nickname) {
 				return users[0];
+			} else {
+				return undefined;
 			}
 		}
 	} catch (e) {
