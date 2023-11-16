@@ -16,7 +16,6 @@ const CreateDm = () => {
 		setChatHeaderState(false);
 		setSidebarState({
 			status: ChatSidebarStatus.CLOSE,
-			chat: null,
 			profile: null,
 		});
 	};

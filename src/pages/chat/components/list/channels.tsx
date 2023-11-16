@@ -21,7 +21,7 @@ const Channels = () => {
 	}, [chatList]);
 
 	return (
-		<Sidebar.Collapse label='채널' className='text-base font-medium'>
+		<Sidebar.Collapse label='채널' open>
 			{channels?.map((channel, id) => (
 				<ChannelItem
 					key={id}

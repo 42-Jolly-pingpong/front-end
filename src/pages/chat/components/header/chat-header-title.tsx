@@ -38,7 +38,7 @@ const ChatHeaderTitle = () => {
 		}
 		return (
 			<div className='w-full flex justify-between items-center ml-6'>
-				<div className='flex items-center font-bold'>
+				<div className='flex items-center font-bold truncate'>
 					<div className='mr-2'>
 						<ChannelIcon roomType={chatRoom.roomType} size={18} />
 					</div>
