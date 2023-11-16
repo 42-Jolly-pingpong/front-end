@@ -5,7 +5,6 @@ const ProfileBioNoraml = () => {
 	const profile = useRecoilValue(profileState);
 	const user = profile.user;
 
-	console.log(user);
 	return (
 		<div className='flex flex-col items-start gap-3'>
 			<div className='font-bold text-sm'>{user?.intraId}</div>
