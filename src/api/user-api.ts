@@ -1,5 +1,6 @@
 import sendAPI from 'api/sendAPI';
 import User from 'ts/interfaces/user.model';
+import UpdateUserDto from 'ts/interfaces/user/update-user.model';
 
 export const getUserByNickname = async (
 	nickname: string | undefined
@@ -17,5 +18,19 @@ export const getUserByNickname = async (
 	} catch (e) {
 		console.log(e);
 		return undefined;
+	}
+};
+
+export const updateUser = async (
+	updateUserDto: UpdateUserDto
+): Promise<void> => {
+	try {
+		await sendAPI({
+			method: 'PATCH',
+			url: '/user',
+			body: updateUserDto,
+		});
+	} catch (e) {
+		console.log(e);
 	}
 };

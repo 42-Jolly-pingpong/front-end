@@ -40,8 +40,9 @@ const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 				onUpload(base64String);
 				setAvatarImage(base64String);
 				setFileChange(true);
+			} else {
+				onUpload('');
 			}
-			onUpload('');
 		}
 	};
 

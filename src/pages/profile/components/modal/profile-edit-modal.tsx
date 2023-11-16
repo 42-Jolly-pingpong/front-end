@@ -10,8 +10,8 @@ import ProfileEditEmail from 'pages/profile/components/modal/item/profile-edit-e
 import ProfileEditAvatar from 'pages/profile/components/modal/item/profile-edit-avatar';
 import ProfileEditButton from 'pages/profile/components/modal/item/profile-edit-button';
 import ProfileEditNickname from 'pages/profile/components/modal/item/profile-edit-nickname';
-import sendAPI from 'api/sendAPI';
 import User from 'ts/interfaces/user.model';
+import { updateUser } from 'api/user-api';
 
 interface ModalProps {
 	show: boolean;
@@ -46,11 +46,7 @@ const ProfileEditModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const handleSubmit = async () => {
 		console.log('이제 저장해야지');
 		// 1. updateUserDto를 백엔드 api에 넘겨 저장
-		await sendAPI({
-			method: 'PATCH',
-			url: `/user/${user?.id}`,
-			body: updateUserDto,
-		});
+		await updateUser(updateUserDto);
 		// 2. (recoil)userState update
 		setUserState({ ...user, ...updateUserDto } as User);
 		// 3. (recoil)profileState의 user update. type은 건드릴 거 없음.
