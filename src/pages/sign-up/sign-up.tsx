@@ -24,8 +24,7 @@ const SignUp = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		await userSignUp(nickname);
-		navigate('/');
-		window.location.reload();
+		navigate('/', { replace: true });
 	};
 
 	return (
