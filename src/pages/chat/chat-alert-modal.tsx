@@ -19,7 +19,7 @@ const ChatAlertModel = () => {
 
 	return (
 		<Modal show={status} onClose={onCloseModal}>
-			<Modal.Header>{title}</Modal.Header>
+			<Modal.Header className='break-all'>{title}</Modal.Header>
 			<Modal.Body className='flex flex-col justify-between'>
 				<div>{subText}</div>
 				<div className='flex justify-end mt-10'>
