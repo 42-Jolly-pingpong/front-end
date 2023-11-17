@@ -1,4 +1,4 @@
-import { getJwtValue } from 'components/utils/cookieUtils';
+import { clearCookies, getJwtValue } from 'components/utils/cookieUtils';
 
 interface ApiOptions {
 	method: string;
@@ -6,8 +6,6 @@ interface ApiOptions {
 	headers?: Record<string, string>;
 	body?: any;
 }
-
-const BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
 
 const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 	const token = getJwtValue();
@@ -19,17 +17,17 @@ const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 		};
 	}
 
-	const response = await fetch(`${BASE_URL}${url}`, {
+	const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}${url}`, {
 		method,
-		credentials: 'include',
+		credentials: token ? 'include' : undefined,
 		headers: {
 			...headers,
 			'Content-Type': 'application/json;charset=UTF-8',
-			origin: process.env.REACT_APP_FRONTEND_URL || 'http://localhost:5173',
+			origin: process.env.REACT_APP_FRONTEND_URL!,
 		},
 		body: body ? JSON.stringify(body) : undefined,
 	});
-
+	console.log('response', response);
 	if (response.ok) {
 		const data = await response.text();
 
