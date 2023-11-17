@@ -2,25 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @charset "UTF-8"; */
-
-@font-face {
-	font-family: 'IAMAPLAYER';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/IAMAPLAYER.woff2')
-		format('woff2');
-	font-weight: normal;
-	font-style: normal;
-}
-
-body {
-	/* overflow: hidden; */
-}
-
-@layer base {
-	html {
-		/* font-family: 'IAMAPLAYER'; */
-	}
-}
+@charset "utf-8";
 
 @layer components {
 	.sidebar {

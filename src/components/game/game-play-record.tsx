@@ -1,5 +1,5 @@
 import { Avatar } from 'flowbite-react';
-import GameScoreBar from './game-score-bar';
+import GameScoreBar from 'components/game/game-score-bar';
 
 interface Score {
 	position: 'left' | 'right';
@@ -7,58 +7,26 @@ interface Score {
 	width: number;
 }
 
-interface Props {
-	playTime: number;
-	leftPlayer?: {
-		avatarPath?: string;
-		scores: { elapsedTime: number }[];
-	};
-	rightPlayer?: {
-		avatarPath?: string;
-		scores: { elapsedTime: number }[];
-	};
+interface Player {
+	nickname?: string;
+	avatarPath?: string;
+	scores: { elapsedTime: number }[];
 }
 
-const lefts = {
-	avatarPath: undefined,
-	scores: [
-		{ elapsedTime: 1000 },
-		{ elapsedTime: 2000 },
-		{ elapsedTime: 3000 },
-		{ elapsedTime: 4000 },
-		{ elapsedTime: 5000 },
-		{ elapsedTime: 6000 },
-		{ elapsedTime: 7000 },
-		{ elapsedTime: 8000 },
-		{ elapsedTime: 9000 },
-		{ elapsedTime: 10000 },
-	],
-};
-
-const rights = {
-	avatarPath: undefined,
-	scores: [
-		{ elapsedTime: 1780 },
-		{ elapsedTime: 2780 },
-		{ elapsedTime: 3780 },
-		{ elapsedTime: 4780 },
-		{ elapsedTime: 5780 },
-		{ elapsedTime: 6780 },
-		{ elapsedTime: 7780 },
-		{ elapsedTime: 8780 },
-		{ elapsedTime: 9780 },
-		{ elapsedTime: 10000 },
-	],
-};
+interface Props {
+	playTime: number;
+	leftPlayer: Player;
+	rightPlayer: Player;
+}
 
 const GamePlayRecord: React.FC<Props> = ({
 	playTime,
-	leftPlayer = lefts,
-	rightPlayer = rights,
+	leftPlayer,
+	rightPlayer,
 }) => {
 	const recordWidth = 624;
 	const getWidth = (elapsedTime: number) => {
-		return Math.round((elapsedTime / playTime) * recordWidth);
+		return Math.round((elapsedTime / playTime) * recordWidth) - 7;
 	};
 
 	const leftScores: Score[] = leftPlayer.scores.map((score, index) => ({
