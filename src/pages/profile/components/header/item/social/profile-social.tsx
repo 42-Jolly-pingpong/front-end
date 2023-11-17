@@ -8,7 +8,7 @@ const ProfileSocial = () => {
 	const profile = useRecoilValue(profileState);
 
 	return (
-		<div className='flex items-center w-72'>
+		<div className='flex justify-center items-center w-auto'>
 			{profile.type === ProfileStatus.MINE ? (
 				<ProfileSocialMine />
 			) : !(

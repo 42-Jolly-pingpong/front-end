@@ -12,8 +12,6 @@ interface FriendProps {
 const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 	const profile = useRecoilValue(profileState);
 
-	console.log(history);
-
 	const amIaWinner = profile.user?.id === history.winner.id;
 	const leftUser = amIaWinner ? history.winner : history.loser;
 	const rightUser = amIaWinner ? history.loser : history.winner;
