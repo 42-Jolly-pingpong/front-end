@@ -50,7 +50,7 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 			<Label htmlFor='nickname' value='닉네임' />
 			<TextInput
 				id='nickname'
-				type='text'
+				type='search'
 				color={errorMessage ? 'failure' : nickname ? 'success' : undefined}
 				helperText={errorMessage}
 				onChange={validateNickname}

@@ -52,7 +52,6 @@ const ProfileEditModal: React.FC<ModalProps> = ({ show, onClose }) => {
 			...profile,
 			user: { ...profile.user, ...updateUserDto } as User,
 		});
-		console.log(user?.nickname);
 	};
 
 	useEffect(() => {
