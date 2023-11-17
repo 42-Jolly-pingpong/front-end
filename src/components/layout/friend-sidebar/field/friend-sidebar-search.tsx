@@ -5,10 +5,12 @@ import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendInputChangeState } from 'ts/states/friend/friend-input-change-state';
 import { getFriendListBySearch } from 'api/friend-api';
+import { useState } from 'react';
 
 const FriendSidebarSearch = () => {
 	const user = useRecoilValue(userState);
 	const userFriends = useRecoilValue(userFriendsState);
+	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 	const [friendInputState, setFrinedInputState] = useRecoilState(
 		friendInputChangeState
 	);
@@ -16,14 +18,19 @@ const FriendSidebarSearch = () => {
 	const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const keyword = e.target.value;
 
-		setFrinedInputState({ ...friendInputState, state: false });
-
-		if (keyword.length === 0) {
-			setFrinedInputState({ friends: userFriends.friends, state: false });
-		} else {
-			const friends = await getFriendListBySearch(user!.id, keyword);
-			setFrinedInputState({ friends, state: true });
+		if (timeoutId) {
+			clearTimeout(timeoutId);
 		}
+
+		const newTimeoutId = setTimeout(async () => {
+			if (keyword.length === 0) {
+				setFrinedInputState({ friends: userFriends.friends, state: false });
+			} else {
+				const friends = await getFriendListBySearch(user!.id, keyword);
+				setFrinedInputState({ friends, state: true });
+			}
+		}, 300);
+		setTimeoutId(newTimeoutId);
 	};
 
 	return (

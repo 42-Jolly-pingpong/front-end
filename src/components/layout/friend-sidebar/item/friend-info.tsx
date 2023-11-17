@@ -8,8 +8,8 @@ interface FriendInfoProps {
 }
 
 const FriendInfo: React.FC<FriendInfoProps> = ({ user }) => {
-	let statusColor = 'border-2 border-gray-800';
 	const navigate = useNavigate();
+	let statusColor = 'border-2 border-gray-800';
 
 	const handleClick = () => {
 		navigate(`/profile/${user.nickname}`);
@@ -28,7 +28,7 @@ const FriendInfo: React.FC<FriendInfoProps> = ({ user }) => {
 		<div className='flex flex-row items-center gap-2'>
 			<Avatar
 				img={user.avatarPath || ''}
-				size={'sm'}
+				size='sm'
 				className='cursor-pointer'
 				onClick={handleClick}
 			/>
