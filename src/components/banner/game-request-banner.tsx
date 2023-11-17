@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import UseCountdown from 'hooks/use-countdown';
 import CancelButton from 'components/button/cancel-button';
@@ -26,7 +26,10 @@ const GameRequestBanner = ({ userInfo }: propsType) => {
 	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
 
 	const handleMatch = () => {
-		socket.emit('acceptInvite', JSON.stringify({user: userInfo, mode: gameBanner.mode}));
+		socket.emit(
+			'acceptInvite',
+			JSON.stringify({ user: userInfo, mode: gameBanner.mode })
+		);
 		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
 	};
 

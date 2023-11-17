@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { socket } from 'socket/socket';
 import { GameMode } from 'ts/enums/game/game-mode.enum';
 import User from 'ts/interfaces/user.model';
+import InviteCancelBanner from './inviteCancel-banner';
 
 /**
  * 소켓 통신 중 헤더 위에 띄워질 Banner 입니다.
@@ -26,6 +27,9 @@ const Banner = () => {
 			setUserInfo(userInfo);
 			setBanner({ type: GameBanner.GAMEREQUEST, mode });
 		});
+		socket.on('inviteCencel', () => {
+			setBanner({ ...banner, type: GameBanner.CENCEL });
+		});
 	});
 
 	switch (banner.type) {
@@ -34,6 +38,8 @@ const Banner = () => {
 			break;
 		case GameBanner.NOMATCH: // 게임 matching에 실패했을 때
 			return <NoMatchBanner />;
+		case GameBanner.CENCEL:
+			return <InviteCancelBanner />;
 		default:
 			return null;
 	}
