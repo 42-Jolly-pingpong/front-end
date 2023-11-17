@@ -15,6 +15,7 @@ const ProfileEditNickname: React.FC<NicknameProps> = ({ onChange }) => {
 	const [errorMessage, setErrorMessage] = useState<string>('');
 
 	const validateNickname = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const invalidCharactersRegex = /[^a-zA-Z0-9가-힣]/;
 		onChange('');
 		const nickname = e.target.value;
 		if (nickname === '') setNickname(nickname);
@@ -31,6 +32,8 @@ const ProfileEditNickname: React.FC<NicknameProps> = ({ onChange }) => {
 				newErrorMessage = '닉네임은 20글자까지 입력할 수 있습니다.';
 			} else if (nickname.indexOf(' ') !== -1) {
 				newErrorMessage = '닉네임에는 공백이 포함될 수 없습니다.';
+			} else if (invalidCharactersRegex.test(nickname)) {
+				newErrorMessage = '숫자, 영어, 한글 이외의 문자는 사용할 수 없습니다';
 			} else {
 				const findUser = await getUserByNickname(nickname);
 				if (findUser !== undefined && user!.nickname !== findUser.nickname) {

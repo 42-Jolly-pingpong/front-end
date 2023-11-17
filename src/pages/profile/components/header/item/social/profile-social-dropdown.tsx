@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Dropdown } from 'flowbite-react';
 import { BiUserMinus } from 'react-icons/bi';
 import { BsThreeDots } from 'react-icons/bs';

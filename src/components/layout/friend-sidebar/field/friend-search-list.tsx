@@ -1,15 +1,15 @@
 import { useRecoilValue } from 'recoil';
 import FriendInfo from 'components/layout/friend-sidebar/item/friend-info';
 import FriendDropdown from 'components/layout/friend-sidebar/item/friend-dropdown';
-import FriendListEmpty from 'components/layout/friend-sidebar/item/friend-list-empty';
 import { friendInputChangeState } from 'ts/states/friend/friend-input-change-state';
+import FriendNotFound from 'components/layout/friend-sidebar/item/friend-not-found';
 
 const FriendSearchList = () => {
 	const friendInputState = useRecoilValue(friendInputChangeState);
 	const friends = friendInputState.friends;
 
 	if (friends === null || friends.length === 0) {
-		return <FriendListEmpty />;
+		return <FriendNotFound />;
 	}
 	return (
 		<div className='flex flex-col h-full border-t pt-2 overflow-y-auto'>

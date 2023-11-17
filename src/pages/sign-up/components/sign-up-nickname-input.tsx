@@ -10,6 +10,7 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 	const [nickname, setNickname] = useState<string>('');
 	const [errorMessage, setErrorMessage] = useState<string>('');
+	const invalidCharactersRegex = /[^a-zA-Z0-9가-힣]/;
 
 	const validateNickname = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChange('');
@@ -28,6 +29,8 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 				newErrorMessage = '닉네임은 20글자까지 입력할 수 있습니다';
 			} else if (nickname.indexOf(' ') !== -1) {
 				newErrorMessage = '닉네임에는 공백이 포함될 수 없습니다';
+			} else if (invalidCharactersRegex.test(nickname)) {
+				newErrorMessage = '숫자, 영어, 한글 이외의 문자는 사용할 수 없습니다';
 			} else {
 				const user = await getUserByNickname(nickname);
 				if (user !== undefined) {
@@ -47,7 +50,7 @@ const SignUpNicknameInput: React.FC<emailProps> = ({ onChange }) => {
 			<Label htmlFor='nickname' value='닉네임' />
 			<TextInput
 				id='nickname'
-				type='text'
+				type='search'
 				color={errorMessage ? 'failure' : nickname ? 'success' : undefined}
 				helperText={errorMessage}
 				onChange={validateNickname}
