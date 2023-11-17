@@ -1,7 +1,7 @@
 import { Avatar } from 'flowbite-react';
+import { useNavigate } from 'react-router-dom';
 import User from 'ts/interfaces/user.model';
 import { UserStatus } from 'ts/enums/user/user-status.enum';
-import { useNavigate } from 'react-router-dom';
 
 interface FriendInfoProps {
 	user: User;
