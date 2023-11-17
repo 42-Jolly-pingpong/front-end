@@ -1,7 +1,9 @@
 import {
+	acceptFriendRequest,
 	addBlockedFriend,
 	deleteBlockedFriend,
 	deleteFriend,
+	denyFriendRequest,
 	getFriendList,
 	getFriendRelation,
 	updateFriend,
@@ -25,7 +27,7 @@ import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 
-const MemberDotButton = (props: { participant: ChatParticipant }) => {
+const MemberDotButton = async (props: { participant: ChatParticipant }) => {
 	const user = useRecoilValue(userState) as User;
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
@@ -88,14 +90,24 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		);
 	};
 
-	const manageFriend = async (isFriend: boolean) => {
-		if (isFriend) {
-			await deleteFriend(otherUser.id);
-			const friends = await getFriendList(user!.id);
-			setFriendsState((pre) => ({ ...pre, friends }));
-			setAlertModal((pre) => ({ ...pre, status: false }));
-		} else {
-			await updateFriend(otherUser.id);
+	const manageFriend = async () => {
+		switch (relation) {
+			case ProfileStatus.FRIEND:
+				await deleteFriend(otherUser.id);
+				const friendsAfterDelete = await getFriendList(user!.id);
+				setFriendsState((pre) => ({ ...pre, friendsAfterDelete }));
+				setAlertModal((pre) => ({ ...pre, status: false }));
+				break;
+			case ProfileStatus.REQUESTEDBYME:
+				await denyFriendRequest(otherUser.id);
+				break;
+			case ProfileStatus.REQUESTEDBYOTHER:
+				await acceptFriendRequest(otherUser.id);
+				break;
+			default:
+				await updateFriend(otherUser.id);
+				const friendsAfterUpdate = await getFriendList(user!.id);
+				setFriendsState((pre) => ({ ...pre, friendsAfterUpdate }));
 		}
 		const newRelation = await getFriendRelation(otherUser.id);
 		setRelation(newRelation);
@@ -110,43 +122,33 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 				confirmButtonText: `친구 목록에서 제거`,
 				exitButtonText: '취소',
 				onClickButton: () => {
-					manageFriend(isFriend);
+					manageFriend();
 				},
 			});
 			return;
 		}
-		manageFriend(isFriend);
+		manageFriend();
 	};
 
 	const manageFriendList = () => {
 		const isFriend = relation === ProfileStatus.FRIEND;
-		const isPending =
-			relation === ProfileStatus.REQUESTEDBYME ||
-			relation === ProfileStatus.REQUESTEDBYOTHER;
 
 		const text = (() => {
 			switch (relation) {
 				case ProfileStatus.FRIEND:
 					return '친구 제거하기';
 				case ProfileStatus.REQUESTEDBYME:
-					return '수락 대기 중';
+					return '요청됨';
 				case ProfileStatus.REQUESTEDBYOTHER:
-					return '응답 대기 중';
+					return '요청 수락';
 				default:
 					return '친구 신청하기';
 			}
 		})();
 
 		return (
-			<Dropdown.Item
-				onClick={() => onClickManageFriend(isFriend)}
-				disabled={isPending}
-			>
-				<div
-					className={`flex items-center font-normal text-sm ${
-						isPending ? 'text-gray-400' : 'text-gray-700'
-					}`}
-				>
+			<Dropdown.Item onClick={() => onClickManageFriend(isFriend)}>
+				<div className='flex items-center font-normal text-sm text-gray-700'>
 					{text}
 				</div>
 			</Dropdown.Item>
