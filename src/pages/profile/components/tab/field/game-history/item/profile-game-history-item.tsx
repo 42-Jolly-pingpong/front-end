@@ -1,9 +1,9 @@
 import GamePlayRecord from 'components/game/game-play-record';
-import { Avatar } from 'flowbite-react';
 import { useRecoilValue } from 'recoil';
 import { GameMode } from 'ts/enums/game/game-mode.enum';
 import { GameHistory } from 'ts/interfaces/game-history.model';
 import { profileState } from 'ts/states/profile/profile-state';
+import ProfileGameHistoryUser from 'pages/profile/components/tab/field/game-history/item/profile-game-history-user';
 
 interface FriendProps {
 	history: GameHistory;
@@ -30,7 +30,6 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 				}`}
 			>
 				<div className='flex justify-start items-center gap-2'>
-					{/* h-full로 바꿔보기 */}
 					<div
 						className={`w-2 h-[120px] rounded-l-lg  ${
 							amIaWinner ? 'bg-blue-500' : 'bg-red-500'
@@ -52,14 +51,12 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 						</div>
 					</div>
 				</div>
-				{/* <div className='grow shrink basis-0 h-[120px] justify-center items-center gap-6 flex'> */}
 				<div className='flex grow h-[120px] justify-center items-center gap-6'>
-					<div className='justify-start items-center gap-2 flex '>
-						<div className='text-lg truncate max-w-[140px]'>
-							{leftUser.nickname}
-						</div>
-						<Avatar img={leftUser.avatarPath || ''} rounded size='lg' />
-					</div>
+					<ProfileGameHistoryUser
+						position='left'
+						nickname={leftUser.nickname}
+						avatarPath={leftUser.avatarPath}
+					/>
 					<div className='flex px-3 py-1 bg-primary-700 rounded-xl justify-center items-center gap-1'>
 						<div className='text-white text-xl font-bold'>
 							{amIaWinner ? history.winScore : history.loseScore}
@@ -70,14 +67,29 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 						</div>
 					</div>
 					<div className='justify-start items-center gap-2 flex '>
-						<Avatar img={rightUser.avatarPath || ''} rounded size='lg' />
-						<div className='text-lg truncate max-w-[140px]'>
-							{rightUser.nickname}
-						</div>
+						<ProfileGameHistoryUser
+							position='right'
+							nickname={rightUser.nickname}
+							avatarPath={rightUser.avatarPath}
+						/>
 					</div>
 				</div>
 			</div>
-			<GamePlayRecord playTime={11000} />
+			<GamePlayRecord
+				playTime={history.playTime}
+				leftPlayer={{
+					avatarPath: leftUser.avatarPath,
+					scores: history.scoreLogs.filter(
+						(score) => score.user.id === leftUser.id
+					),
+				}}
+				rightPlayer={{
+					avatarPath: rightUser.avatarPath,
+					scores: history.scoreLogs.filter(
+						(score) => score.user.id === rightUser.id
+					),
+				}}
+			/>
 		</>
 	);
 };
