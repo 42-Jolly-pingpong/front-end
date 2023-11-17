@@ -9,8 +9,8 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import FriendSidebarHeader from './field/friend-sidebar-header';
-import FriendListEmpty from './item/friend-list-empty';
+import FriendSidebarHeader from 'components/layout/friend-sidebar/field/friend-sidebar-header';
+import FriendListEmpty from 'components/layout/friend-sidebar/item/friend-list-empty';
 import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
 
 const FriendSidebar = () => {
