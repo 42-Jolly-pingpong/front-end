@@ -1,7 +1,9 @@
 import {
+	acceptFriendRequest,
 	addBlockedFriend,
 	deleteBlockedFriend,
 	deleteFriend,
+	denyFriendRequest,
 	getFriendList,
 	getFriendRelation,
 	updateFriend,
@@ -25,7 +27,6 @@ const ProfileDotButton = () => {
 		ProfileStatus.UNDEFINED
 	);
 
-	const isFriend = relation === ProfileStatus.FRIEND;
 	const isBlocked = relation === ProfileStatus.BLOCKEDBYME;
 
 	useEffect(() => {
@@ -35,18 +36,14 @@ const ProfileDotButton = () => {
 		})();
 	}, []);
 
-	const isPending =
-		relation === ProfileStatus.REQUESTEDBYME ||
-		relation === ProfileStatus.REQUESTEDBYOTHER;
-
 	const textForFriendRelation = (() => {
 		switch (relation) {
 			case ProfileStatus.FRIEND:
 				return '친구 제거하기';
 			case ProfileStatus.REQUESTEDBYME:
-				return '수락 대기 중';
+				return '요청됨';
 			case ProfileStatus.REQUESTEDBYOTHER:
-				return '응답 대기 중';
+				return '요청 수락';
 			default:
 				return '친구 신청하기';
 		}
@@ -66,12 +63,22 @@ const ProfileDotButton = () => {
 	};
 
 	const onClickManageFriend = async () => {
-		if (isFriend) {
-			await deleteFriend(otherUser.id);
-			const friends = await getFriendList(user!.id);
-			setFriendsState((pre) => ({ ...pre, friends }));
-		} else {
-			await updateFriend(otherUser.id);
+		switch (relation) {
+			case ProfileStatus.FRIEND:
+				await deleteFriend(otherUser.id);
+				const friendsAfterDelete = await getFriendList(user!.id);
+				setFriendsState((pre) => ({ ...pre, friendsAfterDelete }));
+				break;
+			case ProfileStatus.REQUESTEDBYME:
+				await denyFriendRequest(otherUser.id);
+				break;
+			case ProfileStatus.REQUESTEDBYOTHER:
+				await acceptFriendRequest(otherUser.id);
+				break;
+			default:
+				await updateFriend(otherUser.id);
+				const friendsAfterUpdate = await getFriendList(user!.id);
+				setFriendsState((pre) => ({ ...pre, friendsAfterUpdate }));
 		}
 		const newRelation = await getFriendRelation(otherUser.id);
 		setRelation(newRelation);
@@ -93,12 +100,8 @@ const ProfileDotButton = () => {
 			dismissOnClick={false}
 			renderTrigger={() => renderTrigger()}
 		>
-			<Dropdown.Item onClick={onClickManageFriend} disabled={isPending}>
-				<div
-					className={`flex items-center font-normal text-sm ${
-						isPending ? 'text-gray-400' : 'text-gray-700'
-					}`}
-				>
+			<Dropdown.Item onClick={onClickManageFriend}>
+				<div className='flex items-center font-normal text-sm text-gray-700'>
 					<HiOutlineUserAdd className='mr-2' />
 					{textForFriendRelation}
 				</div>

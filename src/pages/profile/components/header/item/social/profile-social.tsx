@@ -7,18 +7,15 @@ import ProfileSocialNormal from 'pages/profile/components/header/item/social/pro
 const ProfileSocial = () => {
 	const profile = useRecoilValue(profileState);
 
-	return (
-		<div className='flex justify-center items-center w-auto'>
-			{profile.type === ProfileStatus.MINE ? (
-				<ProfileSocialMine />
-			) : !(
-					profile.type === ProfileStatus.UNKNOWN ||
-					profile.type === ProfileStatus.BLOCKEDBYOTHER
-			  ) ? (
-				<ProfileSocialNormal />
-			) : null}
-		</div>
-	);
+	switch (profile.type) {
+		case ProfileStatus.MINE:
+			return <ProfileSocialMine />;
+		case ProfileStatus.UNKNOWN:
+		case ProfileStatus.BLOCKEDBYOTHER:
+			return;
+		default:
+			return <ProfileSocialNormal />;
+	}
 };
 
 export default ProfileSocial;

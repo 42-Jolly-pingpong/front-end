@@ -1,4 +1,5 @@
 import { Avatar } from 'flowbite-react';
+import { useNavigate } from 'react-router-dom';
 import User from 'ts/interfaces/user.model';
 import { UserStatus } from 'ts/enums/user/user-status.enum';
 
@@ -7,7 +8,12 @@ interface FriendInfoProps {
 }
 
 const FriendInfo: React.FC<FriendInfoProps> = ({ user }) => {
+	const navigate = useNavigate();
 	let statusColor = 'border-2 border-gray-800';
+
+	const handleClick = () => {
+		navigate(`/profile/${user.nickname}`);
+	};
 
 	switch (user.status) {
 		case UserStatus.ONLINE:
@@ -20,8 +26,15 @@ const FriendInfo: React.FC<FriendInfoProps> = ({ user }) => {
 
 	return (
 		<div className='flex flex-row items-center gap-2'>
-			<Avatar img={user.avatarPath || ''} size={'sm'} />
-			<div className='text-sm font-bold'>{user.nickname}</div>
+			<Avatar
+				img={user.avatarPath || ''}
+				size='sm'
+				className='cursor-pointer'
+				onClick={handleClick}
+			/>
+			<div className='text-sm font-bold cursor-pointer' onClick={handleClick}>
+				{user.nickname}
+			</div>
 			<div className={`w-2 h-2 rounded-full ${statusColor}`} />
 		</div>
 	);

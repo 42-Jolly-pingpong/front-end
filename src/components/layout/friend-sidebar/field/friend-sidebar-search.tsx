@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { HiSearch } from 'react-icons/hi';
-import { Label, TextInput } from 'flowbite-react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { TextInput } from 'flowbite-react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendInputChangeState } from 'ts/states/friend/friend-input-change-state';
@@ -9,21 +10,25 @@ import { getFriendListBySearch } from 'api/friend-api';
 const FriendSidebarSearch = () => {
 	const user = useRecoilValue(userState);
 	const userFriends = useRecoilValue(userFriendsState);
-	const [friendInputState, setFrinedInputState] = useRecoilState(
-		friendInputChangeState
-	);
+	const setFrinedInputState = useSetRecoilState(friendInputChangeState);
+	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
 	const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const keyword = e.target.value;
 
-		setFrinedInputState({ ...friendInputState, state: false });
-
-		if (keyword.length === 0) {
-			setFrinedInputState({ friends: userFriends.friends, state: false });
-		} else {
-			const friends = await getFriendListBySearch(user!.id, keyword);
-			setFrinedInputState({ friends, state: true });
+		if (timeoutId) {
+			clearTimeout(timeoutId);
 		}
+
+		const newTimeoutId = setTimeout(async () => {
+			if (keyword.length === 0) {
+				setFrinedInputState({ friends: userFriends.friends, state: false });
+			} else {
+				const friends = await getFriendListBySearch(user!.id, keyword);
+				setFrinedInputState({ friends, state: true });
+			}
+		}, 300);
+		setTimeoutId(newTimeoutId);
 	};
 
 	return (

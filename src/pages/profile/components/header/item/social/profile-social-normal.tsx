@@ -17,12 +17,12 @@ import {
 
 const ProfileSocialNormal = () => {
 	const profile = useRecoilValue(profileState);
+	const friendsState = useRecoilState(userFriendsState);
 	const [relation, setRelation] = useState<ProfileStatus>(
 		ProfileStatus.UNKNOWN
 	);
-	const [dropdownState, setDropdownState] = useState(true);
 	const [modalState, setModalState] = useState(false);
-	const friendsState = useRecoilState(userFriendsState);
+	const [dropdownState, setDropdownState] = useState(true);
 
 	const handleClick = async () => {
 		if (relation === ProfileStatus.UNDEFINED) {
@@ -64,13 +64,15 @@ const ProfileSocialNormal = () => {
 			setRelation(relation);
 			if (relation === ProfileStatus.BLOCKEDBYME) {
 				setDropdownState(false);
+			} else {
+				setDropdownState(true);
 			}
 		};
 		fetchRelation();
-	}, [friendsState]);
+	}, [friendsState, profile.user]);
 
 	return (
-		<>
+		<div className='flex items-center w-72'>
 			<div className='text-xl text-center pr-5'>{profile.user?.nickname}</div>
 			<ProfileHeaderSocialButton relation={relation} onClick={handleClick} />
 			<ProfileFriendModal
@@ -85,7 +87,7 @@ const ProfileSocialNormal = () => {
 			</GrayButton>
 			<div className='pl-2' />
 			{dropdownState && <ProfileSocialDropdown />}
-		</>
+		</div>
 	);
 };
 

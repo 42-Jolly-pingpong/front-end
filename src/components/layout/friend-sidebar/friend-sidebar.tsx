@@ -1,17 +1,17 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userFriendsState } from 'ts/states/user/user-friends-state';
-import FriendSidebarNormal from 'components/layout/friend-sidebar/friend-sidebar-normal';
-import { userState } from 'ts/states/user-state';
 import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { socket } from 'socket/socket';
+import { userState } from 'ts/states/user-state';
+import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
+import FriendListEmpty from 'components/layout/friend-sidebar/item/friend-list-empty';
+import FriendSidebarNormal from 'components/layout/friend-sidebar/friend-sidebar-normal';
+import FriendSidebarHeader from 'components/layout/friend-sidebar/field/friend-sidebar-header';
 import {
 	getBlockedList,
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import FriendSidebarHeader from 'components/layout/friend-sidebar/field/friend-sidebar-header';
-import FriendListEmpty from 'components/layout/friend-sidebar/item/friend-list-empty';
-import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
 
 const FriendSidebar = () => {
 	const showFriendsSidebar = useRecoilValue(friendSidebarState);

@@ -65,7 +65,7 @@ export const ChatInput = () => {
 	};
 
 	const sendButton = () => {
-		const isDisabled = input.trim().length === 0;
+		const isDisabled = input.trim().length === 0 || isMuted;
 		return (
 			<button
 				className={`ml-3 ${isDisabled ? 'text-gray-400' : 'text-primary-700'}`}
