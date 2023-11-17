@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Modal } from 'flowbite-react';
 import { useRecoilState } from 'recoil';
+import { Modal } from 'flowbite-react';
+import { useNavigate } from 'react-router-dom';
 import { userState } from 'ts/states/user-state';
 import { profileState } from 'ts/states/profile/profile-state';
 import UpdateUserDto from 'ts/interfaces/user/update-user.model';
@@ -12,7 +13,6 @@ import ProfileEditButton from 'pages/profile/components/modal/item/profile-edit-
 import ProfileEditNickname from 'pages/profile/components/modal/item/profile-edit-nickname';
 import User from 'ts/interfaces/user.model';
 import { updateUser } from 'api/user-api';
-import { useNavigate } from 'react-router-dom';
 
 interface ModalProps {
 	show: boolean;
