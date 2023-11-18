@@ -31,7 +31,7 @@ const ChatSidebarChat = () => {
 	}
 
 	return (
-		<div className='h-hull w-full'>
+		<div className='h-full w-full'>
 			<ChatSidebarHeader
 				aria-label='Tabs with underline'
 				title={chat.roomName}

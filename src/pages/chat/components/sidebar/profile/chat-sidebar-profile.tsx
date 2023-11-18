@@ -23,7 +23,7 @@ const ChatSidebarProfile = () => {
 	};
 
 	return (
-		<div className='h-hull w-full'>
+		<div className='h-full w-full'>
 			<ChatSidebarHeader title='프로필' />
 			<div className='grow'>
 				{userAvatar()}

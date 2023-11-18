@@ -54,7 +54,7 @@ const Chat = () => {
 	}, [token]);
 
 	return (
-		<div className='flex max-h-screen max-w-screen'>
+		<div className='flex h-screen w-screen'>
 			<HandleChatSocket />
 			<ChatList />
 			<ChatContent hasChatSidebar={hasChatSidebar} />

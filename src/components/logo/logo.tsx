@@ -1,17 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 
 const Logo = () => {
-	const context = useNavigate();
+	const navigate = useNavigate();
 
 	const onClickLogo = () => {
-		context('/');
+		navigate('/');
 	};
 
 	return (
-		<button className='flex items-center h-12' onClick={onClickLogo}>
-			<img src='/images/logo2.jpeg' className='w-6 h-6 m-3'></img>
-			<div className='font-semibold text-lg'>죠리핑퐁</div>
-		</button>
+		<div className='flex h-12 border-b'>
+			<button className='flex items-center gap-2 ml-3' onClick={onClickLogo}>
+				<img src='/images/logo2.jpeg' className='w-6 h-6' />
+				<div className='font-semibold text-lg'>죠리핑퐁</div>
+			</button>
+		</div>
 	);
 };
 
