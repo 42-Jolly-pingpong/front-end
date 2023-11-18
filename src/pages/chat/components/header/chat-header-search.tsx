@@ -47,7 +47,7 @@ const ChatHeaderSearch = () => {
 				onFocus={onFocusInput}
 				onBlur={onBlurInput}
 			>
-				<div className='text-gray-500 ml-3'>대상:</div>
+				<div className='text-gray-500 ml-6'>대상:</div>
 				<input
 					ref={inputRef}
 					type='text'
@@ -56,7 +56,7 @@ const ChatHeaderSearch = () => {
 					value={inputContent}
 					onChange={onChangeInput}
 				/>
-				<div className=''>{showPad ? searchedPad() : null}</div>
+				{showPad ? searchedPad() : null}
 			</div>
 		);
 	};
@@ -70,7 +70,7 @@ const ChatHeaderSearch = () => {
 	};
 
 	const searchedPad = () => {
-		const location = 'absolute top-8 left-9';
+		const location = 'absolute top-8 left-10';
 		const commonStyle = 'm-2 bg-white border rounded-lg chat-pad';
 
 		return (
@@ -97,13 +97,11 @@ const ChatHeaderSearch = () => {
 	};
 
 	return (
-		<div>
-			<div className='flex flex-col justify-between w-full flex items-center border-b h-24'>
-				<div className='flex items-center chat-content h-12 border-b font-bold'>
-					<div className='p-3 m-2'>새 메시지</div>
-				</div>
-				{searchInput()}
+		<div className='flex flex-col items-center border-b h-24'>
+			<div className='flex items-center w-full h-12 border-b font-bold'>
+				<div className='ml-6'>새 메시지</div>
 			</div>
+			{searchInput()}
 		</div>
 	);
 };

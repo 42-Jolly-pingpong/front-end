@@ -4,11 +4,14 @@ import { ChatHeaderButtonTheme } from 'pages/chat/themes/chat-header-button-them
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
 
-const ChatInfoButton = (props: { chatRoom: ChatRoom }) => {
-	const { chatRoom } = props;
+interface Props {
+	chatRoom: ChatRoom;
+}
+
+const ChatInfoButton: React.FC<Props> = ({ chatRoom }) => {
 	const setChatSidebar = useChangeSidebar('chat');
 
-	const participantsImg: string[] = [];
+	const participantsImg: (string | undefined)[] = [];
 
 	const participants = chatRoom.participants.filter(
 		(participant) =>
@@ -35,16 +38,16 @@ const ChatInfoButton = (props: { chatRoom: ChatRoom }) => {
 			<Button
 				color='light'
 				size='sm'
-				className='h-8 border border-slate-300 mr-2'
+				className='h-8 border boder rounded-lg border-gray-300 focus:ring-0'
 				onClick={onClickButton}
 			>
-				<div className='flex items-center'>
+				<div className='flex items-center gap-1'>
 					<Avatar.Group>
 						{participantsImg.map((img, id) => (
 							<Avatar size='xs' img={img} key={id} rounded stacked />
 						))}
 					</Avatar.Group>
-					<div className='ml-2 text-gray-500'>{participants.length}</div>
+					<div className='text-gray-500'>{participants.length}</div>
 				</div>
 			</Button>
 		</Flowbite>

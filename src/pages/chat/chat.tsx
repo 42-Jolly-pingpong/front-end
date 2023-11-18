@@ -2,9 +2,7 @@ import ChatContent from 'pages/chat/components/chat-content';
 import ChatList from 'pages/chat/components/list/chat-list';
 import ChatSidebar from 'pages/chat/components/sidebar/chat-sidebar';
 import ChannelModal from 'pages/chat/components/modal/channel-modal';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';
-import { chatSidebarState } from 'ts/states/chat-sidebar-state';
+import { useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import useFetch from 'hooks/use-fetch';
 import { chatListState } from 'ts/states/chat-list.state';
@@ -14,8 +12,6 @@ import useRedirectHome from 'hooks/use-redirect-home';
 import { getJwtValue } from 'components/utils/cookieUtils';
 
 const Chat = () => {
-	const hasChatSidebar =
-		useRecoilValue(chatSidebarState).status !== ChatSidebarStatus.CLOSE;
 	const setChatList = useSetRecoilState(chatListState);
 	const getData = useFetch();
 	const token = getJwtValue();
@@ -54,14 +50,16 @@ const Chat = () => {
 	}, [token]);
 
 	return (
-		<div className='flex h-screen w-screen'>
+		<>
 			<HandleChatSocket />
-			<ChatList />
-			<ChatContent hasChatSidebar={hasChatSidebar} />
-			{hasChatSidebar && <ChatSidebar />}
-			<ChannelModal />
-			<ChatAlertModel />
-		</div>
+			<div className='flex w-screen h-screen no-scrollbar'>
+				<ChatList />
+				<ChatContent />
+				<ChatSidebar />
+				<ChannelModal />
+				<ChatAlertModel />
+			</div>
+		</>
 	);
 };
 

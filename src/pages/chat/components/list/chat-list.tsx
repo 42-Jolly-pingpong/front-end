@@ -6,10 +6,10 @@ import { sidebarTheme } from 'pages/chat/themes/side-bar-theme';
 
 const ChatList = () => {
 	return (
-		<div className='h-full w-[250px] border-r'>
+		<div className='w-[250px] h-full border-r'>
 			<Logo />
 			<Flowbite theme={{ theme: sidebarTheme }}>
-				<Sidebar className='w-full p-3'>
+				<Sidebar className='w-full pt-3 px-3 overflow-y-scroll chat-menu'>
 					<Sidebar.ItemGroup>
 						<Channels />
 					</Sidebar.ItemGroup>
