@@ -1,11 +1,15 @@
 import YellowButton from 'components/button/yellow-button';
 import BannerIcon from './item/banner-icon';
 import BannerMessage from './item/banner-message';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
 
-const InviteCancelBanner = () => {
+interface propsType {
+	message: string;
+}
+
+const InviteCancelBanner = ({ message }: propsType) => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
 
 	const onclick = () => {
@@ -18,7 +22,9 @@ const InviteCancelBanner = () => {
 				<div className='flex justify-between p-4 items-center'>
 					<div className='flex'>
 						<BannerIcon />
-						<BannerMessage message='만료된 요청입니다.' />
+						<BannerMessage
+							message={message}
+						/>
 					</div>
 					<div className='flex items-center'>
 						<YellowButton size='xs' onClick={onclick}>

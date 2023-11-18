@@ -3,11 +3,8 @@ import {
 	useRecoilState,
 	useRecoilValue,
 	useResetRecoilState,
-	useSetRecoilState,
 } from 'recoil';
 import { socket } from 'socket/socket';
-import { gameStartState } from 'ts/states/game/game-start-state';
-import { gameInfoState } from 'ts/states/game/game-info.state';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
 import YellowButton from 'components/button/yellow-button';
 import { userState } from 'ts/states/user-state';
@@ -18,12 +15,10 @@ import GameWaitModal from 'components/modal/game-wait-modal';
 
 const JoinButton = () => {
 	const [modal, setModal] = useState(false);
+	const userInfo = useRecoilValue(userState);
 	const [gameWait, setGameWait] = useRecoilState(gameWaitState);
 	const resetGameWait = useResetRecoilState(gameWaitState);
 	const resetGameBanner = useResetRecoilState(gameBannerState);
-	const userInfo = useRecoilValue(userState);
-	const setIsGameStart = useSetRecoilState(gameStartState);
-	const setGameInfo = useSetRecoilState(gameInfoState);
 
 	const handleButton = () => {
 		resetGameBanner();
@@ -47,6 +42,7 @@ const JoinButton = () => {
 			</YellowButton>
 			<GameWaitModal show={modal} onClose={handleClose} />
 		</>
+
 	);
 };
 

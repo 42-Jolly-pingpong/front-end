@@ -1,21 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import UseCountdown from 'hooks/use-countdown';
 import CancelButton from 'components/button/cancel-button';
 import YellowButton from 'components/button/yellow-button';
 import BannerIcon from 'components/banner/item/banner-icon';
 import BannerMessage from 'components/banner/item/banner-message';
-import BannerProgress from 'components/banner/item/banner-progress';
 import { GameBanner } from 'ts/enums/game/game-banner.enum';
 import { gameBannerState } from 'ts/states/game/game-banner-state';
 import { GAME_REQ_MSG } from 'constants/messages';
-import {
-	COUNTDOWN_REQUEST_INTERVAL,
-	COUNTDOWN_REQUEST_VALUE,
-	PROGRESS_DEFAULT_VALUE,
-} from 'constants/values';
 import { socket } from 'socket/socket';
 import User from 'ts/interfaces/user.model';
+import { Progress } from 'flowbite-react';
+import ProgressTheme from './theme/progress-theme';
 
 interface propsType {
 	userInfo: User;
@@ -23,7 +18,21 @@ interface propsType {
 
 const GameRequestBanner = ({ userInfo }: propsType) => {
 	const [gameBanner, setGameBanner] = useRecoilState(gameBannerState);
-	const [progressValue, setProgressValue] = useState(PROGRESS_DEFAULT_VALUE);
+	const [progressValue, setProgressValue] = useState(100);
+
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+			setProgressValue((prev) => (prev -= 0.1));
+		}, 10);
+
+		return () => {
+			clearInterval(intervalId);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (progressValue < 0) handleCancel();
+	}, [progressValue]);
 
 	const handleMatch = () => {
 		socket.emit(
@@ -34,21 +43,15 @@ const GameRequestBanner = ({ userInfo }: propsType) => {
 	};
 
 	const handleCancel = () => {
+		socket.emit(
+			'refuseInvite',
+			JSON.stringify({ user: userInfo, mode: gameBanner.mode })
+		);
 		setGameBanner({ ...gameBanner, type: GameBanner.NONE });
-	};
-
-	const handleProgress = (value: number) => {
-		setProgressValue(value);
 	};
 
 	return (
 		<>
-			<UseCountdown
-				value={COUNTDOWN_REQUEST_VALUE}
-				interval={COUNTDOWN_REQUEST_INTERVAL}
-				end={handleCancel}
-				onTick={handleProgress}
-			/>
 			<div className='fixed z-50 flex justify-center w-full mt-6'>
 				<div className='fixed w-11/12 border rounded bg-white '>
 					<div className='flex justify-between p-4 items-center'>
@@ -64,7 +67,15 @@ const GameRequestBanner = ({ userInfo }: propsType) => {
 							<CancelButton size='xs' onClick={handleCancel} />
 						</div>
 					</div>
-					<BannerProgress progress={progressValue} />
+					<div className='w-full h-1.5 flex-col  justify-start items-end inline-flex '>
+						<div className='w-full p-1 h-1 rounded-full'>
+							<Progress
+								progress={progressValue}
+								color='yellow'
+								theme={ProgressTheme}
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 		</>
