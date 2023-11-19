@@ -1,4 +1,4 @@
-import { getJwtValue } from 'components/utils/cookieUtils';
+import { getJwtValue } from 'components/utils/cookie-utils';
 import useChangeChat from 'hooks/use-change-chat';
 import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect } from 'react';

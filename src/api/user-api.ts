@@ -1,5 +1,6 @@
 import sendAPI from 'api/sendAPI';
 import User from 'ts/interfaces/user.model';
+import { GameHistory } from 'ts/interfaces/game-history.model';
 import UpdateUserDto from 'ts/interfaces/user/update-user.model';
 
 export const getUserByNickname = async (
@@ -34,5 +35,20 @@ export const updateUser = async (
 		});
 	} catch (e) {
 		console.log(e);
+	}
+};
+
+export const getUserGameHistory = async (
+	id: number
+): Promise<GameHistory[]> => {
+	try {
+		const history: GameHistory[] = await sendAPI({
+			method: 'GET',
+			url: `/user/${id}/history`,
+		});
+		return history;
+	} catch (e) {
+		console.log(e);
+		return [];
 	}
 };
