@@ -1,26 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Outlet } from 'react-router';
+import { socket } from 'socket/socket';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Banner from 'components/banner/banner';
 import Header from 'components/layout/header/header';
 import FriendSidebar from 'components/layout/friend-sidebar/friend-sidebar';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
+import { GameInfoType, gameInfoState } from 'ts/states/game/game-info.state';
+import { gameStartState } from 'ts/states/game/game-start-state';
+import InviteGameModal from 'components/modal/item/game-mode-select';
 import { getUserByJwt } from 'api/auth-api';
 import {
 	getBlockedList,
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
-import { socket } from 'socket/socket';
-import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
-import { GameInfoType, gameInfoState } from 'ts/states/game/game-info.state';
-import { gameStartState } from 'ts/states/game/game-start-state';
-import { useNavigate } from 'react-router-dom';
-import { clearCookies } from 'components/utils/cookie-utils';
-import InviteGameModal from 'components/modal/item/game-mode-select';
-import { useLocation } from 'react-router-dom';
 
 const Layout = () => {
 	const sidebarState = useRecoilValue(friendSidebarState);
@@ -37,10 +35,6 @@ const Layout = () => {
 	const initData = async () => {
 		const newUser = await getUserByJwt();
 		if (newUser) {
-			if (Object.keys(newUser).length === 0) {
-				clearCookies();
-				return;
-			}
 			setUser(newUser);
 			const friends = await getFriendList(newUser.id);
 			const requestFriends = await getFriendRequestList(newUser.id);

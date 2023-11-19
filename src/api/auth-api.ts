@@ -1,15 +1,19 @@
-import { getJsonValueByKey } from 'components/utils/cookie-utils';
+import { getJsonValueByKey, getJwtValue } from 'components/utils/cookie-utils';
 import User from 'ts/interfaces/user.model';
 import sendAPI from 'api/sendAPI';
 import CreateUserDto from 'ts/interfaces/user/create-user.model';
 
 export const getUserByJwt = async (): Promise<User | null> => {
-	const user = await sendAPI({
-		method: 'POST',
-		url: '/auth/user',
-	});
+	const token = getJwtValue();
 
-	return user ? user : null;
+	if (token) {
+		return await sendAPI({
+			method: 'POST',
+			url: '/auth/user',
+		});
+	}
+
+	return null;
 };
 
 export const userSignUp = async (

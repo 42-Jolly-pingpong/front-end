@@ -87,7 +87,7 @@
 		position: absolute;
 		top: 1px;
 		left: -78px;
-		border-bottom: 78px solid #2E4E80;
+		border-bottom: 78px solid #2e4e80;
 		border-left: 78px solid transparent;
 		border-right: 78px solid transparent;
 		height: 0;
@@ -103,7 +103,7 @@
 		left: -80px;
 		height: 20px;
 		width: 760px;
-		background: #192A44;
+		background: #192a44;
 	}
 
 	.line {
@@ -126,7 +126,7 @@
 
 	.net-top:before {
 		display: block;
-		content: " ";
+		content: ' ';
 		position: absolute;
 		top: -3px;
 		width: 4px;
@@ -157,7 +157,7 @@
 
 	.net-bottom:before {
 		display: block;
-		content: " ";
+		content: ' ';
 		position: absolute;
 
 		top: -8px;
@@ -326,37 +326,3 @@
 		}
 	}
 }
-
-/*
-@font-face {
-	font-family: 'Ramche';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Ramche.woff2')
-		format('woff2');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'CookieRun-Regular';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'DungGeunMo';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'PFStardust';
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-*/
