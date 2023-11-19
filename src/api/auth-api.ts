@@ -1,6 +1,7 @@
 import { getJsonValueByKey } from 'components/utils/cookieUtils';
 import User from 'ts/interfaces/user.model';
 import sendAPI from 'api/sendAPI';
+import CreateUserDto from 'ts/interfaces/user/create-user.model';
 
 export const getUserByJwt = async (): Promise<User | null> => {
 	const user = await sendAPI({
@@ -11,13 +12,16 @@ export const getUserByJwt = async (): Promise<User | null> => {
 	return user ? user : null;
 };
 
-export const userSignUp = async (nickname: string): Promise<void> => {
+export const userSignUp = async (
+	createUserDto: CreateUserDto
+): Promise<void> => {
 	const cookies = getJsonValueByKey('user-data');
 
 	const signUpData = {
 		intraId: cookies.intraId,
 		email: cookies.email,
-		nickname,
+		avatarPath: createUserDto.avatarPath,
+		nickname: createUserDto.nickname,
 	};
 
 	try {

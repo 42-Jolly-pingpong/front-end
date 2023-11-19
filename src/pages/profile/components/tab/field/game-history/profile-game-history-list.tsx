@@ -36,7 +36,7 @@ const ProfileGameHistoryList = () => {
 		return <ProfileNoGameHistory />;
 	}
 	return (
-		<div className='grid grid-cols-1 gap-4'>
+		<div className='grid grid-cols-1 items-center h-96 gap-4 overflow-y-auto'>
 			{historyList.map((history: GameHistory) => (
 				<ProfileGameHistoryItem history={history} key={history.roomName} />
 			))}
