@@ -7,8 +7,11 @@ interface ApiOptions {
 	body?: any;
 }
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
+
 const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 	const token = getJwtValue();
+
 	if (token) {
 		headers = {
 			...headers,
@@ -16,13 +19,13 @@ const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 		};
 	}
 
-	const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}${url}`, {
+	const response = await fetch(`${BASE_URL}${url}`, {
 		method,
-		credentials: token ? 'include' : undefined,
+		credentials: 'include',
 		headers: {
 			...headers,
 			'Content-Type': 'application/json;charset=UTF-8',
-			origin: process.env.REACT_APP_FRONTEND_URL!,
+			origin: process.env.REACT_APP_FRONTEND_URL || 'http://localhost:5173',
 		},
 		body: body ? JSON.stringify(body) : undefined,
 	});

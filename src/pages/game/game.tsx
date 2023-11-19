@@ -20,7 +20,11 @@ const Game = () => {
 
 	const getUser = async (id: number) => {
 		const json = await (
-			await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/${id}`)
+			await fetch(
+				`${
+					process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000'
+				}/user/${id}`
+			)
 		).json();
 		setOpponentInfo(json);
 	};
