@@ -25,10 +25,10 @@ export function GameResult() {
 	const gameResult = useRecoilValue(gameResultState);
 	const opponent = useRecoilValue(opponentInfoState);
 	const setIsGameStart = useSetRecoilState(gameStartState);
+	const [modalState, setModalState] = useState(false);
 	const [relation, setRelation] = useState<ProfileStatus>(
 		ProfileStatus.UNDEFINED
 	);
-	const [modalState, setModalState] = useState(false);
 
 	const findRelation = async () => {
 		const relationData = await getFriendRelation(opponent!.id);
@@ -88,25 +88,20 @@ export function GameResult() {
 			<div className='text-center text-white text-9xl font-bold'>
 				{gameResult === gameInfo.position ? 'VICTORY' : 'DEFEAT'}
 			</div>
-			<div className='flex-col justify-center items-center gap-10 flex'>
-				<div className='px-2 justify-center items-center gap-2 inline-flex' />
-				<div className='self-stretch justify-center items-center gap-6 inline-flex'>
-					<div className='justify-start items-start gap-2 flex'>
-						<GameFriendButton relation={relation} onClick={handleClick} />
-						<ProfileFriendModal
-							show={modalState}
-							relation={relation}
-							onRequest={handleChange}
-							onClose={handleClose}
-						/>
-						<GameCustomButton
-							icon={<AiOutlineMessage color='#FDCE02' size='23px' />}
-							message='메시지'
-							onClick={handleMessage}
-						/>
-						<GameExitButton onClick={exitEvent} />
-					</div>
-				</div>
+			<div className='flex justify-center items-center gap-2'>
+				<GameFriendButton relation={relation} onClick={handleClick} />
+				<ProfileFriendModal
+					show={modalState}
+					relation={relation}
+					onRequest={handleChange}
+					onClose={handleClose}
+				/>
+				<GameCustomButton
+					icon={<AiOutlineMessage color='#FDCE02' size='23px' />}
+					message='메시지'
+					onClick={handleMessage}
+				/>
+				<GameExitButton onClick={exitEvent} />
 			</div>
 		</div>
 	);

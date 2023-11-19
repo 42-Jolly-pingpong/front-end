@@ -13,7 +13,7 @@ import { gameResultState } from 'ts/states/game/game-result-state';
 const Game = () => {
 	const gameInfo = useRecoilValue(gameInfoState);
 	const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
-	const [opponentInfo, setOpponentInfo] = useRecoilState(opponentInfoState);
+	const setOpponentInfo = useSetRecoilState(opponentInfoState);
 	const [isGameStart, setIsGameStart] = useRecoilState(gameStartState);
 	const setGameResult = useSetRecoilState(gameResultState);
 	const navigate = useNavigate();
@@ -56,7 +56,7 @@ const Game = () => {
 			{!isGameEnd ? (
 				<div>
 					<PlayerProfile />
-					<GameCanvas></GameCanvas>
+					<GameCanvas />
 				</div>
 			) : (
 				<GameResult />

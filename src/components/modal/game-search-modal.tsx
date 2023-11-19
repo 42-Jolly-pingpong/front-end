@@ -21,9 +21,15 @@ interface Props {
 	sec?: number;
 }
 
-const GameSearchModal: React.FC<Props> = ({ show, onClose, zeroPoint,message, sec }) => {
+const GameSearchModal: React.FC<Props> = ({
+	show,
+	onClose,
+	zeroPoint,
+	message,
+	sec,
+}) => {
 	const [seconds, setSeconds] = useState(sec || COUNTDOWN_MATCH_VALUE);
-	
+
 	// 모달을 닫았을 경우
 	const handleCancel = () => {
 		onClose();

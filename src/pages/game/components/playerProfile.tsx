@@ -12,7 +12,7 @@ export function PlayerProfile() {
 	return (
 		<div className='w-[1152px] flex h-14 justify-center items-center gap-2'>
 			<div className='h-12 justify-end items-center gap-2 flex'>
-				<div className="text-gray-200 text-lg font-medium font-['Inter'] leading-[27px]">
+				<div className='text-gray-200 text-lg font-medium'>
 					{gameInfo.position == 1 ? myInfo?.nickname : opponentInfo?.nickname}
 				</div>
 				<Avatar
@@ -25,9 +25,7 @@ export function PlayerProfile() {
 					}
 				/>
 			</div>
-			<div className="text-gray-200 text-lg font-bold font-['Inter'] leading-normal">
-				vs
-			</div>
+			<div className='text-gray-200 text-lg font-bold leading-normal'>vs</div>
 			<div className='h-12 justify-start items-center gap-2 flex'>
 				<Avatar
 					size='md'
@@ -38,7 +36,7 @@ export function PlayerProfile() {
 							: opponentInfo?.avatarPath || ''
 					}
 				/>
-				<div className="text-gray-200 text-lg font-medium font-['Inter'] leading-[27px]">
+				<div className='text-gray-200 text-lg font-medium'>
 					{gameInfo.position == 2 ? myInfo?.nickname : opponentInfo?.nickname}
 				</div>
 			</div>
