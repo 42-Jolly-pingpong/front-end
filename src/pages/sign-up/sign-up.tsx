@@ -6,24 +6,34 @@ import SignUpEmailInput from 'pages/sign-up/components/sign-up-email-input';
 import SignUpNicknameInput from 'pages/sign-up/components/sign-up-nickname-input';
 import SignUpSubmitButton from 'pages/sign-up/components/sign-up-submit-button';
 import { useNavigate } from 'react-router-dom';
+import CreateUserDto from 'ts/interfaces/user/create-user.model';
+import SignUpAvatar from 'pages/sign-up/components/sign-up-avatar';
 
 const SignUp = () => {
-	const [nickname, setNickname] = useState('');
 	const [validNickname, setValidNickname] = useState(false);
+	const [createUserDto, setCreateUserDto] = useState<CreateUserDto>({
+		nickname: '',
+		avatarPath: '',
+	});
+
 	const navigate = useNavigate();
 
 	const handleNickname = (nickname: string) => {
 		if (nickname) {
-			setNickname(nickname);
+			setCreateUserDto({ ...createUserDto, nickname });
 			setValidNickname(true);
 		} else {
 			setValidNickname(false);
 		}
 	};
 
+	const handleUpload = (avatarPath: string) => {
+		setCreateUserDto({ ...createUserDto, avatarPath });
+	};
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		await userSignUp(nickname);
+		await userSignUp(createUserDto);
 		navigate('/', { replace: true });
 	};
 
@@ -36,6 +46,7 @@ const SignUp = () => {
 					onSubmit={handleSubmit}
 				>
 					<SignUpTitle />
+					<SignUpAvatar onUpload={handleUpload} />
 					<SignUpEmailInput />
 					<SignUpNicknameInput onChange={handleNickname} />
 					<SignUpSubmitButton disabled={!validNickname} />

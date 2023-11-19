@@ -1,16 +1,13 @@
-import { Avatar } from 'flowbite-react';
-import { useRecoilValue } from 'recoil';
-import { FiUpload } from 'react-icons/fi';
-import { ChangeEvent, useState } from 'react';
-import { userState } from 'ts/states/user-state';
 import { uploadFile } from 'components/utils/file-utils';
+import { Avatar } from 'flowbite-react';
+import { ChangeEvent, useState } from 'react';
+import { FiUpload } from 'react-icons/fi';
 
 interface AvatarProps {
 	onUpload: (path: string) => void;
 }
 
-const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
-	const user = useRecoilValue(userState);
+const SignUpAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 	const [avatarImage, setAvatarImage] = useState('');
 	const [fileChange, setFileChange] = useState(false);
 
@@ -29,7 +26,7 @@ const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 
 	return (
 		<div className='flex-flex-col'>
-			<Avatar img={avatarImage || user?.avatarPath || ''} rounded size='lg' />
+			<Avatar img={avatarImage || ''} rounded size='lg' />
 			<label
 				className='flex items-center justify-center gap-2 py-2 hover:cursor-pointer'
 				htmlFor='input-file'
@@ -50,4 +47,4 @@ const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 	);
 };
 
-export default ProfileEditAvatar;
+export default SignUpAvatar;

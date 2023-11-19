@@ -7,7 +7,7 @@ import FriendSidebar from 'components/layout/friend-sidebar/friend-sidebar';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 import { friendSidebarState } from 'ts/states/friend/friend-sidebar-state';
-import { getUserByJwt, userSignOut } from 'api/auth-api';
+import { getUserByJwt } from 'api/auth-api';
 import {
 	getBlockedList,
 	getFriendList,
@@ -18,7 +18,7 @@ import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { GameInfoType, gameInfoState } from 'ts/states/game/game-info.state';
 import { gameStartState } from 'ts/states/game/game-start-state';
 import { useNavigate } from 'react-router-dom';
-import { clearCookies } from 'components/utils/cookieUtils';
+import { clearCookies } from 'components/utils/cookie-utils';
 import InviteGameModal from 'components/modal/item/game-mode-select';
 import { useLocation } from 'react-router-dom';
 

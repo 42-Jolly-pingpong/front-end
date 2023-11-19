@@ -1,6 +1,6 @@
 import { Label, TextInput } from 'flowbite-react';
 import { HiMail } from 'react-icons/hi';
-import { getJsonValueByKey } from 'components/utils/cookieUtils';
+import { getJsonValueByKey } from 'components/utils/cookie-utils';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
