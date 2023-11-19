@@ -9,7 +9,6 @@ interface ApiOptions {
 
 const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 	const token = getJwtValue();
-
 	if (token) {
 		headers = {
 			...headers,
@@ -27,7 +26,7 @@ const sendAPI = async ({ method, url, headers, body }: ApiOptions) => {
 		},
 		body: body ? JSON.stringify(body) : undefined,
 	});
-	console.log('response', response);
+
 	if (response.ok) {
 		const data = await response.text();
 
