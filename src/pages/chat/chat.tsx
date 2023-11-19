@@ -11,7 +11,7 @@ import { chatListState } from 'ts/states/chat-list.state';
 import HandleChatSocket from 'pages/chat/handle-chat-socket';
 import ChatAlertModel from 'pages/chat/chat-alert-modal';
 import useRedirectHome from 'hooks/use-redirect-home';
-import { getJwtValue } from 'components/utils/cookieUtils';
+import { getJwtValue } from 'components/utils/cookie-utils';
 
 const Chat = () => {
 	const hasChatSidebar =

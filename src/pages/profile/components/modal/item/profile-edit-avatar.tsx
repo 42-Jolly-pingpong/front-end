@@ -1,27 +1,13 @@
 import { Avatar } from 'flowbite-react';
 import { useRecoilValue } from 'recoil';
+import { FiUpload } from 'react-icons/fi';
 import { ChangeEvent, useState } from 'react';
 import { userState } from 'ts/states/user-state';
-import { FiUpload } from 'react-icons/fi';
+import { uploadFile } from 'components/utils/file-utils';
 
 interface AvatarProps {
 	onUpload: (path: string) => void;
 }
-
-const readFileAsBase64 = async (file: File): Promise<string> => {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onload = () => {
-			if (reader.result) {
-				resolve(reader.result.toString());
-			} else {
-				reject('');
-			}
-		};
-		reader.onerror = (e) => reject(e);
-		reader.readAsDataURL(file);
-	});
-};
 
 const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 	const user = useRecoilValue(userState);
@@ -29,20 +15,15 @@ const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 	const [fileChange, setFileChange] = useState(false);
 
 	const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
+		const validFile = await uploadFile(event.target.files![0]);
 
-		if (file) {
-			const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-			const maxSizeInBytes = 5 * 1024 * 1024;
-
-			if (allowedExtensions.test(file.name) && file.size <= maxSizeInBytes) {
-				const base64String = await readFileAsBase64(file);
-				onUpload(base64String);
-				setAvatarImage(base64String);
-				setFileChange(true);
-			} else {
-				onUpload('');
-			}
+		if (validFile) {
+			onUpload(validFile);
+			setAvatarImage(validFile);
+			setFileChange(true);
+		} else {
+			setAvatarImage('');
+			onUpload('');
 		}
 	};
 

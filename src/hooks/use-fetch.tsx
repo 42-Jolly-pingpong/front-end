@@ -1,4 +1,4 @@
-import { getJwtValue } from 'components/utils/cookieUtils';
+import { getJwtValue } from 'components/utils/cookie-utils';
 
 const useFetch = () => {
 	const token = getJwtValue();

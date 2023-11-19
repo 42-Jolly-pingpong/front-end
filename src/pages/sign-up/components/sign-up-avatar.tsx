@@ -1,3 +1,4 @@
+import { uploadFile } from 'components/utils/file-utils';
 import { Avatar } from 'flowbite-react';
 import { ChangeEvent, useState } from 'react';
 import { FiUpload } from 'react-icons/fi';
@@ -6,40 +7,20 @@ interface AvatarProps {
 	onUpload: (path: string) => void;
 }
 
-const readFileAsBase64 = async (file: File): Promise<string> => {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onload = () => {
-			if (reader.result) {
-				resolve(reader.result.toString());
-			} else {
-				reject('');
-			}
-		};
-		reader.onerror = (e) => reject(e);
-		reader.readAsDataURL(file);
-	});
-};
-
 const SignUpAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 	const [avatarImage, setAvatarImage] = useState('');
 	const [fileChange, setFileChange] = useState(false);
 
 	const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
+		const validFile = await uploadFile(event.target.files![0]);
 
-		if (file) {
-			const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-			const maxSizeInBytes = 5 * 1024 * 1024;
-
-			if (allowedExtensions.test(file.name) && file.size <= maxSizeInBytes) {
-				const base64String = await readFileAsBase64(file);
-				onUpload(base64String);
-				setAvatarImage(base64String);
-				setFileChange(true);
-			} else {
-				onUpload('');
-			}
+		if (validFile) {
+			onUpload(validFile);
+			setAvatarImage(validFile);
+			setFileChange(true);
+		} else {
+			setAvatarImage('');
+			onUpload('');
 		}
 	};
 

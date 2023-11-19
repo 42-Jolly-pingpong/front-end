@@ -1,4 +1,4 @@
-import { getJsonValueByKey } from 'components/utils/cookieUtils';
+import { getJsonValueByKey } from 'components/utils/cookie-utils';
 import User from 'ts/interfaces/user.model';
 import sendAPI from 'api/sendAPI';
 import CreateUserDto from 'ts/interfaces/user/create-user.model';
