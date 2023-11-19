@@ -2,6 +2,7 @@
 import { Progress } from 'flowbite-react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
+import ProgressTheme from 'components/banner/theme/progress-theme';
 
 interface RoundInfo {
 	round: number;
@@ -46,12 +47,9 @@ function RoundInfo({ round, turn, setIsWaitRound }: RoundInfo) {
 				</div>
 				<div className='w-[264px] h-1.5 flex-col  justify-start items-end inline-flex '>
 					<div className='w-full p-1 h-1 rounded-full'>
-						<Progress progress={value} color='yellow' />
+						<Progress progress={value} color='yellow' theme={ProgressTheme} />
 					</div>
 				</div>
-				{/* <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
-					<Progress color='yellow' progress={45}/>
-				</div> */}
 			</div>
 		</div>
 	);
