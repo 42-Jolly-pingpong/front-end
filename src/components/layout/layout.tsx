@@ -31,6 +31,7 @@ const Layout = () => {
 	const [loading, setLoading] = useState(true);
 	const pathname = useLocation().pathname;
 	const hasLayout = pathname === '/chat' ? false : true;
+	const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
 
 	const initData = async () => {
 		const newUser = await getUserByJwt();
@@ -43,6 +44,19 @@ const Layout = () => {
 			socket.emit('setClient', newUser.id);
 		}
 	};
+
+	useEffect(() => {
+		if (!isConnected) socket.connect();
+		function onConnect() {
+			setIsConnected(true);
+		}
+		function onDisconnect() {
+			setIsConnected(false);
+		}
+
+		socket.on('connect', onConnect);
+		socket.on('disconnect', onDisconnect);
+	}, []);
 
 	useEffect(() => {
 		const initUserData = async () => {
