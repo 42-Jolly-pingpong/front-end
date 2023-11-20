@@ -4,12 +4,6 @@
 
 @charset "utf-8";
 
-@layer components {
-
-	
-
-}
-
 @layer utilities {
 	.ping-body {
 		text-align: center;
@@ -305,7 +299,7 @@
 	}
 
 	.chat-menu {
-		height: calc(100vh - 48px - 24px);
+		height: calc(100vh - 48px);
 	}
 
 	.no-scrollbar::-webkit-scrollbar {

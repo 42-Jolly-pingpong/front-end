@@ -31,10 +31,10 @@ const ProfileTab = () => {
 	return (
 		<Tabs.Group
 			style='underline'
-			className='w-[672px] items-center justify-center'
+			className='w-[680px] items-center justify-center'
 			theme={theme}
 		>
-			<Tabs.Item icon={IoGridOutline} title='경기 전적'>
+			<Tabs.Item active icon={IoGridOutline} title='경기 전적'>
 				<ProfileGameHistoryList />
 			</Tabs.Item>
 			<Tabs.Item icon={FiUsers} title='친구 목록'>
