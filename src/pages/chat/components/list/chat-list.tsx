@@ -9,7 +9,7 @@ const ChatList = () => {
 		<div className='w-[250px] h-full border-r'>
 			<Logo />
 			<Flowbite theme={{ theme: sidebarTheme }}>
-				<Sidebar className='w-full pt-3 px-3 overflow-y-scroll chat-menu'>
+				<Sidebar className='pt-3 px-3 chat-menu'>
 					<Sidebar.ItemGroup>
 						<Channels />
 					</Sidebar.ItemGroup>
