@@ -6,29 +6,38 @@ import { friendSidebarModalState } from 'ts/states/friend/friend-sidebar-modal-s
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { FriendSidebarModalStatus } from 'ts/enums/friend/friend-sidebar-modal-status.enum';
 import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
+import { getDM } from 'api/chat-api';
+import useChangeChat from 'hooks/use-change-chat';
+import { useNavigate } from 'react-router-dom';
 
 interface FriendInfoProps {
 	user: User;
 }
 
 const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
-	const [, setModalState] = useRecoilState(friendSidebarModalState);
+	const setModalState = useSetRecoilState(friendSidebarModalState);
 	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
-	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
+	const [opponentInfo, setOpponentUserInfo] = useRecoilState(opponentInfoState);
+	const setChat = useChangeChat();
+	const navigate = useNavigate();
 
 	const handleUnfriend = async () => {
-		console.log('unfriend가 클릭되었음');
 		setModalState({ type: FriendSidebarModalStatus.UNFRIEND, friend: user });
 	};
 
 	const handleBanned = async () => {
-		console.log('banned가 클릭되었음');
 		setModalState({ type: FriendSidebarModalStatus.BANNED, friend: user });
 	};
 
 	const handleInviteGame = () => {
 		setOpponentUserInfo(user);
 		setGameModeSelect(true);
+	};
+
+	const handleMessage = async () => {
+		const dm = await getDM(opponentInfo!);
+		setChat(dm!);
+		navigate('/chat');
 	};
 
 	return (
@@ -44,7 +53,9 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 				}
 				size='md'
 			>
-				<Dropdown.Item className='text-gray-700'>메시지 보내기</Dropdown.Item>
+				<Dropdown.Item className='text-gray-700' onClick={handleMessage}>
+					메시지 보내기
+				</Dropdown.Item>
 				<Dropdown.Item className='text-gray-700' onClick={handleInviteGame}>
 					게임 초대하기
 				</Dropdown.Item>
