@@ -1,7 +1,7 @@
 import { Avatar } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
 import useChatAlert from 'hooks/use-chat-alert';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Dm } from 'ts/interfaces/dm.model';
 import User from 'ts/interfaces/user.model';

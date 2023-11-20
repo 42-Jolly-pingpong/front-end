@@ -1,6 +1,6 @@
 import { getJwtValue } from 'components/utils/cookie-utils';
 import useChangeChat from 'hooks/use-change-chat';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';
@@ -11,6 +11,9 @@ import { chatListState } from 'ts/states/chat-list.state';
 import { chatState } from 'ts/states/chat-state';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
+import { socket } from 'socket/socket';
+import useFetch from 'hooks/use-fetch';
+import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 
 const HandleChatSocket = () => {
 	const chat = useRecoilValue(chatState);
@@ -20,6 +23,55 @@ const HandleChatSocket = () => {
 	const user = useRecoilValue(userState) as User;
 	const blockedUser = useRecoilValue(userFriendsState).blockedFriends as User[];
 	const setChat = useSetRecoilState(chatState);
+	const getData = useFetch();
+
+	const reloadChat = () => {
+		if (chat.chatRoom === null) {
+			return;
+		}
+		if (chat.chatRoom.roomType === ChatRoomType.DM) {
+			getData('POST', '/chat-rooms/dm', {
+				chatMate: (chat.chatRoom as Dm).chatMate,
+			})
+				.then((res) => {
+					if (res.ok) {
+						return res.json();
+					}
+					throw Error(res.statusText);
+				})
+				.then(async (data) => {
+					setChatRoom(data, false);
+				})
+				.catch((err) => console.log('reload chat', err));
+			return;
+		}
+		getData('GET', `/chat-rooms/${chat.chatRoom.id}`)
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+				throw Error(res.statusText);
+			})
+			.then(async (data) => {
+				setChatRoom(data, false);
+			})
+			.catch((err) => console.log('reload chat', err));
+		return;
+	};
+
+	const reloadDmList = async () => {
+		await getData('get', '/chat-rooms/dm')
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+				throw Error(res.statusText);
+			})
+			.then((data) => {
+				setChatRoomList((pre) => ({ ...pre, dmList: data }));
+			})
+			.catch((err) => console.log('chat', err));
+	};
 
 	const markChannelAsUnread = (roomId: number) => {
 		setChatRoomList((pre) => ({
@@ -149,6 +201,11 @@ const HandleChatSocket = () => {
 			}
 		);
 
+		socket.on('reload', () => {
+			reloadChat();
+			reloadDmList();
+		});
+
 		return () => {
 			chatSocket.off('getNewChat');
 			chatSocket.off('getNewChatOnDm');
@@ -156,6 +213,7 @@ const HandleChatSocket = () => {
 			chatSocket.off('updateChatRoomOnList');
 			chatSocket.off('chatRoomDeleted');
 			chatSocket.off('leaveTheChannel');
+			socket.off('reload');
 		};
 	}, [chat.chatRoom]);
 

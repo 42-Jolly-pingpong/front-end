@@ -2,7 +2,7 @@ import { Button, Label, Radio, TextInput } from 'flowbite-react';
 import useChangeChat from 'hooks/use-change-chat';
 import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';

@@ -1,7 +1,7 @@
 import { Button, Label, Radio, TextInput } from 'flowbite-react';
 import useChatAlert from 'hooks/use-chat-alert';
 import useHash from 'hooks/use-hash';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import ChannelPropertyTitle from 'pages/chat/components/sidebar/channel-property-title';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -183,12 +183,12 @@ const ChannelRoomTypeField = () => {
 						<Radio
 							readOnly
 							checked={chat.roomType !== ChatRoomType.PRIVATE ? true : false}
-							id='public'
+							id='set-public'
 							name='roomType'
-							value='public'
+							value='set-public'
 							className='checked:bg-primary-700'
 						/>
-						<Label htmlFor='public'>공개 - 누구나</Label>
+						<Label htmlFor='set-public'>공개 - 누구나</Label>
 					</div>
 					<div
 						className='flex items-center gap-2'
@@ -197,12 +197,12 @@ const ChannelRoomTypeField = () => {
 						<Radio
 							readOnly
 							checked={chat.roomType !== ChatRoomType.PRIVATE ? false : true}
-							id='private'
+							id='set-private'
 							name='roomType'
-							value='private'
+							value='set-private'
 							className='checked:bg-primary-700'
 						/>
-						<Label htmlFor='private'>비공개 - 일부 사람만</Label>
+						<Label htmlFor='set-private'>비공개 - 일부 사람만</Label>
 					</div>
 				</fieldset>
 			</div>

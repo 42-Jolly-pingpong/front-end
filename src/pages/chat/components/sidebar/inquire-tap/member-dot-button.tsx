@@ -10,7 +10,7 @@ import {
 } from 'api/friend-api';
 import { Dropdown } from 'flowbite-react';
 import useChatAlert from 'hooks/use-chat-alert';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import { useEffect, useState } from 'react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -27,7 +27,7 @@ import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 
-const MemberDotButton = async (props: { participant: ChatParticipant }) => {
+const MemberDotButton = (props: { participant: ChatParticipant }) => {
 	const user = useRecoilValue(userState) as User;
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
