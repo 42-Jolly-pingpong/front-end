@@ -27,7 +27,7 @@ import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { userState } from 'ts/states/user-state';
 import { userFriendsState } from 'ts/states/user/user-friends-state';
 
-const MemberDotButton = async (props: { participant: ChatParticipant }) => {
+const MemberDotButton = (props: { participant: ChatParticipant }) => {
 	const user = useRecoilValue(userState) as User;
 	const setAlertModal = useSetRecoilState(chatAlertModalState);
 	const setDefaultAlertModal = useChatAlert();
