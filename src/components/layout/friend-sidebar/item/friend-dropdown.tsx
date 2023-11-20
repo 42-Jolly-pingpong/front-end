@@ -1,4 +1,4 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { Dropdown } from 'flowbite-react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import User from 'ts/interfaces/user.model';
@@ -17,7 +17,7 @@ interface FriendInfoProps {
 const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 	const setModalState = useSetRecoilState(friendSidebarModalState);
 	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
-	const [opponentInfo, setOpponentUserInfo] = useRecoilState(opponentInfoState);
+	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 	const setChat = useChangeChat();
 	const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 	};
 
 	const handleMessage = async () => {
-		const dm = await getDM(opponentInfo!);
+		const dm = await getDM(user!);
 		setChat(dm!);
 		navigate('/chat');
 	};
