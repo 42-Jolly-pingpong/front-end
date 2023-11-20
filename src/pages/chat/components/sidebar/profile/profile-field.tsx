@@ -1,6 +1,6 @@
 import useChangeChat from 'hooks/use-change-chat';
 import useChatAlert from 'hooks/use-chat-alert';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import IconButton from 'pages/chat/components/sidebar/profile/icon-button';
 import ProfileDotButton from 'pages/chat/components/sidebar/profile/profile-dot-button';
 import Status from 'pages/chat/components/status';

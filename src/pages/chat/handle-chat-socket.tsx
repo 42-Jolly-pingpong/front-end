@@ -1,6 +1,6 @@
 import { getJwtValue } from 'components/utils/cookie-utils';
 import useChangeChat from 'hooks/use-change-chat';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ChatRoom } from 'ts/interfaces/chat-room.model';

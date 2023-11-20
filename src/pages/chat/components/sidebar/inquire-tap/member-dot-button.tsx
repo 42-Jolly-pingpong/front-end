@@ -10,7 +10,7 @@ import {
 } from 'api/friend-api';
 import { Dropdown } from 'flowbite-react';
 import useChatAlert from 'hooks/use-chat-alert';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import { useEffect, useState } from 'react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
