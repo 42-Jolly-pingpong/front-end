@@ -14,24 +14,16 @@ const ChatSidebarProfile = () => {
 		return null;
 	}
 
-	const userAvatar = () => {
-		return (
+	return (
+		<>
+			<ChatSidebarHeader title='프로필' />
 			<div className='flex justify-center my-3'>
 				<BigUserImg src={otherUser.avatarPath} />
 			</div>
-		);
-	};
-
-	return (
-		<div className='h-hull w-full'>
-			<ChatSidebarHeader title='프로필' />
-			<div className='grow'>
-				{userAvatar()}
-				<ProfileField />
-				<ContactField />
-				<HistoryField />
-			</div>
-		</div>
+			<ProfileField />
+			<ContactField />
+			<HistoryField />
+		</>
 	);
 };
 

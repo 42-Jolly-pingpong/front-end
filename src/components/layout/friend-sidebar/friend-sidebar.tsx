@@ -38,7 +38,7 @@ const FriendSidebar = () => {
 	return (
 		<aside
 			id='friend-sidebar'
-			className={`fixed top-0 right-0 z-40 w-96 h-screen transition-transform -translate-x-full sm:translate-x-0 ${
+			className={`fixed top-0 right-0 z-40 w-96 h-screen transition-transform sm:translate-x-0 ${
 				showFriendsSidebar ? 'visible' : 'invisible'
 			}`}
 			aria-label='Sidebar'

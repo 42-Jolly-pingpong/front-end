@@ -49,7 +49,7 @@ export const ChatInput = () => {
 			textareaRef.current.style.height = '0px';
 			const scrollHeight = textareaRef.current.scrollHeight;
 			textareaRef.current.style.height = scrollHeight + 'px';
-			setSrollbar(scrollHeight <= 88 ? 'hide-scrollbar' : '');
+			setSrollbar(scrollHeight <= 88 ? 'no-scrollbar' : '');
 		}
 	}, [textareaRef.current?.value]);
 

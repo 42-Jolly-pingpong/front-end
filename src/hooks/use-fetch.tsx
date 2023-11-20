@@ -3,7 +3,7 @@ import { getJwtValue } from 'components/utils/cookie-utils';
 const useFetch = () => {
 	const token = getJwtValue();
 
-	const baseUrl = process.env.REACT_APP_BACKEND_URL || `http://localhost:3000`;
+	const baseUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
 	/**
 	 * api 보내기
 	 * @param method

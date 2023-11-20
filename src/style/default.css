@@ -5,41 +5,9 @@
 @charset "utf-8";
 
 @layer components {
-	.sidebar {
-		overflow-y: auto;
-		height: calc(100vh - 48px);
-	}
 
-	.chat-content {
-		width: calc(100vw - 240px);
-	}
+	
 
-	.chat-content-sidebar {
-		width: calc(100vw - 240px - 348px);
-	}
-
-	.chat-right-sidebar {
-		width: 348px;
-	}
-
-	.chat-field {
-		height: calc(100vh - 48px - 70px);
-		max-height: calc(100vh - 48px - 70px);
-	}
-
-	.chat-right-sidebar-tap {
-		height: calc(100vh - 48px - 39px);
-		max-height: calc(100vh - 48px - 39px);
-	}
-
-	.chat-pad {
-		width: calc(100vw - 255px - 60px);
-		max-height: 160px;
-	}
-
-	.hide-scrollbar::-webkit-scrollbar {
-		display: none; /* for Chrome, Safari */
-	}
 }
 
 @layer utilities {
@@ -324,5 +292,28 @@
 		.b4 {
 			left: 70px;
 		}
+	}
+
+	.chat-right-sidebar-tap {
+		height: calc(100vh - 48px - 39px);
+		max-height: calc(100vh - 48px - 39px);
+	}
+
+	.chat-pad {
+		width: calc(100vw - 255px - 60px);
+		max-height: 160px;
+	}
+
+	.chat-menu {
+		height: calc(100vh - 48px - 24px);
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	}
 }
