@@ -98,7 +98,7 @@ export const ChatInput = () => {
 		}
 	};
 	return (
-		<div className='flex mx-6 mb-6 bg-gray-50 border border-gray-300 rounded-lg items-center justify-stretch p-3'>
+		<div className='flex flex-none mx-6 mb-6 bg-gray-50 border border-gray-300 rounded-lg items-center justify-stretch p-3'>
 			<Textarea
 				disabled={chat === null}
 				ref={textareaRef}

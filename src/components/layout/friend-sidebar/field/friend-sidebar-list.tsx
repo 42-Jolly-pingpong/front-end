@@ -42,7 +42,7 @@ const FriendSidebarList = () => {
 	}
 
 	return (
-		<div className='flex flex-col h-full border-t pt-2 overflow-y-auto'>
+		<div className='flex flex-col flex-auto border-t pt-2 overflow-y-auto'>
 			{requestFriends &&
 				requestFriends.map((requestFriend, index) => (
 					<div className='hover:bg-gray-200 group' key={index}>
