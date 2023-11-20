@@ -29,7 +29,7 @@ export const sidebarTheme: CustomFlowbiteTheme = {
 			list: 'space-y-1 py-1',
 		},
 		item: {
-			base: 'flex items-center justify-center rounded-lg py-1 text-base text-gray-900 hover:bg-yellow-50',
+			base: 'flex items-center justify-center rounded-lg py-1 text-base text-gray-900 hover:bg-yellow-50 hover:cursor-pointer',
 			active: 'bg-gray-100 dark:bg-gray-700',
 			collapsed: {
 				insideCollapse: 'group w-full transition duration-75',

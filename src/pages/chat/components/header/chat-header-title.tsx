@@ -37,9 +37,9 @@ const ChatHeaderTitle = () => {
 			return;
 		}
 		return (
-			<div className='w-full flex justify-between items-center ml-6'>
+			<div className='w-full h-12 flex justify-between items-center mx-6'>
 				<div className='flex items-center font-bold truncate'>
-					<div className='mr-2'>
+					<div className='mr-1'>
 						<ChannelIcon roomType={chatRoom.roomType} size={18} />
 					</div>
 					{(chatRoom as ChatRoom).roomName}
@@ -53,12 +53,9 @@ const ChatHeaderTitle = () => {
 		if (chatRoom === null) {
 			return <></>;
 		}
-		switch (chatRoom.roomType) {
-			case ChatRoomType.DM:
-				return headerForDm();
-			default:
-				return headerForChannel();
-		}
+		return chatRoom.roomType === ChatRoomType.DM
+			? headerForDm()
+			: headerForChannel();
 	};
 
 	return (

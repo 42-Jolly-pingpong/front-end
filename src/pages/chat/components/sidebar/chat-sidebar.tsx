@@ -7,21 +7,15 @@ import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 const ChatSidebar = () => {
 	const chatSidebarStatus = useRecoilValue(chatSidebarState).status;
 
-	const sidebarContent = () => {
-		switch (chatSidebarStatus) {
-			case ChatSidebarStatus.CHAT:
-				return <ChatSidebarChat />;
-			case ChatSidebarStatus.PROFILE:
-				return <ChatSidebarProfile />;
-			default:
-				return null;
-		}
-	};
-
 	return (
-		<div className='max-h-screen chat-right-sidebar shadow-2xl'>
-			{sidebarContent()}
-		</div>
+		<aside
+			className={`fixed top-0 right-0 z-40 w-[346px] h-fit transition-transform sm:translate-x-0 shadow-2xl bg-white ${
+				chatSidebarStatus != ChatSidebarStatus.CLOSE ? 'visible' : 'invisible'
+			}`}
+		>
+			{chatSidebarStatus == ChatSidebarStatus.CHAT && <ChatSidebarChat />}
+			{chatSidebarStatus == ChatSidebarStatus.PROFILE && <ChatSidebarProfile />}
+		</aside>
 	);
 };
 
