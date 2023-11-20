@@ -60,7 +60,10 @@ const ChatField = () => {
 		return null;
 	}
 	return (
-		<div ref={scrollRef} className='flex flex-col px-6 overflow-y-scroll'>
+		<div
+			ref={scrollRef}
+			className='flex flex-auto flex-col px-6 overflow-y-auto'
+		>
 			{isDm ? (
 				<DmHeader mate={(chatRoom as Dm).chatMate} />
 			) : (
