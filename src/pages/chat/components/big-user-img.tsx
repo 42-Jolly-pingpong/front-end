@@ -1,5 +1,5 @@
 const BigUserImg = (props: { src?: string }) => {
-	if (props.src === null) {
+	if (!props.src) {
 		return (
 			<div
 				className={`relative w-64 h-64 overflow-hidden bg-gray-100 rounded dark:bg-gray-600`}

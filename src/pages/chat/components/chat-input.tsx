@@ -1,5 +1,4 @@
 import { Textarea } from 'flowbite-react';
-import { chatSocket } from 'pages/chat/chat-socket';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend } from 'react-icons/io5';
 import { useRecoilValue } from 'recoil';
@@ -10,6 +9,7 @@ import { Dm } from 'ts/interfaces/dm.model';
 import User from 'ts/interfaces/user.model';
 import { chatState } from 'ts/states/chat-state';
 import { userState } from 'ts/states/user-state';
+import { chatSocket } from 'socket/chat-socket';
 
 export const ChatInput = () => {
 	const [input, setInput] = useState<string>('');
@@ -98,7 +98,7 @@ export const ChatInput = () => {
 		}
 	};
 	return (
-		<div className='flex mx-6 mb-6 bg-gray-50 border border-gray-300 rounded-lg items-center justify-stretch p-3'>
+		<div className='flex flex-none mx-6 mb-6 bg-gray-50 border border-gray-300 rounded-lg items-center justify-stretch p-3'>
 			<Textarea
 				disabled={chat === null}
 				ref={textareaRef}

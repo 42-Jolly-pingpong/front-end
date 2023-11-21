@@ -1,4 +1,4 @@
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import MemberInfo from 'pages/chat/components/sidebar/member-info';
 import NoResult from 'pages/chat/components/sidebar/no-result';
 import { useRecoilValue } from 'recoil';

@@ -23,9 +23,9 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 	const seconds = Math.floor(history.playTime / 1000);
 
 	return (
-		<>
+		<div className='flex flex-col gap-2 w-[672px]'>
 			<div
-				className={`flex w-[672px] rounded-xl justify-between items-center ${
+				className={`flex rounded-xl justify-between items-center ${
 					amIaWinner ? 'bg-blue-100' : 'bg-red-100'
 				}`}
 			>
@@ -90,7 +90,7 @@ const ProfileGameHistoryItem: React.FC<FriendProps> = ({ history }) => {
 					),
 				}}
 			/>
-		</>
+		</div>
 	);
 };
 

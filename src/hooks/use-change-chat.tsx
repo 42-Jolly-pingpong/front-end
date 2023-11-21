@@ -1,5 +1,5 @@
 import useChatAlert from 'hooks/use-chat-alert';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import { useSetRecoilState } from 'recoil';
 import { ChatRoomType } from 'ts/enums/chat-room-type.enum';
 import { ChatSidebarStatus } from 'ts/enums/chat-sidebar-status.enum';

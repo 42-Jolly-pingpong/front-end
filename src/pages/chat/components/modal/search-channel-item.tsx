@@ -12,7 +12,7 @@ import { chatModalState } from 'ts/states/chat-modal-state';
 import { ChatModalStatus } from 'ts/enums/chat-modal-status.enum';
 import { ChatParticipantStatus } from 'ts/enums/chat-participants-status.enum';
 import useHash from 'hooks/use-hash';
-import { chatSocket } from 'pages/chat/chat-socket';
+import { chatSocket } from 'socket/chat-socket';
 import useChatAlert from 'hooks/use-chat-alert';
 import { userState } from 'ts/states/user-state';
 import User from 'ts/interfaces/user.model';
