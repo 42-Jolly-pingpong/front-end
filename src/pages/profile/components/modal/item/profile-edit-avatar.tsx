@@ -16,12 +16,12 @@ const ProfileEditAvatar: React.FC<AvatarProps> = ({ onUpload }) => {
 
 	const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
 		const validFile = await uploadFile(event.target.files![0]);
-
 		if (validFile) {
 			onUpload(validFile);
 			setAvatarImage(validFile);
 			setFileChange(true);
 		} else {
+			alert('5MB 이하 파일만 등록할 수 있습니다.');
 			setAvatarImage('');
 			onUpload('');
 		}
