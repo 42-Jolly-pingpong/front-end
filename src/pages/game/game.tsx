@@ -39,7 +39,10 @@ const Game = () => {
 			setIsGameStart(false);
 		});
 
-		getUser(gameInfo.opponent);
+		if (isGameStart) {
+			getUser(gameInfo.opponent);
+		} else navigate('/');
+
 
 		return () => {
 			socket.off('gameEnd');
