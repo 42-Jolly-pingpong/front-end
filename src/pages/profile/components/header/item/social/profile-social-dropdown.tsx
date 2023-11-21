@@ -12,15 +12,20 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
+import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
+import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 
 const ProfileSocialDropdown = () => {
 	const user = useRecoilValue(userState);
 	const profile = useRecoilValue(profileState);
 	const setFriendsList = useSetRecoilState(userFriendsState);
+	const setGameModeSelect = useSetRecoilState(gameModeSelectState);
+	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 
 	const handleGame = () => {
-		// 여기에 게임 시작 모달 붙이기
-		alert('게임 시작');
+		console.log(profile.user)
+		setOpponentUserInfo(profile.user);
+		setGameModeSelect(true);
 	};
 
 	const handleBlock = async () => {
