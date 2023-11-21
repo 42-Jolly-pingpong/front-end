@@ -15,8 +15,10 @@ import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
 import { userState } from 'ts/states/user-state';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileField = () => {
+	const navigate = useNavigate();
 	const user = useRecoilValue(userState) as User;
 	const otherUser = useRecoilValue(chatSidebarState).profile as User;
 	const dmList = useRecoilValue(chatListSelector).dmList;
@@ -72,7 +74,12 @@ const ProfileField = () => {
 	return (
 		<div className='my-4 border-b'>
 			<div className='mx-4'>
-				<div className='font-bold text-xl'>{otherUser.nickname}</div>
+				<div
+					className='font-bold text-xl hover:underline hover:cursor-pointer'
+					onClick={() => navigate(`/profile/${otherUser.nickname}`)}
+				>
+					{otherUser.nickname}
+				</div>
 				<div className='flex items-center m-2'>
 					<Status status={otherUser.status} />
 					<div className='ml-2'>{statusInKorean()}</div>
@@ -88,7 +95,10 @@ const ProfileField = () => {
 						icon={<MdOutlineRocketLaunch size='12' />}
 						label='게임 신청'
 						onClickEvent={onClickGame}
-						disabled={(otherUser.id === user.id) || !(otherUser.status === UserStatus.ONLINE)}
+						disabled={
+							otherUser.id === user.id ||
+							!(otherUser.status === UserStatus.ONLINE)
+						}
 					/>
 					<ProfileDotButton />
 				</div>
