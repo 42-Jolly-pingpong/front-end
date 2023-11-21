@@ -44,8 +44,8 @@ const ChannelRoomTypeField = () => {
 		chatSocket.emit(
 			'setChatRoom',
 			{
-				...chat,
 				roomId: chat.id,
+				roomName: chat.roomName,
 				roomType,
 				password: password,
 			},
