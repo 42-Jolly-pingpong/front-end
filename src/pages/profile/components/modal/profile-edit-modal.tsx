@@ -27,8 +27,10 @@ const ProfileEditModal: React.FC<ModalProps> = ({ show, onClose }) => {
 	const navigate = useNavigate();
 
 	const handleUpload = (avatarPath: string) => {
-		setUpdateUserDto({ ...updateUserDto, avatarPath });
-		setValidate(true);
+		if (avatarPath) {
+			setUpdateUserDto({ ...updateUserDto, avatarPath });
+			setValidate(true);
+		}
 	};
 
 	const handleBio = (bio: string) => {
