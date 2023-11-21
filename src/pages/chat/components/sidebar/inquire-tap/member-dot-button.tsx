@@ -4,6 +4,7 @@ import {
 	deleteBlockedFriend,
 	deleteFriend,
 	denyFriendRequest,
+	getBlockedList,
 	getFriendList,
 	getFriendRelation,
 	updateFriend,
@@ -163,6 +164,10 @@ const MemberDotButton = (props: { participant: ChatParticipant }) => {
 		}
 		const newRelation = await getFriendRelation(otherUser.id);
 		setRelation(newRelation);
+		const blockedFriends = await getBlockedList(user!.id);
+		setFriendsState((pre) => {
+			return { ...pre, blockedFriends };
+		});
 	};
 
 	const manageBlockList = () => {
