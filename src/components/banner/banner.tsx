@@ -45,7 +45,7 @@ const Banner = () => {
 		case GameBanner.CENCEL:
 			return (
 				<InviteCancelBanner
-					message={opponentInfo?.nickname + '님이 게임 요청을 취소했어요!'}
+					message={userInfo?.nickname + '님이 게임 요청을 취소했어요!'}
 				/>
 			);
 		case GameBanner.REFUSE:
