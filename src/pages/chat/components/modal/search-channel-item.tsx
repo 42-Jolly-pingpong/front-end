@@ -166,6 +166,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 				placeholder='채널 비밀번호'
 				value={input}
 				onChange={onChangeInput}
+				autoComplete='off'
 			/>
 		);
 	};

@@ -138,6 +138,7 @@ const SetChatRoomType = (props: {
 					sizing='sm'
 					required={passwordField}
 					placeholder='채널 비밀번호'
+					autoComplete='off'
 				/>
 			</div>
 		);

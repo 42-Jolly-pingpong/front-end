@@ -120,6 +120,7 @@ const ChannelRoomTypeField = () => {
 					onChange={onchangePassword}
 					className='mt-2'
 					placeholder='채널 비밀번호'
+					autoComplete='off'
 				/>
 				<div className='flex justify-end mt-2'>
 					<Button color='light' size='sm' onClick={onClickClear}>
