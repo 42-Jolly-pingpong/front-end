@@ -19,6 +19,7 @@ import {
 	getFriendList,
 	getFriendRequestList,
 } from 'api/friend-api';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
 
 const Layout = () => {
 	const sidebarState = useRecoilValue(friendSidebarState);
@@ -36,7 +37,7 @@ const Layout = () => {
 	const initData = async () => {
 		const newUser = await getUserByJwt();
 		if (newUser) {
-			setUser(newUser);
+			setUser({ ...newUser, status: UserStatus.ONLINE });
 			const friends = await getFriendList(newUser.id);
 			const requestFriends = await getFriendRequestList(newUser.id);
 			const blockedFriends = await getBlockedList(newUser.id);
