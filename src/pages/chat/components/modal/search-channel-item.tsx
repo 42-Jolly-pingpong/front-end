@@ -95,7 +95,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 		}, 1000);
 	};
 
-	const onClickItem = async () => {
+	const onClickItem = () => {
 		if (isUserInChannel) {
 			setChat(props.channel);
 			setModalStatus(ChatModalStatus.CLOSE);
@@ -107,7 +107,7 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 		}
 		var password = null;
 		if (enterPassword) {
-			password = await hash(input);
+			password = hash(input);
 		}
 
 		chatSocket.emit(
