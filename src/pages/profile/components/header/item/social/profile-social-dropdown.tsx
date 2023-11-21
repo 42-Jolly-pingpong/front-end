@@ -14,6 +14,7 @@ import {
 } from 'api/friend-api';
 import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { opponentInfoState } from 'ts/states/game/opponent-info-state';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
 
 const ProfileSocialDropdown = () => {
 	const user = useRecoilValue(userState);
@@ -37,7 +38,7 @@ const ProfileSocialDropdown = () => {
 
 	return (
 		<Dropdown label={<BsThreeDots />} arrowIcon={false} inline>
-			<Dropdown.Item className='text-gray-700' onClick={handleGame}>
+			<Dropdown.Item className='text-gray-700' onClick={handleGame} disabled={!(profile.user?.status === UserStatus.ONLINE)}>
 				<div className='flex items-center justify-start w-24 text-sm'>
 					<VscDebugStart />
 					<div className='pl-1'>게임하기</div>

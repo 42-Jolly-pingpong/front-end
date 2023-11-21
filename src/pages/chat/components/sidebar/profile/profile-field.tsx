@@ -88,7 +88,7 @@ const ProfileField = () => {
 						icon={<MdOutlineRocketLaunch size='12' />}
 						label='게임 신청'
 						onClickEvent={onClickGame}
-						disabled={otherUser.id === user.id}
+						disabled={(otherUser.id === user.id) || !(otherUser.status === UserStatus.ONLINE)}
 					/>
 					<ProfileDotButton />
 				</div>
