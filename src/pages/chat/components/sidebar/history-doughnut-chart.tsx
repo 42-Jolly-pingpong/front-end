@@ -14,7 +14,6 @@ const HistoryDoughnutChart = (props: {
 	const data = {
 		datasets: [
 			{
-				label: '# counts',
 				data: [winCount, loseCount],
 				backgroundColor: ['rgba(253, 206, 2, 1)', 'rgba(229, 231, 235, 1)'],
 			},
