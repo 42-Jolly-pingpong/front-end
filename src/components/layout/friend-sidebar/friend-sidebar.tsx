@@ -43,7 +43,7 @@ const FriendSidebar = () => {
 			}`}
 			aria-label='Sidebar'
 		>
-			<div className='h-full overflow-y-auto bg-white dark:bg-gray-800 shadow-2xl'>
+			<div className='flex flex-col h-full overflow-y-auto bg-white dark:bg-gray-800 shadow-2xl'>
 				<FriendSidebarHeader />
 				{0 < userFrieds.friends.length + userFrieds.requestFriends.length ? (
 					<FriendSidebarNormal />

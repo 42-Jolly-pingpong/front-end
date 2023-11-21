@@ -9,7 +9,7 @@ const FriendSidebarHeader = () => {
 	};
 
 	return (
-		<div className='flex h-12 border-b'>
+		<div className='flex flex-none h-12 border-b'>
 			<div className='flex justify-between items-center w-full mx-4'>
 				<div className='text-lg font-bold'>친구 목록</div>
 				<HiX
