@@ -23,7 +23,6 @@ const ProfileSocialDropdown = () => {
 	const setOpponentUserInfo = useSetRecoilState(opponentInfoState);
 
 	const handleGame = () => {
-		console.log(profile.user)
 		setOpponentUserInfo(profile.user);
 		setGameModeSelect(true);
 	};
