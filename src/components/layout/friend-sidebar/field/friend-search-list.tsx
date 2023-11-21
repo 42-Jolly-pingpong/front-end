@@ -12,7 +12,7 @@ const FriendSearchList = () => {
 		return <FriendNotFound />;
 	}
 	return (
-		<div className='flex flex-col h-full border-t pt-2 overflow-y-auto'>
+		<div className='flex flex-col flex-auto border-t pt-2 overflow-y-auto'>
 			{friends.map((friend, index) => (
 				<div className='hover:bg-gray-200 group' key={index}>
 					<div className='flex justify-between items-center mx-4 my-3'>

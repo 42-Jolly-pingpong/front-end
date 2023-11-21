@@ -52,7 +52,7 @@ const Chat = () => {
 	return (
 		<>
 			<HandleChatSocket />
-			<div className='flex w-screen h-screen no-scrollbar'>
+			<div className='flex w-screen h-screen'>
 				<ChatList />
 				<ChatContent />
 				<ChatSidebar />

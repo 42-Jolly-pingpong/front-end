@@ -59,7 +59,9 @@ const ChatHeaderTitle = () => {
 	};
 
 	return (
-		<div className='w-full flex items-center border-b h-12'>{header()}</div>
+		<div className='w-full flex flex-none items-center border-b h-12'>
+			{header()}
+		</div>
 	);
 };
 

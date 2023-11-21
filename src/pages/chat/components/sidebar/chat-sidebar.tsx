@@ -9,7 +9,7 @@ const ChatSidebar = () => {
 
 	return (
 		<aside
-			className={`fixed top-0 right-0 z-40 w-[346px] h-fit transition-transform sm:translate-x-0 shadow-2xl bg-white ${
+			className={`fixed top-0 right-0 z-40 w-[346px] h-full transition-transform sm:translate-x-0 shadow-2xl bg-white ${
 				chatSidebarStatus != ChatSidebarStatus.CLOSE ? 'visible' : 'invisible'
 			}`}
 		>

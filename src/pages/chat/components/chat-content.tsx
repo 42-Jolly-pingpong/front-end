@@ -4,7 +4,7 @@ import { ChatInput } from 'pages/chat/components/chat-input';
 
 const ChatContent = () => {
 	return (
-		<div className={`flex flex-col justify-between w-full no-scrollbar`}>
+		<div className={`w-full flex flex-col justify-between`}>
 			<ChatHeader />
 			<ChatField />
 			<ChatInput />

@@ -97,7 +97,7 @@ const ChatHeaderSearch = () => {
 	};
 
 	return (
-		<div className='flex flex-col items-center border-b h-24'>
+		<div className='flex flex-col flex-none items-center border-b h-24'>
 			<div className='flex items-center w-full h-12 border-b font-bold'>
 				<div className='ml-6'>새 메시지</div>
 			</div>

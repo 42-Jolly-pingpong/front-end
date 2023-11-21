@@ -19,6 +19,9 @@ import {
 	getFriendRelation,
 	updateFriend,
 } from 'api/friend-api';
+import useChangeChat from 'hooks/use-change-chat';
+import { useNavigate } from 'react-router-dom';
+import { getDM } from 'api/chat-api';
 
 export function GameResult() {
 	const gameInfo = useRecoilValue(gameInfoState);
@@ -29,6 +32,8 @@ export function GameResult() {
 	const [relation, setRelation] = useState<ProfileStatus>(
 		ProfileStatus.UNDEFINED
 	);
+	const setChat = useChangeChat();
+	const navigate = useNavigate();
 
 	const findRelation = async () => {
 		const relationData = await getFriendRelation(opponent!.id);
@@ -73,8 +78,10 @@ export function GameResult() {
 		setModalState(false);
 	};
 
-	const handleMessage = () => {
-		// dm방으로 navigate
+	const handleMessage = async () => {
+		const dm = await getDM(opponent!);
+		setChat(dm!);
+		navigate('/chat');
 	};
 
 	const exitEvent = () => {
