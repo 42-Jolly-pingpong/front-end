@@ -10,6 +10,7 @@ import { chatHeaderState } from 'ts/states/chat-header-state';
 import { chatListState } from 'ts/states/chat-list.state';
 import { chatSidebarState } from 'ts/states/chat-sidebar-state';
 import { chatState } from 'ts/states/chat-state';
+import useFetch from 'hooks/use-fetch';
 
 const useChangeChat = () => {
 	const setChatState = useSetRecoilState(chatState);
@@ -17,6 +18,56 @@ const useChangeChat = () => {
 	const setChatRoomList = useSetRecoilState(chatListState);
 	const setSidebarState = useSetRecoilState(chatSidebarState);
 	const setAlertModal = useChatAlert();
+	const getData = useFetch();
+
+	const getUpdatedChatRoom = async (
+		chat: ChatRoom | Dm
+	): Promise<ChatRoom | Dm> => {
+		try {
+			let updatedChatRoom: ChatRoom | Dm;
+
+			if (chat.roomType === ChatRoomType.DM) {
+				const res = await getData('POST', '/chat-rooms/dm', {
+					chatMate: (chat as Dm).chatMate,
+				});
+
+				if (res.ok) {
+					const data = await res.json();
+					updatedChatRoom = data;
+				} else {
+					throw new Error(res.statusText);
+				}
+				return updatedChatRoom;
+			}
+			const res = await getData('GET', `/chat-rooms/${chat.id}`);
+
+			if (res.ok) {
+				const data = await res.json();
+				updatedChatRoom = data;
+			} else {
+				throw new Error(res.statusText);
+			}
+
+			return updatedChatRoom;
+		} catch (err) {
+			throw err;
+		}
+	};
+
+	const setNewChatRoom = async (chat: ChatRoom | Dm, chats: Chat[]) => {
+		try {
+			const updatedChatRoom = await getUpdatedChatRoom(chat);
+			setChatState({
+				chatRoom: updatedChatRoom,
+				chats: chats.sort(
+					(a, b) =>
+						new Date(a.sentTime).getTime() - new Date(b.sentTime).getTime()
+				),
+			});
+		} catch (e) {
+			setAlertModal();
+		}
+	};
 
 	const markChannelAsRead = (chat: ChatRoom | Dm) => {
 		switch (chat.roomType) {
@@ -52,16 +103,9 @@ const useChangeChat = () => {
 			chatSocket.emit(
 				'getChats',
 				{ roomId: chat.id },
-				(response: { status: number; chats: Chat[] }) => {
+				async (response: { status: number; chats: Chat[] }) => {
 					if (response.status === 200) {
-						setChatState({
-							chatRoom: chat,
-							chats: response.chats.sort(
-								(a, b) =>
-									new Date(a.sentTime).getTime() -
-									new Date(b.sentTime).getTime()
-							),
-						});
+						setNewChatRoom(chat, response.chats);
 					} else {
 						setAlertModal();
 					}
