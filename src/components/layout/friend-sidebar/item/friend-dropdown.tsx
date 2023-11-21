@@ -9,6 +9,7 @@ import { gameModeSelectState } from 'ts/states/game/game-mode-select-state';
 import { getDM } from 'api/chat-api';
 import useChangeChat from 'hooks/use-change-chat';
 import { useNavigate } from 'react-router-dom';
+import { UserStatus } from 'ts/enums/user/user-status.enum';
 
 interface FriendInfoProps {
 	user: User;
@@ -56,7 +57,7 @@ const FriendDropdown: React.FC<FriendInfoProps> = ({ user }) => {
 				<Dropdown.Item className='text-gray-700' onClick={handleMessage}>
 					메시지 보내기
 				</Dropdown.Item>
-				<Dropdown.Item className='text-gray-700' onClick={handleInviteGame}>
+				<Dropdown.Item className='text-gray-700' onClick={handleInviteGame} disabled={!(user.status == UserStatus.ONLINE)}>
 					게임 초대하기
 				</Dropdown.Item>
 				<Dropdown.Item className='text-red-500' onClick={handleUnfriend}>
