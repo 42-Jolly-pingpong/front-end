@@ -62,13 +62,11 @@ const InviteGameModal = ({ show }: Props) => {
 	};
 
 	return gameWait.status === GameWaitStatus.MODE ? (
-		<Modal show={show} onClose={onClose} size='lg' dismissible>
-			<Modal.Body className='flex flex-col my-2 m-6 '>
-				<div className='font-bold text-xl text-gray-900'>게임 옵션 선택</div>
+		<Modal size={'md'} show={show} onClose={onClose} dismissible>
+			<Modal.Header>게임 옵션 선택</Modal.Header>
+			<Modal.Body className='flex flex-col gap-7'>
 				<GameModeRadio />
-				<YellowButton size='xl' onClick={onClick}>
-					<div className='font-bold'>게임 초대 </div>
-				</YellowButton>
+				<YellowButton onClick={onClick}>게임 초대</YellowButton>
 			</Modal.Body>
 		</Modal>
 	) : (

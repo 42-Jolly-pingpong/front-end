@@ -67,14 +67,13 @@ const GameRequestBanner = ({ userInfo }: propsType) => {
 							<CancelButton size='xs' onClick={handleCancel} />
 						</div>
 					</div>
-					<div className='w-full h-1.5 flex-col  justify-start items-end inline-flex '>
-						<div className='w-full p-1 h-1 rounded-full'>
-							<Progress
-								progress={progressValue}
-								color='yellow'
-								theme={ProgressTheme}
-							/>
-						</div>
+
+					<div className='w-full p-1 rounded-full'>
+						<Progress
+							progress={progressValue}
+							color='yellow'
+							theme={ProgressTheme}
+						/>
 					</div>
 				</div>
 			</div>
