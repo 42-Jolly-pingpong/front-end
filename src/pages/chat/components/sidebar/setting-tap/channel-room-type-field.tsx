@@ -105,7 +105,7 @@ const ChannelRoomTypeField = () => {
 		return (
 			<div className='px-5 py-4 bg-white border-b text-left'>
 				<ChannelPropertyTitle label='비밀번호 변경' />
-				<form>
+				<form name='chat-password'>
 					<TextInput
 						color={inputFail ? 'failure' : 'gray'}
 						helperText={
@@ -162,12 +162,12 @@ const ChannelRoomTypeField = () => {
 				<div className='flex justify-between px-5 py-4 border-b text-left bg-white hover:bg-gray-200'>
 					<ChannelPropertyTitle label='비밀번호 변경' />
 					{chat.roomType === ChatRoomType.PROTECTED && (
-						<button
+						<span
 							className='text-sm font-normal hover:underline'
 							onClick={onClickDeletePassword}
 						>
 							삭제
-						</button>
+						</span>
 					)}
 				</div>
 			</button>
