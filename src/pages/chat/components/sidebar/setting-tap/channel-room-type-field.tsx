@@ -91,12 +91,12 @@ const ChannelRoomTypeField = () => {
 		}, 1000);
 	};
 
-	const onClickChange = async () => {
+	const onClickChange = () => {
 		if (password.length === 0) {
 			changeInput();
 			return;
 		}
-		const encryptedPassword = await hash(password);
+		const encryptedPassword = hash(password);
 
 		onClickChangeRoomType(ChatRoomType.PROTECTED, encryptedPassword);
 	};
