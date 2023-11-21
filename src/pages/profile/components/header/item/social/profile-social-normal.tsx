@@ -14,6 +14,9 @@ import {
 	getFriendRelation,
 	updateFriend,
 } from 'api/friend-api';
+import useChangeChat from 'hooks/use-change-chat';
+import { useNavigate } from 'react-router-dom';
+import { getDM } from 'api/chat-api';
 
 const ProfileSocialNormal = () => {
 	const profile = useRecoilValue(profileState);
@@ -23,6 +26,8 @@ const ProfileSocialNormal = () => {
 	);
 	const [modalState, setModalState] = useState(false);
 	const [dropdownState, setDropdownState] = useState(true);
+	const setChat = useChangeChat();
+	const navigate = useNavigate();
 
 	const handleClick = async () => {
 		if (relation === ProfileStatus.UNDEFINED) {
@@ -50,8 +55,10 @@ const ProfileSocialNormal = () => {
 		return;
 	};
 
-	const handleMessage = () => {
-		console.log('메시지 보내기');
+	const handleMessage = async () => {
+		const dm = await getDM(profile!.user!);
+		setChat(dm!);
+		navigate('/chat');
 	};
 
 	const handleClose = () => {
