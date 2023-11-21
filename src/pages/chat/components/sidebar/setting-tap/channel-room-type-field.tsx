@@ -105,23 +105,25 @@ const ChannelRoomTypeField = () => {
 		return (
 			<div className='px-5 py-4 bg-white border-b text-left'>
 				<ChannelPropertyTitle label='비밀번호 변경' />
-				<TextInput
-					color={inputFail ? 'failure' : 'gray'}
-					helperText={
-						inputFail ? (
-							<span className='text-xs font-normal text-red-600'>
-								비밀번호를 입력해주세요.
-							</span>
-						) : null
-					}
-					ref={inputRef}
-					type='password'
-					value={password}
-					onChange={onchangePassword}
-					className='mt-2'
-					placeholder='채널 비밀번호'
-					autoComplete='off'
-				/>
+				<form>
+					<TextInput
+						color={inputFail ? 'failure' : 'gray'}
+						helperText={
+							inputFail ? (
+								<span className='text-xs font-normal text-red-600'>
+									비밀번호를 입력해주세요.
+								</span>
+							) : null
+						}
+						ref={inputRef}
+						type='password'
+						value={password}
+						onChange={onchangePassword}
+						className='mt-2'
+						placeholder='채널 비밀번호'
+						autoComplete='off'
+					/>
+				</form>
 				<div className='flex justify-end mt-2'>
 					<Button color='light' size='sm' onClick={onClickClear}>
 						취소

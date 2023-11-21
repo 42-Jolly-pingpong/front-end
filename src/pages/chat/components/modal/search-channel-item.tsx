@@ -148,26 +148,28 @@ export const SearchChannelItem = (props: { channel: ChatRoom }) => {
 
 	const passwordInput = () => {
 		return (
-			<TextInput
-				color={inputFail ? 'failure' : 'gray'}
-				helperText={
-					inputFail ? (
-						<span className='text-xs font-normal text-red-600'>
-							비밀번호가 일치하지 않습니다.
-						</span>
-					) : null
-				}
-				onClick={onClickInput}
-				ref={inputRef}
-				name='password'
-				type='password'
-				className='w-[236px] mt-2'
-				sizing='sm'
-				placeholder='채널 비밀번호'
-				value={input}
-				onChange={onChangeInput}
-				autoComplete='off'
-			/>
+			<form>
+				<TextInput
+					color={inputFail ? 'failure' : 'gray'}
+					helperText={
+						inputFail ? (
+							<span className='text-xs font-normal text-red-600'>
+								비밀번호가 일치하지 않습니다.
+							</span>
+						) : null
+					}
+					onClick={onClickInput}
+					ref={inputRef}
+					name='password'
+					type='password'
+					className='w-[236px] mt-2'
+					sizing='sm'
+					placeholder='채널 비밀번호'
+					value={input}
+					onChange={onChangeInput}
+					autoComplete='off'
+				/>
+			</form>
 		);
 	};
 
